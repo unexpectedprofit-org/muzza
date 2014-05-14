@@ -1,7 +1,7 @@
 muzza
 =====
 
-## Setup
+## Pre Requisites
 
 Install Android SDK
 
@@ -22,7 +22,9 @@ Install ANT if you dont have it and set
 
 Install Compass
 
-   gem install compass
+    gem install compass
+
+## Setup
 
 1- Checkout the project
 
