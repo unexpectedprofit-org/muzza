@@ -28,13 +28,6 @@ module.exports = function (grunt) {
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
-      js: {
-        files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js'],
-        tasks: ['newer:jshint:all'],
-        options: {
-          livereload: true
-        }
-      },
       compass: {
         files: ['<%= yeoman.app %>/<%= yeoman.styles %>/**/*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
@@ -42,15 +35,26 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      coffee: {
+          "files": ["<%= yeoman.app %>/<%= yeoman.scripts %>/source/*.coffee"],
+          "tasks": ["coffee:dist"],
+          "options": {
+              "livereload": '<%= connect.options.livereload %>'
+          }
+      },
+      "coffeeTest": {
+          "files": ["test/*.coffee"],
+          "tasks": ["coffee:dist", "coffee:test"]
+      },
       livereload: {
         options: {
-          livereload: '<%= connect.options.livereload %>'
+            livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/*.html',
-          '<%= yeoman.app %>/templates/**/*.html',
-          '.tmp/<%= yeoman.styles %>/**/*.css',
-          '<%= yeoman.app %>/<%= yeoman.images %>/**/*.{png,jpg,jpeg,gif,webp,svg}'
+            '<%= yeoman.app %>/*.html',
+            '<%= yeoman.app %>/templates/**/*.html',
+            '.tmp/<%= yeoman.styles %>/**/*.css',
+            '<%= yeoman.app %>/<%= yeoman.images %>/**/*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -112,7 +116,8 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             'www/*',
-            '!www/.git*'
+            '!www/.git*',
+            '<%= yeoman.app %>/scripts/*.js'
           ]
         }]
       },
@@ -271,7 +276,33 @@ module.exports = function (grunt) {
         dest: 'www/'
       }
     },
-    
+
+
+    coffee: {
+        dist: {
+            files: [
+                {
+                    "expand": true,
+                    "cwd": "<%= yeoman.app %>/scripts/source",
+                    "src": "*.coffee",
+                    "dest": "<%= yeoman.app %>/scripts",
+                    "ext": ".js"
+                }
+            ]
+        }
+//        test: {
+//            files: {
+//                ".tmp/test/spec_coffee.js": "<%= yeoman.test %>/spec/**/*.coffee",
+//                ".tmp/test/e2e_coffee_bootstrap.js": "<%= yeoman.test %>/e2e/helpers/e2e_bootstrap.coffee",
+//                ".tmp/test/e2e_coffee_hotels.js": "<%= yeoman.test %>/e2e/hotels/*.coffee",
+//                ".tmp/test/e2e_coffee_cars.js": "<%= yeoman.test %>/e2e/cars/*.coffee",
+//                ".tmp/test/e2e_coffee_packages.js": "<%= yeoman.test %>/e2e/packages/*.coffee",
+//                ".tmp/test/e2e_coffee_flights.js": "<%= yeoman.test %>/e2e/flights/*.coffee",
+//                ".tmp/test/e2e_coffee.js": "<%= yeoman.test %>/e2e/**/*.coffee"
+//            }
+//        }
+    },
+
     concurrent: {
       server: [
         'compass:server',
@@ -454,6 +485,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bower-install',
+      'coffee:dist',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
