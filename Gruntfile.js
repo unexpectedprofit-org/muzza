@@ -23,7 +23,8 @@ module.exports = function (grunt) {
       app: 'app',
       scripts: 'scripts',
       styles: 'styles',
-      images: 'images'
+      images: 'images',
+      test: 'test'
     },
 
     // Watches files for changes and runs tasks based on the changed files
@@ -104,7 +105,7 @@ module.exports = function (grunt) {
         options: {
           jshintrc: 'test/.jshintrc'
         },
-        src: ['test/unit/**/*.js']
+        src: ['.tmp/test/unit/**/*.js']
       }
     },
 
@@ -289,18 +290,12 @@ module.exports = function (grunt) {
                     "ext": ".js"
                 }
             ]
+        },
+        test: {
+            files: {
+                ".tmp/test/alltests.js": "<%= yeoman.test %>/spec/*.coffee"
+            }
         }
-//        test: {
-//            files: {
-//                ".tmp/test/spec_coffee.js": "<%= yeoman.test %>/spec/**/*.coffee",
-//                ".tmp/test/e2e_coffee_bootstrap.js": "<%= yeoman.test %>/e2e/helpers/e2e_bootstrap.coffee",
-//                ".tmp/test/e2e_coffee_hotels.js": "<%= yeoman.test %>/e2e/hotels/*.coffee",
-//                ".tmp/test/e2e_coffee_cars.js": "<%= yeoman.test %>/e2e/cars/*.coffee",
-//                ".tmp/test/e2e_coffee_packages.js": "<%= yeoman.test %>/e2e/packages/*.coffee",
-//                ".tmp/test/e2e_coffee_flights.js": "<%= yeoman.test %>/e2e/flights/*.coffee",
-//                ".tmp/test/e2e_coffee.js": "<%= yeoman.test %>/e2e/**/*.coffee"
-//            }
-//        }
     },
 
     concurrent: {
@@ -353,45 +348,15 @@ module.exports = function (grunt) {
     // Test settings
     // These will override any config options in karma.conf.js if you create it.
     karma: {
-      options: {
-        basePath: '',
-        frameworks: ['mocha', 'chai'],
-        files: [
-          '<%= yeoman.app %>/bower_components/angular/angular.js',
-          '<%= yeoman.app %>/bower_components/angular-animate/angular-animate.js',
-          '<%= yeoman.app %>/bower_components/angular-sanitize/angular-sanitize.js',
-          '<%= yeoman.app %>/bower_components/angular-ui-router/release/angular-ui-router.js',
-          '<%= yeoman.app %>/bower_components/ionic/release/js/ionic.js',
-          '<%= yeoman.app %>/bower_components/ionic/release/js/ionic-angular.js',
-          '<%= yeoman.app %>/bower_components/angular-mocks/angular-mocks.js',
-          '<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js',
-          'test/mock/**/*.js',
-          'test/spec/**/*.js'
-        ],
-        autoWatch: false,
-        reporters: ['dots', 'coverage'],
-        port: 8080,
-        singleRun: false,
-        preprocessors: {
-          // Update this if you change the yeoman config path
-          'app/scripts/**/*.js': ['coverage']
-        },
-        coverageReporter: {
-          reporters: [
-            { type: 'html', dir: 'coverage/' },
-            { type: 'text-summary' }
-          ]
-        }
-      },
       unit: {
         // Change this to 'Chrome', 'Firefox', etc. Note that you will need
         // to install a karma launcher plugin for browsers other than Chrome.
-        browsers: ['PhantomJS'],
-        background: true
+          configFile:  "karma.conf.js",
+          singleRun: true
+//          background: true
       },
       continuous: {
-        browsers: ['PhantomJS'],
-        singleRun: true,
+        singleRun: true
       }
     },
 
@@ -495,16 +460,17 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'coffee:test',
     'concurrent:test',
     'autoprefixer',
-    'karma:unit:start',
-    'watch:karma'
+    'karma:unit'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
     'bower-install',
     'useminPrepare',
+    'coffee:dist',
     'concurrent:dist',
     'autoprefixer',
     'concat',
