@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       coffee: {
-          "files": ["<%= yeoman.app %>/<%= yeoman.scripts %>/*.coffee"],
+          "files": ["<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.coffee"],
           "tasks": ["coffee:dist"],
           "options": {
               "livereload": '<%= connect.options.livereload %>'
@@ -275,6 +275,12 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/',
         src: '**',
         dest: 'www/'
+      },
+      js: {
+        expand: true,
+        cwd: '.tmp/scripts',
+        src: '**/*.js',
+        dest: 'www/scripts'
       }
     },
 
@@ -285,7 +291,7 @@ module.exports = function (grunt) {
                 {
                     "expand": true,
                     "cwd": "<%= yeoman.app %>/scripts",
-                    "src": "{,*/}{,*/}*.coffee",
+                    "src": "**/*.coffee",
                     "dest": ".tmp/scripts",
                     "ext": ".js"
                 }
@@ -406,12 +412,12 @@ module.exports = function (grunt) {
   // directories, we watch all registered files and then copy all un-built assets
   // over to www/. Last step is running ordova prepare so we can refresh the ripple
   // browser tab to see the changes.
-  grunt.registerTask('ripple', ['bower-install', 'copy:all', 'prepare', 'ripple-emulator']);
+  grunt.registerTask('ripple', ['bower-install', 'copy:all', 'copy:js', 'prepare', 'ripple-emulator']);
   grunt.registerTask('ripple-emulator', function () {
     grunt.config.set('watch', {
       all: {
         files: _.flatten(_.pluck(grunt.config.get('watch'), 'files')),
-        tasks: ['copy:all', 'prepare']
+        tasks: ['copy:all', 'copy:js', 'prepare']
       }
     });
 
@@ -483,7 +489,7 @@ module.exports = function (grunt) {
     'cordova:build'
   ]);
 
-  grunt.registerTask('cordova', ['copy:all', 'cordova:build']);
+  grunt.registerTask('cordova', ['copy:all', 'copy:js', 'cordova:build']);
 
   grunt.registerTask('coverage', ['karma:continuous', 'connect:coverage:keepalive']);
 
