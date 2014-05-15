@@ -38,12 +38,19 @@ angular.module("Muzza", [
       menuContent:
         templateUrl: "templates/playlists.html"
         controller: "PlaylistsCtrl"
-  ).state "app.single",
+  ).state("app.single",
     url: "/playlists/:playlistId"
     views:
       menuContent:
         templateUrl: "templates/playlist.html"
         controller: "PlaylistCtrl"
+  ).state("app.store.new",
+    url: "/store/add"
+    views:
+      menuContent:
+        templateUrl: "templates/playlist.html"
+        controller: "StoreCtrl"
+  )
 
 
   # if none of the above states are matched, use this as the fallback

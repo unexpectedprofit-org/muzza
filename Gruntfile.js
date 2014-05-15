@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       coffee: {
-          "files": ["<%= yeoman.app %>/<%= yeoman.scripts %>/source/*.coffee"],
+          "files": ["<%= yeoman.app %>/<%= yeoman.scripts %>/*.coffee"],
           "tasks": ["coffee:dist"],
           "options": {
               "livereload": '<%= connect.options.livereload %>'
@@ -284,9 +284,9 @@ module.exports = function (grunt) {
             files: [
                 {
                     "expand": true,
-                    "cwd": "<%= yeoman.app %>/scripts/source",
-                    "src": "*.coffee",
-                    "dest": "<%= yeoman.app %>/scripts",
+                    "cwd": "<%= yeoman.app %>/scripts",
+                    "src": "{,*/}{,*/}*.coffee",
+                    "dest": ".tmp/scripts",
                     "ext": ".js"
                 }
             ]
