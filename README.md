@@ -24,6 +24,14 @@ Install Compass
 
     gem install compass
 
+Install libs:
+
+    sudo apt-get install default-jdk
+
+    sudo apt-get install ia32-libs (NA in ubuntu 14)
+    sudo apt-get install lib32z1
+    sudo apt-get install lib32stdc++6
+
 ## Setup
 
 1- Checkout the project
@@ -35,13 +43,13 @@ Install Compass
 
 2- Install dependencies
 
-    npm install
+    sudo npm install
 
     bower install
 
 ## Flow
 
-    grunt serve
+    grunt build (check www folder generated)
 
 Add platform
 
