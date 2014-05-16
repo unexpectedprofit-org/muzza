@@ -40,7 +40,7 @@ Install libs:
 
 2- Install dependencies
 
-    npm install
+    sudo npm install
 
     bower install
 
