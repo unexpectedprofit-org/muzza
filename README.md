@@ -1,6 +1,14 @@
 muzza
 =====
 
+## Frameworks
+
+- AngularJS
+- Sass
+- Karma + Jasmine 2.0
+- Ionic
+- Firebase
+
 ## Pre Requisites
 
 Install NodeJS
