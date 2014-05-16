@@ -417,7 +417,7 @@ module.exports = function (grunt) {
     grunt.config.set('watch', {
       all: {
         files: _.flatten(_.pluck(grunt.config.get('watch'), 'files')),
-        tasks: ['copy:all', 'copy:js', 'prepare']
+        tasks: [ 'coffee:dist', 'copy:all', 'copy:js', 'prepare', 'ripple-emulator']
       }
     });
 
