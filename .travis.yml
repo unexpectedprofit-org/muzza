@@ -6,3 +6,11 @@ before_script:
   - npm install -g bower
   - npm install
   - bower install
+notifications:
+  email:
+    recipients:
+      - santiagoesteva@gmail.com
+      - gonzalo.docarmo@gmail.com
+      - dichoso@gmail.com
+    on_success: never
+    on_failure: always
