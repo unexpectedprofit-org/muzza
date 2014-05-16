@@ -3,12 +3,19 @@ muzza
 
 ## Pre Requisites
 
+Install NodeJS
+
 Install Android SDK
 
 - Download SDK: http://developer.android.com/sdk/index.html?hl=sk#download
 - Select Use an Existing IDE
 - Unzip to desired folder
 - Run ./tools/android update sdk --no-ui
+
+    You may also want to see the ui or setup a proxy.
+
+    - Run ./tools/android update sdk
+
 - Add to your bash profile:
 
     export ANDROID_HOME="$HOME/applications/android-sdk-linux/tools"
@@ -24,14 +31,6 @@ Install Compass
 
     gem install compass
 
-Install libs:
-
-    sudo apt-get install default-jdk
-
-    sudo apt-get install ia32-libs (NA in ubuntu 14)
-    sudo apt-get install lib32z1
-    sudo apt-get install lib32stdc++6
-
 ## Setup
 
 1- Checkout the project
@@ -43,24 +42,47 @@ Install libs:
 
 2- Install dependencies
 
-    sudo npm install
+    npm install
+
+note: you may need to run it as sudo. this depends on your setup.
 
     bower install
 
+## Troubleshooting setup
+
+Linux only - You may need to install the following:
+
+    sudo apt-get install default-jdk
+
+    sudo apt-get install ia32-libs (NA in ubuntu 14)
+    sudo apt-get install lib32z1
+    sudo apt-get install lib32stdc++6
+
 ## Flow
 
-    grunt build (check www folder generated)
+Build web version:
+
+    grunt serve
 
 Add platform
 
     grunt platform:add:android
 
-Prepare for Android
+Build mobile version:
 
-    grunt cordova
+    grunt build
 
-Run emulator
+(check www folder generated)
+Note: grunt Build is running grunt cordova
+
+Run Ripple emulator
 
     grunt ripple
 
+Run Android emulator (this takesa while to stand up)
 
+    grunt emulate:android
+
+Run IOS emulator (requires additional setup)
+
+    grunt emulate:ios
