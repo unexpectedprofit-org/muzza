@@ -1,4 +1,4 @@
-muzza
+muzza [![Build Status](https://secure.travis-ci.org/unexpectedprofit-org/muzza.png?branch=master)](https://travis-ci.org/unexpectedprofit-org/muzza)
 =====
 
 ## Frameworks
