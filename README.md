@@ -24,6 +24,11 @@ Install Compass
 
     gem install compass
 
+Install libs:
+
+    sudo apt-get install ia32-libs
+    sudo apt-get install lib32z1
+
 ## Setup
 
 1- Checkout the project
