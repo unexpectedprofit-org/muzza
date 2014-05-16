@@ -26,8 +26,11 @@ Install Compass
 
 Install libs:
 
-    sudo apt-get install ia32-libs
+    sudo apt-get install default-jdk
+
+    sudo apt-get install ia32-libs (NA in ubuntu 14)
     sudo apt-get install lib32z1
+    sudo apt-get install lib32stdc++6
 
 ## Setup
 
@@ -46,7 +49,7 @@ Install libs:
 
 ## Flow
 
-    grunt serve
+    grunt build (check www folder generated)
 
 Add platform
 
