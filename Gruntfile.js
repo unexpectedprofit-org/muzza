@@ -43,10 +43,6 @@ module.exports = function (grunt) {
               "livereload": '<%= connect.options.livereload %>'
           }
       },
-      "coffeeTest": {
-          "files": ["test/*.coffee"],
-          "tasks": ["coffee:dist", "coffee:test"]
-      },
       livereload: {
         options: {
             livereload: '<%= connect.options.livereload %>'
@@ -296,11 +292,6 @@ module.exports = function (grunt) {
                     "ext": ".js"
                 }
             ]
-        },
-        test: {
-            files: {
-                ".tmp/test/alltests.js": "<%= yeoman.test %>/spec/*.coffee"
-            }
         }
     },
 
@@ -465,10 +456,6 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', [
-    'clean:server',
-    'coffee:test',
-    'concurrent:test',
-    'autoprefixer',
     'karma:unit'
   ]);
 

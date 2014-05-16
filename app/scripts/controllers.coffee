@@ -1,6 +1,6 @@
-"use strict"
-angular.module("Muzza.controllers", []).controller("AppCtrl", ($scope) ->
-).controller("PlaylistsCtrl", ($scope) ->
+angular.module("Muzza.controllers", []).controller "AppCtrl", () ->
+
+angular.module("Muzza.controllers").controller "PlaylistsCtrl", ($scope) ->
   $scope.playlists = [
     {
       title: "Reggae"
@@ -27,5 +27,5 @@ angular.module("Muzza.controllers", []).controller("AppCtrl", ($scope) ->
       id: 6
     }
   ]
-  return
-).controller "PlaylistCtrl", ($scope, $stateParams) ->
+
+angular.module("Muzza.controllers").controller "PlaylistCtrl", () ->

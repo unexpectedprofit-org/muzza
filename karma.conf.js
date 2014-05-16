@@ -2,10 +2,11 @@
 
 module.exports = function(config){
     config.set({
-    frameworks: [ 'mocha', 'chai' ],
+    frameworks: [ 'jasmine' ],
 
     // list of files / patterns to load in the browser
     files: [
+        'test/**/*.coffee',
         'app/bower_components/angular/angular.js',
         'app/bower_components/angular-animate/angular-animate.js',
         'app/bower_components/angular-sanitize/angular-sanitize.js',
@@ -13,8 +14,7 @@ module.exports = function(config){
         'app/bower_components/ionic/release/js/ionic.js',
         'app/bower_components/ionic/release/js/ionic-angular.js',
         'app/bower_components/angular-mocks/angular-mocks.js',
-        'app/scripts/*.js',
-        '.tmp/test/alltests.js'
+        'app/scripts/**/*.coffee'
     ],
 
     // web server port
@@ -51,10 +51,9 @@ module.exports = function(config){
     singleRun: false,
 
     preprocessors: {
-        // source files, that you wanna generate coverage for
-        // do not include tests or libraries
-        // (these files will be instrumented by Istanbul)
-        'app/scripts/*.js': ['coverage']
+      'app/scripts/**/*.coffee': ['coverage'],
+      'app/scripts/**/*.coffee': ['coffee'],
+      'test/**/*.coffee': ['coffee']
     },
 
     coverageReporter: {

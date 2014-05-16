@@ -64,6 +64,10 @@ Build web version:
 
     grunt serve
 
+Run Unit tests:
+
+    grunt test
+
 Add platform
 
     grunt platform:add:android
