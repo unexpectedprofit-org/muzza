@@ -29,6 +29,9 @@ Install Compass
 1- Checkout the project
 
     git clone https://github.com/unexpectedprofit-org/muzza.git
+    cd muzza
+    mkdir platforms
+    mkdir plugins
 
 2- Install dependencies
 
