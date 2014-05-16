@@ -13,7 +13,7 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
   .state "app.menu",
     url: "/menu"
     views:
-      menuContent:
+      navContent:
         templateUrl: "templates/menu.html"
 
   # if none of the above states are matched, use this as the fallback
