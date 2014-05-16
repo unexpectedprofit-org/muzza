@@ -1,31 +1,17 @@
-angular.module("Muzza.controllers", []).controller "AppCtrl", () ->
+angular.module("Muzza.controllers", [])
 
-angular.module("Muzza.controllers").controller "PlaylistsCtrl", ($scope) ->
-  $scope.playlists = [
+angular.module("Muzza.controllers").controller "MenuCtrl", ($scope) ->
+  $scope.menu = [
     {
-      title: "Reggae"
+      title: "Muzza"
       id: 1
     }
     {
-      title: "Chill"
+      title: "Fugazetta"
       id: 2
     }
     {
-      title: "Dubstep"
+      title: "Jamon y Morron"
       id: 3
     }
-    {
-      title: "Indie"
-      id: 4
-    }
-    {
-      title: "Rap"
-      id: 5
-    }
-    {
-      title: "Cowbell"
-      id: 6
-    }
   ]
-
-angular.module("Muzza.controllers").controller "PlaylistCtrl", () ->
