@@ -1,4 +1,4 @@
-describe "directives", ->
+ddescribe "directives", ->
 
   beforeEach ->
     module 'ionic'
@@ -37,6 +37,13 @@ describe "directives", ->
         msg = element.find('div').html()
         expect(msg).not.toMatch(/vacio/)
 
+      it "should show checkout button", ->
+        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        $scope.$digest()
+        txt = element.find('button').html()
+        expect(txt).toMatch(/CHECKOUT/)
+
+
     describe 'when shopping cart is empty', ->
 
       it 'should display a msg when shopping cart is empty', ->
@@ -46,6 +53,12 @@ describe "directives", ->
         msg = element.find('div').html()
         expect(msg).toMatch(/vacio/)
         expect(items.length).toBe 0
+
+      it "should NOT show checkout button", ->
+        spyOn(ShoppingCart, 'getCart').and.returnValue( [] )
+        $scope.$digest()
+        txt = element.find('button').html()
+        expect(txt).not.toMatch(/CHECKOUT/)
 
   describe "Pizzas", ->
 

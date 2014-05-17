@@ -56,10 +56,21 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 #      $scope.size.remove()
 #      $scope.dough.remove()
 
-angular.module('Muzza.directives').directive 'cart', (ShoppingCart) ->
+angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart) ->
   restrict: 'EA'
   scope: {}
   templateUrl: 'cart.html'
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
+
+
+
+    $ionicModal.fromTemplateUrl 'contact.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+      $scope.checkoutModal = modal
+
+    $scope.checkout = ()->
+      $scope.checkoutModal.show()
 
