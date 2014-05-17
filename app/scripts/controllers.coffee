@@ -15,3 +15,9 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope) ->
       id: 3
     }
   ]
+
+angular.module("Muzza.controllers").controller "StoreCtrl", [ "$scope", "StoreService", ($scope, StoreService) ->
+
+  $scope.stores = StoreService.listStores()
+
+]
