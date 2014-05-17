@@ -98,3 +98,7 @@ Run Android emulator (this takesa while to stand up)
 Run IOS emulator (requires additional setup)
 
     grunt emulate:ios
+
+Serve to Android Device
+
+    cordova run android
