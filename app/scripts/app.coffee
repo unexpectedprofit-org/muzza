@@ -1,4 +1,4 @@
-angular.module("Muzza", [ "ionic", "Muzza.controllers"])
+angular.module("Muzza", [ "ionic", "Muzza.controllers", "Muzza.directives", 'Muzza.templates'])
 
 angular.module("Muzza").run ($ionicPlatform) ->
   $ionicPlatform.ready ->

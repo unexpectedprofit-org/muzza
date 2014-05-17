@@ -43,6 +43,10 @@ module.exports = function (grunt) {
               "livereload": '<%= connect.options.livereload %>'
           }
       },
+      html2js: {
+        files: ['<%= yeoman.app %>/templates/**/*.html'],
+        tasks: ['html2js:app']
+      },
       livereload: {
         options: {
             livereload: '<%= connect.options.livereload %>'
@@ -357,6 +361,23 @@ module.exports = function (grunt) {
       }
     },
 
+    html2js: {
+      options: {
+        rename: function (modulaName){
+          return modulaName.replace('../app/templates/', '');
+        },
+        module: 'Muzza.templates'
+      },
+      app: {
+        src: ['app/templates/*.html'],
+        dest: '.tmp/scripts/templates.js'
+      },
+      test: {
+        src: ['app/templates/*.html'],
+        dest: '.tmp/templates.js'
+      }
+    },
+
     // ngmin tries to make the code safe for minification automatically by
     // using the Angular long form for dependency injection. It doesn't work on
     // things like resolve or inject so those have to be done manually.
@@ -408,7 +429,7 @@ module.exports = function (grunt) {
     grunt.config.set('watch', {
       all: {
         files: _.flatten(_.pluck(grunt.config.get('watch'), 'files')),
-        tasks: [ 'coffee:dist', 'copy:all', 'copy:js', 'prepare', 'ripple-emulator']
+        tasks: [ 'coffee:dist', 'html2js:app', 'copy:all', 'copy:js', 'prepare', 'ripple-emulator']
       }
     });
 
@@ -448,6 +469,7 @@ module.exports = function (grunt) {
       'clean:server',
       'bower-install',
       'coffee:dist',
+      'html2js:app',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -456,6 +478,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', [
+    'html2js:test',
     'karma:unit'
   ]);
 
@@ -464,6 +487,7 @@ module.exports = function (grunt) {
     'bower-install',
     'useminPrepare',
     'coffee:dist',
+    'html2js:app',
     'concurrent:dist',
     'autoprefixer',
     'concat',

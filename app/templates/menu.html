@@ -3,10 +3,9 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-content class="has-header">
-        <ion-list>
-            <ion-item ng-repeat="item in menu" href="#/app/menu/{{item.id}}">
-                {{item.title}}
-            </ion-item>
-        </ion-list>
+        <div class="list">
+            <pizzas ng-model="menu"></pizzas>
+
+        </div>
     </ion-content>
 </ion-view>

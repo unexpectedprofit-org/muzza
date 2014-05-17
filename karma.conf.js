@@ -8,13 +8,14 @@ module.exports = function(config){
     files: [
         'test/**/*.coffee',
         'app/bower_components/angular/angular.js',
+        'app/bower_components/angular-mocks/angular-mocks.js',
         'app/bower_components/angular-animate/angular-animate.js',
         'app/bower_components/angular-sanitize/angular-sanitize.js',
         'app/bower_components/angular-ui-router/release/angular-ui-router.js',
         'app/bower_components/ionic/release/js/ionic.js',
         'app/bower_components/ionic/release/js/ionic-angular.js',
-        'app/bower_components/angular-mocks/angular-mocks.js',
-        'app/scripts/**/*.coffee'
+        'app/scripts/**/*.coffee',
+        '.tmp/templates.js'
     ],
 
     // web server port
