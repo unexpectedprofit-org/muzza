@@ -1,6 +1,6 @@
 angular.module('Muzza.directives', [])
 
-angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal) ->
+angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -42,7 +42,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal) ->
       $scope.order = modal
       $scope.order.add = ()->
         $scope.pizzas.push $scope.pizza
-        $log.log 'added to cart: ' + angular.toJson($scope.pizzas)
+        ShoppingCart.addToCart($scope.pizza)
         $scope.order.hide()
 
     $scope.choose = (item)->
@@ -56,5 +56,10 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal) ->
 #      $scope.size.remove()
 #      $scope.dough.remove()
 
-
+angular.module('Muzza.directives').directive 'cart', (ShoppingCart) ->
+  restrict: 'EA'
+  scope: {}
+  templateUrl: 'cart.html'
+  link: ($scope, ele, attrs, ctrl)->
+    $scope.cart = ShoppingCart.getCart()
 

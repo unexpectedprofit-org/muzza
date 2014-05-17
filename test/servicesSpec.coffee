@@ -7,9 +7,8 @@ describe "services", ->
     StoreService = undefined
 
     beforeEach ->
-      inject(( _StoreService_ ) ->
-        StoreService = _StoreService_
-    )
+      inject ($injector) ->
+        StoreService = $injector.get 'StoreService'
 
     it "should create a store object", ->
 
@@ -26,3 +25,23 @@ describe "services", ->
       expect( newObject[0].name ).toBe expected.name
       expect( newObject[0].address).toBe expected.address
       expect( newObject[0].tel ).toBe expected.tel
+
+  describe 'ShoppingCart Service', ->
+
+    ShoppingCart = undefined
+
+    beforeEach ->
+      inject ($injector) ->
+        ShoppingCart = $injector.get 'ShoppingCart'
+
+    it 'should add product', ->
+      item =
+        id: 1
+      ShoppingCart.addToCart(item)
+      expect(ShoppingCart.getCart()[0]).toEqual(item)
+
+    it 'should return all items in the cart', ->
+      ShoppingCart.addToCart({id: 1})
+      ShoppingCart.addToCart({id: 2})
+      cart = ShoppingCart.getCart()
+      expect(cart.length).toBe 2

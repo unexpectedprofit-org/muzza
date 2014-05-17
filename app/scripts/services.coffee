@@ -59,3 +59,17 @@ angular.module("Muzza.services").factory "StoreService", () ->
     return returnStores
 
   listStores: getStores
+
+
+angular.module("Muzza.services").service 'ShoppingCart', ($log)->
+
+  cart = []
+
+  add = (item)->
+    cart.push(item)
+
+  getAll = ->
+    cart
+
+  addToCart: add
+  getCart: getAll
