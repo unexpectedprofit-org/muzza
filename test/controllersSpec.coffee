@@ -3,18 +3,31 @@ describe "controllers", ->
   beforeEach ->
     module "Muzza.controllers"
 
-  it "should create a valid test", ->
-    expect(true).toBe(true)
-
   describe "Menu Controller", ->
 
     scope = undefined
+
+    returnObject = {
+      some: "thing"
+    }
+
+    _fakeProductService =
+      listMenuByStore: () ->
+        returnObject
+
+    beforeEach ->
+      module ($provide) ->
+        $provide.value('ProductService', _fakeProductService )
+        null
+
 
     beforeEach ->
       inject ($controller, $rootScope) ->
         scope = $rootScope.$new()
         $controller "MenuCtrl",
           $scope: scope
+          $stateParams: {}
+          ProductService: _fakeProductService
 
     it "should get the menu items", ->
       expected = [
@@ -34,6 +47,8 @@ describe "controllers", ->
 
       expect(scope.menu).toEqual(expected)
 
+    it "should call the service", ->
+      expect(scope.menu1).toEqual returnObject
 
   describe "Store Controller", ->
 

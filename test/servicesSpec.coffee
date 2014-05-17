@@ -10,7 +10,7 @@ describe "services", ->
       inject ($injector) ->
         StoreService = $injector.get 'StoreService'
 
-    it "should create a store object", ->
+    it "should create a list of store objects", ->
 
 #      jasmine.getJSONFixtures().fixturesPath = 'test/fixtures'
 #      dataResponse = getJSONFixture('store.json')
@@ -45,3 +45,22 @@ describe "services", ->
       ShoppingCart.addToCart({id: 2})
       cart = ShoppingCart.getCart()
       expect(cart.length).toBe 2
+
+  describe "Product Service", ->
+
+    ProductService = undefined
+
+    beforeEach ->
+      inject(( _ProductService_ ) ->
+        ProductService = _ProductService_
+    )
+
+    it "should get a menu of product objects", ->
+
+      newMenuObject = ProductService.listMenuByStore 1
+      expect( newMenuObject.products.pizza.length ).toBe 4
+      expect( newMenuObject.products.empanada.length ).toBe 6
+
+      newMenuObject = ProductService.listMenuByStore 2
+      expect( newMenuObject.products.pizza.length ).toBe 3
+      expect( newMenuObject.products.empanada.length ).toBe 4

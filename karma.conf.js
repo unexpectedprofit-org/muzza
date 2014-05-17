@@ -14,6 +14,7 @@ module.exports = function(config){
         'app/bower_components/angular-ui-router/release/angular-ui-router.js',
         'app/bower_components/ionic/release/js/ionic.js',
         'app/bower_components/ionic/release/js/ionic-angular.js',
+        'app/bower_components/underscore/underscore.js',
         'app/scripts/**/*.coffee',
         '.tmp/templates.js'
     ],
@@ -42,7 +43,7 @@ module.exports = function(config){
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Firefox'],
+    browsers: ['PhantomJS'],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 5000,

@@ -1,20 +1,10 @@
 angular.module("Muzza.controllers", [])
 
-angular.module("Muzza.controllers").controller "MenuCtrl", ($scope) ->
-  $scope.menu = [
-    {
-      title: "Muzza"
-      id: 1
-    }
-    {
-      title: "Fugazetta"
-      id: 2
-    }
-    {
-      title: "Jamon y Morron"
-      id: 3
-    }
-  ]
+angular.module("Muzza.controllers").controller "MenuCtrl", [ "$scope", "$stateParams", "ProductService", ($scope, $stateParams, ProductService) ->
+
+  storeMenu = ProductService.listMenuByStore $stateParams.storeID
+  $scope.menu = storeMenu.products.pizza
+]
 
 angular.module("Muzza.controllers").controller "StoreCtrl", [ "$scope", "StoreService", ($scope, StoreService) ->
 
