@@ -26,7 +26,6 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal) ->
         $scope.pizza.size = value
         $scope.size.hide()
         if $scope.size.isLastToBeDisplayed then $scope.add()
-        $scope.size.remove()
 
     $ionicModal.fromTemplateUrl 'pizza-dough.html',
       scope: $scope,
@@ -37,17 +36,16 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal) ->
         $scope.pizza.dough = value
         $scope.dough.hide()
         if $scope.dough.isLastToBeDisplayed then $scope.add()
-        $scope.dough.remove()
 
     $scope.choose = (item)->
-      $scope.pizza = item
+      $scope.pizza = angular.copy(item)
       angular.forEach $scope.steps, (key, val)->
         modal = $scope[key]
         modal.isLastToBeDisplayed = (val == 0)
         modal.show()
 
     $scope.add = ()->
-      $scope.pizzas.push angular.copy($scope.pizza)
+      $scope.pizzas.push $scope.pizza
       $log.log 'added to cart: ' + angular.toJson($scope.pizzas)
 
 #    $scope.$on '$destroy', ->
