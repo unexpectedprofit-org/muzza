@@ -36,22 +36,22 @@ angular.module("Muzza.services").factory "StoreService", () ->
       },
       {
         "id": 2,
-        "name_real": "Juancho S.R.L.",
-        "name_fantasy": "La pizzeria de Juancho",
+        "name_real": "Las 10 porciones S.R.L.",
+        "name_fantasy": "Pizzeria la tengo mas grande",
 
         "address": {
-          "street": "Av. Rivadavia",
-          "door": 5100,
+          "street": "Av. Juan B. Alberdi",
+          "door": 3200,
           "zip": "1406",
-          "hood": "Caballito",
+          "hood": "Flores",
           "area": "Capital Federal",
           "state": "Buenos Aires"
         },
 
         "phone": {
-          "main": "4444 5555",
-          "other": "1111 2222",
-          "cel": "15 4444 9999"
+          "main": "2222 8898",
+          "other": "1234 4444",
+          "cel": "15 0000 2222"
         }
       }
     ]
