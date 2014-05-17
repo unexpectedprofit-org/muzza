@@ -7,8 +7,24 @@ describe "controllers", ->
 
     scope = undefined
 
+    pizzas = [
+      {
+        desc: "Muzza"
+        id: 1
+      }
+      {
+        desc: "Fugazetta"
+        id: 2
+      }
+      {
+        desc: "Jamon y Morron"
+        id: 3
+      }
+    ]
+
     returnObject = {
-      some: "thing"
+      products:
+        pizza: pizzas
     }
 
     _fakeProductService =
@@ -30,25 +46,7 @@ describe "controllers", ->
           ProductService: _fakeProductService
 
     it "should get the menu items", ->
-      expected = [
-        {
-          title: "Muzza"
-          id: 1
-        }
-        {
-          title: "Fugazetta"
-          id: 2
-        }
-        {
-          title: "Jamon y Morron"
-          id: 3
-        }
-      ]
-
-      expect(scope.menu).toEqual(expected)
-
-    it "should call the service", ->
-      expect(scope.menu1).toEqual returnObject
+      expect(scope.menu).toEqual( pizzas )
 
   describe "Store Controller", ->
 

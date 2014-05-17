@@ -26,13 +26,13 @@ describe "directives", ->
     describe 'when shopping cart has at least on item', ->
 
       it 'should list all items in the shopping cart', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, title:'Muzza'},{id:2, title:'Fugazzeta'}] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
         $scope.$digest()
         items = element.find('ion-item')
         expect(items.length).toBe 2
 
       it 'should not display the empty msg', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, title:'Muzza'},{id:2, title:'Fugazzeta'}] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
         $scope.$digest()
         msg = element.find('div').html()
         expect(msg).not.toMatch(/vacio/)
@@ -55,10 +55,10 @@ describe "directives", ->
       inject ($compile, $rootScope) ->
         $scope = $rootScope
         $scope.menu = [
-          title: "Muzza"
+          desc: "Muzza"
           id: 1
         ,
-          title: "Fugazetta"
+          desc: "Fugazetta"
           id: 2
         ]
         element = angular.element('<pizzas ng-model="menu"></pizzas>')
@@ -100,7 +100,7 @@ describe "directives", ->
           isolatedScope.size.choose('b')
           isolatedScope.dough.choose('a')
           isolatedScope.order.add()
-          expect(addToCart).toHaveBeenCalledWith({"title":"Muzza","id":1,"size":"b","dough":"a"})
+          expect(addToCart).toHaveBeenCalledWith({"desc":"Muzza","id":1,"size":"b","dough":"a"})
 
       it "should replace the previous selection", ->
         inject (ShoppingCart) ->
@@ -112,11 +112,11 @@ describe "directives", ->
           isolatedScope.size.choose('b')
           isolatedScope.dough.choose('a')
           isolatedScope.order.add()
-          expect(addToCart).toHaveBeenCalledWith({"title":"Muzza","id":1,"size":"b","dough":"a"})
+          expect(addToCart).toHaveBeenCalledWith({"desc":"Muzza","id":1,"size":"b","dough":"a"})
 
           #Choose Second Product
           element.find('button')[1].click()
-          expect(isolatedScope.pizza).toEqual { title : 'Fugazetta', id : 2 }
+          expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
 
 
 
