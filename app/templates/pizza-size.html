@@ -1,0 +1,30 @@
+<div class="modal">
+    <ion-header-bar>
+        <h1 class="title">Pizza {{pizza.title}} {{pizza.size}} {{pizza.dough}}</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-radio">
+                <input type="radio" name="size" value="individual" ng-click="size.choose('individual')">
+                <div class="item-content">
+                    Individual
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" name="size" value="chica" ng-click="size.choose('chica')">
+                <div class="item-content">
+                    Chica
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" name="size" value="grande" ng-click="size.choose('grande')">
+                <div class="item-content">
+                    Grande
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+        </div>
+    </ion-content>
+</div>
