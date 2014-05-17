@@ -50,20 +50,15 @@ describe "directives", ->
         expect(showSize).toHaveBeenCalled()
         expect(showDough).toHaveBeenCalled()
 
-      it "should determine which modal is to be displayed the last", ->
-        isolatedScope.steps = ['size', 'dough']
-        element.find('button')[0].click()
-        expect(isolatedScope.size.isLastToBeDisplayed).toBe true
-        expect(isolatedScope.dough.isLastToBeDisplayed).toBe false
-
-      it "should log when user selected the option on the last step", ->
+      it "should log when user selected the add option on the order step", ->
         inject ($log) ->
-          isolatedScope.steps = ['size', 'dough']
+          isolatedScope.steps = ['order','size', 'dough']
           log = spyOn($log, 'log')
           element.find('button')[0].click()
-          isolatedScope.dough.choose('a')
           isolatedScope.size.choose('b')
-          expect(log).toHaveBeenCalledWith('added to cart: [{"title":"Muzza","id":1,"dough":"a","size":"b"}]')
+          isolatedScope.dough.choose('a')
+          isolatedScope.order.add()
+          expect(log).toHaveBeenCalledWith('added to cart: [{"title":"Muzza","id":1,"size":"b","dough":"a"}]')
 
 
 
