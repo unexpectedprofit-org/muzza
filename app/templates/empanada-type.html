@@ -1,23 +1,49 @@
 <div class="modal">
     <ion-header-bar>
-        <h1 class="title">Empanada {{empanada.desc}} {{empanada.type}}</h1>
+        <h1 class="title">Empanada {{empanada.desc}}</h1>
     </ion-header-bar>
     <ion-content>
-        <div class="list">
-            <label class="item item-radio">
-                <input type="radio" name="type" value="so" ng-click="type.choose('souffle')">
-                <div class="item-content">
-                  Souffle
-                </div>
-                <i class="radio-icon ion-checkmark"></i>
+
+      <ul class="list">
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox"
+                   data-ng-true-value="F"
+                    data-ng-model="empanada.type.f">
+          </label>
+          Souffle
+          <br/>
+          <span>Precio: {{empanada.price[0]}}</span>
+
+          <span data-ng-if="empanada.type.f == 'F'">
+            <label class="item item-input">
+              <span class="input-label">Cantidad</span>
+              <input type="number" data-ng-model="empanada.f.qty"/>
             </label>
-            <label class="item item-radio">
-                <input type="radio" name="type" value="ov" ng-click="type.choose('al horno')">
-                <div class="item-content">
-                    Horno
-                </div>
-                <i class="radio-icon ion-checkmark"></i>
+          </span>
+        </li>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox"
+                   data-ng-true-value="H"
+                   data-ng-model="empanada.type.h">
+          </label>
+          Horno
+          <br/>
+          <span>Precio: {{empanada.price[1]}}</span>
+
+          <span data-ng-if="empanada.type.h == 'H'">
+            <label class="item item-input">
+              <span class="input-label">Cantidad</span>
+              <input type="number" data-ng-model="empanada.h.qty"/>
             </label>
-        </div>
+          </span>
+        </li>
+      </ul>
+
+      <button class="button button-positive" data-ng-click="type.choose(empanada.f.qty, empanada.h.qty)">
+        CONTINUAR
+      </button>
+
     </ion-content>
 </div>

@@ -147,7 +147,7 @@ describe "directives", ->
         expect(element.html()).toContain('Humita')
         expect(element.html()).toContain('Pollo')
 
-      it "should be an empty selected pizzas collection", ->
+      it "should be an empty selected empanadas collection", ->
         expect(isolatedScope.empanadas.length).toBe 0
 
       it "should load the templates for the steps", ->
@@ -166,9 +166,9 @@ describe "directives", ->
           isolatedScope.steps = ['order','type']
           addToCart = spyOn(ShoppingCart, 'addToCart')
           element.find('button')[0].click()
-          isolatedScope.type.choose('so')
+          isolatedScope.type.choose 0, 10
           isolatedScope.order.add()
-          expect(addToCart).toHaveBeenCalledWith({"desc":"Jamon y Queso","id":1,"type":"so"})
+          expect(addToCart).toHaveBeenCalledWith {"desc":"Jamon y Queso","id":1, "type": {"f":0,"h": 10}}
 
       it "should replace the previous selection", ->
         inject (ShoppingCart) ->
@@ -177,9 +177,9 @@ describe "directives", ->
 
           #Choose First Product
           element.find('button')[0].click()
-          isolatedScope.type.choose('so')
+          isolatedScope.type.choose 2, 3
           isolatedScope.order.add()
-          expect(addToCart).toHaveBeenCalledWith({"desc":"Jamon y Queso","id":1,"type":"so"})
+          expect(addToCart).toHaveBeenCalledWith {"desc":"Jamon y Queso","id":1, "type": {"f":2,"h": 3}}
 
           #Choose Second Product
           element.find('button')[1].click()
