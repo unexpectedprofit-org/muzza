@@ -30,5 +30,13 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
         templateUrl: "templates/stores.html"
         controller: "StoreCtrl"
 
+  .state "app.orderplace",
+    url: "/order/confo"
+    views:
+      navContent:
+        templateUrl: "templates/confo.html"
+        controller: "PlaceOrderCtrl"
+
+
   # if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise "/app/menu"

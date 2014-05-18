@@ -37,13 +37,6 @@ describe "directives", ->
         msg = element.find('div').html()
         expect(msg).not.toMatch(/vacio/)
 
-      it "should show checkout button", ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
-        $scope.$digest()
-        txt = element.find('button').html()
-        expect(txt).toMatch(/CHECKOUT/)
-
-
     describe 'when shopping cart is empty', ->
 
       it 'should display a msg when shopping cart is empty', ->
@@ -53,34 +46,6 @@ describe "directives", ->
         msg = element.find('div').html()
         expect(msg).toMatch(/vacio/)
         expect(items.length).toBe 0
-
-      it "should NOT show checkout button", ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [] )
-        $scope.$digest()
-        txt = element.find('button').html()
-        expect(txt).not.toMatch(/CHECKOUT/)
-
-    describe "when user clicks checkout button", ->
-
-      isolatedScope = undefined
-
-      beforeEach ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-
-      it "should show all modals for available steps", ->
-
-        isolatedScope.steps = ['contact', 'delivery']
-        showDeliveryMethod = spyOn(isolatedScope.delivery, 'show')
-        showContactForm = spyOn(isolatedScope.contact, 'show')
-
-        element.find('button')[0].click()
-        expect(showDeliveryMethod).toHaveBeenCalled()
-        expect(showContactForm).toHaveBeenCalled()
-
-#      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
-
 
   describe "Pizzas", ->
 
@@ -153,10 +118,50 @@ describe "directives", ->
           element.find('button')[1].click()
           expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
 
+  describe "Checkout Button", ->
+
+    $scope = element = ShoppingCart = undefined
+
+    beforeEach ->
+      inject ($compile, $rootScope, _ShoppingCart_) ->
+        ShoppingCart = _ShoppingCart_
+        $scope = $rootScope
+        element = angular.element('<checkout-button></checkout-button>')
+        $compile(element)($rootScope)
+
+    it "should show if car is not empty", ->
+      spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+      $scope.$digest()
+      txt = element.find('button').html()
+      expect(txt).toMatch(/CHECKOUT/)
+
+#    it "should NOT show if car is empty", ->
+#      spyOn(ShoppingCart, 'getCart').and.returnValue( [] )
+#      $scope.$digest()
+#      txt = element.find('button').html()
+#      expect(txt).not.toMatch(/CHECKOUT/)
 
 
+    describe "when user clicks checkout button", ->
 
+      isolatedScope = undefined
 
+      beforeEach ->
+        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+      it "should show all modals for available steps", ->
+
+        isolatedScope.steps = ['contact', 'delivery']
+        showDeliveryMethod = spyOn(isolatedScope.delivery, 'show')
+        showContactForm = spyOn(isolatedScope.contact, 'show')
+
+        element.find('button')[0].click()
+        expect(showDeliveryMethod).toHaveBeenCalled()
+        expect(showContactForm).toHaveBeenCalled()
+
+    #      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
 
 
 

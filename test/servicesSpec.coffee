@@ -64,3 +64,15 @@ describe "services", ->
       newMenuObject = ProductService.listMenuByStore 2
       expect( newMenuObject.products.pizza.length ).toBe 3
       expect( newMenuObject.products.empanada.length ).toBe 4
+
+  describe "OrderService", ->
+    OrderService = undefined
+
+    beforeEach ->
+      inject(( _OrderService_ ) ->
+        OrderService = _OrderService_
+    )
+
+    it "should get an order details object", ->
+      newMenuObject = OrderService.placeOrder {}
+      expect( newMenuObject.number ).toBe "AXAHA263920"

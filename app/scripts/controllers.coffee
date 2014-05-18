@@ -11,3 +11,9 @@ angular.module("Muzza.controllers").controller "StoreCtrl", [ "$scope", "StoreSe
   $scope.stores = StoreService.listStores()
 
 ]
+
+angular.module("Muzza.controllers").controller "PlaceOrderCtrl", [ "$scope", "OrderService", ($scope, OrderService) ->
+
+  $scope.order = OrderService.placeOrder()
+]
+

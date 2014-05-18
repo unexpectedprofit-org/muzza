@@ -63,16 +63,17 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart)
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
 
+angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCart) ->
+  restrict: 'EA'
+  scope: {}
+  template: '<button class="button button-block button-positive"
+              data-ng-click="checkout()">CHECKOUT</button>'
+
+  link: ($scope, ele, attrs, ctrl)->
+
+    $scope.cart = ShoppingCart.getCart()
 
     $scope.checkoutSteps = ['contact', 'delivery']
-
-
-    ####################################
-    $scope.checkout = () ->
-      angular.forEach $scope.checkoutSteps, (key, val)->
-        modal = $scope[key]
-        modal.show()
-
 
     $ionicModal.fromTemplateUrl 'delivery-option.html',
       scope: $scope,
@@ -88,8 +89,15 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart)
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-        $scope.contact = modal
-        $scope.contact.place = () ->
-          console.log "form completed: "
-          $scope.contact.hide()
-    ####################################
+      $scope.contact = modal
+      $scope.contact.place = () ->
+        console.log "form completed: "
+        $scope.contact.hide()
+
+    $scope.checkout = () ->
+      angular.forEach $scope.checkoutSteps, (key, val)->
+        modal = $scope[key]
+        modal.show()
+
+    $scope.placeOrder = () ->
+      $state.go('^.orderplace')

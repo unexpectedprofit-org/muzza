@@ -1,0 +1,36 @@
+<ion-content class="has-header">
+
+  <header class="bar bar-header bar-stable">
+    <h1 class="title">Confirmacion de Orden</h1>
+  </header>
+
+    <div class="list">
+      <div class="item">
+        ORDEN FINALIZADA
+        DETALLES...
+      </div>
+
+      <div class="item">
+        Numero de condfirmacion: {{ order.number }}
+        <br/>
+        Total: {{ order.total }}
+      </div>
+
+      <div class="item">
+        Nombre: {{ order.contact.name }}
+        </br>
+        Tel: {{ order.contact.tel }}
+      </div>
+    </div>
+
+
+    <div class="list">
+      <div class="item item-divider">
+        Detalle de Orden
+      </div>
+      <a class="item" href="#">
+        PRODUCTO
+      </a>
+    </div>
+
+</ion-content>
