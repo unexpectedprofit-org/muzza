@@ -1,0 +1,55 @@
+<div class="modal">
+    <ion-header-bar>
+        <h1 class="title">Ingreso de datos</h1>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+      <div class="list">
+
+        <label class="item item-input">
+          <input type="text" placeholder="Nombre">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Telefono">
+        </label>
+
+        <label class="item item-input">
+          <input type="text" placeholder="Email">
+        </label>
+
+        <!-- DELIVERY TO HOME REUIRED DATA-->
+        <div data-ng-if="deliveryOption == 'D'">
+
+          <label class="item item-input">
+            <input type="text" placeholder="Calle">
+          </label>
+
+          <label class="item item-input">
+            <input type="text" placeholder="Numero">
+          </label>
+
+          <label class="item item-input">
+            <input type="text" placeholder="Localidad">
+          </label>
+
+        </div>
+        <!-- DELIVERY TO HOME REUIRED DATA-->
+
+
+        <label class="item item-input">
+          <textarea placeholder="Comments"></textarea>
+        </label>
+
+        <button class="button button-block button-positive"
+                data-ng-click="">
+          PLACE ORDER
+        </button>
+
+
+      </div>
+
+
+    </ion-content>
+</div>

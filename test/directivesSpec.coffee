@@ -1,4 +1,4 @@
-ddescribe "directives", ->
+describe "directives", ->
 
   beforeEach ->
     module 'ionic'
@@ -59,6 +59,28 @@ ddescribe "directives", ->
         $scope.$digest()
         txt = element.find('button').html()
         expect(txt).not.toMatch(/CHECKOUT/)
+
+    describe "when user clicks checkout button", ->
+
+      isolatedScope = undefined
+
+      beforeEach ->
+        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+      it "should show all modals for available steps", ->
+
+        isolatedScope.steps = ['contact', 'delivery']
+        showDeliveryMethod = spyOn(isolatedScope.delivery, 'show')
+        showContactForm = spyOn(isolatedScope.contact, 'show')
+
+        element.find('button')[0].click()
+        expect(showDeliveryMethod).toHaveBeenCalled()
+        expect(showContactForm).toHaveBeenCalled()
+
+#      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
+
 
   describe "Pizzas", ->
 

@@ -64,13 +64,32 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart)
     $scope.cart = ShoppingCart.getCart()
 
 
+    $scope.checkoutSteps = ['contact', 'delivery']
 
-    $ionicModal.fromTemplateUrl 'contact.html',
+
+    ####################################
+    $scope.checkout = () ->
+      angular.forEach $scope.checkoutSteps, (key, val)->
+        modal = $scope[key]
+        modal.show()
+
+
+    $ionicModal.fromTemplateUrl 'delivery-option.html',
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.checkoutModal = modal
+      $scope.delivery = modal
+      $scope.delivery.choose = (deliveryType) ->
+        console.log "delivey method selected: " + deliveryType
+        $scope.deliveryOption = deliveryType
+        $scope.delivery.hide()
 
-    $scope.checkout = ()->
-      $scope.checkoutModal.show()
-
+    $ionicModal.fromTemplateUrl 'delivery-contact.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+        $scope.contact = modal
+        $scope.contact.place = () ->
+          console.log "form completed: "
+          $scope.contact.hide()
+    ####################################
