@@ -22,9 +22,25 @@ describe "controllers", ->
       }
     ]
 
+    empanadas = [
+      {
+        desc: "Pollo"
+        id: 1
+      }
+      {
+        desc: "Carne"
+        id: 2
+      }
+      {
+        desc: "Jamon y Queso"
+        id: 3
+      }
+    ]
+
     returnObject = {
       products:
         pizza: pizzas
+        empanada: empanadas
     }
 
     _fakeProductService =
@@ -46,7 +62,8 @@ describe "controllers", ->
           ProductService: _fakeProductService
 
     it "should get the menu items", ->
-      expect(scope.menu).toEqual( pizzas )
+      expect(scope.menu.pizza).toEqual pizzas
+      expect(scope.menu.empanada).toEqual empanadas
 
   describe "Store Controller", ->
 

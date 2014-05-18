@@ -1,0 +1,29 @@
+<div class="modal">
+    <ion-header-bar>
+       <h1 class="title">Confirmacion</h1>
+    </ion-header-bar>
+    <ion-content>
+
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="">
+                <h2>Empanada {{empanada.desc}}</h2>
+                <p>{{empanada.type}}</p>
+            </div>
+            <div class="item item-body">
+                <p>
+                <div class="button-bar">
+                    <a class="button" ng-click="order.add()">Agregar</a>
+                    <a class="button">Editar</a>
+                    <a class="button">Eliminar</a>
+                </div>
+                </p>
+                <p>
+                    <button class="button button-block button-positive">
+                        Enviar Pedido
+                    </button>
+                </p>
+            </div>
+        </div>
+    </ion-content>
+</div>

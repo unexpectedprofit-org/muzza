@@ -1,0 +1,23 @@
+<div class="modal">
+    <ion-header-bar>
+        <h1 class="title">Empanada {{empanada.desc}} {{empanada.type}}</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-radio">
+                <input type="radio" name="type" value="so" ng-click="type.choose('souffle')">
+                <div class="item-content">
+                  Souffle
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" name="type" value="ov" ng-click="type.choose('al horno')">
+                <div class="item-content">
+                    Horno
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
+        </div>
+    </ion-content>
+</div>

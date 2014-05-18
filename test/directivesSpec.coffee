@@ -118,6 +118,73 @@ describe "directives", ->
           element.find('button')[1].click()
           expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
 
+  describe "Empanadas", ->
+
+    isolatedScope = $scope = element = undefined
+
+    beforeEach ->
+      inject ($compile, $rootScope) ->
+        $scope = $rootScope
+        $scope.menu = [
+          desc: "Jamon y Queso"
+          id: 1
+        ,
+          desc: "Humita"
+          id: 2
+        ,
+          desc: "Pollo"
+          id: 3
+        ]
+        element = angular.element('<empanadas ng-model="menu"></empanadas>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+    describe "init", ->
+      it "should display the 2 empanadas menu items", ->
+        expect(element.find('button').length).toBe 3
+        expect(element.html()).toContain('Jamon y Queso')
+        expect(element.html()).toContain('Humita')
+        expect(element.html()).toContain('Pollo')
+
+      it "should be an empty selected pizzas collection", ->
+        expect(isolatedScope.empanadas.length).toBe 0
+
+      it "should load the templates for the steps", ->
+        isolatedScope.steps = ['type']
+        expect(isolatedScope.type).toBeDefined()
+
+    describe "When user chooses a product", ->
+      it "should show all modals for available steps", ->
+        isolatedScope.steps = ['type']
+        showType = spyOn(isolatedScope.type, 'show')
+        element.find('button')[0].click()
+        expect(showType).toHaveBeenCalled()
+
+      it "should add to ShoppingCart when user selected the add option on the order step", ->
+        inject (ShoppingCart) ->
+          isolatedScope.steps = ['order','type']
+          addToCart = spyOn(ShoppingCart, 'addToCart')
+          element.find('button')[0].click()
+          isolatedScope.type.choose('so')
+          isolatedScope.order.add()
+          expect(addToCart).toHaveBeenCalledWith({"desc":"Jamon y Queso","id":1,"type":"so"})
+
+      it "should replace the previous selection", ->
+        inject (ShoppingCart) ->
+          isolatedScope.steps = ['order','type']
+          addToCart = spyOn(ShoppingCart, 'addToCart')
+
+          #Choose First Product
+          element.find('button')[0].click()
+          isolatedScope.type.choose('so')
+          isolatedScope.order.add()
+          expect(addToCart).toHaveBeenCalledWith({"desc":"Jamon y Queso","id":1,"type":"so"})
+
+          #Choose Second Product
+          element.find('button')[1].click()
+          expect(isolatedScope.empanada).toEqual { desc : 'Humita', id : 2 }
+
   ##### need to put both below inside same describe block
   describe "Checkout Button, car not empty", ->
 

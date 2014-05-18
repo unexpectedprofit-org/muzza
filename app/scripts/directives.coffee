@@ -56,6 +56,49 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 #      $scope.size.remove()
 #      $scope.dough.remove()
 
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart) ->
+  restrict: 'EA'
+  scope: {
+    menu: '=ngModel'
+  }
+  require: 'ngModel'
+  templateUrl: 'menu-empanadas.html'
+  link: ($scope, ele, attrs, ctrl)->
+
+#   holds temp selection
+    $scope.empanada = {}
+    #   holds selections
+    $scope.empanadas = []
+
+    #   this could come from firebase, or we can override when starting the app with a decorator at config phase
+    $scope.steps = ['order', 'type']
+
+    $ionicModal.fromTemplateUrl 'empanada-type.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+      $scope.type = modal
+      $scope.type.choose = (value)->
+        $scope.empanada.type = value
+        $scope.type.hide()
+
+    $ionicModal.fromTemplateUrl 'empanada-order.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+      $scope.order = modal
+      $scope.order.add = ()->
+        $scope.empanadas.push $scope.empanada
+        ShoppingCart.addToCart($scope.empanada)
+        $scope.order.hide()
+
+    $scope.choose = (item)->
+      $scope.empanada = angular.copy(item)
+      angular.forEach $scope.steps, (key, val)->
+        modal = $scope[key]
+        modal.show()
+
+
 angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart) ->
   restrict: 'EA'
   scope: {}
