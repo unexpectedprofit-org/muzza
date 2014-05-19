@@ -2,7 +2,7 @@ angular.module('Muzza.directives', [])
 
 angular.module('Muzza.directives').directive 'cancelSelection', ()->
   restrict: 'EA'
-  template: '<button class="button button-light" ng-click="cancel()">Dejar y volver al menu</button>'
+  template: '<button class="button  button-block button-clear button-positive" ng-click="cancel()">Dejar y volver al menu</button>'
   link: ($scope, ele, attrs, ctrl)->
     $scope.cancel = ->
       angular.forEach $scope.steps, (key, val)->
