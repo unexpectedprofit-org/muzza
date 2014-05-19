@@ -115,7 +115,7 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
   scope: {}
   template: '<button class="button button-block button-positive"
               data-ng-if="cart.length > 0"
-              data-ng-click="checkout()">CHECKOUT</button>'
+              data-ng-click="checkout()">Realizar Pedido</button>'
 
   link: ($scope, ele, attrs, ctrl)->
 

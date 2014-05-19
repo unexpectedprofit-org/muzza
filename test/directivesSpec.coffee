@@ -201,7 +201,7 @@ describe "directives", ->
     it "should show if car is not empty", ->
       $scope.$digest()
       txt = element.find('button').html()
-      expect(txt).toMatch(/CHECKOUT/)
+      expect(txt).toMatch(/Pedido/)
 
   describe "Checkout Button, car empty", ->
 
@@ -218,7 +218,7 @@ describe "directives", ->
     it "should NOT show if car is empty", ->
       $scope.$digest()
       txt = element.find('button').html()
-      expect(txt).not.toMatch(/CHECKOUT/)
+      expect(txt).not.toMatch(/Pedido/)
 
 
   describe "when user clicks checkout button", ->
