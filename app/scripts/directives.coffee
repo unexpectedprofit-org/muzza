@@ -105,6 +105,13 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
         ShoppingCart.addToCart($scope.empanada)
         $scope.order.hide()
 
+      $scope.order.cancel = ->
+        $scope.order.hide()
+
+      $scope.order.edit = ()->
+        $scope.choose($scope.empanada)
+
+
     $scope.choose = (item)->
       $scope.empanada = angular.copy(item)
       angular.forEach $scope.steps, (key, val)->

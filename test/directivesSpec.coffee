@@ -242,6 +242,32 @@ describe "directives", ->
           element.find('button')[1].click()
           expect(isolatedScope.empanada).toEqual { desc : 'Humita', id : 2 }
 
+    describe "When user eliminates selected product and options", ->
+
+      it "should hide confirmation modal", ->
+        isolatedScope.steps = ['order','type']
+        hideOrder = spyOn(isolatedScope.order, 'hide')
+        element.find('button')[0].click()
+        isolatedScope.type.choose 2, 3
+        isolatedScope.order.cancel()
+        expect(hideOrder).toHaveBeenCalled()
+
+    describe "When user decides to edit the selected product and options", ->
+
+      it "should display all option modals", ->
+        isolatedScope.steps = ['order','type']
+        showType = spyOn(isolatedScope.type, 'show')
+        element.find('button')[0].click()
+        isolatedScope.type.choose 2, 3
+        isolatedScope.order.edit()
+        expect(isolatedScope.empanada.type.h).toBe 3
+        expect(isolatedScope.empanada.type.f).toBe 2
+        isolatedScope.type.choose 5, 6
+        expect(showType.calls.count()).toBe 2
+        expect(isolatedScope.empanada.type.h).toBe 6
+        expect(isolatedScope.empanada.type.f).toBe 5
+
+
   ##### need to put both below inside same describe block
   describe "Checkout Button, car not empty", ->
 
