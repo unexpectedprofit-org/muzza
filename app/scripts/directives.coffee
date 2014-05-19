@@ -179,6 +179,8 @@ angular.module('Muzza.directives').directive 'validateEmpanadaSelection', () ->
     scope.$watch 'empanada', (newValue) ->
 
       if angular.isDefined newValue
+        #question mark since this directive is being executed in first view also
+        #TODO check
         if newValue.type.f > 0 || newValue.type.h > 0
           console.log "validateEmpanadaSelection: form valid"
           ctrl.$setValidity 'missingQty', true
