@@ -118,6 +118,34 @@ describe "directives", ->
           element.find('button')[1].click()
           expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
 
+  describe "CancelSelection", ->
+
+    isolatedScope = $scope = element = undefined
+
+    beforeEach ->
+      inject ($compile, $rootScope) ->
+        $scope = $rootScope
+        element = angular.element('<cancel-selection></cancel-selection>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        isolatedScope = element.scope()
+
+
+    it 'should hide all modals included on current scope', ->
+
+      isolatedScope.steps = ['order', 'size']
+      isolatedScope.order =
+        hide: -> null
+      isolatedScope.size =
+        hide: -> null
+      hideOrder = spyOn(isolatedScope.order, 'hide')
+      hideSize = spyOn(isolatedScope.size, 'hide')
+
+      isolatedScope.cancel()
+      expect(hideOrder).toHaveBeenCalled()
+      expect(hideSize).toHaveBeenCalled()
+
+
   describe "Empanadas", ->
 
     isolatedScope = $scope = element = undefined

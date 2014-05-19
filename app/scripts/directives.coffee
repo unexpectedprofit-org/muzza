@@ -1,5 +1,15 @@
 angular.module('Muzza.directives', [])
 
+angular.module('Muzza.directives').directive 'cancelSelection', ()->
+  restrict: 'EA'
+  template: '<button class="button button-light" ng-click="cancel()">Dejar y volver al menu</button>'
+  link: ($scope, ele, attrs, ctrl)->
+    $scope.cancel = ->
+      angular.forEach $scope.steps, (key, val)->
+        modal = $scope[key]
+        modal.hide()
+
+
 angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart) ->
   restrict: 'EA'
   scope: {
