@@ -371,8 +371,8 @@ describe "directives", ->
         $scope = $rootScope
         element = angular.element(
           '<form name="form" data-validate-empanada-selection data-ng-model="empanada">' +
-          '<input type="number" name="empanada_f_qty" data-ng-model="empanada.fri"/>' +
-          '<input type="number" name="empanada_h_qty" data-ng-model="empanada.hor"/>' +
+          '<input type="number" name="empanada_f_qty" data-ng-model="empanada.type.f"/>' +
+          '<input type="number" name="empanada_h_qty" data-ng-model="empanada.type.h"/>' +
           '</form>'
         )
         $scope.model = { empanada: {} }

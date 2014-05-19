@@ -24,7 +24,7 @@
 
           <label class="item item-input">
             <span class="input-label">Cantidad</span>
-            <input type="number" data-ng-model="empanada.fri"/>
+            <input type="number" data-ng-model="empanada.type.f" />
           </label>
         </li>
 
@@ -35,13 +35,13 @@
 
           <label class="item item-input">
             <span class="input-label">Cantidad</span>
-            <input type="number" data-ng-model="empanada.hor" />
+            <input type="number" data-ng-model="empanada.type.h" />
           </label>
         </li>
       </ul>
 
       <button class="button button-positive"
-              data-ng-click="empanadaSelectionForm.submitted = 'true'; type.choose(empanada.fri, empanada.hor, empanadaSelectionForm.$invalid)"
+              data-ng-click="empanadaSelectionForm.submitted = 'true'; type.choose(empanada.type.f, empanada.type.h, empanadaSelectionForm.$invalid)"
               data-ng-disabled="empanadaSelectionForm.$invalid">
         CONTINUAR
       </button>
