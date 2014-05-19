@@ -1,50 +1,51 @@
 <div class="modal">
-    <ion-header-bar>
-        <h1 class="title">Empanada {{empanada.desc}}</h1>
-    </ion-header-bar>
-    <ion-content>
+  <ion-header-bar>
+      <h1 class="title">Empanada {{empanada.desc}}</h1>
+  </ion-header-bar>
 
-      <ul class="list">
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox"
-                   data-ng-true-value="F"
-                    data-ng-model="empanada.type.f">
-          </label>
+  <ion-content>
+
+
+    <div class="errors">
+      ERRORES:
+      <ul>
+        <li data-ng-show="empanadaSelection.$error.missingQty">Debe seleccionar al menos una unidad</li>
+      </ul>
+    </div>
+
+
+    <form name="empanadaSelection" validate-empanada-selection data-ng-model="empanada">
+
+      <ul class="list" >
+        <li class="item">
           Souffle
           <br/>
           <span>Precio: {{empanada.price[0]}}</span>
 
-          <span data-ng-if="empanada.type.f == 'F'">
             <label class="item item-input">
               <span class="input-label">Cantidad</span>
-              <input type="number" data-ng-model="empanada.f.qty"/>
+              <input type="number" data-ng-model="empanada.fri"/>
             </label>
-          </span>
         </li>
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox"
-                   data-ng-true-value="H"
-                   data-ng-model="empanada.type.h">
-          </label>
+
+        <li class="item">
           Horno
           <br/>
           <span>Precio: {{empanada.price[1]}}</span>
 
-          <span data-ng-if="empanada.type.h == 'H'">
             <label class="item item-input">
               <span class="input-label">Cantidad</span>
-              <input type="number" data-ng-model="empanada.h.qty"/>
+              <input type="number" data-ng-model="empanada.hor" />
             </label>
-          </span>
         </li>
       </ul>
 
-      <button class="button button-positive" data-ng-click="type.choose(empanada.f.qty, empanada.h.qty)">
+      <button class="button button-positive" data-ng-click="type.choose(empanada.fri, empanada.hor)">
         CONTINUAR
       </button>
+
       <cancel-selection></cancel-selection>
 
-    </ion-content>
+    </form>
+  </ion-content>
 </div>

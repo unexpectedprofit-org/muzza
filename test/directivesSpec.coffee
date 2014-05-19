@@ -274,3 +274,47 @@ describe "directives", ->
       expect(showContactForm).toHaveBeenCalled()
 
   #      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
+
+
+
+  describe "Validate Empanadas", ->
+
+    $scope = element = form = undefined
+
+    beforeEach ->
+      inject ($compile, $rootScope) ->
+        $scope = $rootScope
+        element = angular.element(
+          '<form name="form" data-validate-empanada-selection data-ng-model="empanada">' +
+          '<input type="number" name="empanada_f_qty" data-ng-model="empanada.fri"/>' +
+          '<input type="number" name="empanada_h_qty" data-ng-model="empanada.hor"/>' +
+          '</form>'
+        )
+        $scope.model = { empanada: {} }
+        $compile(element)($scope)
+        $scope.$digest()
+        form = $scope.form
+
+    it "should not validate if both empanada types have 0 quantity", ->
+      form.empanada_f_qty.$setViewValue 0
+      form.empanada_h_qty.$setViewValue 0
+      $scope.$digest()
+      expect(form.$error.missingQty).toBeTruthy()
+
+    it "should validate if empanada type 'F' has 0 quantity and 'H' has more than 0", ->
+      form.empanada_f_qty.$setViewValue 0
+      form.empanada_h_qty.$setViewValue 1
+      $scope.$digest()
+      expect(form.$error.missingQty).toBeFalsy()
+
+    it "should validate if empanada type 'F' has more than 0 quantity and 'H' has 0", ->
+      form.empanada_f_qty.$setViewValue 5
+      form.empanada_h_qty.$setViewValue 0
+      $scope.$digest()
+      expect(form.$error.missingQty).toBeFalsy()
+
+    it "should validate if both empanada types have more than 0", ->
+      form.empanada_f_qty.$setViewValue 8
+      form.empanada_h_qty.$setViewValue 20
+      $scope.$digest()
+      expect(form.$error.missingQty).toBeFalsy()

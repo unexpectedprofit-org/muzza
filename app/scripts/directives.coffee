@@ -157,3 +157,23 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
       angular.forEach $scope.checkoutSteps, (key, val)->
         modal = $scope[key]
         modal.show()
+
+angular.module('Muzza.directives').directive 'validateEmpanadaSelection', () ->
+  restrict: 'A'
+  require: 'ngModel'
+  scope: {
+    empanada: "=ngModel"
+  }
+
+  link: (scope, ele, attrs, ctrl)->
+
+    scope.$watch 'empanada', (newValue) ->
+
+      if angular.isDefined newValue
+        if newValue.fri > 0 || newValue.hor > 0
+          console.log "validateEmpanadaSelection: form valid"
+          ctrl.$setValidity 'missingQty', true
+        else
+          console.log "validateEmpanadaSelection: form invalid"
+          ctrl.$setValidity 'missingQty', false
+    ,true
