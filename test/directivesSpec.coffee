@@ -73,9 +73,6 @@ describe "directives", ->
         expect(element.html()).toContain('Muzza')
         expect(element.html()).toContain('Fugazetta')
 
-      it "should an empty selected pizzas collection", ->
-        expect(isolatedScope.pizzas.length).toBe 0
-
       it "should load the templates for the steps", ->
         isolatedScope.steps = ['size', 'dough']
         expect(isolatedScope.size).toBeDefined()
@@ -209,9 +206,6 @@ describe "directives", ->
         expect(element.html()).toContain('Jamon y Queso')
         expect(element.html()).toContain('Humita')
         expect(element.html()).toContain('Pollo')
-
-      it "should be an empty selected empanadas collection", ->
-        expect(isolatedScope.empanadas.length).toBe 0
 
       it "should load the templates for the steps", ->
         isolatedScope.steps = ['type']

@@ -21,8 +21,6 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
 #   holds temp selection
     $scope.pizza = {}
-#   holds selections
-    $scope.pizzas = []
 
 #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'dough', 'size']
@@ -50,7 +48,6 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
       $scope.order = modal
 
       $scope.order.add = ()->
-        $scope.pizzas.push $scope.pizza
         ShoppingCart.addToCart($scope.pizza)
         $scope.order.hide()
 
@@ -82,8 +79,6 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
 
 #   holds temp selection
     $scope.empanada = {}
-    #   holds selections
-    $scope.empanadas = []
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'type']
@@ -107,7 +102,6 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
     .then (modal) ->
       $scope.order = modal
       $scope.order.add = ()->
-        $scope.empanadas.push $scope.empanada
         ShoppingCart.addToCart($scope.empanada)
         $scope.order.hide()
 
