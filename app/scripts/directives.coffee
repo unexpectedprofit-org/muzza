@@ -88,13 +88,14 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       animation: 'slide-in-up'
     .then (modal) ->
       $scope.type = modal
-      $scope.type.choose = (fried_qty, oven_qty)->
+      $scope.type.choose = (fried_qty, oven_qty, formInvalid)->
 
-        $scope.empanada.type =
-            f: parseInt fried_qty or 0
-            h: parseInt oven_qty or 0
+        if !formInvalid
+          $scope.empanada.type =
+              f: parseInt fried_qty or 0
+              h: parseInt oven_qty or 0
 
-        $scope.type.hide()
+          $scope.type.hide()
 
     $ionicModal.fromTemplateUrl 'empanada-order.html',
       scope: $scope,

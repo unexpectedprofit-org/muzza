@@ -220,11 +220,15 @@ describe "directives", ->
 
       it "should add to ShoppingCart when user selected the add option on the order step", ->
         inject (ShoppingCart) ->
+          hideType = spyOn(isolatedScope.type, 'hide')
+
           isolatedScope.steps = ['order','type']
           addToCart = spyOn(ShoppingCart, 'addToCart')
           element.find('button')[0].click()
-          isolatedScope.type.choose 0, 10
+          isolatedScope.type.choose 0, 10, false
           isolatedScope.order.add()
+
+          expect(hideType).toHaveBeenCalled()
           expect(addToCart).toHaveBeenCalledWith {"desc":"Jamon y Queso","id":1, "type": {"f":0,"h": 10}}
 
       it "should replace the previous selection", ->
@@ -234,13 +238,25 @@ describe "directives", ->
 
           #Choose First Product
           element.find('button')[0].click()
-          isolatedScope.type.choose 2, 3
+          isolatedScope.type.choose 2, 3, false
           isolatedScope.order.add()
           expect(addToCart).toHaveBeenCalledWith {"desc":"Jamon y Queso","id":1, "type": {"f":2,"h": 3}}
 
           #Choose Second Product
           element.find('button')[1].click()
           expect(isolatedScope.empanada).toEqual { desc : 'Humita', id : 2 }
+
+      it "should do nothing if no quantities selected", ->
+        inject (ShoppingCart) ->
+          hideType = spyOn(isolatedScope.type, 'hide')
+
+          isolatedScope.steps = ['order','type']
+          addToCart = spyOn(ShoppingCart, 'addToCart')
+
+          element.find('button')[0].click()
+          isolatedScope.type.choose 0, 0, true
+          expect(hideType).not.toHaveBeenCalled()
+
 
     describe "When user eliminates selected product and options", ->
 
@@ -266,6 +282,20 @@ describe "directives", ->
         expect(showType.calls.count()).toBe 2
         expect(isolatedScope.empanada.type.h).toBe 6
         expect(isolatedScope.empanada.type.f).toBe 5
+
+      it "should not show next modal if no quantities entered", ->
+        isolatedScope.steps = ['order','type']
+        showType = spyOn(isolatedScope.type, 'show')
+        element.find('button')[0].click()
+        isolatedScope.type.choose 2, 3
+        isolatedScope.order.edit()
+        expect(isolatedScope.empanada.type.h).toBe 3
+        expect(isolatedScope.empanada.type.f).toBe 2
+        isolatedScope.type.choose 0, 0
+        expect(showType.calls.count()).toBe 2
+
+        hideType = spyOn(isolatedScope.type, 'hide')
+        expect(hideType).not.toHaveBeenCalled()
 
 
   ##### need to put both below inside same describe block
