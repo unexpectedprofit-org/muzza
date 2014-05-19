@@ -141,11 +141,9 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
       $scope.contact.place = () ->
         console.log "form completed: "
         $scope.contact.hide()
+        $state.go('^.orderplace')
 
     $scope.checkout = () ->
       angular.forEach $scope.checkoutSteps, (key, val)->
         modal = $scope[key]
         modal.show()
-
-    $scope.placeOrder = () ->
-      $state.go('^.orderplace')
