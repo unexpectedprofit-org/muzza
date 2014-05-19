@@ -32,8 +32,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
       animation: 'slide-in-up'
     .then (modal) ->
       $scope.size = modal
-      $scope.size.choose = (value)->
-        $scope.pizza.size = value
+      $scope.size.choose = ->
         $scope.size.hide()
 
     $ionicModal.fromTemplateUrl 'pizza-dough.html',
@@ -41,8 +40,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
       animation: 'slide-in-up'
     .then (modal) ->
       $scope.dough = modal
-      $scope.dough.choose = (value)->
-        $scope.pizza.dough = value
+      $scope.dough.choose = ->
         $scope.dough.hide()
 
     $ionicModal.fromTemplateUrl 'pizza-order.html',
@@ -50,10 +48,17 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
       animation: 'slide-in-up'
     .then (modal) ->
       $scope.order = modal
+
       $scope.order.add = ()->
         $scope.pizzas.push $scope.pizza
         ShoppingCart.addToCart($scope.pizza)
         $scope.order.hide()
+
+      $scope.order.cancel = ->
+        $scope.order.hide()
+
+      $scope.order.edit = ()->
+        $scope.choose($scope.pizza)
 
     $scope.choose = (item)->
       $scope.pizza = angular.copy(item)

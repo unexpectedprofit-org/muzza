@@ -99,6 +99,8 @@ describe "directives", ->
           element.find('button')[0].click()
           isolatedScope.size.choose('b')
           isolatedScope.dough.choose('a')
+          isolatedScope.pizza.size = 'b'
+          isolatedScope.pizza.dough = 'a'
           isolatedScope.order.add()
           expect(addToCart).toHaveBeenCalledWith({"desc":"Muzza","id":1,"size":"b","dough":"a"})
 
@@ -111,12 +113,45 @@ describe "directives", ->
           element.find('button')[0].click()
           isolatedScope.size.choose('b')
           isolatedScope.dough.choose('a')
+          isolatedScope.pizza.size = 'b'
+          isolatedScope.pizza.dough = 'a'
           isolatedScope.order.add()
           expect(addToCart).toHaveBeenCalledWith({"desc":"Muzza","id":1,"size":"b","dough":"a"})
 
           #Choose Second Product
           element.find('button')[1].click()
           expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
+
+      describe "When user eliminates selected product and options", ->
+
+        it "should hide confirmation modal", ->
+          isolatedScope.steps = ['order','size', 'dough']
+          hideOrder = spyOn(isolatedScope.order, 'hide')
+          element.find('button')[0].click()
+          isolatedScope.size.choose('b')
+          isolatedScope.dough.choose('a')
+          isolatedScope.pizza.size = 'b'
+          isolatedScope.pizza.dough = 'a'
+          isolatedScope.order.cancel()
+          expect(hideOrder).toHaveBeenCalled()
+
+      describe "When user decides to edit the selected product and options", ->
+
+        it "should display all option modals", ->
+          isolatedScope.steps = ['size', 'dough']
+          showSize = spyOn(isolatedScope.size, 'show')
+          showDough = spyOn(isolatedScope.dough, 'show')
+          element.find('button')[0].click()
+          isolatedScope.size.choose('b')
+          isolatedScope.dough.choose('a')
+          isolatedScope.pizza.size = 'b'
+          isolatedScope.pizza.dough = 'a'
+          isolatedScope.order.edit()
+          isolatedScope.pizza.size = 'a'
+          expect(showSize.calls.count()).toBe 2
+          expect(showDough.calls.count()).toBe 2
+          expect(isolatedScope.pizza.size).toBe 'a'
+          expect(isolatedScope.pizza.dough).toBe 'a'
 
   describe "CancelSelection", ->
 

@@ -5,14 +5,14 @@
     <ion-content>
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" name="size" value="individual" ng-click="dough.choose('al molde')">
+                <input type="radio" value="al molde" ng-change="dough.choose('al molde')" ng-model="pizza.dough">
                 <div class="item-content">
                     Al Molde
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" name="size" value="chica" ng-click="dough.choose('a la piedra')">
+                <input type="radio" value="a la piedra" ng-change="dough.choose('a la piedra')" ng-model="pizza.dough">
                 <div class="item-content">
                     A la Piedra
                 </div>
