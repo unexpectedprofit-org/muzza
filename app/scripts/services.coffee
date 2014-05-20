@@ -131,22 +131,58 @@ angular.module("Muzza.services").factory "ProductService", () ->
         {
           "desc": "Muzzarella"
           "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
-          "price": [ 50, 60, 70 ]
+          "price" : {
+            base: 5000
+            size:
+              individual: 0
+              chica: 1000
+              grande: 2000
+            dough:
+              "a la piedra": 0
+              "al molde": 0
+          }
         },
         {
           "desc": "Fuggazetta"
           "topp": [ "Muzzarella", "Cebollas" ]
-          "price": [ 55, 70, 75 ]
+          "price" : {
+            base: 5500
+            size:
+              individual: 0
+              chica: 1500
+              grande: 2000
+            dough:
+              "a la piedra": 0
+              "al molde": 0
+          }
         },
         {
           "desc": "Jamon y Morrones"
           "topp": [ "Muzzarella", "Jamon", "Morron" ]
-          "price": [ 75, 85, 90 ]
+          "price" : {
+            base: 7500
+            size:
+              individual: 0
+              chica: 1000
+              grande: 1500
+            dough:
+              "a la piedra": 0
+              "al molde": 0
+          }
         },
         {
           "desc": "Calabresa"
           "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-          "price": [ 50, 60, 70 ]
+          "price" : {
+            base: 5000
+            size:
+              individual: 0
+              chica: 1000
+              grande: 2000
+            dough:
+              "a la piedra": 0
+              "al molde": 0
+          }
         }
       ]
     }

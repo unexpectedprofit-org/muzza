@@ -1,5 +1,9 @@
 angular.module('Muzza.directives', ['Muzza.factories'])
 
+angular.module("Muzza.directives").filter "centsToMoney", ->
+  (cents) ->
+    parseFloat(cents / 100).toFixed(2)
+
 angular.module('Muzza.directives').directive 'cancelSelection', ()->
   restrict: 'EA'
   template: '<button class="button  button-block button-clear button-positive" ng-click="cancel()">Dejar y volver al menu</button>'

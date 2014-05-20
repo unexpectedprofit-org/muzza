@@ -13,6 +13,14 @@ describe 'factories', ->
         modal =
           show: -> null
           hide: -> null
+          scope:
+            pizza:
+              price:
+                base: 50
+                size:
+                  individual: 0
+                  chica: 10
+                  grande: 20
 
         showSpy = spyOn(modal, 'show').and.callThrough()
         hideSpy = spyOn(modal, 'hide').and.callThrough()
@@ -35,10 +43,16 @@ describe 'factories', ->
 
     describe 'When the user choose a pizza size', ->
 
-      it 'should call hide when the user chooses', ->
+      it 'should calculate price summing base + option', ->
+        size.choose('chica')
+        expect(modal.scope.pizza.totalPrice).toBe 60
+
+      it 'should call hide', ->
         internalHideSpy = spyOn(size, 'hide').and.callThrough()
         size.choose()
         expect(internalHideSpy).toHaveBeenCalled()
+
+
 
   describe 'PizzaDough', ->
 
@@ -109,7 +123,7 @@ describe 'factories', ->
 
     describe "Init", ->
 
-      iit 'should construct a PizzaOrder object', ->
+      it 'should construct a PizzaOrder object', ->
         expect(order.add).toBeDefined()
         expect(order.cancel).toBeDefined()
         expect(order.edit).toBeDefined()
