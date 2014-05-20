@@ -58,7 +58,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 #      $scope.size.remove()
 #      $scope.dough.remove()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -79,15 +79,10 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
+
       $scope.type = modal
-      $scope.type.choose = (fried_qty, oven_qty, formInvalid)->
-
-        if !formInvalid
-          $scope.empanada.type =
-              f: parseInt fried_qty or 0
-              h: parseInt oven_qty or 0
-
-          $scope.type.hide()
+      $scope.type.choose = ()->
+        $scope.type.hide()
 
     $ionicModal.fromTemplateUrl 'empanada-order.html',
       scope: $scope,
@@ -95,7 +90,7 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
     .then (modal) ->
       $scope.order = modal
       $scope.order.add = ()->
-        ShoppingCart.addToCart($scope.empanada)
+        ShoppingCart.addToCart $scope.empanada
         $scope.order.hide()
 
       $scope.order.cancel = ->
@@ -106,7 +101,10 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
 
 
     $scope.choose = (item)->
-      $scope.empanada = angular.copy(item)
+      $scope.empanada = new Empanada item
+      if angular.isDefined item.qty
+        $scope.empanada.qty = item.qty
+
       angular.forEach $scope.steps, (key, val)->
         modal = $scope[key]
         modal.show()
@@ -156,21 +154,3 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
       angular.forEach $scope.checkoutSteps, (key, val)->
         modal = $scope[key]
         modal.show()
-
-angular.module('Muzza.directives').directive 'validateEmpanadaSelection', () ->
-  restrict: 'A'
-  require: 'ngModel'
-  scope: {
-    empanada: "=ngModel"
-  }
-
-  link: (scope, ele, attrs, ctrl)->
-
-    scope.$watch 'empanada', (newValue) ->
-
-      if angular.isDefined newValue
-        if newValue.type?.f > 0 || newValue.type?.h > 0
-          ctrl.$setValidity 'missingQty', true
-        else
-          ctrl.$setValidity 'missingQty', false
-    ,true

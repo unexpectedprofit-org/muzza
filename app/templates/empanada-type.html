@@ -5,49 +5,48 @@
 
   <ion-content>
 
+      <!-- CARDDDDDDDDD ------------------------>
+      <div class="card">
+        <div class="item item-text-wrap">
 
-    <div class="errors" data-ng-if="empanadaSelectionForm.submitted && empanadaSelectionForm.$invalid">
-      ERRORES:
-      <ul>
-        <li data-ng-show="empanadaSelectionForm.$error.missingQty">Debe seleccionar al menos una unidad</li>
-      </ul>
-    </div>
+          <span>Cantidad: {{empanada.qty}}</span>
+
+          <button
+                  class="button"
+                  data-ng-disabled="empanada.minReached()"
+                  data-ng-click="empanada.updateQty(-1)"
+                  >
+            <i class="icon ion-minus"></i>
+          </button>
+
+          <button class="button"
+                  data-ng-disabled="empanada.maxReached()"
+                  data-ng-click="empanada.updateQty(+1)"
+                  >
+            <i class="icon ion-plus-round"></i>
+          </button>
+
+          <!--<input-->
+          <!--class="span3 text-center" type="text"-->
+          <!--ng-model="empanada.quantity"-->
+          <!--ng-change=""/>-->
+          <!--------------------------->
+
+        </div>
+      </div>
+      <!-- CARDDDDDDDDD ------------------------>
 
 
-    <form name="empanadaSelectionForm" validate-empanada-selection data-ng-model="empanada" novalidate>
-
-      <ul class="list" >
-        <li class="item">
-          Souffle
-          <br/>
-          <span>Precio: {{empanada.price[0]}}</span>
-
-          <label class="item item-input">
-            <span class="input-label">Cantidad</span>
-            <input type="number" data-ng-model="empanada.type.f" min="0"/>
-          </label>
-        </li>
-
-        <li class="item">
-          Horno
-          <br/>
-          <span>Precio: {{empanada.price[1]}}</span>
-
-          <label class="item item-input">
-            <span class="input-label">Cantidad</span>
-            <input type="number" data-ng-model="empanada.type.h" min="0"/>
-          </label>
-        </li>
-      </ul>
+      <pre>
+        {{ empanada | json }}
+      </pre>
 
       <button class="button button-positive"
-              data-ng-click="empanadaSelectionForm.submitted = 'true'; type.choose(empanada.type.f, empanada.type.h, empanadaSelectionForm.$invalid)"
-              data-ng-disabled="empanadaSelectionForm.$invalid">
+              data-ng-click="type.choose()">
         CONTINUAR
       </button>
 
       <cancel-selection></cancel-selection>
 
-    </form>
   </ion-content>
 </div>

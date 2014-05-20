@@ -138,12 +138,15 @@ describe "directives", ->
         $scope.menu = [
           desc: "Jamon y Queso"
           id: 1
+          price: 100
         ,
           desc: "Humita"
           id: 2
+          price: 80
         ,
           desc: "Pollo"
           id: 3
+          price: 90
         ]
         element = angular.element('<empanadas ng-model="menu"></empanadas>')
         $compile(element)($rootScope)
@@ -163,50 +166,52 @@ describe "directives", ->
 
     describe "When user chooses a product", ->
       it "should show all modals for available steps", ->
-        isolatedScope.steps = ['type']
+        isolatedScope.steps = ['order', 'type']
         showType = spyOn(isolatedScope.type, 'show')
         element.find('button')[0].click()
         expect(showType).toHaveBeenCalled()
 
-      it "should add to ShoppingCart when user selected the add option on the order step", ->
+      xit "should add to ShoppingCart when user selected the add option on the order step", ->
         inject (ShoppingCart) ->
           hideType = spyOn(isolatedScope.type, 'hide')
+          addToCart = spyOn(ShoppingCart, 'addToCart')
 
           isolatedScope.steps = ['order','type']
-          addToCart = spyOn(ShoppingCart, 'addToCart')
           element.find('button')[0].click()
-          isolatedScope.type.choose 0, 10, false
+
+          isolatedScope.empanada.qty = 5
+          isolatedScope.type.choose()
           isolatedScope.order.add()
 
           expect(hideType).toHaveBeenCalled()
-          expect(addToCart).toHaveBeenCalledWith {"desc":"Jamon y Queso","id":1, "type": {"f":0,"h": 10}}
 
-      it "should replace the previous selection", ->
+          expect(addToCart.calls.times).toBe 1
+          expect(addToCart).toHaveBeenCalledWith {"qty": 5,"desc":"Jamon y Queso","price": 100,"id":1}
+
+      xit "should replace the previous selection", ->
         inject (ShoppingCart) ->
           isolatedScope.steps = ['order','type']
           addToCart = spyOn(ShoppingCart, 'addToCart')
 
           #Choose First Product
           element.find('button')[0].click()
-          isolatedScope.type.choose 2, 3, false
+          isolatedScope.empanada.qty = 2
+          isolatedScope.type.choose
           isolatedScope.order.add()
-          expect(addToCart).toHaveBeenCalledWith {"desc":"Jamon y Queso","id":1, "type": {"f":2,"h": 3}}
+
+          expect(addToCart.calls.times).toBe 1
+          expect(addToCart).toHaveBeenCalledWith {"qty": 2,"desc": 'Jamon y Queso',"price": 100,"id":1}
 
           #Choose Second Product
           element.find('button')[1].click()
-          expect(isolatedScope.empanada).toEqual { desc : 'Humita', id : 2 }
+          expectedEmpanada =
+            id: 2
+            desc: "Humita"
+            price: 80
+            qty: 1
 
-      it "should do nothing if no quantities selected", ->
-        inject (ShoppingCart) ->
-          hideType = spyOn(isolatedScope.type, 'hide')
 
-          isolatedScope.steps = ['order','type']
-          addToCart = spyOn(ShoppingCart, 'addToCart')
-
-          element.find('button')[0].click()
-          isolatedScope.type.choose 0, 0, true
-          expect(hideType).not.toHaveBeenCalled()
-
+          expect(isolatedScope.empanada.id).toEqual expectedEmpanada.id
 
     describe "When user eliminates selected product and options", ->
 
@@ -224,28 +229,13 @@ describe "directives", ->
         isolatedScope.steps = ['order','type']
         showType = spyOn(isolatedScope.type, 'show')
         element.find('button')[0].click()
-        isolatedScope.type.choose 2, 3
+        isolatedScope.type.choose
         isolatedScope.order.edit()
-        expect(isolatedScope.empanada.type.h).toBe 3
-        expect(isolatedScope.empanada.type.f).toBe 2
-        isolatedScope.type.choose 5, 6
+        expect(isolatedScope.empanada.qty).toBe 1
+        isolatedScope.empanada.qty = 5
+        isolatedScope.type.choose
         expect(showType.calls.count()).toBe 2
-        expect(isolatedScope.empanada.type.h).toBe 6
-        expect(isolatedScope.empanada.type.f).toBe 5
-
-      it "should not show next modal if no quantities entered", ->
-        isolatedScope.steps = ['order','type']
-        showType = spyOn(isolatedScope.type, 'show')
-        element.find('button')[0].click()
-        isolatedScope.type.choose 2, 3
-        isolatedScope.order.edit()
-        expect(isolatedScope.empanada.type.h).toBe 3
-        expect(isolatedScope.empanada.type.f).toBe 2
-        isolatedScope.type.choose 0, 0
-        expect(showType.calls.count()).toBe 2
-
-        hideType = spyOn(isolatedScope.type, 'hide')
-        expect(hideType).not.toHaveBeenCalled()
+        expect(isolatedScope.empanada.qty).toBe 5
 
 
   ##### need to put both below inside same describe block
@@ -309,47 +299,3 @@ describe "directives", ->
       expect(showContactForm).toHaveBeenCalled()
 
   #      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
-
-
-
-  describe "Validate Empanadas", ->
-
-    $scope = element = form = undefined
-
-    beforeEach ->
-      inject ($compile, $rootScope) ->
-        $scope = $rootScope
-        element = angular.element(
-          '<form name="form" data-validate-empanada-selection data-ng-model="empanada">' +
-          '<input type="number" name="empanada_f_qty" data-ng-model="empanada.type.f"/>' +
-          '<input type="number" name="empanada_h_qty" data-ng-model="empanada.type.h"/>' +
-          '</form>'
-        )
-        $scope.model = { empanada: {} }
-        $compile(element)($scope)
-        $scope.$digest()
-        form = $scope.form
-
-    it "should not validate if both empanada types have 0 quantity", ->
-      form.empanada_f_qty.$setViewValue 0
-      form.empanada_h_qty.$setViewValue 0
-      $scope.$digest()
-      expect(form.$error.missingQty).toBeTruthy()
-
-    it "should validate if empanada type 'F' has 0 quantity and 'H' has more than 0", ->
-      form.empanada_f_qty.$setViewValue 0
-      form.empanada_h_qty.$setViewValue 1
-      $scope.$digest()
-      expect(form.$error.missingQty).toBeFalsy()
-
-    it "should validate if empanada type 'F' has more than 0 quantity and 'H' has 0", ->
-      form.empanada_f_qty.$setViewValue 5
-      form.empanada_h_qty.$setViewValue 0
-      $scope.$digest()
-      expect(form.$error.missingQty).toBeFalsy()
-
-    it "should validate if both empanada types have more than 0", ->
-      form.empanada_f_qty.$setViewValue 8
-      form.empanada_h_qty.$setViewValue 20
-      $scope.$digest()
-      expect(form.$error.missingQty).toBeFalsy()
