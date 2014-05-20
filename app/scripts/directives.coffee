@@ -1,4 +1,4 @@
-angular.module('Muzza.directives', [])
+angular.module('Muzza.directives', ['Muzza.factories'])
 
 angular.module('Muzza.directives').directive 'cancelSelection', ()->
   restrict: 'EA'
@@ -13,7 +13,7 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
       console.log "pizza: " + JSON.stringify  $scope.pizza
 
 
-angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart) ->
+angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -32,33 +32,20 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.size = modal
-      $scope.size.choose = ->
-        $scope.size.hide()
+      $scope.size = new PizzaSize(modal)
 
     $ionicModal.fromTemplateUrl 'pizza-dough.html',
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.dough = modal
-      $scope.dough.choose = ->
-        $scope.dough.hide()
+      $scope.dough = new PizzaDough(modal)
 
     $ionicModal.fromTemplateUrl 'pizza-order.html',
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.order = modal
+      $scope.order = new PizzaOrder(modal)
 
-      $scope.order.add = ()->
-        ShoppingCart.addToCart($scope.pizza)
-        $scope.order.hide()
-
-      $scope.order.cancel = ->
-        $scope.order.hide()
-
-      $scope.order.edit = ()->
-        $scope.choose($scope.pizza)
 
     $scope.choose = (item)->
       $scope.pizza = angular.copy(item)
@@ -183,9 +170,7 @@ angular.module('Muzza.directives').directive 'validateEmpanadaSelection', () ->
 
       if angular.isDefined newValue
         if newValue.type?.f > 0 || newValue.type?.h > 0
-          console.log "validateEmpanadaSelection: form valid"
           ctrl.$setValidity 'missingQty', true
         else
-          console.log "validateEmpanadaSelection: form invalid"
           ctrl.$setValidity 'missingQty', false
     ,true
