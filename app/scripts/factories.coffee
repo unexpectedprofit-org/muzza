@@ -77,6 +77,7 @@ angular.module('Muzza.factories').factory "Empanada", () ->
       @qty = 1
       @desc = from?.desc
       @price = from?.price
+      @type = from?.type
 
       @id = from?.id
 

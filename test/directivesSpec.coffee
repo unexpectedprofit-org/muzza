@@ -139,17 +139,48 @@ describe "directives", ->
       inject ($compile, $rootScope) ->
         $scope = $rootScope
         $scope.menu = [
-          desc: "Jamon y Queso"
-          id: 1
-          price: 100
-        ,
-          desc: "Humita"
-          id: 2
-          price: 80
-        ,
-          desc: "Pollo"
-          id: 3
-          price: 90
+          {
+            "id": 1,
+            "desc": "Al Horno",
+            "prod": [
+              {
+                "id": 1
+                "desc": "Carne cortada a cuchillo"
+                "topp": [ "Carne", "Huevo", "Morron" ]
+                "price": 18
+              },
+              {
+                "id": 2
+                "desc": "Calabresa"
+                "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+                "price": 18
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "desc": "Fritas",
+            "prod": [
+              {
+                "id": 3
+                "desc": "Jamon y Queso"
+                "topp": [ "Jamon", "Queso" ]
+                "price": 20
+              },
+              {
+                "id": 4
+                "desc": "Pollo"
+                "topp": [ "Muzzarella", "Pollo", "Salsa" ]
+                "price": 20
+              },
+              {
+                "id": 5
+                "desc": "Verdura"
+                "topp": [ "Espinaca", "Salsa" ]
+                "price": 20
+              }
+            ]
+          }
         ]
         element = angular.element('<empanadas ng-model="menu"></empanadas>')
         $compile(element)($rootScope)
@@ -158,9 +189,11 @@ describe "directives", ->
 
     describe "init", ->
       it "should display the 2 empanadas menu items", ->
-        expect(element.find('button').length).toBe 3
+        expect(element.find('a').length).toBe 5
+        expect(element.html()).toContain('Carne cortada a cuchillo')
+        expect(element.html()).toContain('Calabresa')
         expect(element.html()).toContain('Jamon y Queso')
-        expect(element.html()).toContain('Humita')
+        expect(element.html()).toContain('Verdura')
         expect(element.html()).toContain('Pollo')
 
       it "should load the templates for the steps", ->
@@ -171,7 +204,7 @@ describe "directives", ->
       it "should show all modals for available steps", ->
         isolatedScope.steps = ['order', 'type']
         showType = spyOn(isolatedScope.type, 'show')
-        element.find('button')[0].click()
+        element.find('a')[0].click()
         expect(showType).toHaveBeenCalled()
 
       xit "should add to ShoppingCart when user selected the add option on the order step", ->
@@ -180,7 +213,7 @@ describe "directives", ->
           addToCart = spyOn(ShoppingCart, 'addToCart')
 
           isolatedScope.steps = ['order','type']
-          element.find('button')[0].click()
+          element.find('a')[0].click()
 
           isolatedScope.empanada.qty = 5
           isolatedScope.type.choose()
@@ -189,7 +222,7 @@ describe "directives", ->
           expect(hideType).toHaveBeenCalled()
           expect(hideType.calls.count()).toBe 1
 
-          expect(addToCart).toHaveBeenCalledWith  { qty : 5, desc : 'Jamon y Queso', price : 100, id : 1 }
+          expect(addToCart).toHaveBeenCalledWith  { qty : 5, desc : 'Carne cortada a cuchillo', price : 18, id : 1 }
           expect(addToCart.calls.count()).toBe 1
 
       xit "should replace the previous selection", ->
@@ -198,16 +231,16 @@ describe "directives", ->
           addToCart = spyOn(ShoppingCart, 'addToCart')
 
           #Choose First Product
-          element.find('button')[0].click()
+          element.find('a')[0].click()
           isolatedScope.empanada.qty = 2
           isolatedScope.type.choose
           isolatedScope.order.add()
 
           expect(addToCart.calls.count()).toBe 1
-          expect(addToCart).toHaveBeenCalledWith {"qty": 2,"desc": 'Jamon y Queso',"price": 100,"id":1}
+          expect(addToCart).toHaveBeenCalledWith {"qty": 2,"desc": 'Carne cortada a cuchillo',"price": 18,"type": 'Al Horno', "id":1}
 
           #Choose Second Product
-          element.find('button')[1].click()
+          element.find('a')[1].click()
           expectedEmpanada =
             id: 2
             desc: "Humita"
@@ -222,8 +255,8 @@ describe "directives", ->
       it "should hide confirmation modal", ->
         isolatedScope.steps = ['order','type']
         hideOrder = spyOn(isolatedScope.order, 'hide')
-        element.find('button')[0].click()
-        isolatedScope.type.choose 2, 3
+        element.find('a')[0].click()
+        isolatedScope.type.choose
         isolatedScope.order.cancel()
         expect(hideOrder).toHaveBeenCalled()
 
@@ -232,7 +265,7 @@ describe "directives", ->
       it "should display all option modals", ->
         isolatedScope.steps = ['order','type']
         showType = spyOn(isolatedScope.type, 'show')
-        element.find('button')[0].click()
+        element.find('a')[0].click()
         isolatedScope.type.choose
         isolatedScope.order.edit()
         expect(isolatedScope.empanada.qty).toBe 1

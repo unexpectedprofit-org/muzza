@@ -220,11 +220,13 @@ describe 'factories', ->
       fromObject =
         desc: "description"
         price: 100.20
+        type: "al horno"
 
       newEmpanada = new Empanada fromObject
       expect(newEmpanada.qty).toBe 1
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.price).toBe fromObject.price
+      expect(newEmpanada.type).toBe fromObject.type
 
     it "should update quantity adding 4 items", ->
       newEmpanada = new Empanada()

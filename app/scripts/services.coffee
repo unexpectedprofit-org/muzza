@@ -97,34 +97,70 @@ angular.module("Muzza.services").factory "ProductService", () ->
     storeProducts1 = {
       "empanada": [
         {
-          "desc": "Carne cortada a cuchillo"
-          "topp": [ "Carne", "Huevo", "Morron" ]
-          "price": [ 18, 18 ]
+          "id": 1,
+          "desc": "Al Horno",
+          "prod": [
+            {
+              "id": 1
+              "desc": "Carne cortada a cuchillo"
+              "topp": [ "Carne", "Huevo", "Morron" ]
+              "price": 18
+            },
+            {
+              "id": 2
+              "desc": "Calabresa"
+              "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+              "price": 18
+            },
+            {
+              "id": 3
+              "desc": "Cebolla y queso"
+              "topp": [ "Muzzarella", "Cebolla" ]
+              "price": 18
+            },
+            {
+              "id": 4
+              "desc": "Pollo"
+              "topp": [ "Pollo", "Cebolla" ]
+              "price": 18
+            },
+            {
+              "id": 5
+              "desc": "Carne picante"
+              "topp": [ "Carne", "Cebolla" ]
+              "price": 18
+            },
+            {
+              "id": 6
+              "desc": "Verdura"
+              "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
+              "price": 18
+            }
+          ]
         },
         {
-          "desc": "Calabresa"
-          "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-          "price": [ 18, 18 ]
-        },
-        {
-          "desc": "Cebolla y queso"
-          "topp": [ "Muzzarella", "Cebolla" ]
-          "price": [ 18, 18 ]
-        },
-        {
-          "desc": "Pollo"
-          "topp": [ "Pollo", "Cebolla" ]
-          "price": [ 18, 18 ]
-        },
-        {
-          "desc": "Carne picante"
-          "topp": [ "Carne", "Cebolla" ]
-          "price": [ 18, 18 ]
-        },
-        {
-          "desc": "Verdura"
-          "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
-          "price": [ 18, 18 ]
+          "id": 2,
+          "desc": "Fritas",
+          "prod": [
+            {
+              "id": 7
+              "desc": "Cebolla y queso"
+              "topp": [ "Muzzarella", "Cebolla" ]
+              "price": 18
+            },
+            {
+              "id": 8
+              "desc": "Pollo"
+              "topp": [ "Pollo", "Cebolla" ]
+              "price": 20
+            },
+            {
+              "id": 9
+              "desc": "Verdura"
+              "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
+              "price": 20
+            }
+          ]
         }
       ],
       "pizza": [
@@ -206,24 +242,58 @@ angular.module("Muzza.services").factory "ProductService", () ->
       ],
       "empanada": [
         {
-          "desc": "Humita"
-          "topp": [ "Choclo", "Salsa Blanca" ]
-          "price": [ 15, 15 ]
+          "id": 1,
+          "desc": "Fritas",
+          "prod": [
+            {
+              "id": 10
+              "desc": "Humita"
+              "topp": [ "Choclo", "Salsa Blanca" ]
+              "price": 17
+            },
+            {
+              "id": 11
+              "desc": "Jamon y Queso"
+              "topp": [ "Muzzarella", "Jamon", "Oregano" ]
+              "price": 17
+            },
+            {
+              "id": 12
+              "desc": "Carne Suava"
+              "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+              "price": 17
+            },
+            {
+              "id": 13
+              "desc": "Carne Picante"
+              "topp": [ "Carne", "Cebolla", "Huevo" ]
+              "price": 17
+            }
+          ]
         },
         {
-          "desc": "Jamon y Queso"
-          "topp": [ "Muzzarella", "Jamon", "Oregano" ]
-          "price": [ 15, 15 ]
-        },
-        {
-          "desc": "Carne Suava"
-          "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-          "price": [ 15, 15]
-        },
-        {
-          "desc": "Carne Picante"
-          "topp": [ "Carne", "Cebolla", "Huevo" ]
-          "price": [ 15, 15 ]
+          "id": 2,
+          "desc": "Horno",
+          "prod": [
+            {
+              "id": 14
+              "desc": "Humita"
+              "topp": [ "Choclo", "Salsa Blanca" ]
+              "price": 23
+            },
+            {
+              "id": 15
+              "desc": "Jamon y Queso"
+              "topp": [ "Muzzarella", "Jamon", "Oregano" ]
+              "price": 23
+            },
+            {
+              "id": 16
+              "desc": "Carne Suava"
+              "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+              "price": 23
+            }
+          ]
         }
       ]
     }
