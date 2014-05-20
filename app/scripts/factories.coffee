@@ -66,3 +66,32 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart)->
   return PizzaOrder
 
 
+angular.module('Muzza.factories').factory "Empanada", () ->
+
+  class Empanada
+    constructor: (from) ->
+      @qty = 1
+      @desc = from?.desc
+      @price = from?.price
+
+      @id = from?.id
+
+
+    toNumber: (value) ->
+      value = value * 1
+      if isNaN(value) then 0 else value
+
+  Empanada::updateQty = (itemQtyDiff) ->
+    itemQtyDiff = @toNumber(itemQtyDiff)
+    @qty = @toNumber(@qty + itemQtyDiff)
+
+  Empanada::minReached = () ->
+    @qty <= 1
+  Empanada::maxReached = () ->
+    @qty >= 100
+
+  Empanada::equals = (anotherObject) ->
+    angular.isDefined(anotherObject) && @id is anotherObject.id
+
+
+  return Empanada
