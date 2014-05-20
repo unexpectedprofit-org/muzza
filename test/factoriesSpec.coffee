@@ -21,9 +21,9 @@ describe 'factories', ->
     describe "Init", ->
 
       it 'should construct a PizzaSize object', ->
-        expect(size.choose()).toBeDefined()
-        expect(size.show()).toBeDefined()
-        expect(size.hide()).toBeDefined()
+        expect(size.choose).toBeDefined()
+        expect(size.show).toBeDefined()
+        expect(size.hide).toBeDefined()
 
       it 'should delegate the show call to the modal', ->
         size.show()
@@ -59,9 +59,9 @@ describe 'factories', ->
     describe "Init", ->
 
       it 'should construct a PizzaDough object', ->
-        expect(dough.choose()).toBeDefined()
-        expect(dough.show()).toBeDefined()
-        expect(dough.hide()).toBeDefined()
+        expect(dough.choose).toBeDefined()
+        expect(dough.show).toBeDefined()
+        expect(dough.hide).toBeDefined()
 
       it 'should delegate the show call to the modal', ->
         dough.show()
@@ -107,14 +107,14 @@ describe 'factories', ->
 
         order = new PizzaOrder(modal)
 
-    describe "Inti", ->
+    describe "Init", ->
 
-      it 'should construct a PizzaOrder object', ->
-        expect(order.add()).toBeDefined()
-        expect(order.cancel()).toBeDefined()
-        expect(order.edit()).toBeDefined()
-        expect(order.show()).toBeDefined()
-        expect(order.hide()).toBeDefined()
+      iit 'should construct a PizzaOrder object', ->
+        expect(order.add).toBeDefined()
+        expect(order.cancel).toBeDefined()
+        expect(order.edit).toBeDefined()
+        expect(order.show).toBeDefined()
+        expect(order.hide).toBeDefined()
 
       it 'should delegate the show call to the modal', ->
         order.show()
@@ -129,9 +129,14 @@ describe 'factories', ->
       it 'should call ShoppingCart to add a product and hide', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
-        order.add({id:1})
-        expect(addSpy).toHaveBeenCalledWith({id:1})
+        order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'})
         expect(internalHideSpy).toHaveBeenCalled()
+
+      it 'should form the descripcion based on the selected options', ->
+        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'})
 
     describe "When user eliminates selected product and options", ->
 

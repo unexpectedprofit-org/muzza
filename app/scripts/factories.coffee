@@ -49,6 +49,7 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart)->
     @modal.hide()
 
   PizzaOrder::add = (pizza)->
+    pizza.desc = pizza.desc + " " + pizza.size + " " + pizza.dough
     ShoppingCart.addToCart(pizza)
     @hide()
 
