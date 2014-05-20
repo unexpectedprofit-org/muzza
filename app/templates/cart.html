@@ -6,7 +6,8 @@
     <ion-list>
         <ion-item nav-clear ng-repeat="item in cart">
 
-          {{item.desc}}
+          {{item.desc}}    </br>
+          {{item.totalPrice | centsToMoney | currency}}
 
           <!-- PIZZAS-------------------->
           <!--<div data-ng-if="item.size">-->
