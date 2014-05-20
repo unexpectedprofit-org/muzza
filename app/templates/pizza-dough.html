@@ -7,14 +7,14 @@
             <label class="item item-radio">
                 <input type="radio" value="al molde" ng-click="dough.choose('al molde')" ng-model="pizza.dough">
                 <div class="item-content">
-                    Al Molde
+                    Al Molde  -  {{ pizza.totalPrice + pizza.price.dough['al molde'] | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
                 <input type="radio" value="a la piedra" ng-click="dough.choose('a la piedra')" ng-model="pizza.dough">
                 <div class="item-content">
-                    A la Piedra
+                    A la Piedra  -  {{ pizza.totalPrice + pizza.price.dough['a la piedra'] | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
