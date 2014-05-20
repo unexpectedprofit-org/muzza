@@ -184,9 +184,10 @@ describe "directives", ->
           isolatedScope.order.add()
 
           expect(hideType).toHaveBeenCalled()
+          expect(hideType.calls.count()).toBe 1
 
-          expect(addToCart.calls.times).toBe 1
-          expect(addToCart).toHaveBeenCalledWith {"qty": 5,"desc":"Jamon y Queso","price": 100,"id":1}
+          expect(addToCart).toHaveBeenCalledWith  { qty : 5, desc : 'Jamon y Queso', price : 100, id : 1 }
+          expect(addToCart.calls.count()).toBe 1
 
       xit "should replace the previous selection", ->
         inject (ShoppingCart) ->
@@ -199,7 +200,7 @@ describe "directives", ->
           isolatedScope.type.choose
           isolatedScope.order.add()
 
-          expect(addToCart.calls.times).toBe 1
+          expect(addToCart.calls.count()).toBe 1
           expect(addToCart).toHaveBeenCalledWith {"qty": 2,"desc": 'Jamon y Queso',"price": 100,"id":1}
 
           #Choose Second Product
