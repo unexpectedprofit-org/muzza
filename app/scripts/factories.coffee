@@ -90,7 +90,10 @@ angular.module('Muzza.factories').factory "Empanada", () ->
 
   Empanada::updateQty = (itemQtyDiff) ->
     itemQtyDiff = @toNumber(itemQtyDiff)
-    @qty = @toNumber(@qty + itemQtyDiff)
+    if (@qty + itemQtyDiff ) <= 0
+      @qty = 0
+    else
+      @qty = @qty + itemQtyDiff
 
   Empanada::minReached = () ->
     @qty <= 1
