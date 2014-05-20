@@ -1,4 +1,4 @@
-angular.module('Muzza.directives', ['Muzza.factories'])
+angular.module('Muzza.directives', ['ui.router' ,'Muzza.factories'])
 
 angular.module("Muzza.directives").filter "centsToMoney", ->
   (cents) ->
@@ -16,8 +16,54 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
       console.log "empa: " + JSON.stringify $scope.empanada
       console.log "pizza: " + JSON.stringify  $scope.pizza
 
+angular.module('Muzza.directives').directive 'pizza', ($q, $log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder,$stateParams, ProductService, $rootScope) ->
+  restrict: 'EA'
+  scope: {}
+  template: '<div></div>'
+  link: ($scope, ele, attrs, ctrl)->
 
-angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder) ->
+#   holds temp selection
+    $scope.pizza = {}
+
+    storeMenu = ProductService.listMenuByStore $rootScope.storeID
+    $scope.pizza = _.filter storeMenu.products.pizza, (item)->
+      console.log $stateParams
+      console.log item.id is $stateParams.id
+      item.id is $stateParams.id
+
+    #   this could come from firebase, or we can override when starting the app with a decorator at config phase
+    $scope.steps = ['order', 'dough', 'size']
+
+    size = $ionicModal.fromTemplateUrl 'pizza-size.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+      $scope.size = new PizzaSize(modal)
+
+    dough = $ionicModal.fromTemplateUrl 'pizza-dough.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+      $scope.dough = new PizzaDough(modal)
+
+    order = $ionicModal.fromTemplateUrl 'pizza-order.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+    .then (modal) ->
+      $scope.order = new PizzaOrder(modal)
+
+    $q.all([order, dough, size]).then ()->
+      angular.forEach $scope.steps, (key, val)->
+        modal = $scope[key]
+        modal.show()
+
+#    $scope.$on '$destroy', ->
+#      $log.log 'destroy'
+#      $scope.size.remove()
+#      $scope.dough.remove()
+
+
+angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder, $state) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -50,12 +96,12 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
     .then (modal) ->
       $scope.order = new PizzaOrder(modal)
 
-
     $scope.choose = (item)->
-      $scope.pizza = angular.copy(item)
-      angular.forEach $scope.steps, (key, val)->
-        modal = $scope[key]
-        modal.show()
+      $state.go('app.pizza', {id: item.id})
+#      $scope.pizza = angular.copy(item)
+#      angular.forEach $scope.steps, (key, val)->
+#        modal = $scope[key]
+#        modal.show()
 
 #    $scope.$on '$destroy', ->
 #      $log.log 'destroy'
@@ -114,12 +160,27 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
         modal.show()
 
 
-angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart) ->
+angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart, PizzaOrder) ->
   restrict: 'EA'
   scope: {}
   templateUrl: 'cart.html'
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
+
+    $scope.edit = (item)->
+      $scope[item.type] = item
+      modalName = "#{item.type}-order.html"
+      $ionicModal.fromTemplateUrl modalName,
+        scope: $scope,
+        animation: 'slide-in-up'
+      .then (modal) ->
+        $scope.order = create(item.type,modal)
+        $scope.order.show()
+
+    create = (type, modal)->
+      #TODO: dynamic classname instantiation????
+      switch type
+        when "pizza" then new PizzaOrder(modal)
 
 angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCart) ->
   restrict: 'EA'

@@ -129,7 +129,9 @@ angular.module("Muzza.services").factory "ProductService", () ->
       ],
       "pizza": [
         {
+          id: 1
           "desc": "Muzzarella"
+          "type": "pizza"
           "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
           "price" : {
             base: 5000
@@ -144,6 +146,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
         },
         {
           "desc": "Fuggazetta"
+          "type": "pizza"
           "topp": [ "Muzzarella", "Cebollas" ]
           "price" : {
             base: 5500
@@ -158,6 +161,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
         },
         {
           "desc": "Jamon y Morrones"
+          "type": "pizza"
           "topp": [ "Muzzarella", "Jamon", "Morron" ]
           "price" : {
             base: 7500
@@ -172,6 +176,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
         },
         {
           "desc": "Calabresa"
+          "type": "pizza"
           "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
           "price" : {
             base: 5000

@@ -9,6 +9,8 @@
           {{item.desc}}    </br>
           {{item.totalPrice | centsToMoney | currency}}
 
+          <button class="button button-light" ng-click="$parent.edit(item)">Editar</button>
+
           <!-- PIZZAS-------------------->
           <!--<div data-ng-if="item.size">-->
             <!--{{item.size}} - {{item.dough}}-->
