@@ -231,6 +231,18 @@ describe 'factories', ->
       newEmpanada.updateQty +4
       expect(newEmpanada.qty).toBe 5
 
+    it "should update to zero when result is less than zero", ->
+      newEmpanada = new Empanada()
+      newEmpanada.qty = 1
+      newEmpanada.updateQty -5
+      expect(newEmpanada.qty).toBe 0
+
+    it "should return current quantity is new is not a number", ->
+      newEmpanada = new Empanada()
+      newEmpanada.qty = 1
+      newEmpanada.updateQty "a"
+      expect(newEmpanada.qty).toBe 1
+
     it "should update quantity sustracting 2 items", ->
       newEmpanada = new Empanada()
       newEmpanada.qty = 10
