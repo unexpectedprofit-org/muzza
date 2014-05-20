@@ -8,21 +8,21 @@
                 <input type="radio" value="individual" ng-click="size.choose('individual')" ng-model="pizza.size">
                 <div class="item-content">
 
-                    Individual  -  {{ pizza.price.base + pizza.price.size.individual | centsToMoney | currency}}
+                    Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
                 <input type="radio" value="chica" ng-click="size.choose('chica')" ng-model="pizza.size">
                 <div class="item-content">
-                    Chica  -  {{ pizza.price.base + pizza.price.size.chica | centsToMoney | currency}}
+                    Chica  -  {{ pizza.totalPrice + pizza.price.size.chica | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
                 <input type="radio" value="grande" ng-click="size.choose('grande')" ng-model="pizza.size">
                 <div class="item-content">
-                    Grande  -  {{ pizza.price.base + pizza.price.size.grande | centsToMoney | currency}}
+                    Grande  -  {{ pizza.totalPrice + pizza.price.size.grande | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>

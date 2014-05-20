@@ -83,13 +83,16 @@ describe "directives", ->
 
       it "should show all modals for available steps", ->
         isolatedScope.steps = ['size', 'dough']
-        showSize = spyOn(isolatedScope.size, 'show')
-        showDough = spyOn(isolatedScope.dough, 'show')
+        showSize = spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
+        showDough = spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
         element.find('button')[0].click()
         expect(showSize).toHaveBeenCalled()
         expect(showDough).toHaveBeenCalled()
 
       it "should replace the previous selection", ->
+        spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
+        spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
+
         #Choose First Product
         element.find('button')[0].click()
         isolatedScope.pizza.size = 'b'
