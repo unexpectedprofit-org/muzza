@@ -13,9 +13,15 @@ angular.module('Muzza.factories').factory "PizzaSize", ()->
     @modal.hide()
 
   PizzaSize::choose = (selection)->
-    basePrice = @modal.scope.pizza.price.base
-    selectionPrice = @modal.scope.pizza.price.size[selection]
-    @modal.scope.pizza.totalPrice = basePrice + selectionPrice
+    pizza = @modal.scope.pizza
+    price  = pizza.price
+    basePrice = price.base
+    totalPrice = pizza.totalPrice
+
+    if totalPrice > 0 then basePrice = totalPrice
+
+    @modal.scope.pizza.totalPrice = basePrice + price.size[selection]
+
     @hide()
 
   return PizzaSize

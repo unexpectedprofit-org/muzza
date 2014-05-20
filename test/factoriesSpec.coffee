@@ -47,6 +47,12 @@ describe 'factories', ->
         size.choose('chica')
         expect(modal.scope.pizza.totalPrice).toBe 60
 
+      it 'should calculate price suming totalPrice + option if another option has already been selected', ->
+        modal.scope.pizza.totalPrice =  50 + 15
+        size.choose('chica')
+        expect(modal.scope.pizza.totalPrice).toBe 75
+
+
       it 'should call hide', ->
         internalHideSpy = spyOn(size, 'hide').and.callThrough()
         size.choose()
