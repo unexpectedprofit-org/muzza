@@ -8,6 +8,9 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
       angular.forEach $scope.steps, (key, val)->
         modal = $scope[key]
         modal.hide()
+      console.log "cancelar button: "
+      console.log "empa: " + JSON.stringify $scope.empanada
+      console.log "pizza: " + JSON.stringify  $scope.pizza
 
 
 angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder) ->
@@ -65,7 +68,9 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
   link: ($scope, ele, attrs, ctrl)->
 
 #   holds temp selection
-    $scope.empanada = {}
+    $scope.empanada = {
+      type: {}
+    }
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'type']
@@ -75,13 +80,14 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       animation: 'slide-in-up'
     .then (modal) ->
       $scope.type = modal
-      $scope.type.choose = (fried_qty, oven_qty)->
+      $scope.type.choose = (fried_qty, oven_qty, formInvalid)->
 
-        $scope.empanada.type =
-            f: parseInt fried_qty or 0
-            h: parseInt oven_qty or 0
+        if !formInvalid
+          $scope.empanada.type =
+              f: parseInt fried_qty or 0
+              h: parseInt oven_qty or 0
 
-        $scope.type.hide()
+          $scope.type.hide()
 
     $ionicModal.fromTemplateUrl 'empanada-order.html',
       scope: $scope,
@@ -163,7 +169,7 @@ angular.module('Muzza.directives').directive 'validateEmpanadaSelection', () ->
     scope.$watch 'empanada', (newValue) ->
 
       if angular.isDefined newValue
-        if newValue.fri > 0 || newValue.hor > 0
+        if newValue.type?.f > 0 || newValue.type?.h > 0
           ctrl.$setValidity 'missingQty', true
         else
           ctrl.$setValidity 'missingQty', false
