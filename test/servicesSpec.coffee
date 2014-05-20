@@ -59,11 +59,15 @@ describe "services", ->
 
       newMenuObject = ProductService.listMenuByStore 1
       expect( newMenuObject.products.pizza.length ).toBe 4
-      expect( newMenuObject.products.empanada.length ).toBe 6
+      expect( newMenuObject.products.empanada.length ).toBe 2
+      expect( newMenuObject.products.empanada[0].prod.length ).toBe 6
+      expect( newMenuObject.products.empanada[1].prod.length ).toBe 3
 
       newMenuObject = ProductService.listMenuByStore 2
       expect( newMenuObject.products.pizza.length ).toBe 3
-      expect( newMenuObject.products.empanada.length ).toBe 4
+      expect( newMenuObject.products.empanada.length ).toBe 2
+      expect( newMenuObject.products.empanada[0].prod.length ).toBe 4
+      expect( newMenuObject.products.empanada[1].prod.length ).toBe 3
 
   describe "OrderService", ->
     OrderService = undefined

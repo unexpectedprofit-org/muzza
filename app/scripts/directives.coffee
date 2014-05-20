@@ -105,8 +105,12 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
         $scope.choose($scope.empanada)
 
 
-    $scope.choose = (item)->
+    $scope.choose = (item, cat_desc)->
       $scope.empanada = new Empanada item
+
+      if angular.isDefined cat_desc
+        $scope.empanada.type = cat_desc
+
       if angular.isDefined item.qty
         $scope.empanada.qty = item.qty
 
