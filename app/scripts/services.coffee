@@ -138,8 +138,8 @@ angular.module("Muzza.services").factory "ProductService", () ->
               chica: 1000
               grande: 2000
             dough:
-              "a la piedra": 0
-              "al molde": 0
+              "a la piedra": 2
+              "al molde": 3
           }
         },
         {
