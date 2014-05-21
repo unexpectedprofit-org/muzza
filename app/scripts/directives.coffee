@@ -63,7 +63,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     init()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada, EmpanadaQty, EmpanadaOrder) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -78,31 +78,19 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
     }
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
-    $scope.steps = ['order', 'type']
+    $scope.steps = ['order', 'qty']
 
     $ionicModal.fromTemplateUrl 'empanada-type.html',
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-
-      $scope.type = modal
-      $scope.type.choose = ()->
-        $scope.type.hide()
+      $scope.qty = new EmpanadaQty(modal)
 
     $ionicModal.fromTemplateUrl 'empanada-order.html',
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.order = modal
-      $scope.order.add = ()->
-        ShoppingCart.addToCart $scope.empanada
-        $scope.order.hide()
-
-      $scope.order.cancel = ->
-        $scope.order.hide()
-
-      $scope.order.edit = ()->
-        $scope.choose($scope.empanada)
+      $scope.order = new EmpanadaOrder modal
 
 
     $scope.choose = (item, cat_desc)->

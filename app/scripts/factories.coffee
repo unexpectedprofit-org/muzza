@@ -106,3 +106,49 @@ angular.module('Muzza.factories').factory "Empanada", () ->
 
 
   return Empanada
+
+angular.module('Muzza.factories').factory "EmpanadaQty", () ->
+
+  class EmpanadaQty
+    constructor: (modal) ->
+      @modal = modal
+
+  EmpanadaQty::show = ->
+    @modal.show()
+
+  EmpanadaQty::hide = ->
+    @modal.hide()
+
+  EmpanadaQty::choose = ()->
+    empanada = @modal.scope.empanada
+    @modal.scope.empanada.price.total = empanada.price.base * empanada.qty
+    @hide()
+
+  return EmpanadaQty
+
+angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
+
+  class EmpanadaOrder
+    constructor: (modal) ->
+      @modal = modal
+
+  EmpanadaOrder::show = ->
+    @modal.show()
+
+  EmpanadaOrder::hide = ->
+    @modal.hide()
+
+  EmpanadaOrder::add = (empanada)->
+    empanada.desc = empanada.desc + " " + empanada.type
+    empanada.totalPrice = empanada.price
+    ShoppingCart.addToCart empanada
+#    @modal.hide()
+    @modal.hide()
+
+  EmpanadaOrder::cancel = ->
+    @modal.hide()
+
+  EmpanadaOrder::edit = (empanada) ->
+    @modal.scope.choose empanada
+
+  return EmpanadaOrder

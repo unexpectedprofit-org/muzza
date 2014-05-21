@@ -197,47 +197,30 @@ describe "directives", ->
         expect(element.html()).toContain('Pollo')
 
       it "should load the templates for the steps", ->
-        isolatedScope.steps = ['type']
-        expect(isolatedScope.type).toBeDefined()
+        isolatedScope.steps = ['qty']
+        expect(isolatedScope.qty).toBeDefined()
 
     describe "When user chooses a product", ->
+
       it "should show all modals for available steps", ->
-        isolatedScope.steps = ['order', 'type']
-        showType = spyOn(isolatedScope.type, 'show')
+        isolatedScope.steps = ['order', 'qty']
+        showType = spyOn(isolatedScope.qty, 'show')
         element.find('a')[0].click()
         expect(showType).toHaveBeenCalled()
 
-      xit "should add to ShoppingCart when user selected the add option on the order step", ->
-        inject (ShoppingCart) ->
-          hideType = spyOn(isolatedScope.type, 'hide')
-          addToCart = spyOn(ShoppingCart, 'addToCart')
-
-          isolatedScope.steps = ['order','type']
-          element.find('a')[0].click()
-
-          isolatedScope.empanada.qty = 5
-          isolatedScope.type.choose()
-          isolatedScope.order.add()
-
-          expect(hideType).toHaveBeenCalled()
-          expect(hideType.calls.count()).toBe 1
-
-          expect(addToCart).toHaveBeenCalledWith  { qty : 5, desc : 'Carne cortada a cuchillo', price : 18, id : 1 }
-          expect(addToCart.calls.count()).toBe 1
-
       xit "should replace the previous selection", ->
         inject (ShoppingCart) ->
-          isolatedScope.steps = ['order','type']
+          isolatedScope.steps = ['order','qty']
           addToCart = spyOn(ShoppingCart, 'addToCart')
 
           #Choose First Product
           element.find('a')[0].click()
           isolatedScope.empanada.qty = 2
-          isolatedScope.type.choose
+          isolatedScope.qty.choose()
           isolatedScope.order.add()
 
-          expect(addToCart.calls.count()).toBe 1
           expect(addToCart).toHaveBeenCalledWith {"qty": 2,"desc": 'Carne cortada a cuchillo',"price": 18,"type": 'Al Horno', "id":1}
+          expect(addToCart.calls.count()).toBe 1
 
           #Choose Second Product
           element.find('a')[1].click()
@@ -247,33 +230,7 @@ describe "directives", ->
             price: 80
             qty: 1
 
-
           expect(isolatedScope.empanada.id).toEqual expectedEmpanada.id
-
-    describe "When user eliminates selected product and options", ->
-
-      it "should hide confirmation modal", ->
-        isolatedScope.steps = ['order','type']
-        hideOrder = spyOn(isolatedScope.order, 'hide')
-        element.find('a')[0].click()
-        isolatedScope.type.choose
-        isolatedScope.order.cancel()
-        expect(hideOrder).toHaveBeenCalled()
-
-    describe "When user decides to edit the selected product and options", ->
-
-      it "should display all option modals", ->
-        isolatedScope.steps = ['order','type']
-        showType = spyOn(isolatedScope.type, 'show')
-        element.find('a')[0].click()
-        isolatedScope.type.choose
-        isolatedScope.order.edit()
-        expect(isolatedScope.empanada.qty).toBe 1
-        isolatedScope.empanada.qty = 5
-        isolatedScope.type.choose
-        expect(showType.calls.count()).toBe 2
-        expect(isolatedScope.empanada.qty).toBe 5
-
 
   ##### need to put both below inside same describe block
   describe "Checkout Button, car not empty", ->
