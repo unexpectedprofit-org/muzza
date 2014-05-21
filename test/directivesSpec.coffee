@@ -86,8 +86,11 @@ describe "directives", ->
         showSize = spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
         showDough = spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
         element.find('button')[0].click()
+
         expect(showSize).toHaveBeenCalled()
+        expect(showSize.calls.count()).toBe 1
         expect(showDough).toHaveBeenCalled()
+        expect(showDough.calls.count()).toBe 1
 
       it "should replace the previous selection", ->
         spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
@@ -127,8 +130,11 @@ describe "directives", ->
       hideSize = spyOn(isolatedScope.size, 'hide')
 
       isolatedScope.cancel()
+
       expect(hideOrder).toHaveBeenCalled()
+      expect(hideOrder.calls.count()).toBe 1
       expect(hideSize).toHaveBeenCalled()
+      expect(hideSize.calls.count()).toBe 1
 
 
   describe "Empanadas", ->
@@ -206,7 +212,9 @@ describe "directives", ->
         isolatedScope.steps = ['order', 'qty']
         showType = spyOn(isolatedScope.qty, 'show')
         element.find('a')[0].click()
+
         expect(showType).toHaveBeenCalled()
+        expect(showType.calls.count()).toBe 1
 
       xit "should replace the previous selection", ->
         inject (ShoppingCart) ->
@@ -289,7 +297,10 @@ describe "directives", ->
       showContactForm = spyOn(isolatedScope.contact, 'show')
 
       element.find('button')[0].click()
+
       expect(showDeliveryMethod).toHaveBeenCalled()
+      expect(showDeliveryMethod.calls.count()).toBe 1
       expect(showContactForm).toHaveBeenCalled()
+      expect(showContactForm.calls.count()).toBe 1
 
   #      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
