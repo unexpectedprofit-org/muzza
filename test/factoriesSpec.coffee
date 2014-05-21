@@ -202,14 +202,14 @@ describe 'factories', ->
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
         order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
 
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra', qty:1})
         expect(addSpy.calls.count()).toBe 1
         expect(internalHideSpy).toHaveBeenCalled()
 
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
         order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra',qty:1})
         expect(addSpy.calls.count()).toBe 1
 
 
