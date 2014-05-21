@@ -117,37 +117,37 @@ angular.module("Muzza.services").factory "ProductService", () ->
               "id": 1
               "desc": "Carne cortada a cuchillo"
               "topp": [ "Carne", "Huevo", "Morron" ]
-              "price": 18
+              "price": 1800
             },
             {
               "id": 2
               "desc": "Calabresa"
               "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-              "price": 18
+              "price": 1800
             },
             {
               "id": 3
               "desc": "Cebolla y queso"
               "topp": [ "Muzzarella", "Cebolla" ]
-              "price": 18
+              "price": 1800
             },
             {
               "id": 4
               "desc": "Pollo"
               "topp": [ "Pollo", "Cebolla" ]
-              "price": 18
+              "price": 1800
             },
             {
               "id": 5
               "desc": "Carne picante"
               "topp": [ "Carne", "Cebolla" ]
-              "price": 18
+              "price": 1800
             },
             {
               "id": 6
               "desc": "Verdura"
               "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
-              "price": 18
+              "price": 1800
             }
           ]
         },
@@ -159,19 +159,19 @@ angular.module("Muzza.services").factory "ProductService", () ->
               "id": 7
               "desc": "Cebolla y queso"
               "topp": [ "Muzzarella", "Cebolla" ]
-              "price": 18
+              "price": 1800
             },
             {
               "id": 8
               "desc": "Pollo"
               "topp": [ "Pollo", "Cebolla" ]
-              "price": 20
+              "price": 2000
             },
             {
               "id": 9
               "desc": "Verdura"
               "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
-              "price": 20
+              "price": 2000
             }
           ]
         }
@@ -270,25 +270,25 @@ angular.module("Muzza.services").factory "ProductService", () ->
               "id": 10
               "desc": "Humita"
               "topp": [ "Choclo", "Salsa Blanca" ]
-              "price": 17
+              "price": 1700
             },
             {
               "id": 11
               "desc": "Jamon y Queso"
               "topp": [ "Muzzarella", "Jamon", "Oregano" ]
-              "price": 17
+              "price": 1700
             },
             {
               "id": 12
               "desc": "Carne Suava"
               "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-              "price": 17
+              "price": 1700
             },
             {
               "id": 13
               "desc": "Carne Picante"
               "topp": [ "Carne", "Cebolla", "Huevo" ]
-              "price": 17
+              "price": 1700
             }
           ]
         },
@@ -300,19 +300,19 @@ angular.module("Muzza.services").factory "ProductService", () ->
               "id": 14
               "desc": "Humita"
               "topp": [ "Choclo", "Salsa Blanca" ]
-              "price": 23
+              "price": 2300
             },
             {
               "id": 15
               "desc": "Jamon y Queso"
               "topp": [ "Muzzarella", "Jamon", "Oregano" ]
-              "price": 23
+              "price": 2300
             },
             {
               "id": 16
               "desc": "Carne Suava"
               "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-              "price": 23
+              "price": 2300
             }
           ]
         }
