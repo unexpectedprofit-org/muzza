@@ -1,17 +1,20 @@
-<h1>EMPANADAS</h1>
-
+<div class="item item-divider">
+    Empanadas
+</div>
 
 <div class="list">
 
-  <div class="item item-divider" ng-repeat="cat in menu">
+  <div class="item item-divider" ng-repeat-start="cat in menu">
     <strong>{{cat.desc}}</strong>
+  </div>
 
+  <div ng-repeat-end>
     <a class="item" href="#" data-ng-repeat="prod in cat.prod" ng-click="choose(prod, cat.desc)">
       {{ prod.desc }}
       {{ prod.topp }}
       {{ prod.price | centsToMoney | currency}}
     </a>
-
   </div>
+
 
 </div>
