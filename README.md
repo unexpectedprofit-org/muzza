@@ -101,4 +101,4 @@ Run IOS emulator (requires additional setup)
 
 Serve to Android Device
 
-    cordova run android
+    grunt run:android
