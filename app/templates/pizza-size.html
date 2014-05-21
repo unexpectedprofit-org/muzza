@@ -19,7 +19,7 @@
 
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" value="individual"  ng-model="pizza.size">
+                <input type="radio" value="individual" ng-click="size.choose('individual')"  ng-model="pizza.size">
                 <div class="item-content">
 
                     Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
