@@ -195,7 +195,7 @@ describe "directives", ->
 
     describe "init", ->
       it "should display the 2 empanadas menu items", ->
-        expect(element.find('a').length).toBe 5
+        expect(element.find('ion-item').length).toBe 5
         expect(element.html()).toContain('Carne cortada a cuchillo')
         expect(element.html()).toContain('Calabresa')
         expect(element.html()).toContain('Jamon y Queso')
@@ -211,7 +211,7 @@ describe "directives", ->
       it "should show all modals for available steps", ->
         isolatedScope.steps = ['order', 'qty']
         showType = spyOn(isolatedScope.qty, 'show')
-        element.find('a')[0].click()
+        element.find('ion-item')[0].click()
 
         expect(showType).toHaveBeenCalled()
         expect(showType.calls.count()).toBe 1
