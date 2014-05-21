@@ -60,6 +60,7 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
   PizzaOrder::add = (pizza)->
     pizza.description = ()->
       pizza.desc + " " + pizza.size + " " + pizza.dough
+    pizza.qty = 1
     ShoppingCart.addToCart(pizza)
     @hide()
 
@@ -142,7 +143,6 @@ angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
     empanada.desc = empanada.desc + " " + empanada.type
     empanada.totalPrice = empanada.price
     ShoppingCart.addToCart empanada
-#    @modal.hide()
     @modal.hide()
 
   EmpanadaOrder::cancel = ->
