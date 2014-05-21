@@ -47,11 +47,15 @@ describe 'factories', ->
 
       it 'should delegate the show call to the modal', ->
         size.show()
+
         expect(showSpy).toHaveBeenCalled()
+        expect(showSpy.calls.count()).toBe 1
 
       it 'should delegate the hide call to the modal', ->
         size.hide()
+
         expect(hideSpy).toHaveBeenCalled()
+        expect(hideSpy.calls.count()).toBe 1
 
     describe 'When the user choose a pizza size', ->
 
@@ -63,7 +67,9 @@ describe 'factories', ->
       it 'should call hide', ->
         internalHideSpy = spyOn(size, 'hide').and.callThrough()
         size.choose()
+
         expect(internalHideSpy).toHaveBeenCalled()
+        expect(internalHideSpy.calls.count()).toBe 1
 
 
 
@@ -111,11 +117,15 @@ describe 'factories', ->
 
         it 'should delegate the show call to the modal', ->
           dough.show()
+
           expect(showSpy).toHaveBeenCalled()
+          expect(showSpy.calls.count()).toBe 1
 
         it 'should delegate the hide call to the modal', ->
           dough.hide()
+
           expect(hideSpy).toHaveBeenCalled()
+          expect(hideSpy.calls.count()).toBe 1
 
     describe 'When the user choose a pizza dough', ->
 
@@ -127,7 +137,9 @@ describe 'factories', ->
       it 'should call hide', ->
         internalHideSpy = spyOn(dough, 'hide').and.callThrough()
         dough.choose()
+
         expect(internalHideSpy).toHaveBeenCalled()
+        expect(internalHideSpy.calls.count()).toBe 1
 
 
   describe 'PizzaOrder', ->
@@ -173,11 +185,15 @@ describe 'factories', ->
 
       it 'should delegate the show call to the modal', ->
         order.show()
+
         expect(showSpy).toHaveBeenCalled()
+        expect(showSpy.calls.count()).toBe 1
 
       it 'should delegate the hide call to the modal', ->
         order.hide()
+
         expect(hideSpy).toHaveBeenCalled()
+        expect(hideSpy.calls.count()).toBe 1
 
     describe "When the user confirms the product selection and options", ->
 
@@ -194,20 +210,26 @@ describe 'factories', ->
         order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
         expect(addSpy).toHaveBeenCalled()
 #        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza', size:'chica', dough:'a la piedra',  description : (pizza)-> pizza.desc + " " + pizza.size + " " + pizza.dough})
+        expect(addSpy.calls.count()).toBe 1
+
 
     describe "When user eliminates selected product and options", ->
 
       it "should hide confirmation modal", ->
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
         order.cancel()
+
         expect(internalHideSpy).toHaveBeenCalled()
+        expect(internalHideSpy.calls.count()).toBe 1
 
     describe "When user decides to edit the selected product and options", ->
 
       it "should display all option modals", ->
         chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
         order.edit({id:1})
+
         expect(chooseSpy).toHaveBeenCalledWith({id:1})
+        expect(chooseSpy.calls.count()).toBe 1
 
 
   describe 'Empanada', ->
