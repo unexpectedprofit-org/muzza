@@ -8,13 +8,13 @@
     <strong>{{cat.desc}}</strong>
   </div>
 
-  <div ng-repeat-end>
-    <a class="item" href="#" data-ng-repeat="prod in cat.prod" ng-click="choose(prod, cat.desc)">
-      <span>{{ prod.desc }}</span>
-      <span>{{ prod.topp }}</span>
-      <span class="text-right">{{ prod.price | centsToMoney | currency}}</span>
-    </a>
-  </div>
+  <ion-list ng-repeat-end>
+    <ion-item data-ng-repeat="prod in cat.prod" ng-click="choose(prod, cat.desc)">
+        <strong>{{ prod.desc }}</strong>
+        <span>{{ prod.topp }}</span>
+        <span class="text-right">{{ prod.price | centsToMoney | currency}}</span>
+    </ion-item>
+  </ion-list>
 
 
 </div>
