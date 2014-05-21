@@ -55,7 +55,7 @@ describe 'factories', ->
 
     describe 'When the user choose a pizza size', ->
 
-      it 'should calculate price suming totalPrice + current option', ->
+      it 'should calculate price adding totalPrice + current option', ->
         modal.scope.pizza.totalPrice =  50 + 15
         size.choose('chica')
         expect(modal.scope.pizza.totalPrice).toBe 75
@@ -275,3 +275,147 @@ describe 'factories', ->
       newEmpanada2.qty = 10
       newEmpanada2.id = 23
       expect(newEmpanada1).toEqual newEmpanada2
+
+  describe 'EmpanadaQty', ->
+
+    EmpanadaQty = modal = showSpy = hideSpy = empanadaQty = undefined
+
+    beforeEach ->
+      inject (_EmpanadaQty_) ->
+        EmpanadaQty = _EmpanadaQty_
+        modal =
+          show: -> null
+          hide: -> null
+          scope:
+            empanada:
+              qty: 1
+              price:
+                base: 10
+
+        showSpy = spyOn(modal, 'show').and.callThrough()
+        hideSpy = spyOn(modal, 'hide').and.callThrough()
+        empanadaQty = new EmpanadaQty(modal)
+
+    describe "Init", ->
+
+      it 'should construct a EmpanadaQty object', ->
+        expect(empanadaQty.choose).toBeDefined()
+        expect(empanadaQty.show).toBeDefined()
+        expect(empanadaQty.hide).toBeDefined()
+
+    describe "When the user is on the quantity step", ->
+
+      it 'should delegate the show call to the modal', ->
+        empanadaQty.show()
+
+        expect(showSpy).toHaveBeenCalled()
+        expect(showSpy.calls.count()).toBe 1
+
+      it 'should delegate the hide call to the modal', ->
+        empanadaQty.hide()
+
+        expect(hideSpy).toHaveBeenCalled()
+        expect(hideSpy.calls.count()).toBe 1
+
+      it 'should call hide', ->
+        internalHideSpy = spyOn(empanadaQty, 'hide').and.callThrough()
+        empanadaQty.choose()
+
+        expect(internalHideSpy).toHaveBeenCalled()
+        expect(internalHideSpy.calls.count()).toBe 1
+
+      it 'should show totalprice for 1 unit at the beggining', ->
+        empanadaQty.choose()
+
+        expect(modal.scope.empanada.price.total).toBe 10
+
+      it "should show totalprice for more than 1 unit", ->
+        modal.scope.empanada.qty = 3
+        empanadaQty.choose()
+        expect(modal.scope.empanada.price.total).toBe 30
+
+
+  describe 'EmpanadaOrder', ->
+
+    EmpanadaOrder = modal = showSpy = hideSpy = order = ShoppingCart = undefined
+
+    beforeEach ->
+      module ($provide) ->
+        $provide.value "ShoppingCart",
+          addToCart: ()->
+            return null
+          getCart: ()->
+            return null
+        return null
+
+    beforeEach ->
+      inject (_EmpanadaOrder_, _ShoppingCart_) ->
+        EmpanadaOrder = _EmpanadaOrder_
+        ShoppingCart = _ShoppingCart_
+        modal =
+          show: -> null
+          hide: -> null
+          scope:
+            choose: -> null
+
+        showSpy = spyOn(modal, 'show').and.callThrough()
+        hideSpy = spyOn(modal, 'hide').and.callThrough()
+
+        order = new EmpanadaOrder modal
+
+    describe "Init", ->
+
+      it 'should construct a EmpanadaOrder object', ->
+        expect(order.add).toBeDefined()
+        expect(order.cancel).toBeDefined()
+        expect(order.edit).toBeDefined()
+        expect(order.show).toBeDefined()
+        expect(order.hide).toBeDefined()
+
+      it 'should delegate the show call to the modal', ->
+        order.show()
+
+        expect(showSpy).toHaveBeenCalled()
+        expect(showSpy.calls.count()).toBe 1
+
+      it 'should delegate the hide call to the modal', ->
+        order.hide()
+
+        expect(hideSpy).toHaveBeenCalled()
+        expect(hideSpy.calls.count()).toBe 1
+
+    describe "When the user confirms the product selection and quantity", ->
+
+      it 'should call ShoppingCart to add a product and hide', ->
+        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        order.add({id:1, desc:'Humita', type:'Frita', qty:2, price: 15})
+
+        expect(hideSpy).toHaveBeenCalled()
+        expect(hideSpy.calls.count()).toBe 1
+
+        expect(addSpy).toHaveBeenCalledWith  {id:1, desc:'Humita Frita', type:'Frita', qty:2, price: 15, totalPrice: 15}
+        expect(addSpy.calls.count()).toBe 1
+
+      it 'should form the descripcion based on the selected options', ->
+        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        order.add({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
+
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10})
+        expect(addSpy.calls.count()).toBe 1
+
+    describe "When user eliminates selected product", ->
+
+      it "should hide confirmation modal", ->
+        order.cancel()
+
+        expect(hideSpy).toHaveBeenCalled()
+        expect(hideSpy.calls.count()).toBe 1
+
+    describe "When user decides to edit the selected product and options", ->
+
+      it "should display quantity modal", ->
+        chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
+        order.edit({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
+
+        expect(chooseSpy).toHaveBeenCalledWith({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
+        expect(chooseSpy.calls.count()).toBe 1
