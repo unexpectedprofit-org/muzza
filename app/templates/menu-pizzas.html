@@ -2,16 +2,10 @@
     Pizzas
 </div>
 
-<div class="item item-button-right" ng-repeat="item in menu" >
-    <strong>{{item.desc}}</strong>
-
-    <br/>
-
-    {{ item.topp }}
-
-    <button class="button" ng-click="choose(item)">
-        <i class="icon ion-plus-round"></i>
-    </button>
-</div>
+<ion-list>
+    <ion-item ng-repeat="item in menu" ng-click="choose(item)">
+        <strong>{{item.desc}}</strong> {{ item.topp }}
+    </ion-item>
+</ion-list>
 
 

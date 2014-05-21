@@ -69,7 +69,7 @@ describe "directives", ->
     describe "init", ->
 
       it "should display the 2 pizza menu items", ->
-        expect(element.find('button').length).toBe 2
+        expect(element.find('ion-item').length).toBe 2
         expect(element.html()).toContain('Muzza')
         expect(element.html()).toContain('Fugazetta')
 
@@ -85,7 +85,7 @@ describe "directives", ->
         isolatedScope.steps = ['size', 'dough']
         showSize = spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
         showDough = spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
-        element.find('button')[0].click()
+        element.find('ion-item')[0].click()
 
         expect(showSize).toHaveBeenCalled()
         expect(showSize.calls.count()).toBe 1
@@ -97,13 +97,13 @@ describe "directives", ->
         spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
 
         #Choose First Product
-        element.find('button')[0].click()
+        element.find('ion-item')[0].click()
         isolatedScope.pizza.size = 'b'
         isolatedScope.pizza.dough = 'a'
 
         #Choose Second Product
-        element.find('button')[1].click()
-        expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 , $$hashKey : '02V'}
+        element.find('ion-item')[1].click()
+        expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
 
 
   describe "CancelSelection", ->
