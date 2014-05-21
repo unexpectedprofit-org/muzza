@@ -198,7 +198,7 @@ describe 'factories', ->
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
         order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
 
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra', qty:1})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra', qty:1, cat:'PIZZA'})
         expect(addSpy.calls.count()).toBe 1
         expect(internalHideSpy).toHaveBeenCalled()
         expect(internalHideSpy.calls.count()).toBe 1
@@ -206,7 +206,7 @@ describe 'factories', ->
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
         order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra',qty:1})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra',qty:1, cat:'PIZZA'})
         expect(addSpy.calls.count()).toBe 1
 
 
@@ -413,19 +413,19 @@ describe 'factories', ->
 
       it 'should call ShoppingCart to add a product and hide', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
-        order.add({id:1, desc:'Humita', type:'Frita', qty:2, price: 15})
+        order.add({id:1, desc:'Humita', type:'Frita', qty:2, price: 15, cat: 'EMPANADA'})
 
         expect(hideSpy).toHaveBeenCalled()
         expect(hideSpy.calls.count()).toBe 1
 
-        expect(addSpy).toHaveBeenCalledWith  {id:1, desc:'Humita Frita', type:'Frita', qty:2, price: 15, totalPrice: 15}
+        expect(addSpy).toHaveBeenCalledWith  {id:1, desc:'Humita Frita', type:'Frita', qty:2, price: 15, totalPrice: 15, cat: 'EMPANADA'}
         expect(addSpy.calls.count()).toBe 1
 
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
-        order.add({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
+        order.add({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10, cat: 'EMPANADA'})
 
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10})
+        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10, cat: 'EMPANADA'})
         expect(addSpy.calls.count()).toBe 1
 
     describe "When user eliminates selected product", ->

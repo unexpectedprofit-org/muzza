@@ -4,7 +4,7 @@
         </div>
     </div>
     <ion-list>
-        <ion-item nav-clear ng-repeat="item in cart">
+        <ion-item nav-clear ng-repeat="item in cart | orderBy:'+cat'">
 
           {{item.qty}} x {{item.desc}}
           </br>

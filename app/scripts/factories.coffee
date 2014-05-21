@@ -58,7 +58,12 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart)->
 
   PizzaOrder::add = (pizza)->
     pizza.desc = pizza.desc + " " + pizza.size + " " + pizza.dough
+
+    ######### FOR CART
     pizza.qty = 1
+    pizza.cat = "PIZZA"
+    ######### FOR CART //probably will need to have one object Pizza
+
     ShoppingCart.addToCart(pizza)
     @hide()
 
@@ -75,6 +80,7 @@ angular.module('Muzza.factories').factory "Empanada", () ->
 
   class Empanada
     constructor: (from) ->
+      @cat = 'EMPANADA'
       @qty = 1
       @desc = from?.desc
       @price = from?.price
