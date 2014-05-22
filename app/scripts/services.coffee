@@ -165,80 +165,111 @@ angular.module("Muzza.services").factory "ProductService", () ->
       ],
       "pizza": [
         {
-          "desc": "Muzzarella"
-          "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
-          "price" : {
-            base: 5000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-            dough:
-              "a la piedra": 2
-              "al molde": 3
-          }
+          "id": 1
+          "desc": "Pizzas Especiales"
+          "prod": [
+            {
+              "id": 90
+              "desc": "Muzzarella"
+              "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
+              "price" : {
+                base: 5000
+                size:
+                  individual: 0
+                  chica: 1000
+                  grande: 2000
+                dough:
+                  "a la piedra": 2
+                  "al molde": 3
+              }
+            },
+            {
+              "id": 91
+              "desc": "Fuggazetta"
+              "topp": [ "Muzzarella", "Cebollas" ]
+              "price" : {
+                base: 5500
+                size:
+                  individual: 0
+                  chica: 1500
+                  grande: 2000
+                dough:
+                  "a la piedra": 0
+                  "al molde": 0
+              }
+            },
+            {
+              "id": 92
+              "desc": "Jamon y Morrones"
+              "topp": [ "Muzzarella", "Jamon", "Morron" ]
+              "price" : {
+                base: 7500
+                size:
+                  individual: 0
+                  chica: 1000
+                  grande: 1500
+                dough:
+                  "a la piedra": 0
+                  "al molde": 0
+              }
+            },
+            {
+              "id": 93
+              "desc": "Calabresa"
+              "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+              "price" : {
+                base: 5000
+                size:
+                  individual: 0
+                  chica: 1000
+                  grande: 2000
+                dough:
+                  "a la piedra": 0
+                  "al molde": 0
+              }
+            }
+          ]
         },
         {
-          "desc": "Fuggazetta"
-          "topp": [ "Muzzarella", "Cebollas" ]
-          "price" : {
-            base: 5500
-            size:
-              individual: 0
-              chica: 1500
-              grande: 2000
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-          }
+          "id": 2
+          "desc": "Pizzas de la Casa"
+          "prod": [
+            {
+              "id": 94
+              "desc": "Muzzarella con tomate al natural y aceitunas"
+              "topp": [ "Muzzarella", "tomate", "Aceitunas" ]
+              "price" : {
+                base: 8000
+                size:
+                  individual: 0
+                  chica: 1000
+                  grande: 2000
+                dough:
+                  "a la piedra": 2
+                  "al molde": 3
+              }
+            },
+            {
+              "id": 95
+              "desc": "Espinaca con salsa blanca o muzzarella"
+              "topp": [ "Espinaca", "muzzarella" ]
+              "price" : {
+                base: 7500
+                size:
+                  individual: 0
+                  chica: 1500
+                  grande: 2000
+                dough:
+                  "a la piedra": 0
+                  "al molde": 0
+              }
+            }
+          ]
         },
-        {
-          "desc": "Jamon y Morrones"
-          "topp": [ "Muzzarella", "Jamon", "Morron" ]
-          "price" : {
-            base: 7500
-            size:
-              individual: 0
-              chica: 1000
-              grande: 1500
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-          }
-        },
-        {
-          "desc": "Calabresa"
-          "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
-          "price" : {
-            base: 5000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-          }
-        }
       ]
     }
     storeProducts2 = {
       "pizza": [
-        {
-          "desc": "Muzzarella"
-          "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
-          "price": [ 22, 55, 77 ]
-        },
-        {
-          "desc": "Espinaca y Salsa Blanca"
-          "topp": [ "Muzzarella", "Espicana", "Salsa Blanca" ]
-          "price": [ 80, 82, 85 ]
-        },
-        {
-          "desc": "Jamon y Morrones"
-          "topp": [ "Muzzarella", "Jamon", "Morron" ]
-          "price": [ 40, 60, 95 ]
-        }
       ],
       "empanada": [
         {
