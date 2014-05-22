@@ -85,6 +85,8 @@ angular.module("Muzza.services").service 'ShoppingCart', ($log)->
     else
       itemSearched.qty += item.qty
 
+    console.log "Item added to cart: " + JSON.stringify item
+
 
   getAll = ->
     cart

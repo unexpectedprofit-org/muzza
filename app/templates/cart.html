@@ -3,16 +3,13 @@
             El carrito esta vacio
         </div>
     </div>
+
     <ion-list>
         <ion-item nav-clear ng-repeat="item in cart | orderBy:'+cat'">
 
           {{item.qty}} x {{item.desc}}
           </br>
           {{item.totalPrice * item.qty | centsToMoney | currency}}
-
-          <pre>
-            {{ item | json }}
-          </pre>
 
         </ion-item>
     </ion-list>
