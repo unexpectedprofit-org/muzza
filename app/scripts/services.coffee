@@ -69,11 +69,14 @@ angular.module("Muzza.services").factory "StoreService", () ->
 
 angular.module("Muzza.services").service 'ShoppingCart', ($log)->
 
-  cart = []
+  cart =
+    items: []
+    price:
+      total: 0
 
 
   getItem = (hashKey) ->
-    _.find( cart, (elem) ->
+    _.find( cart.items, (elem) ->
       elem.hash is hashKey
     )
 
@@ -81,7 +84,7 @@ angular.module("Muzza.services").service 'ShoppingCart', ($log)->
     itemSearched = getItem item.hash
 
     if angular.isUndefined itemSearched
-      cart.push(item)
+      cart.items.push(item)
     else
       itemSearched.qty += item.qty
 
@@ -89,8 +92,21 @@ angular.module("Muzza.services").service 'ShoppingCart', ($log)->
   getAll = ->
     cart
 
+  calculateTotalPrice = ->
+    totalPrice = 0
+
+    if cart.items.length > 0
+      angular.forEach cart.items, (product) ->
+        totalPrice += product.qty * product.totalPrice
+
+    console.log "cart total price: " + totalPrice
+    totalPrice
+
+
+
   addToCart: add
   getCart: getAll
+  getTotalPrice: calculateTotalPrice
 
 angular.module("Muzza.services").factory "ProductService", () ->
 
