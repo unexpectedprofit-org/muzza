@@ -40,16 +40,16 @@ describe "services", ->
         hash: "1-muzza-chica-alapiedra"
       ShoppingCart.addToCart(item)
 
-      expect(ShoppingCart.getCart().length).toBe 1
-      expect(ShoppingCart.getCart()[0]).toEqual(item)
+      expect(ShoppingCart.getCart().items.length).toBe 1
+      expect(ShoppingCart.getCart().items[0]).toEqual item
 
       item =
         id: 2
         hash: "2-cebolla-grande-almolde"
       ShoppingCart.addToCart(item)
 
-      expect(ShoppingCart.getCart().length).toBe 2
-      expect(ShoppingCart.getCart()[1]).toEqual(item)
+      expect(ShoppingCart.getCart().items.length).toBe 2
+      expect(ShoppingCart.getCart().items[1]).toEqual item
 
 
     it 'should NOT add product if already present', ->
@@ -59,8 +59,8 @@ describe "services", ->
         hash: '5-humita-frita'
       ShoppingCart.addToCart(item)
 
-      expect(ShoppingCart.getCart().length).toBe 1
-      expect(ShoppingCart.getCart()[0]).toEqual(item)
+      expect(ShoppingCart.getCart().items.length).toBe 1
+      expect(ShoppingCart.getCart().items[0]).toEqual(item)
 
       item =
         id: 5
@@ -68,15 +68,28 @@ describe "services", ->
         hash: '5-humita-frita'
       ShoppingCart.addToCart(item)
 
-      expect(ShoppingCart.getCart().length).toBe 1
-      expect(ShoppingCart.getCart()[0].qty).toBe 5
-
+      expect(ShoppingCart.getCart().items.length).toBe 1
+      expect(ShoppingCart.getCart().items[0].qty).toBe 5
 
     it 'should return all items in the cart', ->
-      ShoppingCart.addToCart({id: 1, hash:'1-alala'})
-      ShoppingCart.addToCart({id: 2, hash:'2-jojojjo'})
+      ShoppingCart.addToCart {id: 1, hash:'1-alala'}
+      ShoppingCart.addToCart {id: 2, hash:'2-jojojjo'}
       cart = ShoppingCart.getCart()
-      expect(cart.length).toBe 2
+
+      expect(cart.items.length).toBe 2
+
+    it "should calculate total price, only one product", ->
+      ShoppingCart.addToCart {id: 1, hash:'1-alala', qty: 2, totalPrice: 1000}
+
+      expect(ShoppingCart.getTotalPrice()).toBe 2000
+
+    it "should calculate total price, several products", ->
+      ShoppingCart.addToCart {id: 1, hash:'1-alala', qty: 2, totalPrice: 1000}
+      ShoppingCart.addToCart {id: 2, hash:'2-alala', qty: 1, totalPrice: 2000}
+      ShoppingCart.addToCart {id: 3, hash:'3-alala', qty: 3, totalPrice: 3000}
+
+      expect(ShoppingCart.getTotalPrice()).toBe 13000
+
 
   describe "Product Service", ->
 

@@ -11,6 +11,8 @@ describe "directives", ->
           return null
         getCart: ()->
           return null
+        getTotalPrice: () ->
+          return null
       return null
 
   describe "Cart", ->
@@ -23,16 +25,16 @@ describe "directives", ->
         element = angular.element('<cart></cart>')
         $compile(element)($rootScope)
 
-    describe 'when shopping cart has at least on item', ->
+    describe 'when shopping cart has at least one item', ->
 
       it 'should list all items in the shopping cart', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue { items: [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}], price:{total: 20}}
         $scope.$digest()
         items = element.find('ion-item')
         expect(items.length).toBe 2
 
       it 'should not display the empty msg', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue { items: [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}], price:{total: 20}}
         $scope.$digest()
         msg = element.find('div').html()
         expect(msg).not.toMatch(/vacio/)
@@ -40,7 +42,7 @@ describe "directives", ->
     describe 'when shopping cart is empty', ->
 
       it 'should display a msg when shopping cart is empty', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue {items:[], price:{total:0}}
         $scope.$digest()
         items = element.find('ion-item')
         msg = element.find('div').html()
@@ -277,7 +279,7 @@ describe "directives", ->
         ShoppingCart = _ShoppingCart_
         $scope = $rootScope
         element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue  {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price: {total: 20}}
         $compile(element)($rootScope)
 
     it "should show if car is not empty", ->
@@ -312,7 +314,7 @@ describe "directives", ->
         ShoppingCart = _ShoppingCart_
         $scope = $rootScope
         element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}] )
+        spyOn(ShoppingCart, 'getCart').and.returnValue {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price:{total:20}}
         $compile(element)($rootScope)
         $scope.$digest()
         isolatedScope = element.isolateScope()

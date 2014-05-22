@@ -107,11 +107,16 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart)
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
 
+    $scope.$watchCollection 'cart.items', (newVal) ->
+      $scope.cart.price.total = ShoppingCart.getTotalPrice()
+
+
+
 angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCart) ->
   restrict: 'EA'
   scope: {}
   template: '<button class="button button-block button-positive"
-              data-ng-if="cart.length > 0"
+              data-ng-if="cart.items.length > 0"
               data-ng-click="checkout()">Realizar Pedido</button>'
 
   link: ($scope, ele, attrs, ctrl)->
