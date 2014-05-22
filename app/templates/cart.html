@@ -1,11 +1,11 @@
-    <div class="card" ng-if="cart.items.length == 0">
+    <div class="card" ng-if="cart.products.length == 0">
         <div class="item item-text-wrap">
             El carrito esta vacio
         </div>
     </div>
 
     <ion-list>
-        <ion-item nav-clear ng-repeat="item in cart.items | orderBy:'+cat'">
+        <ion-item nav-clear ng-repeat="item in cart.products | orderBy:'+cat'">
 
           {{item.qty}} x {{item.desc}}
           </br>
@@ -14,8 +14,8 @@
 
         </ion-item>
 
-        <div  ng-if="cart.items.length > 0">
-           Total: {{ cart.getPrice()  | centsToMoney | currency }}
+        <div ng-if="cart.products.length > 0">
+           Total: {{ cart.totalPrice()  | centsToMoney | currency }}
         </div>
 
     </ion-list>

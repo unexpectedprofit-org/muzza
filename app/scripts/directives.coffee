@@ -1,4 +1,4 @@
-angular.module('Muzza.directives', ['ui.router' ,'Muzza.factories'])
+angular.module('Muzza.directives', ['Muzza.factories', 'Muzza.services'])
 
 angular.module("Muzza.directives").filter "centsToMoney", ->
   (cents) ->
@@ -16,7 +16,7 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
       console.log "empa: " + JSON.stringify $scope.empanada
       console.log "pizza: " + JSON.stringify  $scope.pizza
 
-angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder, $state, $stateParams, $q) ->
+angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCartService, PizzaSize, PizzaDough, PizzaOrder, $state, $stateParams, $q) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -89,10 +89,7 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.order = modal
-      $scope.order.add = ()->
-        ShoppingCart.addToCart $scope.empanada
-        $scope.order.hide()
+      $scope.order = new EmpanadaOrder modal
 
 
     $scope.choose = (item, cat_desc)->
@@ -109,22 +106,20 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
         modal.show()
 
 
-angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart, PizzaOrder, $state) ->
+angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCartService, PizzaOrder, $state) ->
   restrict: 'EA'
   scope: {}
   templateUrl: 'cart.html'
   link: ($scope, ele, attrs, ctrl)->
-    $scope.cart = ShoppingCart.getCart()
+    $scope.cart = ShoppingCartService.getCart()
 
     $scope.edit = (item)->
 #      TODO: make this dynamic on type
       $state.go('app.pizza', {id: item.hash})
 
-    $scope.cart.getPrice = ShoppingCart.getTotalPrice
 
 
-
-angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCart) ->
+angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCartService) ->
   restrict: 'EA'
   scope: {}
   template: '<button class="button button-block button-positive"
@@ -133,7 +128,7 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
 
   link: ($scope, ele, attrs, ctrl)->
 
-    $scope.cart = ShoppingCart.getCart()
+    $scope.cart = ShoppingCartService.getCart()
 
     $scope.checkoutSteps = ['contact', 'delivery']
 

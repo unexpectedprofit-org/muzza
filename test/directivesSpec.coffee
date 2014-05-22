@@ -7,11 +7,11 @@ describe "directives", ->
 
 
   describe "Cart", ->
-    $scope = element = ShoppingCart = undefined
+    $scope = element = ShoppingCartService = undefined
 
     beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCart_) ->
-        ShoppingCart = _ShoppingCart_
+      inject ($compile, $rootScope, _ShoppingCartService_) ->
+        ShoppingCartService = _ShoppingCartService_
         $scope = $rootScope
         element = angular.element('<cart></cart>')
         $compile(element)($rootScope)
@@ -19,26 +19,42 @@ describe "directives", ->
     describe 'when shopping cart has at least one item', ->
 
       it 'should list all items in the shopping cart', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue { items: [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}], price:{total: 20}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
         $scope.$digest()
         items = element.find('ion-item')
         expect(items.length).toBe 2
 
       it 'should not display the empty msg', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue { items: [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}], price:{total: 20}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue { items: [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}], price:{total: 20}}
         $scope.$digest()
         msg = element.find('div').html()
         expect(msg).not.toMatch(/vacio/)
 
+      it "should show total price", ->
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
+        spyOn(ShoppingCartService, 'getTotalPrice').and.returnValue 1211
+
+        $scope.$digest()
+        msg = element.find('ion-list').html()
+        expect(msg).toMatch(/Total:/)
+        expect(msg).toMatch(/12.11/)
+
+
     describe 'when shopping cart is empty', ->
 
       it 'should display a msg when shopping cart is empty', ->
-        spyOn(ShoppingCart, 'getCart').and.returnValue {items:[], price:{total:0}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue {items:[], price:{total:0}}
         $scope.$digest()
         items = element.find('ion-item')
         msg = element.find('div').html()
         expect(msg).toMatch(/vacio/)
         expect(items.length).toBe 0
+
+      it "should not display totalPrice", ->
+        spyOn(ShoppingCartService, 'getCart').and.returnValue []
+        $scope.$digest()
+        msg = element.find('ion-list').html()
+        expect(msg).not.toMatch(/vacio/)
 
   describe "Pizzas", ->
 
@@ -237,22 +253,24 @@ describe "directives", ->
         expect(isolatedScope.empanada.type).toBe "Al Horno"
         expect(isolatedScope.empanada.qty).toBe 1
 
-      xit "should replace the previous selection", ->
-        inject (ShoppingCart) ->
-          isolatedScope.steps = ['order','type']
-          addToCart = spyOn(ShoppingCart, 'addToCart')
+
+      it "should replace the previous selection", ->
+        inject (ShoppingCartService) ->
+          isolatedScope.steps = ['order']
+          showType = spyOn(isolatedScope.order, 'show')
+          addToCart = spyOn(ShoppingCartService, 'add')
 
           #Choose First Product
-          element.find('a')[0].click()
-          isolatedScope.empanada.qty = 2
-          isolatedScope.qty.choose()
-          isolatedScope.order.add()
+          element.find('ion-item')[0].click()
 
-          expect(addToCart).toHaveBeenCalledWith {"qty": 2,"desc": 'Carne cortada a cuchillo',"price": 18,"type": 'Al Horno', "id":1}
+          isolatedScope.empanada.qty = 2
+          isolatedScope.order.add isolatedScope.empanada
+
+          expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining {"cat": 'EMPANADA', "qty": 2,"desc": 'Carne cortada a cuchillo Al Horno',"price": 18,"type": 'Al Horno', "id":1,"hash":'1-carnecortadaacuchillo-alhorno',"totalPrice": 18}
           expect(addToCart.calls.count()).toBe 1
 
           #Choose Second Product
-          element.find('a')[1].click()
+          element.find('ion-item')[1].click()
           expectedEmpanada =
             id: 2
             desc: "Humita"
@@ -264,14 +282,14 @@ describe "directives", ->
   ##### need to put both below inside same describe block
   describe "Checkout Button, car not empty", ->
 
-    $scope = element = ShoppingCart = undefined
+    $scope = element = ShoppingCartService = undefined
 
     beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCart_) ->
-        ShoppingCart = _ShoppingCart_
+      inject ($compile, $rootScope, _ShoppingCartService_) ->
+        ShoppingCartService = _ShoppingCartService_
         $scope = $rootScope
         element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCart, 'getCart').and.returnValue  {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price: {total: 20}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue  {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price: {total: 20}}
         $compile(element)($rootScope)
 
     it "should show if car is not empty", ->
@@ -281,14 +299,14 @@ describe "directives", ->
 
   describe "Checkout Button, car empty", ->
 
-    $scope = element = ShoppingCart = undefined
+    $scope = element = ShoppingCartService = undefined
 
     beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCart_) ->
-        ShoppingCart = _ShoppingCart_
+      inject ($compile, $rootScope, _ShoppingCartService_) ->
+        ShoppingCartService = _ShoppingCartService_
         $scope = $rootScope
         element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCart, 'getCart').and.returnValue( [] )
+        spyOn(ShoppingCartService, 'getCart').and.returnValue( [] )
         $compile(element)($rootScope)
 
     it "should NOT show if car is empty", ->
@@ -299,14 +317,14 @@ describe "directives", ->
 
   describe "when user clicks checkout button", ->
 
-    $scope = element = ShoppingCart = isolatedScope = undefined
+    $scope = element = ShoppingCartService = isolatedScope = undefined
 
     beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCart_) ->
-        ShoppingCart = _ShoppingCart_
+      inject ($compile, $rootScope, _ShoppingCartService_) ->
+        ShoppingCartService = _ShoppingCartService_
         $scope = $rootScope
         element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCart, 'getCart').and.returnValue {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price:{total:20}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price:{total:20}}
         $compile(element)($rootScope)
         $scope.$digest()
         isolatedScope = element.isolateScope()
