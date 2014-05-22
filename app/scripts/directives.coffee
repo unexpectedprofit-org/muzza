@@ -63,7 +63,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     init()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada, EmpanadaOrder) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -108,12 +108,13 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart,
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
 
-    $scope.cart.getPrice = ShoppingCart.getTotalPrice
-
-
     $scope.edit = (item)->
 #      TODO: make this dynamic on type
       $state.go('app.pizza', {id: item.id})
+
+    $scope.cart.getPrice = ShoppingCart.getTotalPrice
+
+
 
 angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCart) ->
   restrict: 'EA'

@@ -58,15 +58,16 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
     $state.go('app.menu')
 
   PizzaOrder::add = (pizza)->
-    pizza.description = ()->
-      pizza.desc + " " + pizza.size + " " + pizza.dough
+#   TODO: Why is qty hardcoded
+#    TODO: why is cat hardcoded here? not coming from data repo
     ######### FOR CART
     pizza.hash = getHash pizza
     pizza.cat = "PIZZA"
     pizza.qty = 1
     ######### FOR CART //probably will need to have a Pizza object
 
-
+    pizza.description = ()->
+      pizza.desc + " " + pizza.size + " " + pizza.dough
     ShoppingCart.addToCart(pizza)
     @hide()
 
