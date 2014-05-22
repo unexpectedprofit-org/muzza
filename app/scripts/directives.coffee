@@ -44,11 +44,16 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     $scope.choose = (pizza, id)->
 
-      $scope.pizza = pizza or ShoppingCart.getItemById(id)
+      $scope.pizza = pizza
 
-      angular.forEach $scope.steps, (key, val)->
-        modal = $scope[key]
-        modal.show()
+      if id
+        item = ShoppingCart.getItemByHash(id)
+        if item.cat == 'PIZZA' then $scope.pizza = item
+
+      if $scope.pizza?
+        angular.forEach $scope.steps, (key, val)->
+          modal = $scope[key]
+          modal.show()
 
     init = ->
 
@@ -63,7 +68,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     init()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada, EmpanadaOrder) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -110,7 +115,7 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart,
 
     $scope.edit = (item)->
 #      TODO: make this dynamic on type
-      $state.go('app.pizza', {id: item.id})
+      $state.go('app.pizza', {id: item.hash})
 
     $scope.cart.getPrice = ShoppingCart.getTotalPrice
 

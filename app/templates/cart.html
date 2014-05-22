@@ -9,6 +9,8 @@
           {{item.qty}} x {{item.desc}}
           </br>
           {{item.totalPrice * item.qty | centsToMoney | currency}}
+            <button class="button button-light" ng-click="$parent.edit(item)">Editar</button>
+
 
           <pre>
             {{ item | json }}

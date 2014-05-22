@@ -102,8 +102,12 @@ angular.module("Muzza.services").service 'ShoppingCart', ($log)->
     console.log "cart total price: " + totalPrice
     totalPrice
 
+
+
   addToCart: add
   getCart: getAll
+  getTotalPrice: calculateTotalPrice
+  getItemByHash: getItem
 
 angular.module("Muzza.services").factory "ProductService", () ->
 

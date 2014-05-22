@@ -59,7 +59,7 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
 
   PizzaOrder::add = (pizza)->
 #   TODO: Why is qty hardcoded
-#    TODO: why is cat hardcoded here? not coming from data repo
+#   TODO: why is cat hardcoded here? not coming from data repo
     ######### FOR CART
     pizza.hash = getHash pizza
     pizza.cat = "PIZZA"

@@ -123,7 +123,9 @@ describe "directives", ->
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
+        expect(isolatedScope.pizza).toEqual jasmine.objectContaining
+          desc : 'Fugazetta'
+          id : 2
 
 
   describe "CancelSelection", ->

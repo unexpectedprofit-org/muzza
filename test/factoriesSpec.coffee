@@ -202,7 +202,8 @@ describe 'factories', ->
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
         order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
 
-        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'}
+        expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+
         expect(addSpy.calls.count()).toBe 1
         expect(internalHideSpy).toHaveBeenCalled()
         expect(internalHideSpy.calls.count()).toBe 1
@@ -210,7 +211,7 @@ describe 'factories', ->
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
         order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
-        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'}
+        expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
         expect(addSpy.calls.count()).toBe 1
 
       it 'should form a hash', ->
