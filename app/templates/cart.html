@@ -13,7 +13,8 @@
 
         </ion-item>
 
-      <div data-ng-if="cart.price.total > 0">
-           Total: {{ cart.price.total  | centsToMoney | currency }}
-         </div>
+        <div  ng-if="cart.items.length > 0">
+           Total: {{ cart.getPrice()  | centsToMoney | currency }}
+        </div>
+
     </ion-list>

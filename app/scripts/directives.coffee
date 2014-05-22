@@ -107,8 +107,7 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart)
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
 
-    $scope.$watchCollection 'cart.items', (newVal) ->
-      $scope.cart.price.total = ShoppingCart.getTotalPrice()
+    $scope.cart.getPrice = ShoppingCart.getTotalPrice
 
 
 
