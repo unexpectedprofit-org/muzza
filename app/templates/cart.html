@@ -6,7 +6,7 @@
     <ion-list>
         <ion-item nav-clear ng-repeat="item in cart">
 
-          {{item.desc}}    </br>
+          {{item.description()}}    </br>
           {{item.totalPrice | centsToMoney | currency}}
 
           <button class="button button-light" ng-click="$parent.edit(item)">Editar</button>

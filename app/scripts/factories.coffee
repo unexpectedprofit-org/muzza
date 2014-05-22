@@ -1,4 +1,4 @@
-angular.module('Muzza.factories', [])
+angular.module('Muzza.factories', ['ui.router'])
 
 angular.module('Muzza.factories').factory "PizzaSize", ()->
 
@@ -44,7 +44,7 @@ angular.module('Muzza.factories').factory "PizzaDough", ()->
   return PizzaDough
 
 
-angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart)->
+angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
 
   class PizzaOrder
     constructor: (modal) ->
@@ -55,13 +55,16 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart)->
 
   PizzaOrder::hide = ->
     @modal.hide()
+    $state.go('app.menu')
 
   PizzaOrder::add = (pizza)->
-    pizza.desc = pizza.desc + " " + pizza.size + " " + pizza.dough
+    pizza.description = ()->
+      pizza.desc + " " + pizza.size + " " + pizza.dough
     ShoppingCart.addToCart(pizza)
     @hide()
 
   PizzaOrder::cancel = ->
+#    TODO: if item comes from shoppingcart it should be removed
     @hide()
 
   PizzaOrder::edit = (pizza)->
