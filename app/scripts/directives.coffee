@@ -108,6 +108,9 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart,
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
 
+    $scope.cart.getPrice = ShoppingCart.getTotalPrice
+
+
     $scope.edit = (item)->
 #      TODO: make this dynamic on type
       $state.go('app.pizza', {id: item.id})
