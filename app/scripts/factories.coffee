@@ -119,25 +119,6 @@ angular.module('Muzza.factories').factory "Empanada", () ->
 
   return Empanada
 
-angular.module('Muzza.factories').factory "EmpanadaQty", () ->
-
-  class EmpanadaQty
-    constructor: (modal) ->
-      @modal = modal
-
-  EmpanadaQty::show = ->
-    @modal.show()
-
-  EmpanadaQty::hide = ->
-    @modal.hide()
-
-  EmpanadaQty::choose = ()->
-    empanada = @modal.scope.empanada
-    @modal.scope.empanada.price.total = empanada.price.base * empanada.qty
-    @hide()
-
-  return EmpanadaQty
-
 angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
 
   class EmpanadaOrder
