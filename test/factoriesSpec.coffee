@@ -154,6 +154,10 @@ describe 'factories', ->
           getCart: ()->
             return null
         return null
+      module ($provide) ->
+        $provide.value "$state",
+          go: ()-> ''
+        return null
 
     beforeEach ->
       inject (_PizzaOrder_, _ShoppingCart_) ->
@@ -198,22 +202,16 @@ describe 'factories', ->
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
         order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
 
-        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'}
+        expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+
         expect(addSpy.calls.count()).toBe 1
         expect(internalHideSpy).toHaveBeenCalled()
         expect(internalHideSpy.calls.count()).toBe 1
 
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
-        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
-        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'}
-        expect(addSpy.calls.count()).toBe 1
-
-      it 'should form a hash', ->
-        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
-        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
-        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, hash: '1-muzza-chica-alapiedra'}
-        expect(addSpy.calls.count()).toBe 1
+        order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
+        expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
 
     describe "When user eliminates selected product and options", ->
 
@@ -229,9 +227,7 @@ describe 'factories', ->
       it "should display all option modals", ->
         chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
         order.edit({id:1})
-
         expect(chooseSpy).toHaveBeenCalledWith({id:1})
-        expect(chooseSpy.calls.count()).toBe 1
 
 
   describe 'Empanada', ->

@@ -1,4 +1,4 @@
-angular.module("Muzza", [ "ionic", "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services"])
+angular.module("Muzza", [ "ionic", "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants"])
 
 angular.module("Muzza").run ($ionicPlatform) ->
   $ionicPlatform.ready ->
@@ -14,6 +14,12 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
     url: "/menu"
     views:
       navContent:
+        templateUrl: "templates/menu.html"
+
+  .state "app.pizza",
+    url: "/menu/:id"
+    views:
+      'navContent':
         templateUrl: "templates/menu.html"
 
   .state "app.store",

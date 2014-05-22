@@ -123,7 +123,9 @@ describe "directives", ->
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.pizza).toEqual { desc : 'Fugazetta', id : 2 }
+        expect(isolatedScope.pizza).toEqual jasmine.objectContaining
+          desc : 'Fugazetta'
+          id : 2
 
 
   describe "CancelSelection", ->
@@ -244,10 +246,9 @@ describe "directives", ->
         expect(isolatedScope.empanada.type).toBe "Al Horno"
         expect(isolatedScope.empanada.qty).toBe 1
 
-
       xit "should replace the previous selection", ->
         inject (ShoppingCart) ->
-          isolatedScope.steps = ['order','qty']
+          isolatedScope.steps = ['order','type']
           addToCart = spyOn(ShoppingCart, 'addToCart')
 
           #Choose First Product

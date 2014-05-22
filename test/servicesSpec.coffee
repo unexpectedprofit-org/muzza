@@ -101,20 +101,28 @@ describe "services", ->
     )
 
     it "should get a menu of product objects", ->
-
+      store =
+        products:
+          "empanada": [
+            "id": 1,
+            "desc": "Al Horno",
+            "prod": [
+              "id": 1
+              "desc": "Carne cortada a cuchillo"
+              "topp": [ "Carne", "Huevo", "Morron" ]
+              "price": 1800
+            ,
+              "id": 2
+              "desc": "Calabresa"
+              "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+              "price": 1800
+            ]
+          ]
+      spyOn(ProductService, 'listMenuByStore').and.returnValue store
       newMenuObject = ProductService.listMenuByStore 1
-      expect( newMenuObject.products.pizza.length ).toBe 2
-      expect( newMenuObject.products.pizza[0].prod.length ).toBe 4
-      expect( newMenuObject.products.pizza[1].prod.length ).toBe 2
-      expect( newMenuObject.products.empanada.length ).toBe 2
-      expect( newMenuObject.products.empanada[0].prod.length ).toBe 6
-      expect( newMenuObject.products.empanada[1].prod.length ).toBe 3
+      expect( newMenuObject.products.empanada.length ).toBe 1
+      expect( newMenuObject.products.empanada[0].prod.length ).toBe 2
 
-      newMenuObject = ProductService.listMenuByStore 2
-      expect( newMenuObject.products.pizza.length ).toBe 0
-      expect( newMenuObject.products.empanada.length ).toBe 2
-      expect( newMenuObject.products.empanada[0].prod.length ).toBe 4
-      expect( newMenuObject.products.empanada[1].prod.length ).toBe 3
 
   describe "OrderService", ->
     OrderService = undefined

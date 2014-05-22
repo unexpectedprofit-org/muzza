@@ -1,4 +1,4 @@
-angular.module('Muzza.directives', ['Muzza.factories'])
+angular.module('Muzza.directives', ['ui.router' ,'Muzza.factories'])
 
 angular.module("Muzza.directives").filter "centsToMoney", ->
   (cents) ->
@@ -16,8 +16,7 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
       console.log "empa: " + JSON.stringify $scope.empanada
       console.log "pizza: " + JSON.stringify  $scope.pizza
 
-
-angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder) ->
+angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCart, PizzaSize, PizzaDough, PizzaOrder, $state, $stateParams, $q) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -25,42 +24,49 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
   require: 'ngModel'
   templateUrl: 'menu-pizzas.html'
   link: ($scope, ele, attrs, ctrl)->
-
-#   holds temp selection
+    #   holds temp selection
     $scope.pizza = {}
 
-#   this could come from firebase, or we can override when starting the app with a decorator at config phase
+    #this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'dough', 'size']
 
-    $ionicModal.fromTemplateUrl 'pizza-size.html',
+    size = $ionicModal.fromTemplateUrl 'pizza-size.html',
       scope: $scope,
       animation: 'slide-in-up'
-    .then (modal) ->
-      $scope.size = new PizzaSize(modal)
 
-    $ionicModal.fromTemplateUrl 'pizza-dough.html',
+    dough = $ionicModal.fromTemplateUrl 'pizza-dough.html',
       scope: $scope,
       animation: 'slide-in-up'
-    .then (modal) ->
-      $scope.dough = new PizzaDough(modal)
 
-    $ionicModal.fromTemplateUrl 'pizza-order.html',
+    order = $ionicModal.fromTemplateUrl 'pizza-order.html',
       scope: $scope,
       animation: 'slide-in-up'
-    .then (modal) ->
-      $scope.order = new PizzaOrder(modal)
 
+    $scope.choose = (pizza, id)->
 
-    $scope.choose = (item)->
-      $scope.pizza = angular.copy(item)
-      angular.forEach $scope.steps, (key, val)->
-        modal = $scope[key]
-        modal.show()
+      $scope.pizza = pizza
 
-#    $scope.$on '$destroy', ->
-#      $log.log 'destroy'
-#      $scope.size.remove()
-#      $scope.dough.remove()
+      if id
+        item = ShoppingCart.getItemByHash(id)
+        if item.cat == 'PIZZA' then $scope.pizza = item
+
+      if $scope.pizza?
+        angular.forEach $scope.steps, (key, val)->
+          modal = $scope[key]
+          modal.show()
+
+    init = ->
+
+      $q.all([order, dough, size]).then (views)->
+
+        $scope.order = new PizzaOrder(views[0])
+        $scope.dough = new PizzaDough(views[1])
+        $scope.size = new PizzaSize(views[2])
+
+#        If its coming from the shopping cart
+        if $stateParams.id then $scope.choose(null, $stateParams.id)
+
+    init()
 
 angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada, EmpanadaOrder) ->
   restrict: 'EA'
@@ -83,7 +89,10 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       scope: $scope,
       animation: 'slide-in-up'
     .then (modal) ->
-      $scope.order = new EmpanadaOrder modal
+      $scope.order = modal
+      $scope.order.add = ()->
+        ShoppingCart.addToCart $scope.empanada
+        $scope.order.hide()
 
 
     $scope.choose = (item, cat_desc)->
@@ -100,12 +109,16 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
         modal.show()
 
 
-angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart) ->
+angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCart, PizzaOrder, $state) ->
   restrict: 'EA'
   scope: {}
   templateUrl: 'cart.html'
   link: ($scope, ele, attrs, ctrl)->
     $scope.cart = ShoppingCart.getCart()
+
+    $scope.edit = (item)->
+#      TODO: make this dynamic on type
+      $state.go('app.pizza', {id: item.hash})
 
     $scope.cart.getPrice = ShoppingCart.getTotalPrice
 
