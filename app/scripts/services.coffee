@@ -71,8 +71,20 @@ angular.module("Muzza.services").service 'ShoppingCart', ($log)->
 
   cart = []
 
+
+  getItem = (hashKey) ->
+    _.find( cart, (elem) ->
+      elem.hash is hashKey
+    )
+
   add = (item)->
-    cart.push(item)
+    itemSearched = getItem item.hash
+
+    if angular.isUndefined itemSearched
+      cart.push(item)
+    else
+      itemSearched.qty += item.qty
+
 
   getAll = ->
     cart
