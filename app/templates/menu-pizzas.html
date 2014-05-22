@@ -2,10 +2,17 @@
     Pizzas
 </div>
 
-<ion-list>
-    <ion-item ng-repeat="item in menu" ng-click="choose(item)">
-        <strong>{{item.desc}}</strong> {{ item.topp }}
+<div class="list">
+
+  <div class="item item-divider" style="background-color: #f8f8ff" ng-repeat-start="cat in menu">
+    <strong>{{cat.desc}}</strong>
+  </div>
+
+  <ion-list ng-repeat-end>
+    <ion-item data-ng-repeat="prod in cat.prod" ng-click="choose(prod)">
+      <strong>{{ prod.desc }}</strong>
+      <span>{{ prod.topp }}</span>
     </ion-item>
-</ion-list>
+  </ion-list>
 
-
+</div>
