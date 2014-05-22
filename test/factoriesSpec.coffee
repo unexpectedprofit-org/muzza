@@ -310,65 +310,6 @@ describe 'factories', ->
       newEmpanada2.id = 23
       expect(newEmpanada1).toEqual newEmpanada2
 
-  describe 'EmpanadaQty', ->
-
-    EmpanadaQty = modal = showSpy = hideSpy = empanadaQty = undefined
-
-    beforeEach ->
-      inject (_EmpanadaQty_) ->
-        EmpanadaQty = _EmpanadaQty_
-        modal =
-          show: -> null
-          hide: -> null
-          scope:
-            empanada:
-              qty: 1
-              price:
-                base: 10
-
-        showSpy = spyOn(modal, 'show').and.callThrough()
-        hideSpy = spyOn(modal, 'hide').and.callThrough()
-        empanadaQty = new EmpanadaQty(modal)
-
-    describe "Init", ->
-
-      it 'should construct a EmpanadaQty object', ->
-        expect(empanadaQty.choose).toBeDefined()
-        expect(empanadaQty.show).toBeDefined()
-        expect(empanadaQty.hide).toBeDefined()
-
-    describe "When the user is on the quantity step", ->
-
-      it 'should delegate the show call to the modal', ->
-        empanadaQty.show()
-
-        expect(showSpy).toHaveBeenCalled()
-        expect(showSpy.calls.count()).toBe 1
-
-      it 'should delegate the hide call to the modal', ->
-        empanadaQty.hide()
-
-        expect(hideSpy).toHaveBeenCalled()
-        expect(hideSpy.calls.count()).toBe 1
-
-      it 'should call hide', ->
-        internalHideSpy = spyOn(empanadaQty, 'hide').and.callThrough()
-        empanadaQty.choose()
-
-        expect(internalHideSpy).toHaveBeenCalled()
-        expect(internalHideSpy.calls.count()).toBe 1
-
-      it 'should show totalprice for 1 unit at the beggining', ->
-        empanadaQty.choose()
-
-        expect(modal.scope.empanada.price.total).toBe 10
-
-      it "should show totalprice for more than 1 unit", ->
-        modal.scope.empanada.qty = 3
-        empanadaQty.choose()
-        expect(modal.scope.empanada.price.total).toBe 30
-
-
   describe 'EmpanadaOrder', ->
 
     EmpanadaOrder = modal = showSpy = hideSpy = order = ShoppingCart = undefined

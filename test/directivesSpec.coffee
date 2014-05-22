@@ -221,18 +221,27 @@ describe "directives", ->
         expect(element.html()).toContain('Pollo')
 
       it "should load the templates for the steps", ->
-        isolatedScope.steps = ['qty']
-        expect(isolatedScope.qty).toBeDefined()
+        isolatedScope.steps = ['order']
+        expect(isolatedScope.order).toBeDefined()
 
     describe "When user chooses a product", ->
 
       it "should show all modals for available steps", ->
-        isolatedScope.steps = ['order', 'qty']
-        showType = spyOn(isolatedScope.qty, 'show')
+        isolatedScope.steps = ['order']
+        showType = spyOn(isolatedScope.order, 'show')
         element.find('ion-item')[0].click()
 
         expect(showType).toHaveBeenCalled()
         expect(showType.calls.count()).toBe 1
+
+      it "should create a Empanada object", ->
+        isolatedScope.steps = ['order']
+        showType = spyOn(isolatedScope.order, 'show')
+        element.find('ion-item')[0].click()
+
+        expect(isolatedScope.empanada.type).toBe "Al Horno"
+        expect(isolatedScope.empanada.qty).toBe 1
+
 
       xit "should replace the previous selection", ->
         inject (ShoppingCart) ->
