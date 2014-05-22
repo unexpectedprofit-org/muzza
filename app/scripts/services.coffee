@@ -71,27 +71,14 @@ angular.module("Muzza.services").service 'ShoppingCart', ($log)->
 
   cart = []
 
-  add = (toBeAddedItem)->
-#    TODO: we have a limitation by id with this.
-#    Need to create unique ids and handle qtys if it comes a duplicate request
-    existingItem = @getItemById(toBeAddedItem.id)
-    if existingItem == undefined
-      cart.push(toBeAddedItem)
-    else
-      cart = _.map cart, (item) ->
-        if item.id == toBeAddedItem.id then toBeAddedItem else item
+  add = (item)->
+    cart.push(item)
 
   getAll = ->
     cart
 
-  getById = (id)->
-    results = _.filter cart, (item)->
-      item.id is parseInt id
-    results[0]
-
   addToCart: add
   getCart: getAll
-  getItemById: getById
 
 angular.module("Muzza.services").factory "ProductService", () ->
 
@@ -178,9 +165,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
       ],
       "pizza": [
         {
-          id: 1
           "desc": "Muzzarella"
-          "type": "pizza"
           "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
           "price" : {
             base: 5000
@@ -194,9 +179,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
           }
         },
         {
-          id: 2
           "desc": "Fuggazetta"
-          "type": "pizza"
           "topp": [ "Muzzarella", "Cebollas" ]
           "price" : {
             base: 5500
@@ -210,9 +193,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
           }
         },
         {
-          id: 3
           "desc": "Jamon y Morrones"
-          "type": "pizza"
           "topp": [ "Muzzarella", "Jamon", "Morron" ]
           "price" : {
             base: 7500
@@ -226,9 +207,7 @@ angular.module("Muzza.services").factory "ProductService", () ->
           }
         },
         {
-          id: 4
           "desc": "Calabresa"
-          "type": "pizza"
           "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
           "price" : {
             base: 5000

@@ -61,9 +61,11 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
     pizza.description = ()->
       pizza.desc + " " + pizza.size + " " + pizza.dough
     ######### FOR CART
-    pizza.qty = 1
+    pizza.hash = getHash pizza
     pizza.cat = "PIZZA"
-    ######### FOR CART //probably will need to have one object Pizza
+    pizza.qty = 1
+    ######### FOR CART //probably will need to have a Pizza object
+
 
     ShoppingCart.addToCart(pizza)
     @hide()
@@ -74,6 +76,13 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
 
   PizzaOrder::edit = (pizza)->
     @modal.scope.choose(pizza)
+
+  getHash = (pizza) ->
+    _desc = pizza.desc.toLowerCase().replace(/\s+/g, "")
+    _size = pizza.size.toLowerCase().replace(/\s+/g, "")
+    _dough = pizza.dough.toLowerCase().replace(/\s+/g, "")
+
+    pizza.id + "-" + _desc + "-" + _size + "-" + _dough
 
   return PizzaOrder
 
@@ -145,6 +154,8 @@ angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
     @modal.hide()
 
   EmpanadaOrder::add = (empanada)->
+    empanada.hash = getHash empanada
+
     empanada.desc = empanada.desc + " " + empanada.type
     empanada.totalPrice = empanada.price
     ShoppingCart.addToCart empanada
@@ -155,5 +166,11 @@ angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
 
   EmpanadaOrder::edit = (empanada) ->
     @modal.scope.choose empanada
+
+  getHash = (empanada) ->
+    _desc = empanada.desc.toLowerCase().replace(/\s+/g, "")
+    _type = empanada.type.toLowerCase().replace(/\s+/g, "")
+
+    empanada.id + "-" + _desc + "-" + _type
 
   return EmpanadaOrder
