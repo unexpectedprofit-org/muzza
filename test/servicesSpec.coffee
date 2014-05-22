@@ -34,15 +34,47 @@ describe "services", ->
       inject ($injector) ->
         ShoppingCart = $injector.get 'ShoppingCart'
 
-    it 'should add product', ->
+    it 'should add product if not present', ->
       item =
         id: 1
+        hash: "1-muzza-chica-alapiedra"
       ShoppingCart.addToCart(item)
+
+      expect(ShoppingCart.getCart().length).toBe 1
       expect(ShoppingCart.getCart()[0]).toEqual(item)
 
+      item =
+        id: 2
+        hash: "2-cebolla-grande-almolde"
+      ShoppingCart.addToCart(item)
+
+      expect(ShoppingCart.getCart().length).toBe 2
+      expect(ShoppingCart.getCart()[1]).toEqual(item)
+
+
+    it 'should NOT add product if already present', ->
+      item =
+        id: 5
+        qty: 2
+        hash: '5-humita-frita'
+      ShoppingCart.addToCart(item)
+
+      expect(ShoppingCart.getCart().length).toBe 1
+      expect(ShoppingCart.getCart()[0]).toEqual(item)
+
+      item =
+        id: 5
+        qty:3
+        hash: '5-humita-frita'
+      ShoppingCart.addToCart(item)
+
+      expect(ShoppingCart.getCart().length).toBe 1
+      expect(ShoppingCart.getCart()[0].qty).toBe 5
+
+
     it 'should return all items in the cart', ->
-      ShoppingCart.addToCart({id: 1})
-      ShoppingCart.addToCart({id: 2})
+      ShoppingCart.addToCart({id: 1, hash:'1-alala'})
+      ShoppingCart.addToCart({id: 2, hash:'2-jojojjo'})
       cart = ShoppingCart.getCart()
       expect(cart.length).toBe 2
 

@@ -196,19 +196,24 @@ describe 'factories', ->
       it 'should call ShoppingCart to add a product and hide', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
-        order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
+        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
 
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra', qty:1, cat:'PIZZA'})
+        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'}
         expect(addSpy.calls.count()).toBe 1
         expect(internalHideSpy).toHaveBeenCalled()
         expect(internalHideSpy.calls.count()).toBe 1
 
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
-        order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra',qty:1, cat:'PIZZA'})
+        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza chica a la piedra', size:'chica', dough:'a la piedra'}
         expect(addSpy.calls.count()).toBe 1
 
+      it 'should form a hash', ->
+        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, hash: '1-muzza-chica-alapiedra'}
+        expect(addSpy.calls.count()).toBe 1
 
     describe "When user eliminates selected product and options", ->
 
@@ -418,14 +423,20 @@ describe 'factories', ->
         expect(hideSpy).toHaveBeenCalled()
         expect(hideSpy.calls.count()).toBe 1
 
-        expect(addSpy).toHaveBeenCalledWith  {id:1, desc:'Humita Frita', type:'Frita', qty:2, price: 15, totalPrice: 15, cat: 'EMPANADA'}
+        expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Humita Frita', type:'Frita', qty:2, price: 15, totalPrice: 15, cat: 'EMPANADA'}
         expect(addSpy.calls.count()).toBe 1
 
       it 'should form the descripcion based on the selected options', ->
         addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
         order.add({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10, cat: 'EMPANADA'})
 
-        expect(addSpy).toHaveBeenCalledWith({id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10, cat: 'EMPANADA'})
+        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10, cat: 'EMPANADA'}
+        expect(addSpy.calls.count()).toBe 1
+
+      it 'should form a hash', ->
+        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        order.add {id:4, desc:'Humita', type:'Al Horno'}
+        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:4, hash: '4-humita-alhorno'}
         expect(addSpy.calls.count()).toBe 1
 
     describe "When user eliminates selected product", ->
@@ -442,5 +453,5 @@ describe 'factories', ->
         chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
         order.edit({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
 
-        expect(chooseSpy).toHaveBeenCalledWith({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
+        expect(chooseSpy).toHaveBeenCalledWith {id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10}
         expect(chooseSpy.calls.count()).toBe 1

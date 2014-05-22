@@ -14,6 +14,7 @@ module.exports = function(config){
         'app/bower_components/angular-ui-router/release/angular-ui-router.js',
         'app/bower_components/ionic/release/js/ionic.js',
         'app/bower_components/ionic/release/js/ionic-angular.js',
+        'app/bower_components/underscore/underscore.js',
         'app/scripts/**/*.coffee',
         '.tmp/templates.js'
     ],
