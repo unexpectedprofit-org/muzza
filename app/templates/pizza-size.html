@@ -3,9 +3,23 @@
         <h1 class="title">Pizza {{pizza.desc}} {{pizza.size}} {{pizza.dough}}</h1>
     </ion-header-bar>
     <ion-content>
+
+        <!--https://github.com/driftyco/ionic/issues/1464-->
+        <!--
+        <ion-radio ng-model="pizza.size" ng-value="individual" ng-click="size.choose('individual')">
+            Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
+        </ion-radio>
+        <ion-radio ng-model="pizza.size" ng-value="chica" ng-click="size.choose('chica')">
+            Chica  -  {{ pizza.totalPrice + pizza.price.size.chica | centsToMoney | currency}}
+        </ion-radio>
+        <ion-radio ng-model="pizza.size" ng-value="grande" ng-click="size.choose('grande')">
+            Grande  -  {{ pizza.totalPrice + pizza.price.size.grande | centsToMoney | currency}}
+        </ion-radio>
+        -->
+
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" value="individual" ng-click="size.choose('individual')" ng-model="pizza.size">
+                <input type="radio" value="individual" ng-click="size.choose('individual')"  ng-model="pizza.size">
                 <div class="item-content">
 
                     Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
@@ -27,6 +41,7 @@
                 <i class="radio-icon ion-checkmark"></i>
             </label>
         </div>
+
         <cancel-selection></cancel-selection>
     </ion-content>
 </div>
