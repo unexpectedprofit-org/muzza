@@ -55,11 +55,28 @@ describe "directives", ->
       inject ($compile, $rootScope) ->
         $scope = $rootScope
         $scope.menu = [
-          desc: "Muzza"
-          id: 1
-        ,
-          desc: "Fugazetta"
-          id: 2
+          {
+            id: 1
+            desc: "Categ 1"
+            prod: [
+              {
+                id: 1
+                desc: "Muzza"
+              },
+              {
+                id: 2,
+                desc: "Fugazetta"
+              }
+            ]
+          },
+          {
+            id: 2
+            desc: "Categ 2"
+            prod: [
+              id: 3
+              desc: "Napolitana"
+            ]
+          }
         ]
         element = angular.element('<pizzas ng-model="menu"></pizzas>')
         $compile(element)($rootScope)
@@ -68,10 +85,11 @@ describe "directives", ->
 
     describe "init", ->
 
-      it "should display the 2 pizza menu items", ->
-        expect(element.find('ion-item').length).toBe 2
+      it "should display the 3 pizza menu items", ->
+        expect(element.find('ion-item').length).toBe 3
         expect(element.html()).toContain('Muzza')
         expect(element.html()).toContain('Fugazetta')
+        expect(element.html()).toContain('Napolitana')
 
       it "should load the templates for the steps", ->
         isolatedScope.steps = ['size', 'dough']
