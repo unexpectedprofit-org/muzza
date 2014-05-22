@@ -5,15 +5,6 @@ describe "directives", ->
     module 'Muzza.directives'
     module 'Muzza.templates'
 
-    module ($provide) ->
-      $provide.value "ShoppingCart",
-        addToCart: ()->
-          return null
-        getCart: ()->
-          return null
-        getTotalPrice: () ->
-          return null
-      return null
 
   describe "Cart", ->
     $scope = element = ShoppingCart = undefined
