@@ -5,64 +5,64 @@ angular.module('Muzza.constants',[]).constant 'stores',
       "empanada": [
         "id": 1,
         "desc": "Al Horno",
-        "prod": [
+        "products": [
           "id": 1
           "desc": "Carne cortada a cuchillo"
-          "topp": [ "Carne", "Huevo", "Morron" ]
+          "toppings": [ "Carne", "Huevo", "Morron" ]
           "price": 1800
         ,
           "id": 2
           "desc": "Calabresa"
-          "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+          "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
           "price": 1800
         ,
           "id": 3
           "desc": "Cebolla y queso"
-          "topp": [ "Muzzarella", "Cebolla" ]
+          "toppings": [ "Muzzarella", "Cebolla" ]
           "price": 1800
         ,
           "id": 4
           "desc": "Pollo"
-          "topp": [ "Pollo", "Cebolla" ]
+          "toppings": [ "Pollo", "Cebolla" ]
           "price": 1800
         ,
           "id": 5
           "desc": "Carne picante"
-          "topp": [ "Carne", "Cebolla" ]
+          "toppings": [ "Carne", "Cebolla" ]
           "price": 1800
         ,
           "id": 6
           "desc": "Verdura"
-          "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
+          "toppings": [ "Espinaca", "Huevo", "Salsa Blanca" ]
           "price": 1800
         ]
       ,
         "id": 2,
         "desc": "Fritas",
-        "prod": [
+        "products": [
           "id": 7
           "desc": "Cebolla y queso"
-          "topp": [ "Muzzarella", "Cebolla" ]
+          "toppings": [ "Muzzarella", "Cebolla" ]
           "price": 1800
         ,
           "id": 8
           "desc": "Pollo"
-          "topp": [ "Pollo", "Cebolla" ]
+          "toppings": [ "Pollo", "Cebolla" ]
           "price": 2000
         ,
           "id": 9
           "desc": "Verdura"
-          "topp": [ "Espinaca", "Huevo", "Salsa Blanca" ]
+          "toppings": [ "Espinaca", "Huevo", "Salsa Blanca" ]
           "price": 2000
         ]
       ],
       "pizza": [
         "id": 1
         "desc": "Pizzas Especiales"
-        "prod": [
+        "products": [
           "id": 90
           "desc": "Muzzarella"
-          "topp": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
+          "toppings": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
           "price":
             base: 5000
             size:
@@ -75,7 +75,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 91
           "desc": "Fuggazetta"
-          "topp": [ "Muzzarella", "Cebollas" ]
+          "toppings": [ "Muzzarella", "Cebollas" ]
           "price":
             base: 5500
             size:
@@ -88,7 +88,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 92
           "desc": "Jamon y Morrones"
-          "topp": [ "Muzzarella", "Jamon", "Morron" ]
+          "toppings": [ "Muzzarella", "Jamon", "Morron" ]
           "price":
             base: 7500
             size:
@@ -101,7 +101,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 93
           "desc": "Calabresa"
-          "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+          "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
           "price":
             base: 5000
             size:
@@ -115,10 +115,10 @@ angular.module('Muzza.constants',[]).constant 'stores',
       ,
         "id": 2
         "desc": "Pizzas de la Casa"
-        "prod": [
+        "products": [
           "id": 94
           "desc": "Muzzarella con tomate al natural y aceitunas"
-          "topp": [ "Muzzarella", "tomate", "Aceitunas" ]
+          "toppings": [ "Muzzarella", "tomate", "Aceitunas" ]
           "price":
             base: 8000
             size:
@@ -131,7 +131,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 95
           "desc": "Espinaca con salsa blanca o muzzarella"
-          "topp": [ "Espinaca", "muzzarella" ]
+          "toppings": [ "Espinaca", "muzzarella" ]
           "price":
             base: 7500
             size:

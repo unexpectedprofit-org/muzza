@@ -76,7 +76,7 @@ describe "directives", ->
           {
             id: 1
             desc: "Categ 1"
-            prod: [
+            products: [
               {
                 id: 1
                 desc: "Muzza"
@@ -90,7 +90,7 @@ describe "directives", ->
           {
             id: 2
             desc: "Categ 2"
-            prod: [
+            products: [
               id: 3
               desc: "Napolitana"
             ]
@@ -186,17 +186,17 @@ describe "directives", ->
           {
             "id": 1,
             "desc": "Al Horno",
-            "prod": [
+            "products": [
               {
                 "id": 1
                 "desc": "Carne cortada a cuchillo"
-                "topp": [ "Carne", "Huevo", "Morron" ]
+                "toppings": [ "Carne", "Huevo", "Morron" ]
                 "price": 18
               },
               {
                 "id": 2
                 "desc": "Calabresa"
-                "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+                "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
                 "price": 18
               }
             ]
@@ -204,23 +204,23 @@ describe "directives", ->
           {
             "id": 2,
             "desc": "Fritas",
-            "prod": [
+            "products": [
               {
                 "id": 3
                 "desc": "Jamon y Queso"
-                "topp": [ "Jamon", "Queso" ]
+                "toppings": [ "Jamon", "Queso" ]
                 "price": 20
               },
               {
                 "id": 4
                 "desc": "Pollo"
-                "topp": [ "Muzzarella", "Pollo", "Salsa" ]
+                "toppings": [ "Muzzarella", "Pollo", "Salsa" ]
                 "price": 20
               },
               {
                 "id": 5
                 "desc": "Verdura"
-                "topp": [ "Espinaca", "Salsa" ]
+                "toppings": [ "Espinaca", "Salsa" ]
                 "price": 20
               }
             ]

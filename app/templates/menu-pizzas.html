@@ -9,9 +9,9 @@
   </div>
 
   <ion-list ng-repeat-end>
-    <ion-item data-ng-repeat="prod in cat.prod" ng-click="choose(prod)">
+    <ion-item data-ng-repeat="prod in cat.products" ng-click="choose(prod)">
       <strong>{{ prod.desc }}</strong>
-      <span>{{ prod.topp }}</span>
+      <span>{{ prod.toppings }}</span>
     </ion-item>
   </ion-list>
 

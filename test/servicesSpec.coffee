@@ -133,22 +133,22 @@ describe "services", ->
           "empanada": [
             "id": 1,
             "desc": "Al Horno",
-            "prod": [
+            "products": [
               "id": 1
               "desc": "Carne cortada a cuchillo"
-              "topp": [ "Carne", "Huevo", "Morron" ]
+              "toppings": [ "Carne", "Huevo", "Morron" ]
               "price": 1800
             ,
               "id": 2
               "desc": "Calabresa"
-              "topp": [ "Muzzarella", "Longaniza", "Salsa" ]
+              "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
               "price": 1800
             ]
           ]
       spyOn(ProductService, 'listMenuByStore').and.returnValue store
       newMenuObject = ProductService.listMenuByStore 1
       expect( newMenuObject.products.empanada.length ).toBe 1
-      expect( newMenuObject.products.empanada[0].prod.length ).toBe 2
+      expect( newMenuObject.products.empanada[0].products.length ).toBe 2
 
 
   describe "OrderService", ->
