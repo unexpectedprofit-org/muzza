@@ -43,12 +43,12 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
       scope: $scope,
       animation: 'slide-in-up'
 
-    $scope.choose = (pizza, id)->
+    $scope.choose = (pizza, hashKey)->
 
       $scope.pizza = pizza
 
-      if id
-        item = ShoppingCart.getItemByHash(id)
+      if hashKey
+        item = ShoppingCartService.get hashKey
         if item.cat == 'PIZZA' then $scope.pizza = item
 
       if $scope.pizza?
