@@ -8,32 +8,32 @@ angular.module('Muzza.constants',[]).constant 'stores',
         "products": [
           "id": 1
           "desc": "Carne cortada a cuchillo"
-          "toppings": [ "Carne", "Huevo", "Morron" ]
+          "toppings": "Carne / Huevo / Morron"
           "price": 1800
         ,
           "id": 2
           "desc": "Calabresa"
-          "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
+          "toppings": "Muzzarella / Longaniza / Salsa"
           "price": 1800
         ,
           "id": 3
           "desc": "Cebolla y queso"
-          "toppings": [ "Muzzarella", "Cebolla" ]
+          "toppings": "Muzzarella / Cebolla"
           "price": 1800
         ,
           "id": 4
           "desc": "Pollo"
-          "toppings": [ "Pollo", "Cebolla" ]
+          "toppings": "Pollo / Cebolla"
           "price": 1800
         ,
           "id": 5
           "desc": "Carne picante"
-          "toppings": [ "Carne", "Cebolla" ]
+          "toppings": "Carne / Cebolla"
           "price": 1800
         ,
           "id": 6
           "desc": "Verdura"
-          "toppings": [ "Espinaca", "Huevo", "Salsa Blanca" ]
+          "toppings": "Espinaca / Huevo / Salsa Blanca"
           "price": 1800
         ]
       ,
@@ -42,17 +42,17 @@ angular.module('Muzza.constants',[]).constant 'stores',
         "products": [
           "id": 7
           "desc": "Cebolla y queso"
-          "toppings": [ "Muzzarella", "Cebolla" ]
+          "toppings": "Muzzarella / Cebolla"
           "price": 1800
         ,
           "id": 8
           "desc": "Pollo"
-          "toppings": [ "Pollo", "Cebolla" ]
+          "toppings": "Pollo / Cebolla"
           "price": 2000
         ,
           "id": 9
           "desc": "Verdura"
-          "toppings": [ "Espinaca", "Huevo", "Salsa Blanca" ]
+          "toppings": "Espinaca / Huevo / Salsa Blanca"
           "price": 2000
         ]
       ],

@@ -34,13 +34,13 @@ describe "Empanadas", ->
         "products": [
           "id": 1
           "desc": "Carne cortada a cuchillo"
-          "toppings": [ "Carne", "Huevo", "Morron" ]
-          "price": 18
+          "toppings": "Carne / Huevo / Morron"
+          "price": 1800
         ,
           "id": 2
           "desc": "Calabresa"
-          "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
-          "price": 18
+          "toppings": "Muzzarella / Longaniza / Salsa"
+          "price": 1900
         ]
       ,
         "id": 2,
@@ -48,18 +48,18 @@ describe "Empanadas", ->
         "products": [
           "id": 3
           "desc": "Jamon y Queso"
-          "toppings": [ "Jamon", "Queso" ]
-          "price": 20
+          "toppings": "Jamon / Queso"
+          "price": 2000
         ,
           "id": 4
           "desc": "Pollo"
-          "toppings": [ "Muzzarella", "Pollo", "Salsa" ]
-          "price": 20
+          "toppings": "Muzzarella / Pollo / Salsa"
+          "price": 2100
         ,
           "id": 5
           "desc": "Verdura"
-          "toppings": [ "Espinaca", "Salsa" ]
-          "price": 20
+          "toppings": "Espinaca / Salsa"
+          "price": 2200
         ]
       ]
       element = angular.element('<empanadas ng-model="menu"></empanadas>')
@@ -71,12 +71,33 @@ describe "Empanadas", ->
 
   describe "init", ->
     it "should display the 5 products listed on the menu", ->
+
       expect(element.find('ion-item').length).toBe 5
-      expect(element.html()).toContain('Carne cortada a cuchillo')
-      expect(element.html()).toContain('Calabresa')
-      expect(element.html()).toContain('Jamon y Queso')
-      expect(element.html()).toContain('Verdura')
-      expect(element.html()).toContain('Pollo')
+#      expect(element.find('.item.item-divider').length).toBe 2
+
+      onClickEvent = element.find('ion-item')[0].attributes['ng-click'].nodeValue
+      expect(onClickEvent).toContain "choose(prod, cat.desc)"
+
+      expect(element.html()).toContain 'Carne cortada a cuchillo'
+      expect(element.html()).toContain "Carne / Huevo / Morron"
+      expect(element.html()).toContain "18.00"
+
+      expect(element.html()).toContain 'Calabresa'
+      expect(element.html()).toContain "Muzzarella / Longaniza / Salsa"
+      expect(element.html()).toContain "19.00"
+
+      expect(element.html()).toContain 'Jamon y Queso'
+      expect(element.html()).toContain "Jamon / Queso"
+      expect(element.html()).toContain "20.00"
+
+      expect(element.html()).toContain 'Pollo'
+      expect(element.html()).toContain "Muzzarella / Pollo / Salsa"
+      expect(element.html()).toContain "21.00"
+
+      expect(element.html()).toContain 'Verdura'
+      expect(element.html()).toContain "Espinaca / Salsa"
+      expect(element.html()).toContain "22.00"
+
 
     it "should have steps defined in the scope", ->
       expect(isolatedScope.steps).toEqual ['order']
@@ -87,7 +108,6 @@ describe "Empanadas", ->
 
     it "should have a product defined in the scope", ->
       expect(isolatedScope.empanada).toBeDefined()
-
 
     it "should have a choose function defined in the scope", ->
       expect(isolatedScope.choose).toBeDefined()
@@ -113,8 +133,8 @@ describe "Empanadas", ->
       expected =
         id: 1
         desc: "Carne cortada a cuchillo"
-        toppings: [ "Carne", "Huevo", "Morron" ]
-        price: 18
+        toppings: "Carne / Huevo / Morron"
+        price: 1800
 
       expect(chooseSpy).toHaveBeenCalledWith( jasmine.objectContaining(expected), "Al Horno" )
       expect(isolatedScope.empanada).not.toBeEmpty
@@ -132,7 +152,7 @@ describe "Empanadas", ->
         isolatedScope.empanada.qty = 2
         isolatedScope.order.add isolatedScope.empanada
 
-        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining {"cat": 'EMPANADA', "qty": 2,"desc": 'Carne cortada a cuchillo Al Horno',"price": 18,"type": 'Al Horno', "id":1,"hash":'1-carnecortadaacuchillo-alhorno',"totalPrice": 18}
+        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining {"cat": 'EMPANADA', "qty": 2,"desc": 'Carne cortada a cuchillo Al Horno',"price": 1800,"type": 'Al Horno', "id":1,"hash":'1-carnecortadaacuchillo-alhorno',"totalPrice": 1800}
         expect(addToCart.calls.count()).toBe 1
 
         #Choose Second Product
