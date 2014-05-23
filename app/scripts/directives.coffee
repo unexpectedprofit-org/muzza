@@ -12,9 +12,9 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
       angular.forEach $scope.steps, (key, val)->
         modal = $scope[key]
         modal.hide()
-      console.log "cancelar button: "
-      console.log "empa: " + JSON.stringify $scope.empanada
-      console.log "pizza: " + JSON.stringify  $scope.pizza
+#      console.log "cancelar button: "
+#      console.log "empa: " + JSON.stringify $scope.empanada
+#      console.log "pizza: " + JSON.stringify  $scope.pizza
 
 angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, ShoppingCartService, PizzaSize, PizzaDough, PizzaOrder, $state, $stateParams, $q) ->
   restrict: 'EA'
@@ -47,14 +47,20 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
       $scope.pizza = pizza
 
-      if hashKey
-        item = ShoppingCartService.get hashKey
-        if item.cat == 'PIZZA' then $scope.pizza = item
+      if hashKey then editCartItem hashKey
 
       if $scope.pizza?
         angular.forEach $scope.steps, (key, val)->
           modal = $scope[key]
           modal.show()
+
+    editCartItem = (hashKey)->
+      item = ShoppingCartService.get hashKey
+      if item.cat == 'PIZZA'
+        #RESET PRICE to base
+        item.totalPrice = item.price.base
+        $scope.pizza = item
+
 
     init = ->
 
@@ -142,7 +148,7 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
     .then (modal) ->
       $scope.delivery = modal
       $scope.delivery.choose = (deliveryType) ->
-        console.log "delivey method selected: " + deliveryType
+#        console.log "delivey method selected: " + deliveryType
         $scope.deliveryOption = deliveryType
         $scope.delivery.hide()
 
@@ -152,7 +158,7 @@ angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $st
     .then (modal) ->
       $scope.contact = modal
       $scope.contact.place = () ->
-        console.log "form completed: "
+#        console.log "form completed: "
         $scope.contact.hide()
         $state.go('^.orderplace')
 

@@ -85,7 +85,7 @@ angular.module("Muzza.services").service 'ShoppingCartService', ()->
     else
       itemSearched.qty += item.qty
 
-    console.log "Item added to cart: " + JSON.stringify item
+#    console.log "Item added to cart: " + JSON.stringify item
 
   removeItem = (hashKey) ->
     _.remove( products, (elem) ->
