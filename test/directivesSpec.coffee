@@ -14,9 +14,14 @@ describe "directives", ->
         getTotalPrice: () ->
           return null
       return null
+    module ($provide) ->
+      $provide.value "$state",
+          go: () ->
+            return null
+      return null
 
   describe "Cart", ->
-    $scope = element = ShoppingCartService = undefined
+    $scope = element = ShoppingCartService = isolatedScope = undefined
 
     beforeEach ->
       inject ($compile, $rootScope, _ShoppingCartService_) ->
@@ -64,6 +69,67 @@ describe "directives", ->
         $scope.$digest()
         msg = element.find('ion-list').html()
         expect(msg).not.toMatch(/vacio/)
+
+    describe 'when editting', ->
+
+      describe "and hit edit button", ->
+
+        it "should call the edit function with proper data", ->
+
+          spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10, cat: 'EMPANADA'},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5, cat: 'EMPANADA'}]
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
+
+          editItem = spyOn(isolatedScope, 'edit').and.callFake( () -> 1 )
+
+          element.find('button')[0].click()
+          expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza', qty:1, totalPrice: 10}
+
+      describe "edit function show redirect to proper view", ->
+
+        onState = $mystate = undefined
+
+        beforeEach ->
+          inject ($state) ->
+            $mystate = $state
+
+
+        it "should redirect to PIZZA edit view", ->
+
+          spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '1-Muzza-chica-alala',cat: 'PIZZA'}]
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
+
+          onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
+          editItem = spyOn(isolatedScope, 'edit').and.callThrough()
+
+          element.find('button')[0].click()
+          expect(onState).toHaveBeenCalledWith 'app.pizza', {id:'1-Muzza-chica-alala'}
+
+        it "should redirect to EMPANADA edit view", ->
+
+          spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '45-Pollo-alhorno',cat: 'EMPANADA'}]
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
+
+          onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
+          editItem = spyOn(isolatedScope, 'edit').and.callThrough()
+
+          element.find('button')[0].click()
+          expect(onState).toHaveBeenCalledWith 'app.empanada', {id:'45-Pollo-alhorno'}
+
+        it "should redirect to menu default view if no categ matches", ->
+
+          spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '45-newproduct',cat: 'NEW_CATEGORY'}]
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
+
+          onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
+          editItem = spyOn(isolatedScope, 'edit').and.callThrough()
+
+          element.find('button')[0].click()
+          expect(onState).toHaveBeenCalledWith 'app.menu'
+
 
   describe "Pizzas", ->
 

@@ -119,13 +119,14 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCartS
   link: ($scope, ele, attrs, ctrl)->
 
     $scope.edit = (item)->
-#      TODO: make this dynamic on type
-      $state.go('app.pizza', {id: item.hash})
+      switch item.cat
+        when 'EMPANADA' then $state.go 'app.empanada', {id: item.hash}
+        when 'PIZZA'    then $state.go 'app.pizza', {id: item.hash}
+        else $state.go 'app.menu'
 
     $scope.cart =
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice
-
 
 
 angular.module('Muzza.directives').directive 'checkoutButton', ($ionicModal, $state, ShoppingCartService) ->

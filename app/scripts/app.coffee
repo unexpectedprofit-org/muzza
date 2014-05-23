@@ -22,6 +22,12 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
       'navContent':
         templateUrl: "templates/menu.html"
 
+  .state "app.empanada",
+    url: "/menu/:id"
+    views:
+      'navContent':
+        templateUrl: "templates/menu.html"
+
   .state "app.store",
     url: "/menu/:storeID"
     views:
