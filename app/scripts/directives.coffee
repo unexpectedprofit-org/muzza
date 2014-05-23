@@ -69,7 +69,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     init()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCartService, Empanada, EmpanadaOrder, $q) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCartService, Empanada, EmpanadaOrder, $q, $stateParams) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -90,14 +90,19 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       scope: $scope,
       animation: 'slide-in-up'
 
-    $scope.choose = (item, cat_desc)->
-      $scope.empanada = new Empanada item
+    $scope.choose = (item, cat_desc, hashKey)->
 
-      if angular.isDefined cat_desc
+      empanadaInCart = undefined
+
+      if angular.isDefined hashKey
+        empanadaInCart = ShoppingCartService.get hashKey
+
+      if angular.isDefined empanadaInCart
+        $scope.empanada = empanadaInCart
+      else
+        $scope.empanada = new Empanada item
         $scope.empanada.type = cat_desc
 
-      if angular.isDefined item.qty
-        $scope.empanada.qty = item.qty
 
       angular.forEach $scope.steps, (key, val)->
         modal = $scope[key]
@@ -107,8 +112,8 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
       $q.all([order]).then (views)->
         $scope.order = new EmpanadaOrder views[0]
 
-        #        If its coming from the shopping cart
-#        if $stateParams.id then $scope.choose(null, $stateParams.id)
+#       If its coming from the shopping cart
+        if $stateParams.id then $scope.choose(null, null, $stateParams.id)
 
     init()
 

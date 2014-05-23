@@ -315,9 +315,18 @@ describe "directives", ->
 
   describe "Empanadas", ->
 
+
     isolatedScope = $scope = element = undefined
 
     beforeEach ->
+      module ($provide) ->
+        $provide.value "ShoppingCartService",
+          add: () ->
+            return null
+          get: (id) ->
+            return null
+        return null
+
       inject ($compile, $rootScope) ->
         $scope = $rootScope
         $scope.menu = [
@@ -368,6 +377,8 @@ describe "directives", ->
         $compile(element)($rootScope)
         $scope.$digest()
         isolatedScope = element.isolateScope()
+
+
 
     describe "init", ->
       it "should display the 5 products listed on the menu", ->
@@ -444,6 +455,49 @@ describe "directives", ->
             qty: 1
 
           expect(isolatedScope.empanada.id).toEqual expectedEmpanada.id
+
+    describe "when user edits a product", ->
+
+      beforeEach ->
+        isolatedScope.steps = ['order']
+        showType = spyOn(isolatedScope.order, 'show')
+        chooseSpy = spyOn(isolatedScope, 'choose').and.callThrough()
+
+        element.find('ion-item')[0].click()
+        isolatedScope.empanada.qty = 2
+        isolatedScope.order.add isolatedScope.empanada
+
+        isolatedScope
+
+      it "should update qunatity", ->
+        inject (ShoppingCartService) ->
+          expected =
+            id: 23
+            hash:'23-Carnepicante-alhorno'
+            qty:5
+
+          getItem = spyOn(ShoppingCartService, 'get').and.returnValue expected
+          isolatedScope.choose null, null, '23-Carnepicante-alhorno'
+
+          isolatedScope.empanada.qty = 5
+
+
+          expect(getItem).toHaveBeenCalledWith expected.hash
+          expect(isolatedScope.empanada).toBe expected
+
+        it "should retrieve the product from the cart", ->
+          inject (ShoppingCartService) ->
+            expected =
+              id: 23
+              hash:'23-Carnepicante-alhorno'
+              qty:5
+
+            getItem = spyOn(ShoppingCartService, 'get').and.returnValue expected
+            isolatedScope.choose null, null, '23-Carnepicante-alhorno'
+
+            expect(getItem).toHaveBeenCalledWith expected.hash
+            expect(isolatedScope.empanada).toBe expected
+
 
   ##### need to put both below inside same describe block
   describe "Checkout Button, car not empty", ->
