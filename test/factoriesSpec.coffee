@@ -189,18 +189,52 @@ describe 'factories', ->
         expect(showSpy).toHaveBeenCalled()
         expect(showSpy.calls.count()).toBe 1
 
+    describe "Hide", ->
+
       it 'should delegate the hide call to the modal', ->
+        modal.scope.pizza = {}
         order.hide()
 
         expect(hideSpy).toHaveBeenCalled()
         expect(hideSpy.calls.count()).toBe 1
 
+      it 'should reset pizzas values', ->
+        modal.scope.pizza =
+          size: 'chica'
+          dough: 'a la piedra'
+          qty: 1
+          hash: '123-aaa'
+          totalPrice: 60
+
+        order.hide()
+        expect(modal.scope.pizza).toEqual jasmine.objectContaining
+          size: ''
+          dough: ''
+          qty: undefined
+          hash: undefined
+          totalPrice: undefined
+
+      it 'should redirect to the menu', ->
+        inject ($state) ->
+          spyOn($state, 'go').and.callThrough()
+          modal.scope.pizza = {}
+          order.hide()
+          expect($state.go).toHaveBeenCalledWith('app.menu')
+
+
+
     describe "When the user confirms the product selection and options", ->
+
+      item = undefined
+
+      beforeEach ->
+        item = {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        modal.scope.pizza = item
 
       it 'should call ShoppingCart to add a product and hide', ->
         addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
-        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        order.add item
 
         expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
 
@@ -208,10 +242,11 @@ describe 'factories', ->
         expect(internalHideSpy).toHaveBeenCalled()
         expect(internalHideSpy.calls.count()).toBe 1
 
-      it 'should form the descripcion based on the selected options', ->
+      it 'should decorate the pizza object', ->
         addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-        order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
-        expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        item = {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        order.add item
+        expect(item.description).toBeDefined()
 
       it 'should form a hash', ->
         addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
@@ -219,10 +254,17 @@ describe 'factories', ->
         expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, hash: '1-muzza-chica-alapiedra'}
         expect(addSpy.calls.count()).toBe 1
 
+
     describe "When user eliminates selected product and options", ->
 
       it "should hide confirmation modal", ->
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
+        modal.scope.pizza =
+          size: 'chica'
+          dough: 'a la piedra'
+          totalPrice: 60
+          price:
+            base: 50
         order.cancel()
 
         expect(internalHideSpy).toHaveBeenCalled()
@@ -232,8 +274,15 @@ describe 'factories', ->
 
       it "should display all option modals", ->
         chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
-        order.edit({id:1})
-        expect(chooseSpy).toHaveBeenCalledWith({id:1})
+        order.edit({id:1, totalPrice: 60, price: {base: 50 }})
+        expect(chooseSpy).toHaveBeenCalledWith({ id : 1, totalPrice : 50, price : { base : 50 } })
+
+      it "should reset price to its base price", ->
+        modal.scope.pizza = {}
+        chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
+        order.edit({id:1, totalPrice: 60, price: {base: 50 }})
+        expect(chooseSpy).toHaveBeenCalledWith({id:1, totalPrice: 50, price: {base: 50 }})
+
 
 
   describe 'Empanada', ->

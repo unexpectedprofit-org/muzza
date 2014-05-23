@@ -144,58 +144,58 @@ describe "directives", ->
         inject ($compile, $rootScope) ->
           $scope = $rootScope
           $scope.menu = [
-          {
-            id: 1
-            desc: "Categ 1"
-            products: [
             {
               id: 1
-              desc: "Muzza"
-              toppings: [ "Muzzarella", "tomate", "Aceitunas" ]
-              price:
-                base: 8000
-                size:
-                  individual: 0
-                  chica: 1000
-                  grande: 2000
-                dough:
-                  "a la piedra": 2
-                  "al molde": 3
+              desc: "Categ 1"
+              products: [
+                {
+                  id: 1
+                  desc: "Muzza"
+                  toppings: [ "Muzzarella", "tomate", "Aceitunas" ]
+                  price:
+                    base: 8000
+                    size:
+                      individual: 0
+                      chica: 1000
+                      grande: 2000
+                    dough:
+                      "a la piedra": 2
+                      "al molde": 3
+                },
+                {
+                  id: 2,
+                  desc: "Fugazetta"
+                  toppings: [ "Muzzarella", "Cebolla" ]
+                  price:
+                    base: 7500
+                    size:
+                      individual: 0
+                      chica: 1500
+                      grande: 2000
+                    dough:
+                      "a la piedra": 0
+                      "al molde": 0
+                }
+              ]
             },
             {
-              id: 2,
-              desc: "Fugazetta"
-              toppings: [ "Muzzarella", "Cebolla" ]
-              price:
-                base: 7500
-                size:
-                  individual: 0
-                  chica: 1500
-                  grande: 2000
-                dough:
-                  "a la piedra": 0
-                  "al molde": 0
+              id: 2
+              desc: "Categ 2"
+              products: [
+                id: 3
+                desc: "Calabresa"
+                toppings: [ "Muzzarella", "Longaniza", "Salsa" ]
+                price:
+                  base: 5000
+                  size:
+                    individual: 0
+                    chica: 1000
+                    grande: 2000
+                  dough:
+                    "a la piedra": 0
+                    "al molde": 0
+              ]
             }
-            ]
-          },
-          {
-            id: 2
-            desc: "Categ 2"
-            products: [
-              id: 3
-              desc: "Calabresa"
-              toppings: [ "Muzzarella", "Longaniza", "Salsa" ]
-              price:
-                base: 5000
-                size:
-                  individual: 0
-                  chica: 1000
-                  grande: 2000
-                dough:
-                  "a la piedra": 0
-                  "al molde": 0
-            ]
-          }
           ]
           element = angular.element('<pizzas ng-model="menu"></pizzas>')
           $compile(element)($rootScope)
@@ -325,34 +325,6 @@ describe "directives", ->
         it "should not assign an item or reset price", ->
           expect(getItemSpy).toHaveBeenCalled()
           expect(isolatedScope.pizza).toBeNull()
-
-
-      it "should call choose function", ->
-        isolatedScope.steps = ['order', 'dough', 'size']
-        showOrder = spyOn(isolatedScope.order, 'show')
-        showDough = spyOn(isolatedScope.dough, 'show')
-        showSize = spyOn(isolatedScope.size, 'show')
-
-        chooseSpy = spyOn(isolatedScope, 'choose').and.callThrough()
-
-        element.find('ion-item')[0].click()
-
-        expected =
-          id: 1
-          desc: "Muzza"
-          toppings: [ "Muzzarella", "tomate", "Aceitunas" ]
-          price:
-            base: 8000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-            dough:
-              "a la piedra": 2
-              "al molde": 3
-
-        expect(chooseSpy).toHaveBeenCalledWith jasmine.objectContaining expected
-        expect(isolatedScope.pizza).not.toBeEmpty
 
 
   describe "CancelSelection", ->

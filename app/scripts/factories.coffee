@@ -54,6 +54,13 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCartService, $s
     @modal.show()
 
   PizzaOrder::hide = ->
+#   TODO: Where should this go?
+    @modal.scope.pizza.size = ''
+    @modal.scope.pizza.dough = ''
+    @modal.scope.pizza.qty = undefined
+    @modal.scope.pizza.hash = undefined
+    @modal.scope.pizza.totalPrice = undefined
+
     @modal.hide()
     $state.go('app.menu')
 
@@ -68,7 +75,8 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCartService, $s
 
     pizza.description = ()->
       pizza.desc + " " + pizza.size + " " + pizza.dough
-    ShoppingCartService.add pizza
+    item = angular.copy(pizza)
+    ShoppingCartService.add item
     @hide()
 
   PizzaOrder::cancel = ->
@@ -76,6 +84,7 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCartService, $s
     @hide()
 
   PizzaOrder::edit = (pizza)->
+    pizza.totalPrice = pizza.price.base
     @modal.scope.choose(pizza)
 
   getHash = (pizza) ->
