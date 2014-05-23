@@ -232,7 +232,7 @@ describe "directives", ->
         isolatedScope = element.isolateScope()
 
     describe "init", ->
-      it "should display the 2 empanadas menu items", ->
+      it "should display the 5 products listed on the menu", ->
         expect(element.find('ion-item').length).toBe 5
         expect(element.html()).toContain('Carne cortada a cuchillo')
         expect(element.html()).toContain('Calabresa')
@@ -240,9 +240,20 @@ describe "directives", ->
         expect(element.html()).toContain('Verdura')
         expect(element.html()).toContain('Pollo')
 
-      it "should load the templates for the steps", ->
+      it "should have steps defined in the scope", ->
+        expect(isolatedScope.steps).toEqual ['order']
+
+      it "should load the templates for all the steps", ->
         isolatedScope.steps = ['order']
         expect(isolatedScope.order).toBeDefined()
+
+      it "should have a product defined in the scope", ->
+        expect(isolatedScope.empanada).toBeDefined()
+
+
+      it "should have a choose function defined in the scope", ->
+        expect(isolatedScope.choose).toBeDefined()
+
 
     describe "When user chooses a product", ->
 
@@ -254,13 +265,21 @@ describe "directives", ->
         expect(showType).toHaveBeenCalled()
         expect(showType.calls.count()).toBe 1
 
-      it "should create a Empanada object", ->
+      it "should call choose function", ->
         isolatedScope.steps = ['order']
         showType = spyOn(isolatedScope.order, 'show')
+        chooseSpy = spyOn(isolatedScope, 'choose').and.callThrough()
+
         element.find('ion-item')[0].click()
 
-        expect(isolatedScope.empanada.type).toBe "Al Horno"
-        expect(isolatedScope.empanada.qty).toBe 1
+        expected =
+          id: 1
+          desc: "Carne cortada a cuchillo"
+          toppings: [ "Carne", "Huevo", "Morron" ]
+          price: 18
+
+        expect(chooseSpy).toHaveBeenCalledWith( jasmine.objectContaining(expected), "Al Horno" )
+        expect(isolatedScope.empanada).not.toBeEmpty
 
 
       it "should replace the previous selection", ->

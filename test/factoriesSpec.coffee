@@ -247,18 +247,23 @@ describe 'factories', ->
     it "should init the object with quantity = 1", ->
       newEmpanada = new Empanada()
       expect(newEmpanada.qty).toBe 1
+      expect(newEmpanada.cat).toBe "EMPANADA"
 
     it "should init the object from another object", ->
       fromObject =
+        id: 505
         desc: "description"
         price: 100.20
         type: "al horno"
 
       newEmpanada = new Empanada fromObject
+      expect(newEmpanada.id).toBe 505
       expect(newEmpanada.qty).toBe 1
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.price).toBe fromObject.price
       expect(newEmpanada.type).toBe fromObject.type
+      expect(newEmpanada.cat).toBe "EMPANADA"
+
 
     it "should update quantity adding 4 items", ->
       newEmpanada = new Empanada()

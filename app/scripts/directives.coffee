@@ -69,7 +69,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     init()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCartService, Empanada, EmpanadaOrder) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCartService, Empanada, EmpanadaOrder, $q) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -80,18 +80,15 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
 
 #   holds temp selection
     $scope.empanada = {
-      type: {}
     }
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order']
 
-    $ionicModal.fromTemplateUrl 'empanada-order.html',
+
+    order = $ionicModal.fromTemplateUrl 'empanada-order.html',
       scope: $scope,
       animation: 'slide-in-up'
-    .then (modal) ->
-      $scope.order = new EmpanadaOrder modal
-
 
     $scope.choose = (item, cat_desc)->
       $scope.empanada = new Empanada item
@@ -106,6 +103,14 @@ angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, Sh
         modal = $scope[key]
         modal.show()
 
+    init = ->
+      $q.all([order]).then (views)->
+        $scope.order = new EmpanadaOrder views[0]
+
+        #        If its coming from the shopping cart
+#        if $stateParams.id then $scope.choose(null, $stateParams.id)
+
+    init()
 
 angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCartService, PizzaOrder, $state) ->
   restrict: 'EA'
