@@ -57,7 +57,13 @@ describe "Cart", ->
 
   describe 'when shopping cart is empty', ->
 
-    it 'should display a msg when shopping cart is empty', ->
+    it "should list no items", ->
+      spyOn(ShoppingCartService, 'getCart').and.returnValue []
+      $scope.$digest()
+      items = element.find('ion-item')
+      expect(items.length).toBe 0
+
+    it 'should display the empty msg', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue []
       $scope.$digest()
       items = element.find('ion-item')
