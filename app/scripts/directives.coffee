@@ -1,4 +1,4 @@
-angular.module('Muzza.directives', ['Muzza.factories', 'Muzza.services'])
+angular.module('Muzza.directives', ['Muzza.factories'])
 
 angular.module("Muzza.directives").filter "centsToMoney", ->
   (cents) ->
@@ -24,10 +24,11 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
   require: 'ngModel'
   templateUrl: 'menu-pizzas.html'
   link: ($scope, ele, attrs, ctrl)->
-    #   holds temp selection
+
+#   holds temp selection
     $scope.pizza = {}
 
-    #this could come from firebase, or we can override when starting the app with a decorator at config phase
+#   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'dough', 'size']
 
     size = $ionicModal.fromTemplateUrl 'pizza-size.html',
@@ -68,7 +69,7 @@ angular.module('Muzza.directives').directive 'pizzas', ($log, $ionicModal, Shopp
 
     init()
 
-angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCart, Empanada, EmpanadaOrder) ->
+angular.module('Muzza.directives').directive 'empanadas', ($log, $ionicModal, ShoppingCartService, Empanada, EmpanadaOrder) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -111,11 +112,14 @@ angular.module('Muzza.directives').directive 'cart', ($ionicModal, ShoppingCartS
   scope: {}
   templateUrl: 'cart.html'
   link: ($scope, ele, attrs, ctrl)->
-    $scope.cart = ShoppingCartService.getCart()
 
     $scope.edit = (item)->
 #      TODO: make this dynamic on type
       $state.go('app.pizza', {id: item.hash})
+
+    $scope.cart =
+      products: ShoppingCartService.getCart()
+      totalPrice: ShoppingCartService.getTotalPrice
 
 
 

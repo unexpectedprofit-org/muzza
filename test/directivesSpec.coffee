@@ -5,6 +5,15 @@ describe "directives", ->
     module 'Muzza.directives'
     module 'Muzza.templates'
 
+    module ($provide) ->
+      $provide.value "ShoppingCartService",
+        add: ()->
+          return null
+        getCart: ()->
+          return null
+        getTotalPrice: () ->
+          return null
+      return null
 
   describe "Cart", ->
     $scope = element = ShoppingCartService = undefined
@@ -25,7 +34,7 @@ describe "directives", ->
         expect(items.length).toBe 2
 
       it 'should not display the empty msg', ->
-        spyOn(ShoppingCartService, 'getCart').and.returnValue { items: [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}], price:{total: 20}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
         $scope.$digest()
         msg = element.find('div').html()
         expect(msg).not.toMatch(/vacio/)
@@ -43,7 +52,7 @@ describe "directives", ->
     describe 'when shopping cart is empty', ->
 
       it 'should display a msg when shopping cart is empty', ->
-        spyOn(ShoppingCartService, 'getCart').and.returnValue {items:[], price:{total:0}}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue []
         $scope.$digest()
         items = element.find('ion-item')
         msg = element.find('div').html()

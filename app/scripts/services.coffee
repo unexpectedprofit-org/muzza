@@ -67,49 +67,55 @@ angular.module("Muzza.services").factory "StoreService", () ->
   listStores: getStores
 
 
-angular.module("Muzza.services").service 'ShoppingCart', ($log)->
+angular.module("Muzza.services").service 'ShoppingCartService', ()->
 
-  cart =
-    items: []
-    price:
-      total: 0
+  products = []
 
 
   getItem = (hashKey) ->
-    _.find( cart.items, (elem) ->
+    _.find( products, (elem) ->
       elem.hash is hashKey
     )
 
-  add = (item)->
+  addItem = (item) ->
     itemSearched = getItem item.hash
 
     if angular.isUndefined itemSearched
-      cart.items.push(item)
+      products.push item
     else
       itemSearched.qty += item.qty
 
     console.log "Item added to cart: " + JSON.stringify item
 
+  removeItem = (hashKey) ->
+    _.remove( products, (elem) ->
+      elem.hash is hashKey
+    )
 
-  getAll = ->
-    cart
-
-  calculateTotalPrice = ->
+  calculateTotalPrice = () ->
     totalPrice = 0
 
-    if cart.items.length > 0
-      angular.forEach cart.items, (product) ->
-        totalPrice += product.qty * product.totalPrice
+    angular.forEach products, (product) ->
+      totalPrice += product.qty * product.totalPrice
 
-    console.log "cart total price: " + totalPrice
     totalPrice
 
 
+  getItems = () ->
+    products
 
-  addToCart: add
-  getCart: getAll
+  removeAllItems = () ->
+    products = []
+
+
+  getCart: getItems
+  emptyCart: removeAllItems
   getTotalPrice: calculateTotalPrice
-  getItemByHash: getItem
+
+  add: addItem
+  remove: removeItem
+  get: getItem
+
 
 angular.module("Muzza.services").factory "ProductService", (stores) ->
 

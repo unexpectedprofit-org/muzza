@@ -44,7 +44,7 @@ angular.module('Muzza.factories').factory "PizzaDough", ()->
   return PizzaDough
 
 
-angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
+angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCartService, $state)->
 
   class PizzaOrder
     constructor: (modal) ->
@@ -68,7 +68,7 @@ angular.module('Muzza.factories').factory "PizzaOrder", (ShoppingCart, $state)->
 
     pizza.description = ()->
       pizza.desc + " " + pizza.size + " " + pizza.dough
-    ShoppingCart.addToCart(pizza)
+    ShoppingCartService.add pizza
     @hide()
 
   PizzaOrder::cancel = ->
@@ -123,7 +123,7 @@ angular.module('Muzza.factories').factory "Empanada", () ->
 
   return Empanada
 
-angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
+angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCartService) ->
 
   class EmpanadaOrder
     constructor: (modal) ->
@@ -140,7 +140,7 @@ angular.module('Muzza.factories').factory "EmpanadaOrder", (ShoppingCart) ->
 
     empanada.desc = empanada.desc + " " + empanada.type
     empanada.totalPrice = empanada.price
-    ShoppingCart.addToCart empanada
+    ShoppingCartService.add empanada
     @modal.hide()
 
   EmpanadaOrder::cancel = ->

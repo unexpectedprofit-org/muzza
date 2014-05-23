@@ -144,12 +144,12 @@ describe 'factories', ->
 
   describe 'PizzaOrder', ->
 
-    PizzaOrder = modal = showSpy = hideSpy = order = ShoppingCart = undefined
+    PizzaOrder = modal = showSpy = hideSpy = order = ShoppingCartService = undefined
 
     beforeEach ->
       module ($provide) ->
-        $provide.value "ShoppingCart",
-          addToCart: ()->
+        $provide.value "ShoppingCartService",
+          add: () ->
             return null
           getCart: ()->
             return null
@@ -160,9 +160,9 @@ describe 'factories', ->
         return null
 
     beforeEach ->
-      inject (_PizzaOrder_, _ShoppingCart_) ->
+      inject (_PizzaOrder_, _ShoppingCartService_) ->
         PizzaOrder = _PizzaOrder_
-        ShoppingCart = _ShoppingCart_
+        ShoppingCartService = _ShoppingCartService_
         modal =
           show: -> null
           hide: -> null
@@ -198,7 +198,7 @@ describe 'factories', ->
     describe "When the user confirms the product selection and options", ->
 
       it 'should call ShoppingCart to add a product and hide', ->
-        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
         internalHideSpy = spyOn(order, 'hide').and.callThrough()
         order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
 
@@ -209,9 +209,15 @@ describe 'factories', ->
         expect(internalHideSpy.calls.count()).toBe 1
 
       it 'should form the descripcion based on the selected options', ->
-        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
         order.add({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
         expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+
+      it 'should form a hash', ->
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
+        order.add {id:1, desc:'Muzza', size:'chica', dough:'a la piedra'}
+        expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, hash: '1-muzza-chica-alapiedra'}
+        expect(addSpy.calls.count()).toBe 1
 
     describe "When user eliminates selected product and options", ->
 
@@ -304,21 +310,21 @@ describe 'factories', ->
 
   describe 'EmpanadaOrder', ->
 
-    EmpanadaOrder = modal = showSpy = hideSpy = order = ShoppingCart = undefined
+    EmpanadaOrder = modal = showSpy = hideSpy = order = ShoppingCartService = undefined
 
     beforeEach ->
       module ($provide) ->
-        $provide.value "ShoppingCart",
-          addToCart: ()->
+        $provide.value "ShoppingCartService",
+          add: ()->
             return null
           getCart: ()->
             return null
         return null
 
     beforeEach ->
-      inject (_EmpanadaOrder_, _ShoppingCart_) ->
+      inject (_EmpanadaOrder_, _ShoppingCartService_) ->
         EmpanadaOrder = _EmpanadaOrder_
-        ShoppingCart = _ShoppingCart_
+        ShoppingCartService = _ShoppingCartService_
         modal =
           show: -> null
           hide: -> null
@@ -354,7 +360,7 @@ describe 'factories', ->
     describe "When the user confirms the product selection and quantity", ->
 
       it 'should call ShoppingCart to add a product and hide', ->
-        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
         order.add({id:1, desc:'Humita', type:'Frita', qty:2, price: 15, cat: 'EMPANADA'})
 
         expect(hideSpy).toHaveBeenCalled()
@@ -364,14 +370,14 @@ describe 'factories', ->
         expect(addSpy.calls.count()).toBe 1
 
       it 'should form the descripcion based on the selected options', ->
-        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
         order.add({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10, cat: 'EMPANADA'})
 
         expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10, cat: 'EMPANADA'}
         expect(addSpy.calls.count()).toBe 1
 
       it 'should form a hash', ->
-        addSpy = spyOn(ShoppingCart, 'addToCart').and.callThrough()
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
         order.add {id:4, desc:'Humita', type:'Al Horno'}
         expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:4, hash: '4-humita-alhorno'}
         expect(addSpy.calls.count()).toBe 1
