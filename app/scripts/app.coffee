@@ -1,4 +1,9 @@
-angular.module("Muzza", [ "ionic", "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants"])
+
+angular.module("Muzza.pizzas", ['ui.router'])
+angular.module("Muzza.empanadas", [''])
+angular.module("Muzza.cart", [''])
+
+angular.module("Muzza", [ "ionic", "Muzza.pizzas" ,"Muzza.empanadas", "Muzza.cart", "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants"])
 
 angular.module("Muzza").run ($ionicPlatform) ->
   $ionicPlatform.ready ->

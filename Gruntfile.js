@@ -44,7 +44,7 @@ module.exports = function (grunt) {
           }
       },
       html2js: {
-        files: ['<%= yeoman.app %>/templates/**/*.html'],
+        files: ['<%= yeoman.app %>/**/*.html'],
         tasks: ['html2js:app']
       },
       livereload: {
@@ -363,17 +363,17 @@ module.exports = function (grunt) {
 
     html2js: {
       options: {
-        rename: function (modulaName){
-          return modulaName.replace('../app/templates/', '');
-        },
+//        rename: function (moduleName){
+//          return moduleName.replace('../app/templates/', '');
+//        },
         module: 'Muzza.templates'
       },
       app: {
-        src: ['app/templates/*.html'],
+        src: ['app/templates/*.html', 'app/scripts/**/*.html'],
         dest: '.tmp/scripts/templates.js'
       },
       test: {
-        src: ['app/templates/*.html'],
+        src: ['app/templates/*.html', 'app/scripts/**/*.html'],
         dest: '.tmp/templates.js'
       }
     },
