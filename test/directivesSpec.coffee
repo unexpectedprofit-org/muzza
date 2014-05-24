@@ -56,67 +56,99 @@ describe "directives", ->
       expect(hideSize.calls.count()).toBe 1
 
 
-  ##### need to put both below inside same describe block
-  describe "Checkout Button, car not empty", ->
+  describe "Checkout Button", ->
 
-    $scope = element = ShoppingCartService = undefined
+    describe "init", ->
 
-    beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCartService_) ->
-        ShoppingCartService = _ShoppingCartService_
-        $scope = $rootScope
-        element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCartService, 'getCart').and.returnValue  {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price: {total: 20}}
-        $compile(element)($rootScope)
+      isolatedScope = ShoppingCartService = element = undefined
 
-    it "should show if car is not empty", ->
-      $scope.$digest()
-      txt = element.find('button').html()
-      expect(txt).toMatch(/Pedido/)
+      beforeEach ->
+        inject ($compile, $rootScope, _ShoppingCartService_) ->
+          ShoppingCartService = _ShoppingCartService_
+          $scope = $rootScope
+          element = angular.element('<checkout-button></checkout-button>')
+          spyOn(ShoppingCartService, 'getCart').and.returnValue  [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}]
+          $compile(element)($rootScope)
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
 
-  describe "Checkout Button, car empty", ->
+      it "should have a cart element defined in the scope", ->
+        expect(isolatedScope.cart).toBeDefined
 
-    $scope = element = ShoppingCartService = undefined
+      it "should have steps defined in the scope", ->
+        expect(isolatedScope.checkoutSteps).toEqual ['contact', 'delivery']
 
-    beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCartService_) ->
-        ShoppingCartService = _ShoppingCartService_
-        $scope = $rootScope
-        element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCartService, 'getCart').and.returnValue( [] )
-        $compile(element)($rootScope)
+      it "should load the templates for all the steps", ->
+        isolatedScope.steps = ['contact', 'delivery']
+        expect(isolatedScope.contact).toBeDefined()
+        expect(isolatedScope.delivery).toBeDefined()
 
-    it "should NOT show if car is empty", ->
-      $scope.$digest()
-      txt = element.find('button').html()
-      expect(txt).not.toMatch(/Pedido/)
+      it "should have a checkout function defined in the scope", ->
+        expect(isolatedScope.checkout).toBeDefined()
+
+      it "should have a click function bind", ->
+        onClickEvent = element.find('button')[0].attributes['data-ng-click'].nodeValue
+
+        expect(onClickEvent).toContain "checkout()"
 
 
-  describe "when user clicks checkout button", ->
+    describe "car NOT empty", ->
 
-    $scope = element = ShoppingCartService = isolatedScope = undefined
+      $scope = element = ShoppingCartService = undefined
 
-    beforeEach ->
-      inject ($compile, $rootScope, _ShoppingCartService_) ->
-        ShoppingCartService = _ShoppingCartService_
-        $scope = $rootScope
-        element = angular.element('<checkout-button></checkout-button>')
-        spyOn(ShoppingCartService, 'getCart').and.returnValue {items: [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}], price:{total:20}}
-        $compile(element)($rootScope)
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
+      it "should show button", ->
+        inject ($compile, $rootScope, _ShoppingCartService_) ->
+          ShoppingCartService = _ShoppingCartService_
+          $scope = $rootScope
+          element = angular.element('<checkout-button></checkout-button>')
+          spyOn(ShoppingCartService, 'getCart').and.returnValue  [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}]
+          $compile(element)($rootScope)
+          $scope.$digest()
 
-    it "should show all modals for available steps", ->
+          expect(element.find('button')).toBeDefined()
+          expect(element.find('button').html()).toMatch(/Pedido/)
 
-      isolatedScope.steps = ['contact', 'delivery']
-      showDeliveryMethod = spyOn(isolatedScope.delivery, 'show')
-      showContactForm = spyOn(isolatedScope.contact, 'show')
+    describe "car empty", ->
 
-      element.find('button')[0].click()
+      $scope = element = ShoppingCartService = undefined
 
-      expect(showDeliveryMethod).toHaveBeenCalled()
-      expect(showDeliveryMethod.calls.count()).toBe 1
-      expect(showContactForm).toHaveBeenCalled()
-      expect(showContactForm.calls.count()).toBe 1
+      it "should NOT show button", ->
+        inject ($compile, $rootScope, _ShoppingCartService_) ->
+          ShoppingCartService = _ShoppingCartService_
+          $scope = $rootScope
+          element = angular.element('<checkout-button></checkout-button>')
+          spyOn(ShoppingCartService, 'getCart').and.returnValue []
+          $compile(element)($rootScope)
+          $scope.$digest()
 
-  #      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
+          expect(element.find('button')).toBeUndefined
+
+
+    describe "when user clicks checkout button", ->
+
+      $scope = element = ShoppingCartService = isolatedScope = undefined
+
+      beforeEach ->
+        inject ($compile, $rootScope, _ShoppingCartService_) ->
+          ShoppingCartService = _ShoppingCartService_
+          $scope = $rootScope
+          element = angular.element('<checkout-button></checkout-button>')
+          spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}]
+          $compile(element)($rootScope)
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
+
+      it "should show all modals for available steps", ->
+
+        isolatedScope.steps = ['contact', 'delivery']
+        showDeliveryMethod = spyOn(isolatedScope.delivery, 'show')
+        showContactForm = spyOn(isolatedScope.contact, 'show')
+
+        element.find('button')[0].click()
+
+        expect(showDeliveryMethod).toHaveBeenCalled()
+        expect(showDeliveryMethod.calls.count()).toBe 1
+        expect(showContactForm).toHaveBeenCalled()
+        expect(showContactForm.calls.count()).toBe 1
+
+    #      TODO ADD TEST TO FILL IN DATA IN FIRST MODAL AND GET TO THE SECOND ONE
