@@ -349,6 +349,11 @@ module.exports = function (grunt) {
     // Test settings
     // These will override any config options in karma.conf.js if you create it.
     karma: {
+      webStorm: {
+        configFile: "karma.conf.js",
+        singleRun: false,
+        autoWatch: true
+      },
       unit: {
         // Change this to 'Chrome', 'Firefox', etc. Note that you will need
         // to install a karma launcher plugin for browsers other than Chrome.
@@ -480,6 +485,11 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'html2js:test',
     'karma:unit'
+  ]);
+
+  grunt.registerTask('test-ws', [
+    'html2js:test',
+    'karma:webStorm'
   ]);
 
   grunt.registerTask('build', [
