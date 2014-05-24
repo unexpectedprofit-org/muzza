@@ -13,9 +13,9 @@ describe 'Empanada', ->
 
     it "should construct a Empanada object", ->
       newEmpanada = new Empanada()
-      expect(newEmpanada.updateQty).toBeDefined
-      expect(newEmpanada.minReached).toBeDefined
-      expect(newEmpanada.maxReached).toBeDefined
+      expect(newEmpanada.updateQty).toBeDefined()
+      expect(newEmpanada.minReached).toBeDefined()
+      expect(newEmpanada.maxReached).toBeDefined()
 
     it "should init the object", ->
       newEmpanada = new Empanada()

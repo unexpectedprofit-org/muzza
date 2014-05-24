@@ -73,7 +73,7 @@ describe "directives", ->
           isolatedScope = element.isolateScope()
 
       it "should have a cart element defined in the scope", ->
-        expect(isolatedScope.cart).toBeDefined
+        expect(isolatedScope.cart).toBeDefined()
 
       it "should have steps defined in the scope", ->
         expect(isolatedScope.checkoutSteps).toEqual ['contact', 'delivery']
@@ -120,7 +120,8 @@ describe "directives", ->
           $compile(element)($rootScope)
           $scope.$digest()
 
-          expect(element.find('button')).toBeUndefined
+          console.log element.find('button')
+          expect(element.find('button')).toEqual {}
 
     describe "when user clicks checkout button", ->
 
