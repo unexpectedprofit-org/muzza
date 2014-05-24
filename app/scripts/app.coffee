@@ -22,13 +22,13 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
         templateUrl: "templates/menu.html"
 
   .state "app.pizza",
-    url: "/menu/:pizzaId"
+    url: "/menu/pizza/:pizzaId"
     views:
       'navContent':
         templateUrl: "templates/menu.html"
 
   .state "app.empanada",
-    url: "/menu/:empanadaId"
+    url: "/menu/empanada/:empanadaId"
     views:
       'navContent':
         templateUrl: "templates/menu.html"

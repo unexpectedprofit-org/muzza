@@ -4,6 +4,8 @@ describe "Cart", ->
     module 'Muzza.cart'
     module 'Muzza.templates'
     module 'Muzza.directives'
+    module 'Muzza.pizzas'
+    module 'Muzza.empanadas'
 
     module ($provide) ->
       $provide.value "ShoppingCartService",
@@ -18,22 +20,24 @@ describe "Cart", ->
          return null
       return null
 
-  $scope = element = ShoppingCartService = isolatedScope = undefined
+  $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _ShoppingCartService_) ->
+    inject ($compile, $rootScope, _ShoppingCartService_, _Pizza_, _Empanada_) ->
       ShoppingCartService = _ShoppingCartService_
+      Pizza = _Pizza_
+      Empanada = _Empanada_
       $scope = $rootScope
       element = angular.element('<cart></cart>')
       $compile(element)($rootScope)
 
   describe 'when shopping cart has at least one item', ->
 
-    it 'should list all items in the shopping cart', ->
+    it 'should list all items in the shopping cart and the total price', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
       $scope.$digest()
       items = element.find('ion-item')
-      expect(items.length).toBe 2
+      expect(items.length).toBe 3
 
     it 'should not display the empty msg', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
@@ -51,26 +55,28 @@ describe "Cart", ->
       expect(msg).toMatch(/12.11/)
 
     it "should display items sorted by category - 1", ->
-      pizza = {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
-      empanada = {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
+      inject (Pizza, Empanada)->
+        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
+        empanada = new Empanada {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
 
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza,empanada]
-      $scope.$digest()
-      items = element.find('ion-list').children()
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza,empanada]
+        $scope.$digest()
+        items = element.find('ion-list').children()
 
-      expect(items[0].innerHTML).toContain empanada.desc
-      expect(items[1].innerHTML).toContain pizza.desc
+        expect(items[0].innerHTML).toContain empanada.description()
+        expect(items[1].innerHTML).toContain pizza.description()
 
     it "should display items sorted by category - 2", ->
-      pizza = {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
-      empanada = {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
+      inject (Pizza, Empanada)->
+        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
+        empanada = new Empanada {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
 
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada,pizza]
-      $scope.$digest()
-      items = element.find('ion-list').children()
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada,pizza]
+        $scope.$digest()
+        items = element.find('ion-list').children()
 
-      expect(items[0].innerHTML).toContain empanada.desc
-      expect(items[1].innerHTML).toContain pizza.desc
+        expect(items[0].innerHTML).toContain empanada.description()
+        expect(items[1].innerHTML).toContain pizza.description()
 
 
   describe 'when shopping cart is empty', ->

@@ -7,16 +7,15 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
       @desc = param?.desc or ''
       @type = param?.type or ''
       @price = param?.price or 0
-
       @id = param?.id
 
+  Empanada::updateQty = (itemQtyDiff) ->
 
-    toNumber: (value) ->
+    toNumber = (value) ->
       value = value * 1
       if isNaN(value) then 0 else value
 
-  Empanada::updateQty = (itemQtyDiff) ->
-    itemQtyDiff = @toNumber(itemQtyDiff)
+    itemQtyDiff = toNumber(itemQtyDiff)
     if (@qty + itemQtyDiff ) <= 0
       @qty = 0
     else
