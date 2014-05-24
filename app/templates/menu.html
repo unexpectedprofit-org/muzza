@@ -1,4 +1,4 @@
-<ion-view title="Menu" ng-controller="MenuCtrl as menu">
+<ion-view title="Menu" data-ng-controller="MenuCtrl as menu">
 
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
@@ -10,9 +10,9 @@
 
     <ion-content class="has-header">
 
-      <pizzas ng-model="menu.pizza"></pizzas>
+      <pizzas data-ng-model="menu.pizza"></pizzas>
 
-      <empanadas ng-model="menu.empanada"></empanadas>
+      <empanadas data-ng-model="menu.empanada"></empanadas>
 
     </ion-content>
 

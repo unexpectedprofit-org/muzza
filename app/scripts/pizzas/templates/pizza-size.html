@@ -19,7 +19,7 @@
 
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" value="individual" ng-click="size.choose('individual')"  ng-model="pizza.size">
+                <input type="radio" value="individual" data-ng-click="size.choose('individual')"  data-ng-model="pizza.size">
                 <div class="item-content">
 
                     Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
@@ -27,14 +27,14 @@
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" value="chica" ng-click="size.choose('chica')" ng-model="pizza.size">
+                <input type="radio" value="chica" data-ng-click="size.choose('chica')" data-ng-model="pizza.size">
                 <div class="item-content">
                     Chica  -  {{ pizza.totalPrice + pizza.price.size.chica | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" value="grande" ng-click="size.choose('grande')" ng-model="pizza.size">
+                <input type="radio" value="grande" data-ng-click="size.choose('grande')" data-ng-model="pizza.size">
                 <div class="item-content">
                     Grande  -  {{ pizza.totalPrice + pizza.price.size.grande | centsToMoney | currency}}
                 </div>

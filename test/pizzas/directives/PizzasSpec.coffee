@@ -108,7 +108,7 @@ describe "Pizzas", ->
         expect(divs[4].innerHTML).toContain "Categ 2"
 
       it "should have a click function bind", ->
-        onClickEvent = element.find('ion-item')[0].attributes['ng-click'].nodeValue
+        onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
         expect(onClickEvent).toContain "choose(prod)"
 
       it "should have steps defined in the scope", ->

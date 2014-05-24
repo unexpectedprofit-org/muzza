@@ -4,12 +4,12 @@
 
 <div class="list">
 
-  <div class="item item-divider" style="background-color: #f8f8ff" ng-repeat-start="cat in menu">
+  <div class="item item-divider" style="background-color: #f8f8ff" data-ng-repeat-start="cat in menu">
     <strong>{{cat.desc}}</strong>
   </div>
 
-  <ion-list ng-repeat-end>
-    <ion-item data-ng-repeat="prod in cat.products" ng-click="choose(prod, cat.desc)">
+  <ion-list data-ng-repeat-end>
+    <ion-item data-ng-repeat="prod in cat.products" data-ng-click="choose(prod, cat.desc)">
         <strong>{{ prod.desc }}</strong>
         <span>{{ prod.toppings }}</span>
         <span class="text-right">{{ prod.price | centsToMoney | currency}}</span>

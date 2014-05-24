@@ -101,7 +101,7 @@ describe "Empanadas", ->
       expect(divs[4].innerHTML).toContain "Fritas"
 
     it "should have a click function bind", ->
-      onClickEvent = element.find('ion-item')[0].attributes['ng-click'].nodeValue
+      onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
 
       expect(onClickEvent).toContain "choose(prod, cat.desc)"
 
