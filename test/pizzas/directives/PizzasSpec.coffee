@@ -91,11 +91,25 @@ describe "Pizzas", ->
 
       it "should display the 3 products listed on the menu", ->
         expect(element.find('ion-item').length).toBe 3
-        #      expect(element.find('.item.item-divider').length).toBe 2
 
-        expect(element.html()).toContain('Muzza')
-        expect(element.html()).toContain('Fugazetta')
-        expect(element.html()).toContain('Calabresa')
+        expect(element.html()).toContain 'Muzza'
+        expect(element.html()).toContain 'Muzzarella / tomate / Aceitunas'
+
+        expect(element.html()).toContain 'Fugazetta'
+        expect(element.html()).toContain 'Muzzarella / Cebolla'
+
+        expect(element.html()).toContain 'Calabresa'
+        expect(element.html()).toContain 'Muzzarella / Longaniza / Salsa'
+
+      it "should display the 2 categories", ->
+        divs = element.find('div')
+
+        expect(divs[2].innerHTML).toContain "Categ 1"
+        expect(divs[4].innerHTML).toContain "Categ 2"
+
+      it "should have a click function bind", ->
+        onClickEvent = element.find('ion-item')[0].attributes['ng-click'].nodeValue
+        expect(onClickEvent).toContain "choose(prod)"
 
       it "should have steps defined in the scope", ->
         expect(isolatedScope.steps).toEqual ['order', 'dough', 'size']
