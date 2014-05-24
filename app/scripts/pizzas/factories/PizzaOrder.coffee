@@ -12,9 +12,8 @@ angular.module('Muzza.pizzas').factory "PizzaOrder", (ShoppingCartService, $stat
     $state.go('app.menu')
 
   PizzaOrder::add = (pizza)->
-    item = angular.copy(pizza)
-    item.setHash()
-    ShoppingCartService.add item
+    pizza.setHash()
+    ShoppingCartService.add pizza
     @hide()
 
   PizzaOrder::cancel = ->
