@@ -1,4 +1,4 @@
-ddescribe 'Pizza', ->
+describe 'Pizza', ->
 
   Pizza = undefined
 
