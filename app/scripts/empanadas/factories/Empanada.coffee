@@ -24,8 +24,12 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
 
   Empanada::minReached = () ->
     @qty <= 1
+
   Empanada::maxReached = () ->
     @qty >= 100
+
+  Empanada::description = () ->
+    @desc
 
 
   return Empanada

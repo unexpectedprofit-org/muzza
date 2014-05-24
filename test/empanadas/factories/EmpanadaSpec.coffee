@@ -78,3 +78,14 @@ describe 'Empanada', ->
 
       newEmpanada.updateQty -2
       expect(newEmpanada.qty).toBe 8
+
+  it 'should generate a description from default values', ->
+    empanada = new Empanada()
+    description = empanada.description()
+    expect(description).toBe ''
+
+  it 'should generate a description from changes values', ->
+    empanada = new Empanada()
+    empanada.desc = 'JyQ'
+    description = empanada.description()
+    expect(description).toBe 'JyQ'

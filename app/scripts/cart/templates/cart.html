@@ -6,17 +6,14 @@
 
     <ion-list>
         <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
-
-          {{item.qty}} x {{item.desc}}
-          </br>
+          <div style="white-space: normal">{{item.qty}} x {{item.description()}}</div>
           {{item.totalPrice * item.qty | centsToMoney | currency}}
 
           <button class="button button-light" data-ng-click="$parent.edit(item)">Editar</button>
-
         </ion-item>
 
-        <div data-ng-if="cart.products.length > 0">
+        <ion-item  data-ng-if="cart.products.length > 0">
            Total: {{ cart.totalPrice()  | centsToMoney | currency }}
-        </div>
+        </ion-item>
 
     </ion-list>
