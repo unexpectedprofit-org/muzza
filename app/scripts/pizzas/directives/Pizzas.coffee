@@ -54,6 +54,6 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
         $scope.size = new PizzaSize(views[2])
 
         #        If its coming from the shopping cart
-        if $stateParams.id then $scope.choose(null, $stateParams.id)
+        if $stateParams.pizzaId then $scope.choose(null, $stateParams.pizzaId)
 
     init()

@@ -129,7 +129,7 @@ describe "Cart", ->
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
         element.find('button')[0].click()
-        expect(onState).toHaveBeenCalledWith 'app.pizza', {id:'1-Muzza-chica-alala'}
+        expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:'1-Muzza-chica-alala'}
 
       it "should redirect to EMPANADA edit view", ->
 
@@ -141,7 +141,7 @@ describe "Cart", ->
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
         element.find('button')[0].click()
-        expect(onState).toHaveBeenCalledWith 'app.empanada', {id:'45-Pollo-alhorno'}
+        expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:'45-Pollo-alhorno'}
 
       it "should redirect to menu default view if no categ matches", ->
 

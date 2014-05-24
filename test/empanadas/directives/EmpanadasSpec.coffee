@@ -16,12 +16,13 @@ describe "Empanadas", ->
          return null
         get: ()->
           return null
-      return null
-    module ($provide) ->
       $provide.value "$state",
         go: () ->
           return null
+      $provide.value "$stateParams",
+        {}
       return null
+
 
   isolatedScope = $scope = element = undefined
 
@@ -172,47 +173,64 @@ describe "Empanadas", ->
 
         expect(isolatedScope.empanada.id).toEqual expectedEmpanada.id
 
-  describe "when user edits a product", ->
+  describe "when system requests the menu an specific item view", ->
+
+    ShoppingCartService = $stateParams = getItemSpy = Empanada = undefined
 
     beforeEach ->
-      isolatedScope.steps = ['order']
-      showType = spyOn(isolatedScope.order, 'show')
-      chooseSpy = spyOn(isolatedScope, 'choose').and.callThrough()
+      inject (_$stateParams_, _ShoppingCartService_, $rootScope, _Empanada_) ->
+        Empanada = _Empanada_
+        ShoppingCartService = _ShoppingCartService_
+        $stateParams = _$stateParams_
+        $scope = $rootScope
+        $scope.menu = [
+          id: 1
+          desc: "Categ 1"
+          products: [
+            id: 1
+            desc: "JYQ"
+          ,
+            id: 2,
+            desc: "OTHER"
+          ]
+        ,
+          id: 2
+          desc: "Categ 2"
+          products: [
+            id: 3
+            desc: "ANOTHER"
+          ]
+        ]
 
-      element.find('ion-item')[0].click()
-      isolatedScope.empanada.qty = 2
-      isolatedScope.order.add isolatedScope.empanada
+    describe "and the item is an EMPANADA", ->
 
+      beforeEach ->
+        inject ($compile, $rootScope) ->
+          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Empanada({ hash:'23-Carnepicante-alhorno', qty: 5, id: 1, desc: "JYQ", cat: 'EMPANADA', totalPrice: 60, price: {base:50} }))
+          $stateParams.empanadaId = 1
+          element = angular.element('<empanadas ng-model="menu"></empanadas>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
 
-    it "should update quantity", ->
-      inject (ShoppingCartService) ->
-        expected =
-          id: 23
-          hash:'23-Carnepicante-alhorno'
-          qty:5
-          cat: 'EMPANADA'
+      it "should retrieve the item from the shopping cart", ->
+        expect(getItemSpy).toHaveBeenCalled()
 
-        getItem = spyOn(ShoppingCartService, 'get').and.returnValue expected
-        isolatedScope.choose null, null, '23-Carnepicante-alhorno'
+    describe "and the item is not an empanada", ->
 
-        isolatedScope.empanada.qty = 5
+      beforeEach ->
+        inject ($rootScope, $compile) ->
+          $stateParams.empanadaId = undefined
+          $stateParams.pizzaId = 2
+          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Empanada({ hash:'23-Carnepicante-alhorno', qty: 5, id: 1, desc: "JYQ", cat: 'EMPANADA', totalPrice: 60, price: {base:50} }))
+          element = angular.element('<empanadas ng-model="menu"></empanadas>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
 
+      it "should not retrieve the product", ->
+        expect(getItemSpy).not.toHaveBeenCalled()
 
-        expect(getItem).toHaveBeenCalledWith expected.hash
-        expect(isolatedScope.empanada).toBe expected
-
-      it "should retrieve the product from the cart", ->
-        inject (ShoppingCartService) ->
-          expected =
-            id: 23
-            hash:'23-Carnepicante-alhorno'
-            qty:5
-
-          getItem = spyOn(ShoppingCartService, 'get').and.returnValue expected
-          isolatedScope.choose null, null, '23-Carnepicante-alhorno'
-
-          expect(getItem).toHaveBeenCalledWith expected.hash
-          expect(isolatedScope.empanada).toBe expected
 
   describe "when user deletes a product", ->
 

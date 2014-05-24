@@ -47,6 +47,6 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
         $scope.order = new EmpanadaOrder views[0]
 
         # If its coming from the shopping cart
-        if $stateParams.id then $scope.choose(null, null, $stateParams.id)
+        if $stateParams.empanadaId then $scope.choose(null, null, $stateParams.empanadaId)
 
     init()
