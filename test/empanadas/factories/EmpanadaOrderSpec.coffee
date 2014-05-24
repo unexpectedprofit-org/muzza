@@ -10,8 +10,6 @@ describe 'EmpanadaOrder', ->
       $provide.value "ShoppingCartService",
         add: ()->
           return null
-        getCart: ()->
-          return null
       return null
 
   beforeEach ->
@@ -32,11 +30,17 @@ describe 'EmpanadaOrder', ->
   describe "Init", ->
 
     it 'should construct a EmpanadaOrder object', ->
+
       expect(order.add).toBeDefined()
       expect(order.cancel).toBeDefined()
       expect(order.edit).toBeDefined()
       expect(order.show).toBeDefined()
       expect(order.hide).toBeDefined()
+
+    it "should init the object", ->
+      expect(order.modal).toBe modal
+
+  describe "call the modal", ->
 
     it 'should delegate the show call to the modal', ->
       order.show()
@@ -54,7 +58,7 @@ describe 'EmpanadaOrder', ->
 
     it 'should call ShoppingCart to add a product and hide', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      order.add({id:1, desc:'Humita', type:'Frita', qty:2, price: 15, cat: 'EMPANADA'})
+      order.add {id:1, desc:'Humita', type:'Frita', qty:2, price: 15, cat: 'EMPANADA'}
 
       expect(hideSpy).toHaveBeenCalled()
       expect(hideSpy.calls.count()).toBe 1
@@ -64,14 +68,15 @@ describe 'EmpanadaOrder', ->
 
     it 'should form the descripcion based on the selected options', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      order.add({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10, cat: 'EMPANADA'})
+      order.add {id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10, cat: 'EMPANADA'}
 
-      expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Pollo Al Horno', type: "Al Horno", qty:3, totalPrice: 10, price: 10, cat: 'EMPANADA'}
+      expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Pollo Al Horno'}
       expect(addSpy.calls.count()).toBe 1
 
     it 'should form a hash', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
       order.add {id:4, desc:'Humita', type:'Al Horno'}
+
       expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:4, hash: '4-humita-alhorno'}
       expect(addSpy.calls.count()).toBe 1
 
@@ -86,8 +91,9 @@ describe 'EmpanadaOrder', ->
   describe "When user decides to edit the selected product and options", ->
 
     it "should display quantity modal", ->
+      empanadaToEdit = {id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10}
       chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
-      order.edit({id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10})
+      order.edit empanadaToEdit
 
-      expect(chooseSpy).toHaveBeenCalledWith {id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10}
+      expect(chooseSpy).toHaveBeenCalledWith empanadaToEdit
       expect(chooseSpy.calls.count()).toBe 1
