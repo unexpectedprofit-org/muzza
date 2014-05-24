@@ -9,71 +9,72 @@ describe 'Empanada', ->
     inject (_Empanada_) ->
       Empanada = _Empanada_
 
-  it "should init the object with quantity = 1", ->
-    newEmpanada = new Empanada()
-    expect(newEmpanada.qty).toBe 1
-    expect(newEmpanada.cat).toBe "EMPANADA"
+  describe "init", ->
 
-  it "should init the object from another object", ->
-    fromObject =
-      id: 505
-      desc: "description"
-      price: 100.20
-      type: "al horno"
+    it "should construct a Empanada object", ->
+      newEmpanada = new Empanada()
+      expect(newEmpanada.updateQty).toBeDefined
+      expect(newEmpanada.minReached).toBeDefined
+      expect(newEmpanada.maxReached).toBeDefined
 
-    newEmpanada = new Empanada fromObject
-    expect(newEmpanada.id).toBe 505
-    expect(newEmpanada.qty).toBe 1
-    expect(newEmpanada.desc).toBe fromObject.desc
-    expect(newEmpanada.price).toBe fromObject.price
-    expect(newEmpanada.type).toBe fromObject.type
-    expect(newEmpanada.cat).toBe "EMPANADA"
+    it "should init the object", ->
+      newEmpanada = new Empanada()
+      expect(newEmpanada.qty).toBe 1
+      expect(newEmpanada.cat).toBe "EMPANADA"
 
+    it "should init the object from another object", ->
+      fromObject =
+        id: 505
+        desc: "description"
+        price: 1020
+        type: "al horno"
 
-  it "should update quantity adding 4 items", ->
-    newEmpanada = new Empanada()
-    newEmpanada.updateQty +4
-    expect(newEmpanada.qty).toBe 5
+      newEmpanada = new Empanada fromObject
+      expect(newEmpanada.qty).toBe 1
+      expect(newEmpanada.cat).toBe "EMPANADA"
+      expect(newEmpanada.id).toBe 505
+      expect(newEmpanada.desc).toBe fromObject.desc
+      expect(newEmpanada.price).toBe fromObject.price
+      expect(newEmpanada.type).toBe fromObject.type
 
-  it "should update to zero when result is less than zero", ->
-    newEmpanada = new Empanada()
-    newEmpanada.qty = 1
-    newEmpanada.updateQty -5
-    expect(newEmpanada.qty).toBe 0
+  describe "max/min allowed", ->
 
-  it "should return current quantity is new is not a number", ->
-    newEmpanada = new Empanada()
-    newEmpanada.qty = 1
-    newEmpanada.updateQty "a"
-    expect(newEmpanada.qty).toBe 1
+    it "should validate min quantity", ->
+      newEmpanada = new Empanada()
+      expect(newEmpanada.minReached()).toBeTruthy()
 
-  it "should update quantity sustracting 2 items", ->
-    newEmpanada = new Empanada()
-    newEmpanada.qty = 10
+      newEmpanada.qty = 10
+      expect(newEmpanada.minReached()).toBeFalsy()
 
-    newEmpanada.updateQty -2
-    expect(newEmpanada.qty).toBe 8
+    it "should validate max quantity", ->
+      newEmpanada = new Empanada()
+      expect(newEmpanada.maxReached()).toBeFalsy()
 
-  it "should validate min quantity", ->
-    newEmpanada = new Empanada()
-    expect(newEmpanada.minReached()).toBeTruthy()
+      newEmpanada.qty = 100
+      expect(newEmpanada.maxReached()).toBeTruthy()
 
-    newEmpanada.qty = 10
-    expect(newEmpanada.minReached()).toBeFalsy()
+  describe "update quantity functionality", ->
 
-  it "should validate max quantity", ->
-    newEmpanada = new Empanada()
-    expect(newEmpanada.maxReached()).toBeFalsy()
+    it "should update quantity adding 4 items", ->
+      newEmpanada = new Empanada()
+      newEmpanada.updateQty +4
+      expect(newEmpanada.qty).toBe 5
 
-    newEmpanada.qty = 100
-    expect(newEmpanada.maxReached()).toBeTruthy()
+    it "should update to zero when result is less than zero", ->
+      newEmpanada = new Empanada()
+      newEmpanada.qty = 1
+      newEmpanada.updateQty -5
+      expect(newEmpanada.qty).toBe 0
 
-  it "should be equal", ->
-    newEmpanada1 = new Empanada()
-    newEmpanada1.qty = 10
-    newEmpanada1.id = 23
+    it "should return current quantity is new is not a number", ->
+      newEmpanada = new Empanada()
+      newEmpanada.qty = 4
+      newEmpanada.updateQty "a"
+      expect(newEmpanada.qty).toBe 4
 
-    newEmpanada2 = new Empanada()
-    newEmpanada2.qty = 10
-    newEmpanada2.id = 23
-    expect(newEmpanada1).toEqual newEmpanada2
+    it "should update quantity sustracting 2 items", ->
+      newEmpanada = new Empanada()
+      newEmpanada.qty = 10
+
+      newEmpanada.updateQty -2
+      expect(newEmpanada.qty).toBe 8

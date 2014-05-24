@@ -1,14 +1,14 @@
 angular.module('Muzza.empanadas').factory "Empanada", () ->
 
   class Empanada
-    constructor: (from) ->
+    constructor: (param) ->
       @cat = 'EMPANADA'
       @qty = 1
-      @desc = from?.desc
-      @price = from?.price
-      @type = from?.type
+      @desc = param?.desc or ''
+      @type = param?.type or ''
+      @price = param?.price or 0
 
-      @id = from?.id
+      @id = param?.id
 
 
     toNumber: (value) ->
@@ -26,9 +26,6 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @qty <= 1
   Empanada::maxReached = () ->
     @qty >= 100
-
-  Empanada::equals = (anotherObject) ->
-    angular.isDefined(anotherObject) && @id is anotherObject.id
 
 
   return Empanada
