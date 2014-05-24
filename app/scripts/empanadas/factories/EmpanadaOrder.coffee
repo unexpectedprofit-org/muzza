@@ -16,10 +16,11 @@ angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService)
     empanada.desc = empanada.desc + " " + empanada.type
     empanada.totalPrice = empanada.price
     ShoppingCartService.add empanada
-    @modal.hide()
+    @hide()
 
   EmpanadaOrder::cancel = ->
-    @modal.hide()
+    @hide()
+    @modal.scope.remove()
 
   EmpanadaOrder::edit = (empanada) ->
     @modal.scope.choose empanada

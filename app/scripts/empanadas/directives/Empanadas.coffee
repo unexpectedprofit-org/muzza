@@ -19,6 +19,9 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
       scope: $scope,
       animation: 'slide-in-up'
 
+    $scope.remove = () ->
+      $scope.empanada = undefined
+
     $scope.choose = (item, cat_desc, hashKey)->
 
       empanadaInCart = undefined

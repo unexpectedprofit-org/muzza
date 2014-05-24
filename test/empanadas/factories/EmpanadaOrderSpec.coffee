@@ -21,6 +21,7 @@ describe 'EmpanadaOrder', ->
         hide: -> null
         scope:
           choose: -> null
+          remove: -> null
 
       showSpy = spyOn(modal, 'show').and.callThrough()
       hideSpy = spyOn(modal, 'hide').and.callThrough()
@@ -40,15 +41,17 @@ describe 'EmpanadaOrder', ->
     it "should init the object", ->
       expect(order.modal).toBe modal
 
-  describe "call the modal", ->
+  describe "show functionality", ->
 
-    it 'should delegate the show call to the modal', ->
+    it 'should delegate call to the modal', ->
       order.show()
 
       expect(showSpy).toHaveBeenCalled()
       expect(showSpy.calls.count()).toBe 1
 
-    it 'should delegate the hide call to the modal', ->
+  describe "hide functionality", ->
+
+    it 'should delegate call to the modal', ->
       order.hide()
 
       expect(hideSpy).toHaveBeenCalled()
@@ -80,13 +83,21 @@ describe 'EmpanadaOrder', ->
       expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:4, hash: '4-humita-alhorno'}
       expect(addSpy.calls.count()).toBe 1
 
-  describe "When user eliminates selected product", ->
+  describe "cancel functionality", ->
 
     it "should hide confirmation modal", ->
       order.cancel()
 
       expect(hideSpy).toHaveBeenCalled()
       expect(hideSpy.calls.count()).toBe 1
+
+    it "should delegate call to the scope", ->
+      removeSpy = spyOn(modal.scope,'remove').and.callThrough()
+      order.cancel()
+
+      expect(removeSpy).toHaveBeenCalled()
+      expect(removeSpy.calls.count()).toBe 1
+
 
   describe "When user decides to edit the selected product and options", ->
 

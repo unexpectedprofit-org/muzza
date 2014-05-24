@@ -115,8 +115,9 @@ describe "Empanadas", ->
     it "should have a product defined in the scope", ->
       expect(isolatedScope.empanada).toBeDefined()
 
-    it "should have a choose function defined in the scope", ->
+    it "should have functions defined in the scope", ->
       expect(isolatedScope.choose).toBeDefined()
+      expect(isolatedScope.remove).toBeDefined()
 
 
   describe "When user chooses a product", ->
@@ -143,7 +144,7 @@ describe "Empanadas", ->
         price: 1800
 
       expect(chooseSpy).toHaveBeenCalledWith( jasmine.objectContaining(expected), "Al Horno" )
-      expect(isolatedScope.empanada).not.toBeEmpty
+      expect(isolatedScope.empanada.desc).toBe expected.desc
 
 
     it "should replace the previous selection", ->
@@ -182,9 +183,8 @@ describe "Empanadas", ->
       isolatedScope.empanada.qty = 2
       isolatedScope.order.add isolatedScope.empanada
 
-      isolatedScope
 
-    it "should update qunatity", ->
+    it "should update quantity", ->
       inject (ShoppingCartService) ->
         expected =
           id: 23
@@ -212,3 +212,12 @@ describe "Empanadas", ->
 
           expect(getItem).toHaveBeenCalledWith expected.hash
           expect(isolatedScope.empanada).toBe expected
+
+  describe "when user deletes a product", ->
+
+    it "should remove the item from the modal scope", ->
+      chooseSpy = spyOn(isolatedScope, 'choose').and.callThrough()
+      element.find('ion-item')[0].click()
+      isolatedScope.remove()
+
+      expect(isolatedScope.empanada).toBeUndefined()
