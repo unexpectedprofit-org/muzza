@@ -10,7 +10,8 @@
           {{item.qty}} x {{item.desc}}
           </br>
           {{item.totalPrice * item.qty | centsToMoney | currency}}
-            <button class="button button-light" data-ng-click="$parent.edit(item)">Editar</button>
+
+          <button class="button button-light" data-ng-click="$parent.edit(item)">Editar</button>
 
         </ion-item>
 
