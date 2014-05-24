@@ -91,7 +91,6 @@ describe "directives", ->
 
         expect(onClickEvent).toContain "checkout()"
 
-
     describe "car NOT empty", ->
 
       $scope = element = ShoppingCartService = undefined
@@ -122,7 +121,6 @@ describe "directives", ->
           $scope.$digest()
 
           expect(element.find('button')).toBeUndefined
-
 
     describe "when user clicks checkout button", ->
 
