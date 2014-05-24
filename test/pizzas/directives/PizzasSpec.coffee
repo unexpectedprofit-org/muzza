@@ -36,7 +36,7 @@ describe "Pizzas", ->
           products: [
             id: 1
             desc: "Muzza"
-            toppings: [ "Muzzarella", "tomate", "Aceitunas" ]
+            toppings: "Muzzarella / tomate / Aceitunas"
             price:
               base: 8000
               size:
@@ -50,7 +50,7 @@ describe "Pizzas", ->
 
             id: 2,
             desc: "Fugazetta"
-            toppings: [ "Muzzarella", "Cebolla" ]
+            toppings: "Muzzarella / Cebolla"
             price:
               base: 7500
               size:
@@ -69,7 +69,7 @@ describe "Pizzas", ->
           products: [
             id: 3
             desc: "Calabresa"
-            toppings: [ "Muzzarella", "Longaniza", "Salsa" ]
+            toppings: "Muzzarella / Longaniza / Salsa"
             price:
               base: 5000
               size:
@@ -89,28 +89,28 @@ describe "Pizzas", ->
 
     describe "init", ->
 
-      describe "when user clicks on a product", ->
+      it "should display the 3 products listed on the menu", ->
+        expect(element.find('ion-item').length).toBe 3
+        #      expect(element.find('.item.item-divider').length).toBe 2
 
-        it "should display the 3 pizza menu items", ->
-          expect(element.find('ion-item').length).toBe 3
-          expect(element.html()).toContain('Muzza')
-          expect(element.html()).toContain('Fugazetta')
-          expect(element.html()).toContain('Calabresa')
+        expect(element.html()).toContain('Muzza')
+        expect(element.html()).toContain('Fugazetta')
+        expect(element.html()).toContain('Calabresa')
 
-        it "should load the templates for the steps", ->
-          isolatedScope.steps = ['size', 'dough']
-          expect(isolatedScope.size).toBeDefined()
-          expect(isolatedScope.dough).toBeDefined()
+      it "should have steps defined in the scope", ->
+        expect(isolatedScope.steps).toEqual ['order', 'dough', 'size']
 
-        it "should have steps defined in the scope", ->
-          expect(isolatedScope.steps).toEqual ['order', 'dough', 'size']
+      it "should load the templates for all the steps", ->
+        isolatedScope.steps = ['size', 'dough']
+        expect(isolatedScope.size).toBeDefined()
+        expect(isolatedScope.dough).toBeDefined()
+        expect(isolatedScope.order).toBeDefined()
 
-        it "should have a product defined in the scope", ->
-          expect(isolatedScope.pizza).toBeDefined()
+      it "should have a product defined in the scope", ->
+        expect(isolatedScope.pizza).toBeDefined()
 
-        it "should have a choose function defined in the scope", ->
-          expect(isolatedScope.choose).toBeDefined()
-
+      it "should have a choose function defined in the scope", ->
+        expect(isolatedScope.choose).toBeDefined()
 
     describe "When user chooses a product", ->
 

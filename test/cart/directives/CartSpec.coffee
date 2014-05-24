@@ -7,13 +7,9 @@ describe "Cart", ->
 
     module ($provide) ->
       $provide.value "ShoppingCartService",
-        add: ()->
-          return null
         getCart: ()->
           return null
         getTotalPrice: () ->
-          return null
-        get: ()->
           return null
       return null
     module ($provide) ->
@@ -53,6 +49,28 @@ describe "Cart", ->
       msg = element.find('ion-list').html()
       expect(msg).toMatch(/Total:/)
       expect(msg).toMatch(/12.11/)
+
+    it "should display items sorted by category - 1", ->
+      pizza = {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
+      empanada = {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
+
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza,empanada]
+      $scope.$digest()
+      items = element.find('ion-list').children()
+
+      expect(items[0].innerHTML).toContain empanada.desc
+      expect(items[1].innerHTML).toContain pizza.desc
+
+    it "should display items sorted by category - 2", ->
+      pizza = {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
+      empanada = {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
+
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada,pizza]
+      $scope.$digest()
+      items = element.find('ion-list').children()
+
+      expect(items[0].innerHTML).toContain empanada.desc
+      expect(items[1].innerHTML).toContain pizza.desc
 
 
   describe 'when shopping cart is empty', ->
