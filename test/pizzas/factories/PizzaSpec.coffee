@@ -15,7 +15,7 @@ describe 'Pizza', ->
     it 'should construct a Pizza model with default values', ->
       pizza = new Pizza()
       expect(pizza.desc).toBe ''
-      expect(pizza.totalPrice).toBe 0
+      expect(pizza.totalPrice).toBe undefined
       expect(pizza.size).toBe ''
       expect(pizza.dough).toBe ''
       expect(pizza.cat).toBe 'PIZZA'
@@ -31,7 +31,7 @@ describe 'Pizza', ->
         price:
           base: 50
       pizza = new Pizza(param)
-      expect(pizza.totalPrice).toBe 0
+      expect(pizza.totalPrice).toBe undefined
       expect(pizza.size).toBe 'chica'
       expect(pizza.price.base).toBe 50
       expect(pizza.dough).toBe 'al molde'

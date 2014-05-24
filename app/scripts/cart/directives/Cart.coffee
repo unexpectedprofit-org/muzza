@@ -5,6 +5,9 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state) ->
   link: ($scope, ele, attrs, ctrl)->
 
     $scope.edit = (item)->
+#      TODO: edit needs to remove the item from cart.
+#      If user decided not to edit it after all, we should put it back to the cart.
+
       switch item.cat
         when 'EMPANADA' then $state.go 'app.empanada', {id: item.hash}
         when 'PIZZA'    then $state.go 'app.pizza', {id: item.hash}

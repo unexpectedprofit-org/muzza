@@ -38,28 +38,11 @@ describe "services", ->
         ProductService = _ProductService_
     )
 
-    it "should get a menu of product objects", ->
-      store =
-        products:
-          "empanada": [
-            "id": 1,
-            "desc": "Al Horno",
-            "products": [
-              "id": 1
-              "desc": "Carne cortada a cuchillo"
-              "toppings": [ "Carne", "Huevo", "Morron" ]
-              "price": 1800
-            ,
-              "id": 2
-              "desc": "Calabresa"
-              "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
-              "price": 1800
-            ]
-          ]
-      spyOn(ProductService, 'listMenuByStore').and.returnValue store
-      newMenuObject = ProductService.listMenuByStore 1
-      expect( newMenuObject.products.empanada.length ).toBe 1
-      expect( newMenuObject.products.empanada[0].products.length ).toBe 2
+    it 'should retrieve a list of categories with products and produce an array of models', ->
+      menu = ProductService.getMenu()
+      expect(menu.pizza[0].products[0].description()).toBeDefined()
+      expect( menu.empanada.length ).toBe 2
+      expect( menu.empanada[0].products.length ).toBe 6
 
 
   describe "OrderService", ->

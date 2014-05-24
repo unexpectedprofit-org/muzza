@@ -190,6 +190,7 @@ describe "Empanadas", ->
           id: 23
           hash:'23-Carnepicante-alhorno'
           qty:5
+          cat: 'EMPANADA'
 
         getItem = spyOn(ShoppingCartService, 'get').and.returnValue expected
         isolatedScope.choose null, null, '23-Carnepicante-alhorno'

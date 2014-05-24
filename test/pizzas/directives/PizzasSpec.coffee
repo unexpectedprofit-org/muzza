@@ -6,6 +6,7 @@ describe "Pizzas", ->
     module 'Muzza.templates'
     module 'Muzza.directives'
 
+  beforeEach ->
     module ($provide) ->
       $provide.value "ShoppingCartService",
         add: ()->
@@ -17,13 +18,18 @@ describe "Pizzas", ->
         get: ()->
           return null
       return null
+
     module ($provide) ->
       $provide.value "$state",
         go: () ->
           return null
       return null
 
-  isolatedScope = $scope = element = undefined
+  isolatedScope = $scope = element = Pizza = undefined
+
+  beforeEach ->
+    inject (_Pizza_)->
+      Pizza = _Pizza_
 
   describe "When user gets to the menu", ->
 
@@ -142,6 +148,11 @@ describe "Pizzas", ->
         expect(showDough).toHaveBeenCalled()
         expect(showDough.calls.count()).toBe 1
 
+      it 'should create a Pizza model from the item picked form the menu', ->
+        inject (Pizza)->
+          element.find('ion-item')[0].click()
+          expect(isolatedScope.pizza instanceof Pizza).toBeTruthy()
+
       it "should replace the previous selection", ->
         spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
         spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
@@ -190,7 +201,7 @@ describe "Pizzas", ->
 
       beforeEach ->
         inject ($compile, $rootScope) ->
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue({ id: 1, desc: "Muzza", cat: 'PIZZA', totalPrice: 60, price: {base:50} })
+          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Pizza({ id: 1, desc: "Muzza", cat: 'PIZZA', totalPrice: 60, price: {base:50} }))
           $stateParams.id = 1
           element = angular.element('<pizzas ng-model="menu"></pizzas>')
           $compile(element)($rootScope)
@@ -217,4 +228,4 @@ describe "Pizzas", ->
 
       it "should not assign an item or reset price", ->
         expect(getItemSpy).toHaveBeenCalled()
-        expect(isolatedScope.pizza).toBeNull()
+        expect(isolatedScope.pizza).toBeUndefined()

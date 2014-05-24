@@ -7,51 +7,12 @@ describe "controllers", ->
 
     scope = undefined
 
-    pizzas = [
-      {
-        desc: "Muzza"
-        id: 1
-      }
-      {
-        desc: "Fugazetta"
-        id: 2
-      }
-      {
-        desc: "Jamon y Morron"
-        id: 3
-      }
-    ]
-
-    empanadas = [
-      {
-        desc: "Pollo"
-        id: 1
-      }
-      {
-        desc: "Carne"
-        id: 2
-      }
-      {
-        desc: "Jamon y Queso"
-        id: 3
-      }
-    ]
-
-    returnObject = {
-      products:
-        pizza: pizzas
-        empanada: empanadas
-    }
-
-    _fakeProductService =
-      listMenuByStore: () ->
-        returnObject
-
     beforeEach ->
       module ($provide) ->
-        $provide.value('ProductService', _fakeProductService )
+        $provide.value 'ProductService',
+          getMenu: ()->
+            { pizza:[products:{id:1}], empanada:[products:{id:2}] }
         null
-
 
     beforeEach ->
       inject ($controller, $rootScope) ->
@@ -59,11 +20,11 @@ describe "controllers", ->
         $controller "MenuCtrl",
           $scope: scope
           $stateParams: {}
-          ProductService: _fakeProductService
 
     it "should get the menu items", ->
-      expect(scope.menu.pizza).toEqual pizzas
-      expect(scope.menu.empanada).toEqual empanadas
+      inject (ProductService)->
+        expect(scope.menu.pizza).toEqual [{products:{id:1}}]
+        expect(scope.menu.empanada).toEqual [{products:{id:2}}]
 
   describe "Store Controller", ->
 

@@ -1,4 +1,4 @@
-angular.module("Muzza.services", ['Muzza.constants'])
+angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas'])
 
 angular.module("Muzza.services").factory "StoreService", () ->
 
@@ -67,33 +67,21 @@ angular.module("Muzza.services").factory "StoreService", () ->
   listStores: getStores
 
 
-angular.module("Muzza.services").factory "ProductService", (stores) ->
+angular.module("Muzza.services").service "ProductService", (stores, Pizza) ->
 
-  class MenuObject
-    constructor: ( data ) ->
-      @products = @getProducts data
+  getProductsByCompanyId = (id)->
+    menu =
+      pizza: _.map stores.store1.products['pizza'], constructPizzas
+      empanada: stores.store1.products['empanada']
 
-    getProducts: ( data ) ->
-      {
-        pizza:  data.pizza or []
-        empanada: data.empanada or []
-      }
+  constructPizzas = (pizzaCategory)->
+    pizzaCategory.products = _.map pizzaCategory.products, (pizza)->
+      new Pizza(pizza)
+    pizzaCategory
 
-  getStoreMenu = ( storeId ) ->
-    ######################### back end data
-    storeProducts1 = stores.store1.products
-    storeProducts2 = stores.store1.products
+  getMenu: getProductsByCompanyId
 
-    id = parseInt( storeId ) or 1
-    if id is 1
-      responseData = storeProducts1
-    else
-      responseData = storeProducts2
-    ######################### back end data
 
-    return new MenuObject responseData
-
-  listMenuByStore: getStoreMenu
 
 angular.module("Muzza.services").factory "OrderService", () ->
 

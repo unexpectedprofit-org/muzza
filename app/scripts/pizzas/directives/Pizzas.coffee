@@ -1,4 +1,4 @@
-angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingCartService, PizzaSize, PizzaDough, PizzaOrder, $state, $stateParams, $q) ->
+angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingCartService, PizzaSize, PizzaDough, PizzaOrder, $state, $stateParams, $q, Pizza) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -27,7 +27,9 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
 
     $scope.choose = (pizza, hashKey)->
 
-      $scope.pizza = pizza
+      $scope.pizza = undefined
+#     we create a new to avoid modifying the model that comes from the menu
+      if pizza? then $scope.pizza = new Pizza(pizza)
 
       if hashKey then editCartItem hashKey
 
@@ -39,8 +41,7 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
     editCartItem = (hashKey)->
       item = ShoppingCartService.get hashKey
       if item.cat == 'PIZZA'
-        #RESET PRICE to base
-        item.totalPrice = item.price.base
+        item.resetPrice()
         $scope.pizza = item
 
 

@@ -5,7 +5,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ()->
       @desc = param?.desc or ''
       @cat = 'PIZZA'
       @qty = param?.qty or 1
-      @totalPrice = param?.totalPrice or 0
+      @totalPrice = param?.totalPrice or undefined
       @size = param?.size or ''
       @dough = param?.dough or ''
       @price =
@@ -23,6 +23,9 @@ angular.module('Muzza.pizzas').factory 'Pizza', ()->
     _size = @size.toLowerCase().replace(/\s+/g, "")
     _dough = @dough.toLowerCase().replace(/\s+/g, "")
     @hash = @id + "-" + _desc + "-" + _size + "-" + _dough
+
+#  TODO:  calculate total price
+#  TODO:  handle adding price
 
 
   return Pizza

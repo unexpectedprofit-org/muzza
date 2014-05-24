@@ -5,7 +5,8 @@ angular.module('Muzza.pizzas').factory "PizzaDough", ()->
       @modal = modal
 
   PizzaDough::show = ->
-    if @modal.scope.pizza.totalPrice == undefined
+    totalPrice = @modal.scope.pizza.totalPrice
+    if totalPrice == undefined or totalPrice == 0
       @modal.scope.pizza.totalPrice = @modal.scope.pizza.price.base
     @modal.show()
 

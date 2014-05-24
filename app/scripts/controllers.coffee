@@ -1,9 +1,8 @@
-angular.module("Muzza.controllers", [])
+angular.module("Muzza.controllers", ['Muzza.services'])
 
 angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, $rootScope) ->
   $rootScope.storeId = $stateParams.storeID
-  storeMenu = ProductService.listMenuByStore $stateParams.storeID
-  $scope.menu = storeMenu.products
+  $scope.menu = ProductService.getMenu()
 
 angular.module("Muzza.controllers").controller "StoreCtrl", ($scope, StoreService) ->
 

@@ -3,17 +3,18 @@ describe 'PizzaDough', ->
   beforeEach ->
     module 'Muzza.pizzas'
 
-  PizzaDough = modal = showSpy = hideSpy = dough = undefined
+  PizzaDough = Pizza = modal = showSpy = hideSpy = dough = undefined
 
   beforeEach ->
-    inject (_PizzaDough_) ->
+    inject (_PizzaDough_, _Pizza_) ->
       PizzaDough = _PizzaDough_
+      Pizza = _Pizza_
       modal =
         show: -> null
         hide: -> null
         scope:
           pizza:
-            price:
+            price: new Pizza
               base: 50
               dough:
                 'al molde': 0
@@ -35,6 +36,11 @@ describe 'PizzaDough', ->
 
       it "should calculate the initial total price to match the base price when no other options has been selected yet", ->
         modal.scope.pizza.totalPrice = undefined
+        dough.show()
+        expect(modal.scope.pizza.totalPrice).toBe modal.scope.pizza.price.base
+
+      it "should calculate the initial total price to match the base price when totalPrice is 0", ->
+        modal.scope.pizza.totalPrice = 0
         dough.show()
         expect(modal.scope.pizza.totalPrice).toBe modal.scope.pizza.price.base
 
