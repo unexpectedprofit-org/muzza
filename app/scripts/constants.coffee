@@ -62,7 +62,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         "products": [
           "id": 90
           "desc": "Muzzarella"
-          "toppings": [ "Muzzarella", "Salsa tomate", "Aceitunas" ]
+          "toppings": "Muzzarella / Salsa tomate / Aceitunas"
           "price":
             base: 5000
             size:
@@ -75,7 +75,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 91
           "desc": "Fuggazetta"
-          "toppings": [ "Muzzarella", "Cebollas" ]
+          "toppings": "Muzzarella / Cebollas"
           "price":
             base: 5500
             size:
@@ -88,7 +88,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 92
           "desc": "Jamon y Morrones"
-          "toppings": [ "Muzzarella", "Jamon", "Morron" ]
+          "toppings": "Muzzarella / Jamon / Morron"
           "price":
             base: 7500
             size:
@@ -101,7 +101,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 93
           "desc": "Calabresa"
-          "toppings": [ "Muzzarella", "Longaniza", "Salsa" ]
+          "toppings": "Muzzarella / Longaniza / Salsa"
           "price":
             base: 5000
             size:
@@ -118,7 +118,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         "products": [
           "id": 94
           "desc": "Muzzarella con tomate al natural y aceitunas"
-          "toppings": [ "Muzzarella", "tomate", "Aceitunas" ]
+          "toppings": "Muzzarella / tomate / Aceitunas"
           "price":
             base: 8000
             size:
@@ -131,7 +131,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           "id": 95
           "desc": "Espinaca con salsa blanca o muzzarella"
-          "toppings": [ "Espinaca", "muzzarella" ]
+          "toppings": "Espinaca / muzzarella"
           "price":
             base: 7500
             size:
