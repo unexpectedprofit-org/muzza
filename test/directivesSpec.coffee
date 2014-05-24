@@ -120,7 +120,6 @@ describe "directives", ->
           $compile(element)($rootScope)
           $scope.$digest()
 
-          console.log element.find('button')
           expect(element.find('button')).toEqual {}
 
     describe "when user clicks checkout button", ->
