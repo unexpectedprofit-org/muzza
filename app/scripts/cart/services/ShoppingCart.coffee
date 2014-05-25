@@ -9,14 +9,9 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ()->
     )
 
   addItem = (item) ->
-    itemSearched = getItem( item.getHash() )
-
-    if angular.isUndefined itemSearched
-      products.push item
-    else
-      itemSearched.qty += item.qty
-
-  #    console.log "Item added to cart: " + JSON.stringify item
+    id = item.getHash()
+    if getItem(id)? then removeItem id
+    products.push item
 
   removeItem = (hashKey) ->
     _.remove( products, (elem) ->

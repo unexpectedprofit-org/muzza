@@ -31,19 +31,18 @@ describe 'ShoppingCart Service', ->
       expect(ShoppingCartService.getCart().length).toBe 2
       expect(ShoppingCartService.getCart()[1]).toEqual item
 
-
-    it 'should NOT add product if already present', ->
+    it "should replace product if product is already in the cart", ->
+#      Create product
       item = new Empanada {id:1,desc:'Pollo',type:'Frita',qty:2}
       ShoppingCartService.add item
 
-      expect(ShoppingCartService.getCart().length).toBe 1
-      expect(ShoppingCartService.getCart()[0]).toEqual item
+#      edit product
+      editedItem  = ShoppingCartService.get item.getHash()
+      editedItem.updateQty(+1)
 
-      item = new Empanada {id:1,desc:'Pollo',type:'Frita',qty:10}
-      ShoppingCartService.add item
-
-      expect(ShoppingCartService.getCart().length).toBe 1
-      expect(ShoppingCartService.getCart()[0].qty).toBe 12
+      ShoppingCartService.add editedItem
+      updatedItem = ShoppingCartService.getCart()[0]
+      expect(updatedItem.qty).toBe 3
 
   describe "retrieve functionality", ->
 

@@ -1,4 +1,4 @@
-describe "Cart", ->
+ddescribe "Cart", ->
 
   beforeEach ->
     module 'Muzza.cart'
@@ -34,19 +34,19 @@ describe "Cart", ->
   describe 'when shopping cart has at least one item', ->
 
     it 'should list all items in the shopping cart and the total price', ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
       $scope.$digest()
       items = element.find('ion-item')
-      expect(items.length).toBe 3
+      expect(items.length).toBe 2
 
     it 'should not display the empty msg', ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
       $scope.$digest()
       msg = element.find('div').html()
       expect(msg).not.toMatch(/vacio/)
 
     it "should show total price", ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
       spyOn(ShoppingCartService, 'getTotalPrice').and.returnValue 1211
 
       $scope.$digest()
@@ -107,7 +107,7 @@ describe "Cart", ->
 
       it "should call the edit function with proper data", ->
 
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [{id:1, desc:'Muzza', qty:1, totalPrice: 10, cat: 'EMPANADA'},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5, cat: 'EMPANADA'}]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10, cat: 'EMPANADA'},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5, cat: 'EMPANADA'}]
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
@@ -126,8 +126,9 @@ describe "Cart", ->
 
 
       it "should redirect to PIZZA edit view", ->
+        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA', size:'chica', dough:'alala', id:1}
 
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '1-Muzza-chica-alala',cat: 'PIZZA'}]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza]
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
@@ -135,11 +136,12 @@ describe "Cart", ->
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
         element.find('button')[0].click()
-        expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:'1-Muzza-chica-alala'}
+        expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:'1-muzza-chica-alala'}
 
       it "should redirect to EMPANADA edit view", ->
+        empanada = new Empanada {desc:'Pollo',qty:1,totalPrice:2000,cat:'EMPANADA', id:45, type:'alhorno'}
 
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '45-Pollo-alhorno',cat: 'EMPANADA'}]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada]
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
@@ -147,7 +149,7 @@ describe "Cart", ->
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
         element.find('button')[0].click()
-        expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:'45-Pollo-alhorno'}
+        expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:'45-pollo-alhorno'}
 
       it "should redirect to menu default view if no categ matches", ->
 
