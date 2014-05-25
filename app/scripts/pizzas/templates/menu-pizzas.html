@@ -13,6 +13,7 @@
     <ion-item data-ng-repeat="prod in cat.products" data-ng-click="choose(prod)">
       <strong>{{ prod.desc }}</strong>
       <span>{{ prod.toppings }}</span>
+      <span>{{ prod.price.base | centsToMoney | currency}}</span>
     </ion-item>
   </ion-list>
 
