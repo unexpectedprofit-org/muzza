@@ -92,13 +92,6 @@ describe 'PizzaOrder', ->
       order.add item
       expect(item.description).toBeDefined()
 
-    it 'should form a hash', ->
-      addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      order.add new Pizza({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
-      expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, hash: '1-muzza-chica-alapiedra'}
-      expect(addSpy.calls.count()).toBe 1
-
-
   describe "When user eliminates selected product and options", ->
 
     it "should hide confirmation modal", ->

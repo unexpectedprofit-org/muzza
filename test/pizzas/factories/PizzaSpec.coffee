@@ -55,7 +55,6 @@ describe 'Pizza', ->
     pizza.resetPrice()
     expect(pizza.totalPrice).toBe 50
 
-  it 'shoudl generate the identifier hash dynamically', ->
+  it 'should generate the identifier hash dynamically', ->
     pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde' } )
-    pizza.setHash()
-    expect(pizza.hash).toBe '1-muzza-grande-almolde'
+    expect(pizza.getHash()).toBe '1-muzza-grande-almolde'
