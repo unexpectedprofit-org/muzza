@@ -1,0 +1,10 @@
+<span>Cantidad</span>
+<button class="button" data-ng-click="item.updateQty(-1)">
+    <i class="icon ion-minus"></i>
+</button>
+<button class="button button-clear button-positive" data-ng-disabled="true">
+    {{item.qty}}
+</button>
+<button class="button" data-ng-click="item.updateQty(+1)">
+    <i class="icon ion-plus-round"></i>
+</button>

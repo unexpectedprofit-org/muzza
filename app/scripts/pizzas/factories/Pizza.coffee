@@ -18,6 +18,10 @@ angular.module('Muzza.pizzas').factory 'Pizza', ()->
   Pizza::resetPrice = ()->
     @totalPrice = @price.base
 
+  Pizza::updateQty = (value)->
+    @qty = @qty + value
+    if @qty < 0 then @qty = 0
+
   Pizza::getHash = ()->
     _desc = @desc.toLowerCase().replace(/\s+/g, "")
     _size = @size.toLowerCase().replace(/\s+/g, "")

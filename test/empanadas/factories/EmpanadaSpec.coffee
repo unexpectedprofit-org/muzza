@@ -71,12 +71,6 @@ describe 'Empanada', ->
       newEmpanada.updateQty -5
       expect(newEmpanada.qty).toBe 0
 
-    it "should return current quantity is new is not a number", ->
-      newEmpanada = new Empanada fromObject
-      newEmpanada.qty = 4
-      newEmpanada.updateQty "a"
-      expect(newEmpanada.qty).toBe 4
-
     it "should update quantity sustracting 2 items", ->
       newEmpanada = new Empanada fromObject
       newEmpanada.qty = 10

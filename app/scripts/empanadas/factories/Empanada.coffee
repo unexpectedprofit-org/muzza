@@ -11,17 +11,10 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
       @id = param.id
       angular.extend(@, param)
 
-  Empanada::updateQty = (itemQtyDiff) ->
+  Empanada::updateQty = (value) ->
 
-    toNumber = (value) ->
-      value = value * 1
-      if isNaN(value) then 0 else value
-
-    itemQtyDiff = toNumber(itemQtyDiff)
-    if (@qty + itemQtyDiff ) <= 0
-      @qty = 0
-    else
-      @qty = @qty + itemQtyDiff
+    @qty = @qty + value
+    if @qty < 0 then @qty = 0
 
   Empanada::minReached = () ->
     @qty <= 1
