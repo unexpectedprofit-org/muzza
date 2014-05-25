@@ -23,47 +23,32 @@ describe "Empanadas", ->
         {}
       return null
 
-
-  isolatedScope = $scope = element = undefined
+  isolatedScope = $scope = element = Empanada = $stateParams = undefined
+  empanada1 = empanada2 = empanada3 = empanada4 = empanada5 = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope) ->
+    inject ($compile, $rootScope, _Empanada_, _$stateParams_ ) ->
+      Empanada = _Empanada_
       $scope = $rootScope
-      $scope.menu = [
-        "id": 1,
-        "desc": "Al Horno",
-        "products": [
-          "id": 1
-          "desc": "Carne cortada a cuchillo"
-          "toppings": "Carne / Huevo / Morron"
-          "price": 1800
+      $stateParams = _$stateParams_
+
+      empanada1 = new Empanada {id:1,desc:"Carne cortada a cuchillo",price: 1800,toppings:"Carne / Huevo / Morron"}
+      empanada2 = new Empanada {id:2,desc:"Calabresa",price: 1900,toppings:"Muzzarella / Longaniza / Salsa"}
+      empanada3 = new Empanada {id:3,desc:"Jamon y Queso",price:2000,toppings:"Jamon / Queso"}
+      empanada4 = new Empanada {id:4,desc:"Pollo",price: 2100,toppings:"Muzzarella / Pollo / Salsa"}
+      empanada5 = new Empanada {id:5,desc:"Verdura",price: 2200,toppings:"Espinaca / Salsa"}
+
+      $scope.menu =
+        empanada: [
+          "id": 1,
+          "desc": "Al Horno",
+          "products": [ empanada1, empanada2 ]
         ,
-          "id": 2
-          "desc": "Calabresa"
-          "toppings": "Muzzarella / Longaniza / Salsa"
-          "price": 1900
+          "id": 2,
+          "desc": "Fritas",
+          "products": [ empanada3, empanada4, empanada5 ]
         ]
-      ,
-        "id": 2,
-        "desc": "Fritas",
-        "products": [
-          "id": 3
-          "desc": "Jamon y Queso"
-          "toppings": "Jamon / Queso"
-          "price": 2000
-        ,
-          "id": 4
-          "desc": "Pollo"
-          "toppings": "Muzzarella / Pollo / Salsa"
-          "price": 2100
-        ,
-          "id": 5
-          "desc": "Verdura"
-          "toppings": "Espinaca / Salsa"
-          "price": 2200
-        ]
-      ]
-      element = angular.element('<empanadas ng-model="menu"></empanadas>')
+      element = angular.element('<empanadas ng-model="menu.empanada"></empanadas>')
       $compile(element)($rootScope)
       $scope.$digest()
       isolatedScope = element.isolateScope()
@@ -104,7 +89,7 @@ describe "Empanadas", ->
     it "should have a click function bind", ->
       onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
 
-      expect(onClickEvent).toContain "choose(prod, cat.desc)"
+      expect(onClickEvent).toContain "choose(prod)"
 
     it "should have steps defined in the scope", ->
       expect(isolatedScope.steps).toEqual ['order']
@@ -138,13 +123,9 @@ describe "Empanadas", ->
 
       element.find('ion-item')[0].click()
 
-      expected =
-        id: 1
-        desc: "Carne cortada a cuchillo"
-        toppings: "Carne / Huevo / Morron"
-        price: 1800
+      expected = new Empanada {id: 1,desc: "Carne cortada a cuchillo",toppings: "Carne / Huevo / Morron",price: 1800}
 
-      expect(chooseSpy).toHaveBeenCalledWith( jasmine.objectContaining(expected), "Al Horno" )
+      expect(chooseSpy).toHaveBeenCalledWith jasmine.objectContaining expected
       expect(isolatedScope.empanada.desc).toBe expected.desc
 
 
@@ -160,53 +141,27 @@ describe "Empanadas", ->
         isolatedScope.empanada.qty = 2
         isolatedScope.order.add isolatedScope.empanada
 
-        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining {"cat": 'EMPANADA', "qty": 2,"desc": 'Carne cortada a cuchillo Al Horno',"price": 1800,"type": 'Al Horno', "id":1,"hash":'1-carnecortadaacuchillo-alhorno',"totalPrice": 1800}
+        expected = empanada1
+        expected.qty = 2
+
+        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining expected
         expect(addToCart.calls.count()).toBe 1
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expectedEmpanada =
-          id: 2
-          desc: "Humita"
-          price: 80
-          qty: 1
 
-        expect(isolatedScope.empanada.id).toEqual expectedEmpanada.id
+        expect(isolatedScope.empanada.id).toEqual empanada2.id
 
   describe "when system requests the menu an specific item view", ->
 
-    ShoppingCartService = $stateParams = getItemSpy = Empanada = undefined
-
-    beforeEach ->
-      inject (_$stateParams_, _ShoppingCartService_, $rootScope, _Empanada_) ->
-        Empanada = _Empanada_
-        ShoppingCartService = _ShoppingCartService_
-        $stateParams = _$stateParams_
-        $scope = $rootScope
-        $scope.menu = [
-          id: 1
-          desc: "Categ 1"
-          products: [
-            id: 1
-            desc: "JYQ"
-          ,
-            id: 2,
-            desc: "OTHER"
-          ]
-        ,
-          id: 2
-          desc: "Categ 2"
-          products: [
-            id: 3
-            desc: "ANOTHER"
-          ]
-        ]
+    getItemSpy = undefined
 
     describe "and the item is an EMPANADA", ->
 
       beforeEach ->
-        inject ($compile, $rootScope) ->
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Empanada({ hash:'23-Carnepicante-alhorno', qty: 5, id: 1, desc: "JYQ", cat: 'EMPANADA', totalPrice: 60, price: {base:50} }))
+        inject ($compile, $rootScope, _ShoppingCartService_) ->
+          ShoppingCartService = _ShoppingCartService_
+          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue empanada1
           $stateParams.empanadaId = 1
           element = angular.element('<empanadas ng-model="menu"></empanadas>')
           $compile(element)($rootScope)
@@ -219,10 +174,11 @@ describe "Empanadas", ->
     describe "and the item is not an empanada", ->
 
       beforeEach ->
-        inject ($rootScope, $compile) ->
+        inject ($rootScope, $compile, _ShoppingCartService_) ->
+          ShoppingCartService = _ShoppingCartService_
           $stateParams.empanadaId = undefined
           $stateParams.pizzaId = 2
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Empanada({ hash:'23-Carnepicante-alhorno', qty: 5, id: 1, desc: "JYQ", cat: 'EMPANADA', totalPrice: 60, price: {base:50} }))
+          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue empanada1
           element = angular.element('<empanadas ng-model="menu"></empanadas>')
           $compile(element)($rootScope)
           $scope.$digest()

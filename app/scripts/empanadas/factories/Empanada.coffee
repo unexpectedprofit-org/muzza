@@ -3,11 +3,13 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
   class Empanada
     constructor: (param) ->
       @cat = 'EMPANADA'
-      @qty = 1
-      @desc = param?.desc or ''
-      @type = param?.type or ''
-      @price = param?.price or 0
-      @id = param?.id
+      @qty = param.qty or 1
+      @desc = param.desc or ''
+      @type = param.type or ''
+      @totalPrice = param.price or 0
+      @toppings = param.toppings or ''
+
+      @id = param.id
 
   Empanada::updateQty = (itemQtyDiff) ->
 
@@ -30,5 +32,10 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
   Empanada::description = () ->
     @desc
 
+  Empanada::getHash = () ->
+    _desc = @desc.toLowerCase().replace(/\s+/g, "")
+    _type = @type.toLowerCase().replace(/\s+/g, "")
+
+    @id + "-" + _desc + "-" + _type
 
   return Empanada

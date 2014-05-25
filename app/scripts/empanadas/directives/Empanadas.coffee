@@ -21,16 +21,15 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
     $scope.remove = () ->
       $scope.empanada = undefined
 
-    $scope.choose = (item, cat_desc, hashKey)->
+    $scope.choose = (empanada, hashKey)->
 
-      $scope.empanada = undefined
-
-      #TODO: move this into product service passing an extra param in constructor {} and angular.extend
-      if item?
-        $scope.empanada = new Empanada item
-        $scope.empanada?.type = cat_desc
-
-      if hashKey then editCartItem hashKey
+      if hashKey
+        editCartItem hashKey
+      else
+        if empanada instanceof Empanada
+          $scope.empanada = empanada
+        else
+          $scope.empanada = new Empanada empanada
 
       if $scope.empanada?
         angular.forEach $scope.steps, (key, val)->
@@ -47,6 +46,6 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
         $scope.order = new EmpanadaOrder views[0]
 
         # If its coming from the shopping cart
-        if $stateParams.empanadaId then $scope.choose(null, null, $stateParams.empanadaId)
+        if $stateParams.empanadaId then $scope.choose(null, $stateParams.empanadaId)
 
     init()

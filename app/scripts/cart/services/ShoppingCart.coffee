@@ -5,11 +5,11 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ()->
 
   getItem = (hashKey) ->
     _.find( products, (elem) ->
-      elem.hash is hashKey
+      elem.getHash() is hashKey
     )
 
   addItem = (item) ->
-    itemSearched = getItem item.hash
+    itemSearched = getItem( item.getHash() )
 
     if angular.isUndefined itemSearched
       products.push item
@@ -20,7 +20,7 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ()->
 
   removeItem = (hashKey) ->
     _.remove( products, (elem) ->
-      elem.hash is hashKey
+      elem.getHash() is hashKey
     )
 
   calculateTotalPrice = () ->

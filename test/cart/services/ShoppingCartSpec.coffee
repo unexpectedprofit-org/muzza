@@ -2,12 +2,14 @@ describe 'ShoppingCart Service', ->
 
   beforeEach ->
     module 'Muzza.cart'
+    module 'Muzza.empanadas'
 
-  ShoppingCartService = undefined
+  ShoppingCartService = Empanada = undefined
 
   beforeEach ->
     inject ($injector) ->
       ShoppingCartService = $injector.get 'ShoppingCartService'
+      Empanada = $injector.get 'Empanada'
 
   it 'should get an initial empty cart', ->
     expect(ShoppingCartService.getCart().length).toBe 0
@@ -17,17 +19,13 @@ describe 'ShoppingCart Service', ->
   describe "add functionality", ->
 
     it "should add product if not present", ->
-      item =
-        id: 1
-        hash: "1-muzza-chica-alapiedra"
+      item = new Empanada {id:1,desc:'Pollo',type:'Frita',qty:2}
       ShoppingCartService.add item
 
       expect(ShoppingCartService.getCart().length).toBe 1
       expect(ShoppingCartService.getCart()[0]).toEqual item
 
-      item =
-        id: 2
-        hash: "2-cebolla-grande-almolde"
+      item = new Empanada {id:2,desc:'Humita',type:'Frita',qty:6}
       ShoppingCartService.add item
 
       expect(ShoppingCartService.getCart().length).toBe 2
@@ -35,58 +33,62 @@ describe 'ShoppingCart Service', ->
 
 
     it 'should NOT add product if already present', ->
-      item =
-        id: 5
-        qty: 2
-        hash: '5-humita-frita'
+      item = new Empanada {id:1,desc:'Pollo',type:'Frita',qty:2}
       ShoppingCartService.add item
 
       expect(ShoppingCartService.getCart().length).toBe 1
       expect(ShoppingCartService.getCart()[0]).toEqual item
 
-      item =
-        id: 5
-        qty:3
-        hash: '5-humita-frita'
+      item = new Empanada {id:1,desc:'Pollo',type:'Frita',qty:10}
       ShoppingCartService.add item
 
       expect(ShoppingCartService.getCart().length).toBe 1
-      expect(ShoppingCartService.getCart()[0].qty).toBe 5
+      expect(ShoppingCartService.getCart()[0].qty).toBe 12
 
   describe "retrieve functionality", ->
 
     it 'should return all items in the cart', ->
-      ShoppingCartService.add {id: 1, hash:'1-alala'}
-      ShoppingCartService.add {id: 2, hash:'2-jojojjo'}
+      item1 = new Empanada {id:12,desc:'Pollo',type:'Frita'}
+      item2 = new Empanada {id:13,desc:'Carne',type:'Horno'}
+      ShoppingCartService.add item1
+      ShoppingCartService.add item2
+
+      expect(ShoppingCartService.getCart().length).toBe 2
+      expect(ShoppingCartService.getCart()).toContain item1
+      expect(ShoppingCartService.getCart()).toContain item2
 
     it "should return specific item", ->
-      itemLooked = {id: 2, hash:'2-jojojjo'}
-      ShoppingCartService.add {id: 1, hash:'1-alala'}
-      ShoppingCartService.add itemLooked
-      ShoppingCartService.add {id: 3, hash:'3-niniin'}
+      item1 = new Empanada {id:15,desc:'Pollo',type:'Frita'}
+      item2 = new Empanada {id:16,desc:'Carne suave',type:'Horno'}
+      item3 = new Empanada {id:17,desc:'Cebolla y Queso',type:'Frita'}
 
-      expect(ShoppingCartService.get( itemLooked.hash )).toEqual itemLooked
+      ShoppingCartService.add item1
+      ShoppingCartService.add item2
+      ShoppingCartService.add item3
+
+      expect(ShoppingCartService.get( item2.getHash() )).toEqual item2
 
   describe "remove functionality", ->
 
     it "should remove specific item", ->
-      product1 = {id: 1, hash:'1-alala', qty: 2, totalPrice: 1000}
-      product2 = {id: 2, hash:'2-alala', qty: 1, totalPrice: 2000}
-      product3 = {id: 3, hash:'3-alala', qty: 3, totalPrice: 3000}
-      ShoppingCartService.add product1
-      ShoppingCartService.add product2
-      ShoppingCartService.add product3
+      item1 = new Empanada {id:15,desc:'Pollo',type:'Frita',qty:1}
+      item2 = new Empanada {id:16,desc:'Carne suave',type:'Horno',qty:1}
+      item3 = new Empanada {id:17,desc:'Cebolla y Queso',type:'Frita',qty:1}
 
-      ShoppingCartService.remove product2.hash
+      ShoppingCartService.add item1
+      ShoppingCartService.add item2
+      ShoppingCartService.add item3
+
+      ShoppingCartService.remove item1.getHash()
 
       expect(ShoppingCartService.getCart().length).toBe 2
-      expect(ShoppingCartService.getCart()).toContain product1
-      expect(ShoppingCartService.getCart()).toContain product3
+      expect(ShoppingCartService.getCart()).toContain item2
+      expect(ShoppingCartService.getCart()).toContain item3
 
     it "should empty cart", ->
-      ShoppingCartService.add {id: 1, hash:'1-alala', qty: 2, totalPrice: 1000}
-      ShoppingCartService.add {id: 2, hash:'2-alala', qty: 1, totalPrice: 2000}
-      ShoppingCartService.add {id: 3, hash:'3-alala', qty: 3, totalPrice: 3000}
+      ShoppingCartService.add new Empanada {id:20,desc:'Pollo',type:'Frita',qty:1}
+      ShoppingCartService.add new Empanada {id:21,desc:'Carne suave',type:'Horno',qty:1}
+      ShoppingCartService.add new Empanada {id:22,desc:'Cebolla y Queso',type:'Frita',qty:1}
 
       ShoppingCartService.emptyCart()
 
@@ -96,13 +98,13 @@ describe 'ShoppingCart Service', ->
   describe "calculate price functionality", ->
 
     it "should calculate total price, only one product", ->
-      ShoppingCartService.add {id: 1, hash:'1-alala', qty: 2, totalPrice: 1000}
+      ShoppingCartService.add new Empanada {id:15,desc:'Pollo',type:'Frita',qty:2,price:1000}
 
       expect(ShoppingCartService.getTotalPrice()).toBe 2000
 
     it "should calculate total price, several products", ->
-      ShoppingCartService.add {id: 1, hash:'1-alala', qty: 2, totalPrice: 1000}
-      ShoppingCartService.add {id: 2, hash:'2-alala', qty: 1, totalPrice: 2000}
-      ShoppingCartService.add {id: 3, hash:'3-alala', qty: 3, totalPrice: 3000}
+      ShoppingCartService.add new Empanada {id:20,desc:'Pollo',type:'Frita',qty:2, price:1000}
+      ShoppingCartService.add new Empanada {id:21,desc:'Carne suave',type:'Horno',qty:3, price:2000}
+      ShoppingCartService.add new Empanada {id:22,desc:'Cebolla y Queso',type:'Frita',qty:2, price:3000}
 
-      expect(ShoppingCartService.getTotalPrice()).toBe 13000
+      expect(ShoppingCartService.getTotalPrice()).toBe 14000

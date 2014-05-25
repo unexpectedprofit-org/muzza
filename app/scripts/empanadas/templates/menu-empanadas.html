@@ -9,10 +9,10 @@
   </div>
 
   <ion-list data-ng-repeat-end>
-    <ion-item data-ng-repeat="prod in cat.products" data-ng-click="choose(prod, cat.desc)">
+    <ion-item data-ng-repeat="prod in cat.products" data-ng-click="choose(prod)">
         <strong>{{ prod.desc }}</strong>
         <span>{{ prod.toppings }}</span>
-        <span class="text-right">{{ prod.price | centsToMoney | currency}}</span>
+        <span class="text-right">{{ prod.totalPrice | centsToMoney | currency}}</span>
     </ion-item>
   </ion-list>
 

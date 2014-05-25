@@ -1,4 +1,4 @@
-angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas'])
+angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas'])
 
 angular.module("Muzza.services").factory "StoreService", () ->
 
@@ -67,17 +67,24 @@ angular.module("Muzza.services").factory "StoreService", () ->
   listStores: getStores
 
 
-angular.module("Muzza.services").service "ProductService", (stores, Pizza) ->
+angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada) ->
 
   getProductsByCompanyId = (id)->
     menu =
       pizza: _.map stores.store1.products['pizza'], constructPizzas
-      empanada: stores.store1.products['empanada']
+      empanada: _.map stores.store1.products['empanada'], constructEmpanadas
 
   constructPizzas = (pizzaCategory)->
     pizzaCategory.products = _.map pizzaCategory.products, (pizza)->
-      new Pizza(pizza)
+      new Pizza pizza
     pizzaCategory
+
+  constructEmpanadas = (empanadaCategory)->
+    empanadaCategory.products = _.map empanadaCategory.products, (empanada)->
+      empanada.type = empanadaCategory.desc
+      new Empanada empanada
+    empanadaCategory
+
 
   getMenu: getProductsByCompanyId
 

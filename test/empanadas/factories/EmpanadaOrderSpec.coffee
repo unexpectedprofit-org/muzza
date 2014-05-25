@@ -61,26 +61,20 @@ describe 'EmpanadaOrder', ->
 
     it 'should call ShoppingCart to add a product and hide', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      order.add {id:1, desc:'Humita', type:'Frita', qty:2, price: 15, cat: 'EMPANADA'}
+      empanada =
+        id:1
+        desc:'Humita'
+        type:'Frita'
+        qty:2
+        totalPrice: 15
+        cat: 'EMPANADA'
+
+      order.add empanada
 
       expect(hideSpy).toHaveBeenCalled()
       expect(hideSpy.calls.count()).toBe 1
 
-      expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1, desc:'Humita Frita', type:'Frita', qty:2, price: 15, totalPrice: 15, cat: 'EMPANADA'}
-      expect(addSpy.calls.count()).toBe 1
-
-    it 'should form the descripcion based on the selected options', ->
-      addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      order.add {id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10, cat: 'EMPANADA'}
-
-      expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Pollo Al Horno'}
-      expect(addSpy.calls.count()).toBe 1
-
-    it 'should form a hash', ->
-      addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      order.add {id:4, desc:'Humita', type:'Al Horno'}
-
-      expect(addSpy).toHaveBeenCalledWith jasmine.objectContaining {id:4, hash: '4-humita-alhorno'}
+      expect(addSpy).toHaveBeenCalledWith  empanada
       expect(addSpy.calls.count()).toBe 1
 
   describe "cancel functionality", ->

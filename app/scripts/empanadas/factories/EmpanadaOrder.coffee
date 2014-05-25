@@ -11,10 +11,6 @@ angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService)
     @modal.hide()
 
   EmpanadaOrder::add = (empanada)->
-    empanada.hash = getHash empanada
-
-    empanada.desc = empanada.desc + " " + empanada.type
-    empanada.totalPrice = empanada.price
     ShoppingCartService.add empanada
     @hide()
 
@@ -24,11 +20,5 @@ angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService)
 
   EmpanadaOrder::edit = (empanada) ->
     @modal.scope.choose empanada
-
-  getHash = (empanada) ->
-    _desc = empanada.desc.toLowerCase().replace(/\s+/g, "")
-    _type = empanada.type.toLowerCase().replace(/\s+/g, "")
-
-    empanada.id + "-" + _desc + "-" + _type
 
   return EmpanadaOrder
