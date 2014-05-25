@@ -1,15 +1,26 @@
+<ion-header-bar align-title="left" class="bar-positive">
+    <div class="buttons">
+        <button class="button button-icon icon ion-ios7-minus-outline" ng-click="showDelete = !showDelete; showEdit = false"></button>
+    </div>
+    <h1 class="title"></h1>
+    <div class="buttons">
+        <button class="button" ng-click="showEdit = !showEdit; showDelete = false">Editar</button>
+    </div>
+</ion-header-bar>
+<ion-content>
     <div class="card" data-ng-if="cart.products.length == 0">
         <div class="item item-text-wrap">
             El carrito esta vacio
         </div>
     </div>
 
-    <ion-list>
+    <ion-list show-delete="showDelete">
         <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
           <div style="white-space: normal">{{item.qty}} x {{item.description()}}</div>
           {{item.totalPrice * item.qty | centsToMoney | currency}}
 
-          <button class="button button-light" data-ng-click="$parent.edit(item)">Editar</button>
+          <button class="button button-light" data-ng-click="$parent.edit(item)" ng-if="showEdit">Editar</button>
+          <ion-delete-button class="ion-minus-circled" ng-click="cart.products.splice($index, 1)"> </ion-delete-button>
         </ion-item>
 
         <ion-item  data-ng-if="cart.products.length > 0">
@@ -17,3 +28,5 @@
         </ion-item>
 
     </ion-list>
+<checkout-button></checkout-button>
+</ion-content>
