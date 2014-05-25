@@ -20,7 +20,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ()->
 
   Pizza::updateQty = (value)->
     @qty = @qty + value
-    if @qty < 0 then @qty = 0
+    if @qty <= 0 then @qty = 1
 
   Pizza::getHash = ()->
     _desc = @desc.toLowerCase().replace(/\s+/g, "")

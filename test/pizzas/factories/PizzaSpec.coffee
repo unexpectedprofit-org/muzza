@@ -69,9 +69,9 @@ describe 'Pizza', ->
     pizza.updateQty(-1)
     expect(pizza.qty).toBe 1
 
-  it 'should update qty to 0 if the user substracts below 0', ->
+  it 'should update qty to 1 if the user substracts below 0', ->
     pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde', qty: 1 } )
     pizza.updateQty(-1)
-    expect(pizza.qty).toBe 0
+    expect(pizza.qty).toBe 1
 
 
