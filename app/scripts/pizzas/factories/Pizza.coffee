@@ -22,7 +22,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ()->
     _desc = @desc.toLowerCase().replace(/\s+/g, "")
     _size = @size.toLowerCase().replace(/\s+/g, "")
     _dough = @dough.toLowerCase().replace(/\s+/g, "")
-    @hash = @id + "-" + _desc + "-" + _size + "-" + _dough
+    @id + "-" + _desc + "-" + _size + "-" + _dough
 
 #  TODO:  calculate total price
 #  TODO:  handle adding price

@@ -9,32 +9,38 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "id": 1
           "desc": "Carne cortada a cuchillo"
           "toppings": "Carne / Huevo / Morron"
-          "price": 1800
+          "price":
+            base:1800
         ,
           "id": 2
           "desc": "Calabresa"
           "toppings": "Muzzarella / Longaniza / Salsa"
-          "price": 1800
+          "price":
+            base: 1800
         ,
           "id": 3
           "desc": "Cebolla y queso"
           "toppings": "Muzzarella / Cebolla"
-          "price": 1800
+          "price":
+            base: 1800
         ,
           "id": 4
           "desc": "Pollo"
           "toppings": "Pollo / Cebolla"
-          "price": 1800
+          "price":
+            base: 1800
         ,
           "id": 5
           "desc": "Carne picante"
           "toppings": "Carne / Cebolla"
-          "price": 1800
+          "price":
+            base: 1800
         ,
           "id": 6
           "desc": "Verdura"
           "toppings": "Espinaca / Huevo / Salsa Blanca"
-          "price": 1800
+          "price":
+            base: 1800
         ]
       ,
         "id": 2,
@@ -43,17 +49,20 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "id": 7
           "desc": "Cebolla y queso"
           "toppings": "Muzzarella / Cebolla"
-          "price": 1800
+          "price":
+            base: 1800
         ,
           "id": 8
           "desc": "Pollo"
           "toppings": "Pollo / Cebolla"
-          "price": 2000
+          "price":
+            base: 2000
         ,
           "id": 9
           "desc": "Verdura"
           "toppings": "Espinaca / Huevo / Salsa Blanca"
-          "price": 2000
+          "price":
+            base: 2000
         ]
       ],
       "pizza": [
