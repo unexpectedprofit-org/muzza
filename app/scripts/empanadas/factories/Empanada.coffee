@@ -6,10 +6,10 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
       @qty = param.qty or 1
       @desc = param.desc or ''
       @type = param.type or ''
-      @totalPrice = param.price or 0
+      @totalPrice = param?.price?.base or 0
       @toppings = param.toppings or ''
-
       @id = param.id
+      angular.extend(@, param)
 
   Empanada::updateQty = (itemQtyDiff) ->
 

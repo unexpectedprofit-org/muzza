@@ -12,8 +12,6 @@ describe 'PizzaOrder', ->
           return null
         getCart: ()->
           return null
-      return null
-    module ($provide) ->
       $provide.value "$state",
         go: ()-> ''
       return null

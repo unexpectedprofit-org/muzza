@@ -32,11 +32,11 @@ describe "Empanadas", ->
       $scope = $rootScope
       $stateParams = _$stateParams_
 
-      empanada1 = new Empanada {id:1,desc:"Carne cortada a cuchillo",price: 1800,toppings:"Carne / Huevo / Morron"}
-      empanada2 = new Empanada {id:2,desc:"Calabresa",price: 1900,toppings:"Muzzarella / Longaniza / Salsa"}
-      empanada3 = new Empanada {id:3,desc:"Jamon y Queso",price:2000,toppings:"Jamon / Queso"}
-      empanada4 = new Empanada {id:4,desc:"Pollo",price: 2100,toppings:"Muzzarella / Pollo / Salsa"}
-      empanada5 = new Empanada {id:5,desc:"Verdura",price: 2200,toppings:"Espinaca / Salsa"}
+      empanada1 = new Empanada {id:1,desc:"Carne cortada a cuchillo",price: {base:1800},toppings:"Carne / Huevo / Morron"}
+      empanada2 = new Empanada {id:2,desc:"Calabresa",price: {base:1900},toppings:"Muzzarella / Longaniza / Salsa"}
+      empanada3 = new Empanada {id:3,desc:"Jamon y Queso",price:{base:2000},toppings:"Jamon / Queso"}
+      empanada4 = new Empanada {id:4,desc:"Pollo",price: {base:2100},toppings:"Muzzarella / Pollo / Salsa"}
+      empanada5 = new Empanada {id:5,desc:"Verdura",price: {base:2200},toppings:"Espinaca / Salsa"}
 
       $scope.menu =
         empanada: [
@@ -123,7 +123,7 @@ describe "Empanadas", ->
 
       element.find('ion-item')[0].click()
 
-      expected = new Empanada {id: 1,desc: "Carne cortada a cuchillo",toppings: "Carne / Huevo / Morron",price: 1800}
+      expected = new Empanada {id: 1,desc: "Carne cortada a cuchillo",toppings: "Carne / Huevo / Morron",price: {base:1800}}
 
       expect(chooseSpy).toHaveBeenCalledWith jasmine.objectContaining expected
       expect(isolatedScope.empanada.desc).toBe expected.desc

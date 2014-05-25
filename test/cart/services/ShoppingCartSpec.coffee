@@ -97,13 +97,13 @@ describe 'ShoppingCart Service', ->
   describe "calculate price functionality", ->
 
     it "should calculate total price, only one product", ->
-      ShoppingCartService.add new Empanada {id:15,desc:'Pollo',type:'Frita',qty:2,price:1000}
+      ShoppingCartService.add new Empanada {id:15,desc:'Pollo',type:'Frita',qty:2,price:{base:1000}}
 
       expect(ShoppingCartService.getTotalPrice()).toBe 2000
 
     it "should calculate total price, several products", ->
-      ShoppingCartService.add new Empanada {id:20,desc:'Pollo',type:'Frita',qty:2, price:1000}
-      ShoppingCartService.add new Empanada {id:21,desc:'Carne suave',type:'Horno',qty:3, price:2000}
-      ShoppingCartService.add new Empanada {id:22,desc:'Cebolla y Queso',type:'Frita',qty:2, price:3000}
+      ShoppingCartService.add new Empanada {id:20,desc:'Pollo',type:'Frita',qty:2, price:{base:1000}}
+      ShoppingCartService.add new Empanada {id:21,desc:'Carne suave',type:'Horno',qty:3, price:{base:2000}}
+      ShoppingCartService.add new Empanada {id:22,desc:'Cebolla y Queso',type:'Frita',qty:2, price:{base:3000}}
 
       expect(ShoppingCartService.getTotalPrice()).toBe 14000

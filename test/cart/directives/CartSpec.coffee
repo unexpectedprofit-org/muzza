@@ -1,4 +1,4 @@
-ddescribe "Cart", ->
+describe "Cart", ->
 
   beforeEach ->
     module 'Muzza.cart'
@@ -56,8 +56,8 @@ ddescribe "Cart", ->
 
     it "should display items sorted by category - 1", ->
       inject (Pizza, Empanada)->
-        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
-        empanada = new Empanada {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
+        pizza = new Pizza {desc:'Muzza', qty:1,cat:'PIZZA', price: {base: 1000}}
+        empanada = new Empanada {desc:'Humita',qty:1,cat:'EMPANADA', price: {base: 2000}}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza,empanada]
         $scope.$digest()
@@ -68,8 +68,8 @@ ddescribe "Cart", ->
 
     it "should display items sorted by category - 2", ->
       inject (Pizza, Empanada)->
-        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA'}
-        empanada = new Empanada {desc:'Humita',qty:1,totalPrice:2000,cat:'EMPANADA'}
+        pizza = new Pizza {desc:'Muzza', qty:1,cat:'PIZZA', price: {base: 1000}}
+        empanada = new Empanada {desc:'Humita',qty:1,cat:'EMPANADA', price: {base: 2000}}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada,pizza]
         $scope.$digest()
@@ -126,7 +126,7 @@ ddescribe "Cart", ->
 
 
       it "should redirect to PIZZA edit view", ->
-        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA', size:'chica', dough:'alala', id:1}
+        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA', size:'chica', dough:'alala', id:1, price:{base:1000}}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza]
         $scope.$digest()
@@ -139,7 +139,7 @@ ddescribe "Cart", ->
         expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:'1-muzza-chica-alala'}
 
       it "should redirect to EMPANADA edit view", ->
-        empanada = new Empanada {desc:'Pollo',qty:1,totalPrice:2000,cat:'EMPANADA', id:45, type:'alhorno'}
+        empanada = new Empanada {desc:'Pollo',qty:1,totalPrice:2000,cat:'EMPANADA', id:45, type:'alhorno', price:{base:2000}}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada]
         $scope.$digest()
