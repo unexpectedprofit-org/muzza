@@ -28,10 +28,7 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
     $scope.choose = (pizza, hashKey)->
 
       $scope.pizza = undefined
-#     we create a new to avoid modifying the model that comes from the menu
-
-#     do we need to create a new one when it;s already a Pizza object See test should replace the previous selection. Same for empanada
-#      Response: Either we create a new one, or use angular.copy. Otherwise you would be updating the menu product instance.
+      # Reminder: we create a new to avoid modifying the model that comes from the menu
       if pizza? then $scope.pizza = new Pizza pizza
 
       if hashKey then editCartItem hashKey
@@ -41,8 +38,8 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
           modal = $scope[key]
           modal.show()
 
-    editCartItem = (hashKey)->
-      item = angular.copy (ShoppingCartService.get hashKey)
+    editCartItem = (id)->
+      item = angular.copy (ShoppingCartService.get id)
       if item.cat == 'PIZZA'
         item.resetPrice()
         $scope.pizza = item

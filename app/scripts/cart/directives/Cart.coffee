@@ -7,8 +7,8 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state) ->
     $scope.edit = (item)->
 
       switch item.cat
-        when 'EMPANADA' then $state.go 'app.empanada', {empanadaId: item.getHash()}
-        when 'PIZZA'    then $state.go 'app.pizza', {pizzaId: item.getHash()}
+        when 'EMPANADA' then $state.go 'app.empanada', { empanadaId: item.cartItemKey }
+        when 'PIZZA'    then $state.go 'app.pizza', { pizzaId: item.cartItemKey }
         else $state.go 'app.menu'
 
     $scope.cart =

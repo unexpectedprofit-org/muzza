@@ -158,7 +158,7 @@ describe "Cart", ->
 
 
       it "should redirect to PIZZA edit view", ->
-        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA', size:'chica', dough:'alala', id:1, price:{base:1000}}
+        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA', size:'chica', dough:'alala', id:1, price:{base:1000}, cartItemKey: 1}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza]
         $scope.$digest()
@@ -168,10 +168,10 @@ describe "Cart", ->
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
         isolatedScope.edit(pizza)
-        expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:'1-muzza-chica-alala'}
+        expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:1}
 
       it "should redirect to EMPANADA edit view", ->
-        empanada = new Empanada {desc:'Pollo',qty:1,totalPrice:2000,cat:'EMPANADA', id:45, type:'alhorno', price:{base:2000}}
+        empanada = new Empanada {desc:'Pollo',qty:1,totalPrice:2000,cat:'EMPANADA', id:45, type:'alhorno', price:{base:2000}, cartItemKey: 1}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada]
         $scope.$digest()
@@ -182,7 +182,7 @@ describe "Cart", ->
 
 
         isolatedScope.edit(empanada)
-        expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:'45-pollo-alhorno'}
+        expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:1}
 
       it "should redirect to menu default view if no categ matches", ->
 
