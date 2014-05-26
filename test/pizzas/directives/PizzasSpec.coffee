@@ -1,4 +1,4 @@
-ddescribe "Pizzas", ->
+describe "Pizzas", ->
 
   beforeEach ->
     module 'ionic'
