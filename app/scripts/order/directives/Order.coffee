@@ -18,26 +18,6 @@ angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, 
     contact = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/contact.html',
       scope: $scope,
       animation: 'slide-in-up'
-    #
-    #    $ionicModal.fromTemplateUrl '../app/templates/delivery-option.html',
-    #      scope: $scope,
-    #      animation: 'slide-in-up'
-    #    .then (modal) ->
-    #      $scope.delivery = modal
-    #      $scope.delivery.choose = (deliveryType) ->
-    ##        console.log "delivey method selected: " + deliveryType
-    #        $scope.deliveryOption = deliveryType
-    #        $scope.delivery.hide()
-    #
-    #    $ionicModal.fromTemplateUrl '../app/templates/delivery-contact.html',
-    #      scope: $scope,
-    #      animation: 'slide-in-up'
-    #    .then (modal) ->
-    #      $scope.contact = modal
-    #      $scope.contact.place = () ->
-    ##        console.log "form completed: "
-    #        $scope.contact.hide()
-    #        $state.go('^.orderplace')
 
     $scope.checkout = () ->
       angular.forEach $scope.checkoutSteps, (key, val)->
