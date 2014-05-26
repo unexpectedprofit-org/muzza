@@ -9,12 +9,10 @@
               <img src="">
               <h2>Empanada {{empanada.desc}}</h2>
               <p>{{empanada.type}}</p>
+              <div>{{empanada.totalPrice * empanada.qty | centsToMoney | currency}}</div>
           </div>
 
-
           <div class="item item-avatar">
-
-            <span>Cantidad</span>
 
             <button
                     class="button"
@@ -39,18 +37,11 @@
 
 
           <div class="item item-body">
-              <p>
               <div class="button-bar">
-                  <a class="button" data-ng-click="order.add(empanada)">Agregar</a>
-                  <a class="button" data-ng-click="order.edit(empanada)">Editar</a>
-                  <a class="button" data-ng-click="order.cancel()">Eliminar</a>
+                  <a class="button" data-ng-click="order.add(empanada)">Agregar a Mi Pedido</a>
+                  <a class="button" data-ng-click="order.edit(empanada)">Modificar</a>
               </div>
-              </p>
-              <p>
-                  <button class="button button-block button-positive">
-                      Enviar Pedido
-                  </button>
-              </p>
+              <cancel-selection></cancel-selection>
           </div>
 
         </div>

@@ -9,24 +9,18 @@
                 <img src="">
                 <h2>Pizza {{pizza.desc}}</h2>
                 <p>{{pizza.size}} {{pizza.dough}}</p>
+                <div>{{pizza.totalPrice * pizza.qty | centsToMoney | currency}}</div>
             </div>
             <div class="item item-avatar">
                 <qty ng-model="pizza"></qty>
             </div>
 
             <div class="item item-body">
-                <p>
                 <div class="button-bar">
-                    <a class="button" data-ng-click="order.add(pizza)">Agregar</a>
-                    <a class="button" data-ng-click="order.edit(pizza)">Editar</a>
-                    <a class="button" data-ng-click="order.cancel()">Eliminar</a>
+                    <a class="button" data-ng-click="order.add(pizza)">Agregar a Mi Pedido</a>
+                    <a class="button" data-ng-click="order.edit(pizza)">Modificar</a>
                 </div>
-                </p>
-                <p>
-                    <button class="button button-block button-positive">
-                        Enviar Pedido
-                    </button>
-                </p>
+                <cancel-selection></cancel-selection>
             </div>
         </div>
     </ion-content>

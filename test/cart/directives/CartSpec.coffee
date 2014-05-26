@@ -6,6 +6,7 @@ describe "Cart", ->
     module 'Muzza.directives'
     module 'Muzza.pizzas'
     module 'Muzza.empanadas'
+    module 'ionic'
 
     module ($provide) ->
       $provide.value "ShoppingCartService",
@@ -42,7 +43,7 @@ describe "Cart", ->
     it 'should not display the empty msg', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5}]
       $scope.$digest()
-      msg = element.find('div').html()
+      msg = element.find('div.card').html()
       expect(msg).not.toMatch(/vacio/)
 
     it "should show total price", ->
@@ -61,23 +62,10 @@ describe "Cart", ->
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza,empanada]
         $scope.$digest()
-        items = element.find('ion-list').children()
+        items = element.find('ion-list').html()
 
-        expect(items[0].innerHTML).toContain empanada.description()
-        expect(items[1].innerHTML).toContain pizza.description()
-
-    it "should display items sorted by category - 2", ->
-      inject (Pizza, Empanada)->
-        pizza = new Pizza {desc:'Muzza', qty:1,cat:'PIZZA', price: {base: 1000}}
-        empanada = new Empanada {desc:'Humita',qty:1,cat:'EMPANADA', price: {base: 2000}}
-
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada,pizza]
-        $scope.$digest()
-        items = element.find('ion-list').children()
-
-        expect(items[0].innerHTML).toContain empanada.description()
-        expect(items[1].innerHTML).toContain pizza.description()
-
+        expect(items).toContain empanada.description()
+        expect(items).toContain pizza.description()
 
   describe 'when shopping cart is empty', ->
 
@@ -91,7 +79,7 @@ describe "Cart", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue []
       $scope.$digest()
       items = element.find('ion-item')
-      msg = element.find('div').html()
+      msg = element.find('ion-content').html()
       expect(msg).toMatch(/vacio/)
       expect(items.length).toBe 0
 
@@ -107,13 +95,16 @@ describe "Cart", ->
 
       it "should call the edit function with proper data", ->
 
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10, cat: 'EMPANADA'},{id:2, desc:'Fugazzeta',qty:2, totalPrice:5, cat: 'EMPANADA'}]
+        pizza1 = new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10, cat: 'EMPANADA'}
+        pizza2 = new Pizza {id:2, desc:'Fugazzeta',qty:2, totalPrice:5, cat: 'EMPANADA'}
+
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1, pizza2]
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
         editItem = spyOn(isolatedScope, 'edit').and.callFake( () -> 1 )
 
-        element.find('button')[0].click()
+        isolatedScope.edit(pizza1)
         expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza', qty:1, totalPrice: 10}
 
     describe "edit function show redirect to proper view", ->
@@ -135,7 +126,7 @@ describe "Cart", ->
         onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
-        element.find('button')[0].click()
+        isolatedScope.edit(pizza)
         expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:'1-muzza-chica-alala'}
 
       it "should redirect to EMPANADA edit view", ->
@@ -148,7 +139,8 @@ describe "Cart", ->
         onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
-        element.find('button')[0].click()
+
+        isolatedScope.edit(empanada)
         expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:'45-pollo-alhorno'}
 
       it "should redirect to menu default view if no categ matches", ->
@@ -160,5 +152,5 @@ describe "Cart", ->
         onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
         editItem = spyOn(isolatedScope, 'edit').and.callThrough()
 
-        element.find('button')[0].click()
+        isolatedScope.edit({})
         expect(onState).toHaveBeenCalledWith 'app.menu'

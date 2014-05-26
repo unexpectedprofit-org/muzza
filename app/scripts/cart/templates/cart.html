@@ -1,8 +1,8 @@
 <ion-header-bar align-title="left" class="bar-positive">
     <div class="buttons">
-        <button class="button button-icon icon ion-ios7-minus-outline" ng-click="showDelete = !showDelete; showEdit = false"></button>
+        <button class="button button-icon icon ion-minus-circled" ng-click="showDelete = !showDelete; showEdit = false"></button>
     </div>
-    <h1 class="title"></h1>
+    <h1 class="title">Mi Pedido</h1>
     <div class="buttons">
         <button class="button" ng-click="showEdit = !showEdit; showDelete = false">Editar</button>
     </div>
@@ -16,7 +16,7 @@
 
     <ion-list show-delete="showDelete">
         <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
-          <div style="white-space: normal">{{item.qty}} x {{item.description()}}</div>
+          <div style="white-space: normal">{{item.cat}} {{item.description()}} - Cant. {{item.qty}}</div>
           {{item.totalPrice * item.qty | centsToMoney | currency}}
 
           <button class="button button-light" data-ng-click="$parent.edit(item)" ng-if="showEdit">Editar</button>
