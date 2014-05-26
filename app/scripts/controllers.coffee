@@ -2,6 +2,11 @@ angular.module("Muzza.controllers", ['Muzza.services'])
 
 angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, $rootScope) ->
   $rootScope.storeId = $stateParams.storeID
+
+  $scope.cartTotalPrice = 0
+  $rootScope.$on 'CART:PRICE_UPDATED', (event, newValue) ->
+    $scope.cartTotalPrice = newValue
+
   $scope.menu = ProductService.getMenu($rootScope.storeId, $stateParams.category)
 
 angular.module("Muzza.controllers").controller "StoreCtrl", ($scope, StoreService) ->

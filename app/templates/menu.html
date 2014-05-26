@@ -5,7 +5,10 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <button menu-toggle="right" class="button button-clear button-positive">Mi Pedido</button>
+        <button menu-toggle="right" class="button button-clear button-positive">
+          Mi Pedido
+          <span data-ng-if="cartTotalPrice > 0">({{ cartTotalPrice  | centsToMoney | currency }})</span>
+        </button>
     </ion-nav-buttons>
 
     <ion-content class="has-header">

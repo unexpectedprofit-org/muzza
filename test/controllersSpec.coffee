@@ -5,7 +5,7 @@ describe "controllers", ->
 
   describe "Menu Controller", ->
 
-    scope = ProductService = createController = undefined
+    scope = rootScope = ProductService = createController = undefined
 
     beforeEach ->
       module ($provide) ->
@@ -20,10 +20,12 @@ describe "controllers", ->
         ProductService = _ProductService_
         spyOn(ProductService, 'getMenu').and.callThrough()
         scope = $rootScope.$new()
+        rootScope = $rootScope
         createController = (params)->
           $controller "MenuCtrl",
             $scope: scope
             $stateParams: params
+            $rootScope: $rootScope
 
     it "should get all menu items", ->
       createController({storeID: 1})
@@ -34,6 +36,16 @@ describe "controllers", ->
     it "should get only the menu items for an specific category", ->
       createController({category: 'PIZZA', storeID: 1})
       expect(ProductService.getMenu).toHaveBeenCalledWith(1, 'PIZZA')
+
+    it "should have total price initial value", ->
+      createController({})
+      expect(scope.cartTotalPrice).toBe 0
+
+    it "should update the price when event is fired", ->
+      createController({})
+      rootScope.$broadcast 'CART:PRICE_UPDATED', 1200
+
+      expect(scope.cartTotalPrice).toBe 1200
 
   describe "Store Controller", ->
 

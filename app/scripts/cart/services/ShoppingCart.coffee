@@ -1,4 +1,4 @@
-angular.module("Muzza.cart").service 'ShoppingCartService', ()->
+angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
 
   products = []
 
@@ -18,11 +18,14 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ()->
     else
       item.cartItemKey = generateItemKey()
     products.push item
+    notifyTotalPriceChange()
 
   removeItem = (id) ->
+    previousLengthBeforeRemoval = products.length
     _.remove( products, (elem) ->
       elem.cartItemKey is id
     )
+    notifyTotalPriceChange() unless previousLengthBeforeRemoval is products.length
 
   calculateTotalPrice = () ->
     totalPrice = 0
@@ -38,6 +41,10 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ()->
 
   removeAllItems = () ->
     products = []
+    notifyTotalPriceChange()
+
+  notifyTotalPriceChange = () ->
+    $rootScope.$broadcast 'CART:PRICE_UPDATED', calculateTotalPrice()
 
 
   getCart: getItems

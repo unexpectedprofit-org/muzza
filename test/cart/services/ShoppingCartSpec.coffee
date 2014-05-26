@@ -48,6 +48,15 @@ describe 'ShoppingCart Service', ->
       expect(updatedItem.qty).toBe 3
       expect(ShoppingCartService.getCart().length).toBe 1
 
+    it "should broadcast CART:PRICE_UPDATED event", ->
+        inject ($rootScope) ->
+          broadcastSpy = spyOn($rootScope, '$broadcast')
+          ShoppingCartService.add new Empanada {id:1,desc:'Pollo',type:'Frita',qty:2,price:{base: 10}}
+
+          expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 20
+
+
+
   describe "retrieve functionality", ->
 
     it 'should return all items in the cart', ->
@@ -97,6 +106,25 @@ describe 'ShoppingCart Service', ->
 
       expect(ShoppingCartService.getCart().length).toBe 0
       expect(ShoppingCartService.getTotalPrice()).toBe 0
+
+    it "should broadcast CART:PRICE_UPDATED event", ->
+      inject ($rootScope) ->
+        broadcastSpy = spyOn($rootScope, '$broadcast')
+
+        item1 = new Empanada {id:15,desc:'Pollo',type:'Frita',qty:1,price:{base:10}}
+        item2 = new Empanada {id:16,desc:'Carne suave',type:'Horno',qty:1,price:{base:20}}
+        item3 = new Empanada {id:17,desc:'Cebolla y Queso',type:'Frita',qty:1,price:{base:20}}
+
+        ShoppingCartService.add item1
+        ShoppingCartService.add item2
+        ShoppingCartService.add item3
+        expect(broadcastSpy).toHaveBeenCalled()
+
+        ShoppingCartService.remove item1.cartItemKey
+        expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 40
+
+        ShoppingCartService.emptyCart()
+        expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 0
 
   describe "calculate price functionality", ->
 
