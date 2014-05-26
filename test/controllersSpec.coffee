@@ -5,7 +5,7 @@ describe "controllers", ->
 
   describe "Menu Controller", ->
 
-    scope = undefined
+    scope = ProductService = createController = undefined
 
     beforeEach ->
       module ($provide) ->
@@ -15,16 +15,25 @@ describe "controllers", ->
         null
 
     beforeEach ->
-      inject ($controller, $rootScope) ->
-        scope = $rootScope.$new()
-        $controller "MenuCtrl",
-          $scope: scope
-          $stateParams: {}
+      inject ($controller, $rootScope, _ProductService_, $stateParams) ->
 
-    it "should get the menu items", ->
-      inject (ProductService)->
-        expect(scope.menu.pizza).toEqual [{products:{id:1}}]
-        expect(scope.menu.empanada).toEqual [{products:{id:2}}]
+        ProductService = _ProductService_
+        spyOn(ProductService, 'getMenu').and.callThrough()
+        scope = $rootScope.$new()
+        createController = (params)->
+          $controller "MenuCtrl",
+            $scope: scope
+            $stateParams: params
+
+    it "should get all menu items", ->
+      createController({storeID: 1})
+      expect(scope.menu.pizza).toEqual [{products:{id:1}}]
+      expect(scope.menu.empanada).toEqual [{products:{id:2}}]
+      expect(ProductService.getMenu).toHaveBeenCalled()
+
+    it "should get only the menu items for an specific category", ->
+      createController({category: 'PIZZA', storeID: 1})
+      expect(ProductService.getMenu).toHaveBeenCalledWith(1, 'PIZZA')
 
   describe "Store Controller", ->
 

@@ -39,10 +39,16 @@ describe "services", ->
     )
 
     it 'should retrieve a list of categories with products and produce an array of models', ->
-      menu = ProductService.getMenu()
+      menu = ProductService.getMenu(1, undefined)
       expect(menu.pizza[0].products[0].description()).toBeDefined()
       expect( menu.empanada.length ).toBe 2
       expect( menu.empanada[0].products.length ).toBe 6
+
+    it 'should return only the array from an specific category', ->
+      menu = ProductService.getMenu(1, 'pizza')
+      expect(menu.pizza).toBeDefined()
+      expect(menu.empanada).toBeUndefined()
+
 
 
   describe "OrderService", ->

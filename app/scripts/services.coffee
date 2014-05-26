@@ -69,10 +69,20 @@ angular.module("Muzza.services").factory "StoreService", () ->
 
 angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada) ->
 
-  getProductsByCompanyId = (id)->
-    menu =
+  getProductsByCompanyId = (id, category)->
+    results =
       pizza: _.map stores.store1.products['pizza'], constructPizzas
       empanada: _.map stores.store1.products['empanada'], constructEmpanadas
+
+    # This should become two different methods executing either diff queries,
+    # or fetching form cache...who knows?
+    if category?
+      menu = {}
+      menu[category] = results[category]
+    else
+      menu = results
+
+    menu
 
   constructPizzas = (pizzaCategory)->
     pizzaCategory.products = _.map pizzaCategory.products, (pizza)->
