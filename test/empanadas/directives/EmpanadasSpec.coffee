@@ -84,10 +84,8 @@ describe "Empanadas", ->
       expect(element.html()).toContain "22.00"
 
     it "should display the 2 categories", ->
-      divs = element.find('div')
-
-      expect(divs[2].innerHTML).toContain "Al Horno"
-      expect(divs[4].innerHTML).toContain "Fritas"
+      expect(element.html()).toContain "Al Horno"
+      expect(element.html()).toContain "Fritas"
 
     it "should have a click function bind", ->
       onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
