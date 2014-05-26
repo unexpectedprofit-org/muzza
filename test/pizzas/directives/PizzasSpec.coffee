@@ -95,6 +95,9 @@ describe "Pizzas", ->
       it "should display the 3 products listed on the menu", ->
         expect(element.find('ion-item').length).toBe 3
 
+        expect(isolatedScope.menu[0].products[0] instanceof Pizza).toBeTruthy()
+        expect(isolatedScope.menu[0].products[0]).toBe pizza1
+
         expect(element.html()).toContain 'Muzza'
         expect(element.html()).toContain 'Muzzarella / tomate / Aceitunas'
 
@@ -160,7 +163,7 @@ describe "Pizzas", ->
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.pizza).toEqual jasmine.objectContaining pizza2
+        expect(isolatedScope.pizza).toEqual jasmine.objectContaining new Pizza pizza2
 
   describe "when system requests the menu an specific item view", ->
 

@@ -60,6 +60,9 @@ describe "Empanadas", ->
 
       expect(element.find('ion-item').length).toBe 5
 
+      expect(isolatedScope.menu[0].products[0] instanceof Empanada).toBeTruthy()
+      expect(isolatedScope.menu[0].products[0]).toBe empanada1
+
       expect(element.html()).toContain 'Carne cortada a cuchillo'
       expect(element.html()).toContain "Carne / Huevo / Morron"
       expect(element.html()).toContain "18.00"
@@ -144,7 +147,7 @@ describe "Empanadas", ->
         expected = empanada1
         expected.qty = 2
 
-        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining expected
+        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining new Empanada expected
         expect(addToCart.calls.count()).toBe 1
 
         #Choose Second Product

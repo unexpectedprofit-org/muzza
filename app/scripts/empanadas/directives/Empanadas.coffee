@@ -26,8 +26,8 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
       $scope.empanada = undefined
 
       #     we create a new to avoid modifying the model that comes from the menu
-      if empanada?
-        $scope.empanada = empanada
+      #     do we need to create a new one when it;s already a Empanada object See test should replace the previous selection. Same for pizza
+      if empanada? then  $scope.empanada = new Empanada empanada
 
       if hashKey then editCartItem hashKey
 
