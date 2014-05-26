@@ -119,18 +119,9 @@ describe "Empanadas", ->
       expect(showType).toHaveBeenCalled()
       expect(showType.calls.count()).toBe 1
 
-    it "should call choose function", ->
-      isolatedScope.steps = ['order']
-      showType = spyOn(isolatedScope.order, 'show')
-      chooseSpy = spyOn(isolatedScope, 'choose').and.callThrough()
-
+    it 'should create a Pizza model from the item picked form the menu', ->
       element.find('ion-item')[0].click()
-
-      expected = new Empanada {id: 1,desc: "Carne cortada a cuchillo",toppings: "Carne / Huevo / Morron",price: {base:1800}}
-
-      expect(chooseSpy).toHaveBeenCalledWith jasmine.objectContaining expected
-      expect(isolatedScope.empanada.desc).toBe expected.desc
-
+      expect(isolatedScope.empanada instanceof Empanada).toBeTruthy()
 
     it "should replace the previous selection", ->
       inject (ShoppingCartService) ->
@@ -147,13 +138,20 @@ describe "Empanadas", ->
         expected = empanada1
         expected.qty = 2
 
-        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining new Empanada expected
+        expect(addToCart).toHaveBeenCalledWith jasmine.objectContaining
+          id: expected.id
+          qty: expected.qty
         expect(addToCart.calls.count()).toBe 1
 
         #Choose Second Product
         element.find('ion-item')[1].click()
 
-        expect(isolatedScope.empanada.id).toEqual empanada2.id
+        expect(isolatedScope.empanada).not.toBe empanada2
+        expect(isolatedScope.empanada).toEqual jasmine.objectContaining
+          id: empanada2.id
+          qty: empanada2.qty
+          desc: empanada2.desc
+
 
   describe "when system requests the menu an specific item view", ->
 
