@@ -23,13 +23,13 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
 
     $scope.choose = (empanada, hashKey)->
 
-      if hashKey
-        editCartItem hashKey
-      else
-        if empanada instanceof Empanada
-          $scope.empanada = empanada
-        else
-          $scope.empanada = new Empanada empanada
+      $scope.empanada = undefined
+
+      #     we create a new to avoid modifying the model that comes from the menu
+      if empanada?
+        $scope.empanada = empanada
+
+      if hashKey then editCartItem hashKey
 
       if $scope.empanada?
         angular.forEach $scope.steps, (key, val)->
