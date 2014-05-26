@@ -17,9 +17,11 @@ describe "Pizzas", ->
           return null
         get: ()->
           return null
+
       $provide.value "$state",
         go: () ->
           return null
+
       $provide.value "$stateParams",
         {}
       return null
@@ -173,7 +175,7 @@ describe "Pizzas", ->
     ShoppingCartService = $stateParams = getItemSpy = undefined
 
     beforeEach ->
-      inject (_$state, _ShoppingCartService_, $rootScope) ->
+      inject (_$stateParams_, _ShoppingCartService_, $rootScope) ->
         ShoppingCartService = _ShoppingCartService_
         $stateParams = _$stateParams_
         $scope = $rootScope
@@ -197,10 +199,10 @@ describe "Pizzas", ->
         ]
 
 
-    xdescribe "and the item is a pizza", ->
+    describe "and the item is a pizza", ->
 
       beforeEach ->
-        inject ($compile, $rootScope) ->
+        inject ($compile, $rootScope, $stateParams, $state) ->
           getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Pizza({ id: 1, desc: "Muzza", cat: 'PIZZA', totalPrice: 60, price: {base:50} }))
           $stateParams.pizzaId = 1
           element = angular.element('<pizzas ng-model="menu"></pizzas>')
@@ -212,10 +214,14 @@ describe "Pizzas", ->
       it "should retrieve the item from the shopping cart", ->
         expect(getItemSpy).toHaveBeenCalled()
 
+      it 'should copy the item from the shopping cart into a new one to avoid resetting the price on cart item', ->
+        cartItem = ShoppingCartService.get $stateParams.pizzaId
+        expect(cartItem).not.toEqual isolatedScope.pizza
+
       it "should reset the items price to the base price", ->
         expect(isolatedScope.pizza.totalPrice).toBe 50
 
-    xdescribe "and the item is not a pizza", ->
+    describe "and the item is not a pizza", ->
 
       beforeEach ->
         inject ($rootScope, $compile) ->

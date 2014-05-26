@@ -39,7 +39,7 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
           modal.show()
 
     editCartItem = (hashKey)->
-      item = ShoppingCartService.get hashKey
+      item = angular.copy (ShoppingCartService.get hashKey)
       if item.cat == 'PIZZA'
         item.resetPrice()
         $scope.pizza = item

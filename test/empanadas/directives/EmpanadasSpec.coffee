@@ -171,6 +171,11 @@ describe "Empanadas", ->
       it "should retrieve the item from the shopping cart", ->
         expect(getItemSpy).toHaveBeenCalled()
 
+      it 'should copy the item from the shopping cart into a new one to avoid changing the cart item', ->
+        inject (ShoppingCartService)->
+          cartItem = ShoppingCartService.get $stateParams.empanadaId
+          expect(cartItem).not.toEqual isolatedScope.empanada
+
     describe "and the item is not an empanada", ->
 
       beforeEach ->

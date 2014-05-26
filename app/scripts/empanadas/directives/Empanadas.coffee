@@ -37,7 +37,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
           modal.show()
 
     editCartItem = (hashKey)->
-      item = ShoppingCartService.get hashKey
+      item = angular.copy (ShoppingCartService.get hashKey)
       if item.cat == 'EMPANADA'
         $scope.empanada = item
 
