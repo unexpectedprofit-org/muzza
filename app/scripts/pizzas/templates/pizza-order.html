@@ -16,7 +16,10 @@
             </div>
 
             <div class="item item-body">
-                <div class="button-bar">
+                <div class="button-bar" data-ng-if="pizza.cartItemKey">
+                    <a class="button" data-ng-click="order.add(pizza)">Actualizar Mi Pedido</a>
+                </div>
+                <div class="button-bar" data-ng-if="!pizza.cartItemKey">
                     <a class="button" data-ng-click="order.add(pizza)">Agregar a Mi Pedido</a>
                     <a class="button" data-ng-click="order.edit(pizza)">Modificar</a>
                 </div>

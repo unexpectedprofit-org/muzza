@@ -2,18 +2,15 @@
     Pizzas
 </div>
 
-<div class="list">
 
-  <div class="item item-divider bar bar-calm" data-ng-repeat-start="cat in menu">
+<div class="item item-divider bar bar-calm" data-ng-repeat-start="cat in menu">
     <strong>{{cat.desc}}</strong>
-  </div>
+</div>
 
-  <ion-list data-ng-repeat-end>
+<ion-list data-ng-repeat-end>
     <ion-item data-ng-repeat="prod in cat.products" data-ng-click="choose(prod)">
       <h3>{{ prod.desc }}</h3>
       <span>{{ prod.toppings }}</span>
       <span>{{ prod.price.base | centsToMoney | currency}}</span>
     </ion-item>
-  </ion-list>
-
-</div>
+</ion-list>
