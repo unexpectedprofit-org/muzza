@@ -3,7 +3,7 @@ describe 'EmpanadaOrder', ->
   beforeEach ->
     module 'Muzza.empanadas'
 
-  EmpanadaOrder = modal = showSpy = hideSpy = order = ShoppingCartService = undefined
+  EmpanadaOrder = Empanada = modal = showSpy = hideSpy = order = ShoppingCartService = undefined
 
   beforeEach ->
     module ($provide) ->
@@ -14,8 +14,9 @@ describe 'EmpanadaOrder', ->
       return null
 
   beforeEach ->
-    inject (_EmpanadaOrder_, _ShoppingCartService_) ->
+    inject (_EmpanadaOrder_, _ShoppingCartService_,_Empanada_) ->
       EmpanadaOrder = _EmpanadaOrder_
+      Empanada = _Empanada_
       ShoppingCartService = _ShoppingCartService_
       modal =
         show: -> null
@@ -69,13 +70,7 @@ describe 'EmpanadaOrder', ->
 
     it 'should call ShoppingCart to add a product and hide', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-      empanada =
-        id:1
-        desc:'Humita'
-        type:'Frita'
-        qty:2
-        totalPrice: 15
-        cat: 'EMPANADA'
+      empanada = new Empanada {id:1,desc:'Humita',type:'Frita',qty:2,totalPrice: 15}
 
       order.add empanada
 

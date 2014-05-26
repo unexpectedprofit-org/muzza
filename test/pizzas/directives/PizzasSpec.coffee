@@ -182,7 +182,7 @@ describe "Pizzas", ->
 
       beforeEach ->
         inject ($compile, $rootScope, $stateParams, $state) ->
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Pizza({ id: 1, desc: "Muzza", cat: 'PIZZA', totalPrice: 60, price: {base:50} }))
+          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Pizza({ id: 1, desc: "Muzza", totalPrice: 60, price: {base:50} }))
           $stateParams.pizzaId = 1
           element = angular.element('<pizzas ng-model="menu"></pizzas>')
           $compile(element)($rootScope)
