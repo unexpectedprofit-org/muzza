@@ -27,9 +27,12 @@ describe 'ShoppingCart Service', ->
 
       item = new Empanada {id:2,desc:'Humita',type:'Frita',qty:6}
       ShoppingCartService.add item
+      addedItem = ShoppingCartService.getCart()[1]
 
       expect(ShoppingCartService.getCart().length).toBe 2
-      expect(ShoppingCartService.getCart()[1]).toEqual item
+      expect(addedItem).toEqual item
+      expect(addedItem.cartItemKey).toBeDefined()
+      expect(addedItem.cartItemKey).toBe 'cart_2'
 
     it "should replace product if product is already in the cart", ->
 #      Create product
@@ -37,12 +40,13 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add item
 
 #      edit product
-      editedItem  = ShoppingCartService.get item.getHash()
+      editedItem  = ShoppingCartService.get item.cartItemKey
       editedItem.updateQty(+1)
 
       ShoppingCartService.add editedItem
       updatedItem = ShoppingCartService.getCart()[0]
       expect(updatedItem.qty).toBe 3
+      expect(ShoppingCartService.getCart().length).toBe 1
 
   describe "retrieve functionality", ->
 
@@ -65,7 +69,7 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add item2
       ShoppingCartService.add item3
 
-      expect(ShoppingCartService.get( item2.getHash() )).toEqual item2
+      expect(ShoppingCartService.get( item2.cartItemKey )).toEqual item2
 
   describe "remove functionality", ->
 
@@ -78,7 +82,7 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add item2
       ShoppingCartService.add item3
 
-      ShoppingCartService.remove item1.getHash()
+      ShoppingCartService.remove item1.cartItemKey
 
       expect(ShoppingCartService.getCart().length).toBe 2
       expect(ShoppingCartService.getCart()).toContain item2

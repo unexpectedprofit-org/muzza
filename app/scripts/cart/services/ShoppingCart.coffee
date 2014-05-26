@@ -3,19 +3,25 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ()->
   products = []
 
 
-  getItem = (hashKey) ->
+  getItem = (id) ->
     _.find( products, (elem) ->
-      elem.getHash() is hashKey
+      elem.cartItemKey is id
     )
 
+  generateItemKey = ()->
+    _.uniqueId('cart_')
+
   addItem = (item) ->
-    id = item.getHash()
-    if getItem(id)? then removeItem id
+    id = item.cartItemKey
+    if id
+      removeItem id
+    else
+      item.cartItemKey = generateItemKey()
     products.push item
 
-  removeItem = (hashKey) ->
+  removeItem = (id) ->
     _.remove( products, (elem) ->
-      elem.getHash() is hashKey
+      elem.cartItemKey is id
     )
 
   calculateTotalPrice = () ->
