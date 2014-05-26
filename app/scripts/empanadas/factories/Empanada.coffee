@@ -23,7 +23,7 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @qty >= 100
 
   Empanada::description = () ->
-    @desc
+    @desc + @type
 
   Empanada::getHash = () ->
     _desc = @desc.toLowerCase().replace(/\s+/g, "")

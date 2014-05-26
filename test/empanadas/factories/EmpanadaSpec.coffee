@@ -89,10 +89,10 @@ describe 'Empanada', ->
   it 'should generate a description from default values', ->
     empanada = new Empanada fromObject
     description = empanada.description()
-    expect(description).toBe fromObject.desc
+    expect(description).toBe fromObject.desc + fromObject.type
 
   it 'should generate a description from changes values', ->
     empanada = new Empanada fromObject
     empanada.desc = 'JyQ'
     description = empanada.description()
-    expect(description).toBe 'JyQ'
+    expect(description).toBe 'JyQ' + fromObject.type
