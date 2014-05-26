@@ -8,7 +8,10 @@
         </button>
     </div>
 
-    <h1 class="title">Mi Pedido</h1>
+    <h1 class="title">
+      Mi Pedido
+      <span data-ng-if="cart.products.length > 0">({{ cart.totalPrice()  | centsToMoney | currency }})</span>
+    </h1>
 
     <div class="buttons">
         <button
@@ -42,10 +45,6 @@
 
           <ion-delete-button class="ion-minus-circled" ng-click="cart.products.splice($index, 1)"> </ion-delete-button>
 
-        </ion-item>
-
-        <ion-item  data-ng-if="cart.products.length > 0">
-           Total: {{ cart.totalPrice()  | centsToMoney | currency }}
         </ion-item>
 
     </ion-list>
