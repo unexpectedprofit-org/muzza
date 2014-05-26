@@ -29,7 +29,11 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
 
       $scope.pizza = undefined
 #     we create a new to avoid modifying the model that comes from the menu
-      if pizza? then $scope.pizza = new Pizza(pizza)
+      if pizza?
+        if !(pizza instanceof Pizza)
+          pizza = new Pizza pizza
+
+        $scope.pizza = pizza
 
       if hashKey then editCartItem hashKey
 

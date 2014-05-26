@@ -27,73 +27,68 @@ describe "Pizzas", ->
       return null
 
 
-  isolatedScope = $scope = element = Pizza = undefined
+  isolatedScope = $scope = element = Pizza = pizza1 = pizza2 = pizza3 = undefined
 
   beforeEach ->
-    inject (_Pizza_)->
+    inject (_Pizza_,$compile, $rootScope)->
       Pizza = _Pizza_
+      $scope = $rootScope
+      pizza1 = new Pizza
+        id: 1
+        desc: "Muzza"
+        toppings: "Muzzarella / tomate / Aceitunas"
+        price:
+          base: 8000
+          size:
+            individual: 0
+            chica: 1000
+            grande: 2000
+          dough:
+            "a la piedra": 2
+            "al molde": 3
+      pizza2 = new Pizza
+        id: 2,
+        desc: "Fugazetta"
+        toppings: "Muzzarella / Cebolla"
+        price:
+          base: 7500
+          size:
+            individual: 0
+            chica: 1500
+            grande: 2000
+          dough:
+            "a la piedra": 0
+            "al molde": 0
+      pizza3 = new Pizza
+        id: 3
+        desc: "Calabresa"
+        toppings: "Muzzarella / Longaniza / Salsa"
+        price:
+          base: 5000
+          size:
+            individual: 0
+            chica: 1000
+            grande: 2000
+          dough:
+            "a la piedra": 0
+            "al molde": 0
+
+      $scope.menu = [
+        id: 1
+        desc: "Categ 1"
+        products: [ pizza1, pizza2 ]
+      ,
+        id: 2
+        desc: "Categ 2"
+        products: [ pizza3 ]
+      ]
+      element = angular.element('<pizzas ng-model="menu"></pizzas>')
+      $compile(element)($rootScope)
+      $scope.$digest()
+      isolatedScope = element.isolateScope()
+
 
   describe "When user gets to the menu", ->
-
-    beforeEach ->
-      inject ($compile, $rootScope) ->
-        $scope = $rootScope
-        $scope.menu = [
-          id: 1
-          desc: "Categ 1"
-          products: [
-            id: 1
-            desc: "Muzza"
-            toppings: "Muzzarella / tomate / Aceitunas"
-            price:
-              base: 8000
-              size:
-                individual: 0
-                chica: 1000
-                grande: 2000
-              dough:
-                "a la piedra": 2
-                "al molde": 3
-          ,
-
-            id: 2,
-            desc: "Fugazetta"
-            toppings: "Muzzarella / Cebolla"
-            price:
-              base: 7500
-              size:
-                individual: 0
-                chica: 1500
-                grande: 2000
-              dough:
-                "a la piedra": 0
-                "al molde": 0
-
-          ]
-        ,
-
-          id: 2
-          desc: "Categ 2"
-          products: [
-            id: 3
-            desc: "Calabresa"
-            toppings: "Muzzarella / Longaniza / Salsa"
-            price:
-              base: 5000
-              size:
-                individual: 0
-                chica: 1000
-                grande: 2000
-              dough:
-                "a la piedra": 0
-                "al molde": 0
-          ]
-
-        ]
-        element = angular.element('<pizzas ng-model="menu"></pizzas>')
-        $compile(element)($rootScope)
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
 
     describe "init", ->
 
@@ -151,9 +146,8 @@ describe "Pizzas", ->
         expect(showDough.calls.count()).toBe 1
 
       it 'should create a Pizza model from the item picked form the menu', ->
-        inject (Pizza)->
-          element.find('ion-item')[0].click()
-          expect(isolatedScope.pizza instanceof Pizza).toBeTruthy()
+        element.find('ion-item')[0].click()
+        expect(isolatedScope.pizza instanceof Pizza).toBeTruthy()
 
       it "should replace the previous selection", ->
         spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
@@ -166,9 +160,7 @@ describe "Pizzas", ->
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.pizza).toEqual jasmine.objectContaining
-          desc : 'Fugazetta'
-          id : 2
+        expect(isolatedScope.pizza).toEqual jasmine.objectContaining pizza2
 
   describe "when system requests the menu an specific item view", ->
 
@@ -178,26 +170,6 @@ describe "Pizzas", ->
       inject (_$stateParams_, _ShoppingCartService_, $rootScope) ->
         ShoppingCartService = _ShoppingCartService_
         $stateParams = _$stateParams_
-        $scope = $rootScope
-        $scope.menu = [
-          id: 1
-          desc: "Categ 1"
-          products: [
-            id: 1
-            desc: "Muzza"
-          ,
-            id: 2,
-            desc: "Fugazetta"
-          ]
-        ,
-          id: 2
-          desc: "Categ 2"
-          products: [
-            id: 3
-            desc: "Napolitana"
-          ]
-        ]
-
 
     describe "and the item is a pizza", ->
 
