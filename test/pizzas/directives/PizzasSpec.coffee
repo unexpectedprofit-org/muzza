@@ -164,11 +164,10 @@ ddescribe "Pizzas", ->
         #Choose Second Product
         element.find('ion-item')[1].click()
 
-        console.log "isolatedScope.pizza:"+ JSON.stringify isolatedScope.pizza
-        console.log "pizza2: "            + JSON.stringify pizza2
-        console.log "new Pizza pizza2: "  + JSON.stringify new Pizza pizza2
-
-        expect(isolatedScope.pizza).toEqual jasmine.objectContaining new Pizza pizza2
+        expect(isolatedScope.pizza).not.toEqual pizza2
+        expect(isolatedScope.pizza).toEqual jasmine.objectContaining
+          desc : 'Fugazetta'
+          id : 2
 
   describe "when system requests the menu an specific item view", ->
 
