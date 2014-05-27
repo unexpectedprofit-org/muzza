@@ -5,7 +5,7 @@ describe "controllers", ->
 
   describe "Menu Controller", ->
 
-    scope = rootScope = ProductService = createController = undefined
+    scope = rootScope = ProductService = createController = ShoppingCartService = undefined
 
     beforeEach ->
       module ($provide) ->
@@ -13,11 +13,16 @@ describe "controllers", ->
           getMenu: ()->
             { pizza:[products:{id:1}], empanada:[products:{id:2}] }
         null
+        $provide.value 'ShoppingCartService',
+          getTotalPrice: () ->
+            100
+        null
 
     beforeEach ->
-      inject ($controller, $rootScope, _ProductService_, $stateParams) ->
+      inject ($controller, $rootScope, _ProductService_, $stateParams, _ShoppingCartService_) ->
 
         ProductService = _ProductService_
+        ShoppingCartService = _ShoppingCartService_
         spyOn(ProductService, 'getMenu').and.callThrough()
         scope = $rootScope.$new()
         rootScope = $rootScope
@@ -26,6 +31,7 @@ describe "controllers", ->
             $scope: scope
             $stateParams: params
             $rootScope: $rootScope
+            ShoppingCartService: ShoppingCartService
 
     it "should get all menu items", ->
       createController({storeID: 1})
@@ -37,9 +43,10 @@ describe "controllers", ->
       createController({category: 'PIZZA', storeID: 1})
       expect(ProductService.getMenu).toHaveBeenCalledWith(1, 'PIZZA')
 
-    it "should have total price initial value", ->
+    it "should call cart to get price", ->
+      getPriceSpy = spyOn(ShoppingCartService, 'getTotalPrice').and.callThrough()
       createController({})
-      expect(scope.cartTotalPrice).toBe 0
+      expect(getPriceSpy).toHaveBeenCalled()
 
     it "should update the price when event is fired", ->
       createController({})
