@@ -11,7 +11,7 @@ angular.module('Muzza.order').factory "OrderDelivery", ()->
     @modal.hide()
 
   OrderDelivery::choose = (deliveryType)->
-    @modal.scope.deliveryOption = deliveryType
+    @modal.scope.order.deliveryOption = deliveryType
     @hide()
 
   return OrderDelivery

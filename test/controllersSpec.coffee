@@ -82,25 +82,28 @@ describe "controllers", ->
 
   describe "PlaceOrder Controller", ->
 
-    scope = undefined
-    returnObject = {
-      some: "thing"
-    }
-
-    _fakeOrderService =
-      placeOrder: () ->
-        returnObject
+    scope = placeSpy = OrderService = undefined
 
     beforeEach ->
       module ($provide) ->
-        $provide.value('OrderService', _fakeOrderService )
+        $provide.value 'OrderService',
+          place: () -> 1
         null
 
-      inject ($controller, $rootScope) ->
+      inject ($controller, $rootScope, _OrderService_) ->
         scope = $rootScope.$new()
+        OrderService = _OrderService_
+
+        placeSpy = spyOn(OrderService, 'place').and.callThrough()
+
         $controller "PlaceOrderCtrl",
           $scope: scope
-          OrderService: _fakeOrderService
+        OrderService: _OrderService_
+
+
 
     it "should call the service", ->
-      expect(scope.order).toEqual returnObject
+      expect(scope.response).toEqual 1
+
+      expect(placeSpy).toHaveBeenCalled()
+      expect(placeSpy.calls.count()).toBe 1

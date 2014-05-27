@@ -60,11 +60,11 @@
           </label>
 
           <!-- DELIVERY TO HOME REQUIRED DATA-->
-          <div data-ng-if="deliveryOption == 'D'">
+          <div data-ng-if="order.deliveryOption == 'D'">
 
             <label class="item item-input">
               <input type="text" placeholder="Calle"
-                     data-ng-required="deliveryOption == 'D'"
+                     data-ng-required="order.deliveryOption == 'D'"
                      data-ng-maxlength="20"
                      data-ng-model="order.addr.street"
                      name="street">
@@ -72,7 +72,7 @@
 
             <label class="item item-input">
               <input type="number" placeholder="Numero"
-                     data-ng-required="deliveryOption == 'D'"
+                     data-ng-required="order.deliveryOption == 'D'"
                      data-ng-maxlength="5"
                      data-ng-model="order.addr.door"
                      name="door">
@@ -80,7 +80,7 @@
 
             <label class="item item-input">
               <input type="text" placeholder="Localidad"
-                     data-ng-required="deliveryOption == 'D'"
+                     data-ng-required="order.deliveryOption == 'D'"
                      data-ng-maxlength="20"
                      data-ng-model="order.addr.area"
                      name="area">
@@ -98,7 +98,7 @@
           </label>
 
           <button class="button button-block button-positive"
-                  data-ng-click="contact.place()"
+                  data-ng-click="contact.place(order)"
                   data-ng-disabled="contactDetailsForm.$invalid">
             Enviar Pedido
           </button>

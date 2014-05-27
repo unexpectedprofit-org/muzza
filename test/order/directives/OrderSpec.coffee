@@ -100,7 +100,7 @@ describe "Order", ->
 
     describe "when user clicks checkout button", ->
 
-      $scope = element = ShoppingCartService = isolatedScope = undefined
+      $scope = element = ShoppingCartService = OrderDetails = isolatedScope = undefined
 
       beforeEach ->
         inject ($compile, $rootScope, _ShoppingCartService_) ->
@@ -124,3 +124,8 @@ describe "Order", ->
         expect(showDeliveryMethod.calls.count()).toBe 1
         expect(showContactForm).toHaveBeenCalled()
         expect(showContactForm.calls.count()).toBe 1
+
+      it "should have a order object defined in the scope", ->
+        element.find('button')[0].click()
+
+        expect(isolatedScope.order).toBeDefined()

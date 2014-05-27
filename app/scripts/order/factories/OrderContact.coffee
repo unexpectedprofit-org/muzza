@@ -10,7 +10,7 @@ angular.module('Muzza.order').factory "OrderContact", ($state)->
   OrderContact::hide = ->
     @modal.hide()
 
-  OrderContact::place = ()->
+  OrderContact::place = (order)->
     @hide()
     $state.go('^.orderplace')
 

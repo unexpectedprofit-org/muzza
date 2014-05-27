@@ -1,4 +1,4 @@
-angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, ShoppingCartService, OrderContact, OrderDelivery, $q) ->
+angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, ShoppingCartService, OrderContact, OrderDelivery, OrderDetails, $q) ->
   restrict: 'EA'
   scope: {}
   template: '<button class="button button-block button-positive"
@@ -20,6 +20,9 @@ angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, 
       animation: 'slide-in-up'
 
     $scope.checkout = () ->
+
+      $scope.order = {}
+
       angular.forEach $scope.checkoutSteps, (key, val)->
         modal = $scope[key]
         modal.show()

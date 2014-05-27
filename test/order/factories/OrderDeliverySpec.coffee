@@ -11,7 +11,8 @@ describe 'OrderDelivery', ->
       modal =
         show: -> null
         hide: -> null
-        scope: {}
+        scope:
+          order: {}
 
       showSpy = spyOn(modal, 'show').and.callThrough()
       hideSpy = spyOn(modal, 'hide').and.callThrough()
@@ -49,4 +50,4 @@ describe 'OrderDelivery', ->
     it "should set deliveryoption into the scope", ->
       orderDelivery.choose "mydeliveryMethod"
 
-      expect(modal.scope.deliveryOption).toBe "mydeliveryMethod"
+      expect(modal.scope.order.deliveryOption).toBe "mydeliveryMethod"

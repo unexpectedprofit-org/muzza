@@ -16,5 +16,7 @@ angular.module("Muzza.controllers").controller "StoreCtrl", ($scope, StoreServic
 
 angular.module("Muzza.controllers").controller "PlaceOrderCtrl", ($scope, OrderService) ->
 
-  $scope.order = OrderService.placeOrder()
+  $scope.response = OrderService.place()
+
+
 
