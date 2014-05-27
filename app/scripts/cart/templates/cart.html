@@ -39,11 +39,11 @@
           <button
                   class="button button-light"
                   data-ng-click="$parent.edit(item)"
-                  data-ng-if="showEdit">
+                  data-ng-show="showEdit">
             Editar
           </button>
 
-          <ion-delete-button class="ion-minus-circled" ng-click="cart.products.splice($index, 1)"> </ion-delete-button>
+          <ion-delete-button class="ion-minus-circled" data-ng-click="$parent.remove(item.cartItemKey)"> </ion-delete-button>
 
         </ion-item>
 

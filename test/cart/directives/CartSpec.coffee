@@ -60,6 +60,16 @@ describe "Cart", ->
             "a la piedra": 0
             "al molde": 0
 
+  describe "init", ->
+
+    it "should have functions defined", ->
+      $scope.$digest()
+      isolatedScope = element.isolateScope()
+
+      expect(isolatedScope.edit).toBeDefined()
+      expect(isolatedScope.remove).toBeDefined()
+
+
   describe 'when shopping cart has at least one item', ->
 
     xit "should display buttons on header", ->
@@ -99,6 +109,19 @@ describe "Cart", ->
       $scope.$digest()
       msg = element.find('div.card').html()
       expect(msg).not.toMatch(/vacio/)
+
+    it "should list items with edit function bound", ->
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
+      $scope.$digest()
+      isolatedScope = element.isolateScope()
+      isolatedScope.showEdit = true
+      expect(element.find('ion-item').html()).toContain "$parent.edit(item)"
+
+    it "should list items with remove function bound", ->
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
+      $scope.$digest()
+      expect(element.find('ion-item').html()).toContain "$parent.remove(item.cartItemKey)"
+
 
   describe 'when shopping cart is empty', ->
 
@@ -195,3 +218,16 @@ describe "Cart", ->
 
         isolatedScope.edit({})
         expect(onState).toHaveBeenCalledWith 'app.menu'
+
+  describe "remove functionality", ->
+
+    it "should call service", ->
+
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1}]
+      $scope.$digest()
+      isolatedScope = element.isolateScope()
+
+      removeItem = spyOn(isolatedScope, 'remove').and.callFake( () -> 1 )
+
+      isolatedScope.remove pizza1.cartItemKey
+      expect(removeItem).toHaveBeenCalledWith pizza1.cartItemKey

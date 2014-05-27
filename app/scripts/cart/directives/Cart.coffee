@@ -11,6 +11,9 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state) ->
         when 'PIZZA'    then $state.go 'app.pizza', { pizzaId: item.cartItemKey }
         else $state.go 'app.menu'
 
+    $scope.remove = (cartItemKey) ->
+      ShoppingCartService.remove cartItemKey
+
     $scope.cart =
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice
