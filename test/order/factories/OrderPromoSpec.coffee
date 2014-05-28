@@ -4,25 +4,25 @@ describe 'OrderPromo', ->
     module 'Muzza.order'
 
     module ($provide) ->
-      $provide.value 'Promo_Empanadas_Qty_Type',
+      $provide.value 'PromoTypeQuantity',
         validate: () -> true
       null
 
 
 
-  OrderPromo = Promo_Empanadas_Qty_Type = modal = showSpy = hideSpy = orderPromo = undefined
+  OrderPromo = PromoTypeQuantity = modal = showSpy = hideSpy = orderPromo = undefined
 
   beforeEach ->
-    inject (_OrderPromo_, _Promo_Empanadas_Qty_Type_) ->
+    inject (_OrderPromo_, _PromoTypeQuantity_) ->
       OrderPromo = _OrderPromo_
-      Promo_Empanadas_Qty_Type = _Promo_Empanadas_Qty_Type_
+      PromoTypeQuantity = _PromoTypeQuantity_
       modal =
         show: -> null
         hide: -> null
 
       showSpy = spyOn(modal, 'show').and.callThrough()
       hideSpy = spyOn(modal, 'hide').and.callThrough()
-      validateSpy = spyOn(Promo_Empanadas_Qty_Type, 'validate').and.callThrough()
+      validateSpy = spyOn(PromoTypeQuantity, 'validate').and.callThrough()
 
       orderPromo = new OrderPromo modal
 

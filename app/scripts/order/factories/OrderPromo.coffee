@@ -1,4 +1,4 @@
-angular.module('Muzza.order').factory "OrderPromo", (Promo_Empanadas_Qty_Type)->
+angular.module('Muzza.order').factory "OrderPromo", (PromoTypeQuantity)->
 
   class OrderPromo
     constructor: (modal) ->
@@ -11,12 +11,11 @@ angular.module('Muzza.order').factory "OrderPromo", (Promo_Empanadas_Qty_Type)->
     @modal.hide()
 
   OrderPromo::applyPromos = (cart)->
-
-    console.log "apply promo - cart " + JSON.stringify cart
-
-    promo = new Promo_Empanadas_Qty_Type 6, 'H'
+    promo = new PromoTypeQuantity [{cat:'EMPANADA',qty:6}]
     result = promo.validate cart
 
+    console.log "apply promo - cart: " + JSON.stringify cart
+    console.log "apply promo - rules: " + JSON.stringify promo.rules
     console.log "apply promo: " + result
 
     @modal.scope.isPromoValid = result

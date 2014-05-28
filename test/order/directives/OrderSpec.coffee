@@ -26,7 +26,7 @@ describe "Order", ->
       $provide.value "$stateParams",
         {}
 
-      $provide.value 'Promo_Pizza_Empanadas_Qty_Type',
+      $provide.value 'PromoTypeQuantity',
         validate: () ->
           return null
 
@@ -42,9 +42,9 @@ describe "Order", ->
       ShoppingCartService  = undefined
 
       beforeEach ->
-        inject ($compile, $rootScope, _ShoppingCartService_, _Promo_Pizza_Empanadas_Qty_Type_) ->
+        inject ($compile, $rootScope, _ShoppingCartService_, _PromoTypeQuantity_) ->
           ShoppingCartService = _ShoppingCartService_
-          Promo_Pizza_Empanadas_Qty_Type = _Promo_Pizza_Empanadas_Qty_Type_
+          PromoTypeQuantity = _PromoTypeQuantity_
           $scope = $rootScope
           element = angular.element('<checkout-button></checkout-button>')
           spyOn(ShoppingCartService, 'getCart').and.returnValue  [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}]
