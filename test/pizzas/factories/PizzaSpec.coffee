@@ -4,6 +4,7 @@ describe 'Pizza', ->
 
   beforeEach ->
     module 'Muzza.pizzas'
+    module 'Muzza.directives'
 
   beforeEach ->
     inject (_Pizza_)->
@@ -73,5 +74,31 @@ describe 'Pizza', ->
     pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde', qty: 1 } )
     pizza.updateQty(-1)
     expect(pizza.qty).toBe 1
+
+  it 'should return a formatted base price when value is greater than 0', ->
+    pizza = new Pizza( { id: 1, desc: 'Muzza', price: {base: 5000}, qty: 1 } )
+    expect(pizza.getBasePrice()).toBe '$50.00'
+
+  it 'should return a formatted base price when value is 0', ->
+    pizza = new Pizza( { id: 1, desc: 'Muzza', price: {base: 0}, qty: 1 } )
+    expect(pizza.getBasePrice()).toBe '$0.00'
+
+  it 'should return a formatted base price of 0 when value is undefined', ->
+    pizza = new Pizza( { id: 1, desc: 'Muzza', price: {base: undefined}, qty: 1 } )
+    expect(pizza.getBasePrice()).toBe '$0.00'
+
+  it 'should return a formatted total price when value is greater than 0', ->
+    pizza = new Pizza( { id: 1, desc: 'Muzza', price: {base: 5000}, qty: 1, totalPrice: 5000 } )
+    expect(pizza.getTotalPrice()).toBe '$50.00'
+
+  it 'should return a formatted total price when value is 0', ->
+    pizza = new Pizza( { id: 1, desc: 'Muzza', price: {base: 0}, qty: 1, totalPrice: 0 } )
+    expect(pizza.getTotalPrice()).toBe '$0.00'
+
+  it 'should return a formatted total price of 0 when value is undefined', ->
+    pizza = new Pizza( { id: 1, desc: 'Muzza', price: {base: undefined}, qty: 1 } )
+    expect(pizza.getTotalPrice()).toBe '$0.00'
+
+
 
 

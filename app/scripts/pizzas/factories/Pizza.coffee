@@ -1,4 +1,4 @@
-angular.module('Muzza.pizzas').factory 'Pizza', ()->
+angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
 
   class Pizza
     constructor: (param)->
@@ -11,6 +11,18 @@ angular.module('Muzza.pizzas').factory 'Pizza', ()->
       @price =
         base: 0
       angular.extend(@, param)
+
+  formatPrice = (value) ->
+    value = $filter('centsToMoney')(value)
+    $filter('currency')(value)
+
+  Pizza::getBasePrice = ->
+    if @price.base is undefined then @price.base = 0
+    formatPrice(@price.base)
+
+  Pizza::getTotalPrice = ->
+    if @totalPrice is undefined then @totalPrice = 0
+    formatPrice(@totalPrice)
 
   Pizza::description = ()->
     @size + ' de ' + @desc + ' ' + @dough
