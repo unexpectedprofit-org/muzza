@@ -1,16 +1,16 @@
-<div class="item item-divider bar bar-positive " data-ng-if="menu">
+<div class="item item-divider bar bar-positive " data-bo-if="menu">
     Pizzas
 </div>
 
 
-<div class="item item-divider bar bar-calm" data-ng-repeat-start="cat in menu">
-    <strong>{{cat.desc}}</strong>
+<div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu">
+    <strong data-bo-bind="cat.desc"></strong>
 </div>
 
 <ion-list data-ng-repeat-end>
-    <ion-item data-ng-repeat="prod in cat.products" data-ng-click="choose(prod)">
-      <h3>{{ prod.desc }}</h3>
-      <span>{{ prod.toppings }}</span>
-      <span>{{ prod.price.base | centsToMoney | currency}}</span>
+    <ion-item bindonce data-ng-repeat="prod in cat.products" data-ng-click="choose(prod)">
+      <h3 data-bo-bind="prod.desc"></h3>
+      <span data-bo-bind="prod.toppings"></span>
+      <span data-bo-bind="prod.price.base | centsToMoney | currency"></span>
     </ion-item>
 </ion-list>

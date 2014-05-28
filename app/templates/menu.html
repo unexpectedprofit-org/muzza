@@ -7,15 +7,15 @@
     <ion-nav-buttons side="right">
         <button menu-toggle="right" class="button button-clear button-positive">
           Mi Pedido
-          <span data-ng-if="cartTotalPrice > 0">({{ cartTotalPrice  | centsToMoney | currency }})</span>
+          <span data-ng-if="cartTotalPrice > 0" >({{ cartTotalPrice  | centsToMoney | currency }})</span>
         </button>
     </ion-nav-buttons>
 
     <ion-content class="has-header">
 
-      <pizzas data-ng-model="menu.pizza"></pizzas>
+      <pizzas bindonce data-ng-model="menu.pizza"></pizzas>
 
-      <empanadas data-ng-model="menu.empanada"></empanadas>
+      <empanadas bindonce data-ng-model="menu.empanada"></empanadas>
 
     </ion-content>
 

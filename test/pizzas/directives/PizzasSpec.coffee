@@ -98,19 +98,6 @@ describe "Pizzas", ->
         expect(isolatedScope.menu[0].products[0] instanceof Pizza).toBeTruthy()
         expect(isolatedScope.menu[0].products[0]).toBe pizza1
 
-        expect(element.html()).toContain 'Muzza'
-        expect(element.html()).toContain 'Muzzarella / tomate / Aceitunas'
-
-        expect(element.html()).toContain 'Fugazetta'
-        expect(element.html()).toContain 'Muzzarella / Cebolla'
-
-        expect(element.html()).toContain 'Calabresa'
-        expect(element.html()).toContain 'Muzzarella / Longaniza / Salsa'
-
-      it "should display the 2 categories", ->
-        expect(element.html()).toContain "Categ 1"
-        expect(element.html()).toContain "Categ 2"
-
       it "should have a click function bind", ->
         onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
         expect(onClickEvent).toContain "choose(prod)"

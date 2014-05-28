@@ -63,30 +63,6 @@ describe "Empanadas", ->
       expect(isolatedScope.menu[0].products[0] instanceof Empanada).toBeTruthy()
       expect(isolatedScope.menu[0].products[0]).toBe empanada1
 
-      expect(element.html()).toContain 'Carne cortada a cuchillo'
-      expect(element.html()).toContain "Carne / Huevo / Morron"
-      expect(element.html()).toContain "18.00"
-
-      expect(element.html()).toContain 'Calabresa'
-      expect(element.html()).toContain "Muzzarella / Longaniza / Salsa"
-      expect(element.html()).toContain "19.00"
-
-      expect(element.html()).toContain 'Jamon y Queso'
-      expect(element.html()).toContain "Jamon / Queso"
-      expect(element.html()).toContain "20.00"
-
-      expect(element.html()).toContain 'Pollo'
-      expect(element.html()).toContain "Muzzarella / Pollo / Salsa"
-      expect(element.html()).toContain "21.00"
-
-      expect(element.html()).toContain 'Verdura'
-      expect(element.html()).toContain "Espinaca / Salsa"
-      expect(element.html()).toContain "22.00"
-
-    it "should display the 2 categories", ->
-      expect(element.html()).toContain "Al Horno"
-      expect(element.html()).toContain "Fritas"
-
     it "should have a click function bind", ->
       onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
 
