@@ -11,26 +11,22 @@ angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, 
 
     $scope.checkoutSteps = ['contact', 'deliveryOption']
 
-    deliveryOption = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/delivery-option.html',
-      scope: $scope,
-      animation: 'slide-in-up'
-
-    contact = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/contact.html',
-      scope: $scope,
-      animation: 'slide-in-up'
-
     $scope.checkout = () ->
 
       $scope.order = {}
 
-      angular.forEach $scope.checkoutSteps, (key, val)->
-        modal = $scope[key]
-        modal.show()
+      deliveryOption = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/delivery-option.html',
+        scope: $scope,
+        animation: 'slide-in-up'
 
-    init = ->
+      contact = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/contact.html',
+        scope: $scope,
+        animation: 'slide-in-up'
+
       $q.all([contact, deliveryOption]).then (views)->
         $scope.contact = new OrderContact views[0]
         $scope.deliveryOption = new OrderDelivery views[1]
 
-
-    init()
+        angular.forEach $scope.checkoutSteps, (key, val)->
+          modal = $scope[key]
+          modal.show()
