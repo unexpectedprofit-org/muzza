@@ -6,6 +6,10 @@ angular.module('Muzza.promo').factory 'Promo', () ->
 
   Promo::validate = (shoppingCart) ->
 
+    if angular.isUndefined( shoppingCart ) || !(shoppingCart instanceof Array) || shoppingCart.length < 1
+      return false
+
+
     isValid = true
 
 #    console.log "usando rules: " + JSON.stringify @rules
@@ -61,7 +65,7 @@ angular.module('Muzza.promo').factory 'Promo', () ->
 
 
   Promo::apply = (shoppingCart) ->
-    shoppingCart
+    return false
 
 
 

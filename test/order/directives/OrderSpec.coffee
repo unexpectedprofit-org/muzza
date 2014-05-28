@@ -5,6 +5,7 @@ describe "Order", ->
     module 'Muzza.pizzas'
     module 'Muzza.templates'
     module 'Muzza.order'
+    module 'Muzza.promo'
 
   beforeEach ->
     module ($provide) ->
@@ -24,23 +25,26 @@ describe "Order", ->
 
       $provide.value "$stateParams",
         {}
-      return null
+
+      $provide.value 'Promo_Pizza_Empanadas_Qty_Type',
+        validate: () ->
+          return null
+
+      null
 
 
   isolatedScope = $scope = element = Pizza = pizza1 = pizza2 = pizza3 = undefined
-
-  beforeEach ->
-    inject (_Pizza_,$compile, $rootScope)->
 
   describe "Checkout Button", ->
 
     describe "init", ->
 
-      isolatedScope = ShoppingCartService = element = undefined
+      ShoppingCartService  = undefined
 
       beforeEach ->
-        inject ($compile, $rootScope, _ShoppingCartService_) ->
+        inject ($compile, $rootScope, _ShoppingCartService_, _Promo_Pizza_Empanadas_Qty_Type_) ->
           ShoppingCartService = _ShoppingCartService_
+          Promo_Pizza_Empanadas_Qty_Type = _Promo_Pizza_Empanadas_Qty_Type_
           $scope = $rootScope
           element = angular.element('<checkout-button></checkout-button>')
           spyOn(ShoppingCartService, 'getCart').and.returnValue  [{id:1, desc:'Muzza'},{id:2, desc:'Fugazzeta'}]
@@ -52,7 +56,7 @@ describe "Order", ->
         expect(isolatedScope.cart).toBeDefined()
 
       it "should have steps defined in the scope", ->
-        expect(isolatedScope.checkoutSteps).toEqual ['contact', 'deliveryOption']
+        expect(isolatedScope.checkoutSteps).toEqual ['contact', 'deliveryOption', 'promos']
 
       it "should have a checkout function defined in the scope", ->
         expect(isolatedScope.checkout).toBeDefined()
@@ -64,7 +68,7 @@ describe "Order", ->
 
     describe "car NOT empty", ->
 
-      $scope = element = ShoppingCartService = undefined
+      ShoppingCartService = undefined
 
       it "should show button", ->
         inject ($compile, $rootScope, _ShoppingCartService_) ->
@@ -80,7 +84,7 @@ describe "Order", ->
 
     describe "car empty", ->
 
-      $scope = element = ShoppingCartService = undefined
+      ShoppingCartService = undefined
 
       it "should NOT show button", ->
         inject ($compile, $rootScope, _ShoppingCartService_) ->
@@ -95,7 +99,7 @@ describe "Order", ->
 
     describe "when user clicks checkout button", ->
 
-      $scope = element = ShoppingCartService = OrderDetails = isolatedScope = undefined
+      ShoppingCartService = OrderDetails = undefined
 
       beforeEach ->
         inject ($compile, $rootScope, _ShoppingCartService_) ->
@@ -113,13 +117,13 @@ describe "Order", ->
 
 
       it "should load the templates for all the steps", ->
-        isolatedScope.steps = ['contact', 'deliveryOption']
+        isolatedScope.steps = ['contact', 'deliveryOption', 'promos']
         isolatedScope.checkout()
         isolatedScope.$apply()
 
         expect(isolatedScope.contact).toBeDefined()
         expect(isolatedScope.deliveryOption).toBeDefined()
-
+        expect(isolatedScope.promos).toBeDefined()
 
 
       xit "should show all modals for available steps", ->
@@ -128,6 +132,7 @@ describe "Order", ->
 
         showContactForm = spyOn(isolatedScope.contact, 'show')
         showDeliveryMethod = spyOn(isolatedScope.deliveryOption, 'show')
+        showPromos = spyOn(isolatedScope.promos, 'show')
 
         expect(showContactForm).toHaveBeenCalled()
         expect(showContactForm).toHaveBeenCalled()

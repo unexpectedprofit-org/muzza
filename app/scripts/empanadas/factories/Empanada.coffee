@@ -3,6 +3,7 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
   class Empanada
     constructor: (param) ->
       @cat = 'EMPANADA'
+      @subcat = if param.type is 'Al Horno' then 'H' else 'F'
       @qty = param.qty or 1
       @desc = param.desc or ''
       @type = param.type or ''

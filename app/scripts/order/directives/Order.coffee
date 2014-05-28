@@ -1,4 +1,4 @@
-angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, ShoppingCartService, OrderContact, OrderDelivery, OrderDetails, $q) ->
+angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, ShoppingCartService, OrderContact, OrderDelivery, OrderDetails, OrderPromo, $q) ->
   restrict: 'EA'
   scope: {}
   template: '<button class="button button-block button-positive"
@@ -9,11 +9,15 @@ angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, 
 
     $scope.cart = ShoppingCartService.getCart()
 
-    $scope.checkoutSteps = ['contact', 'deliveryOption']
+    $scope.checkoutSteps = ['contact', 'deliveryOption', 'promos']
 
     $scope.checkout = () ->
 
       $scope.order = {}
+
+      promos = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/promos-option.html',
+        scope: $scope,
+        animation: 'slide-in-up'
 
       deliveryOption = $ionicModal.fromTemplateUrl '../app/scripts/order/templates/delivery-option.html',
         scope: $scope,
@@ -23,9 +27,10 @@ angular.module('Muzza.order').directive 'checkoutButton', ($ionicModal, $state, 
         scope: $scope,
         animation: 'slide-in-up'
 
-      $q.all([contact, deliveryOption]).then (views)->
+      $q.all([contact, deliveryOption, promos]).then (views)->
         $scope.contact = new OrderContact views[0]
         $scope.deliveryOption = new OrderDelivery views[1]
+        $scope.promos = new OrderPromo views[2]
 
         angular.forEach $scope.checkoutSteps, (key, val)->
           modal = $scope[key]

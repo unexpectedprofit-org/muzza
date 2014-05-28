@@ -1,4 +1,4 @@
-ddescribe 'Promo_Pizza_Empanadas_Qty_Type', ->
+describe 'Promo_Pizza_Empanadas_Qty_Type', ->
 
   beforeEach ->
     module 'Muzza.promo'

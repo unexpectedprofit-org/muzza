@@ -14,7 +14,7 @@ describe 'Empanada', ->
       desc: "description"
       price:
         base: 1020
-      type: "al horno"
+      type: "Al Horno"
 
   describe "init", ->
 
@@ -36,6 +36,7 @@ describe 'Empanada', ->
       newEmpanada = new Empanada fromObject
       expect(newEmpanada.qty).toBe 1
       expect(newEmpanada.cat).toBe "EMPANADA"
+      expect(newEmpanada.subcat).toBe "H"
       expect(newEmpanada.id).toBe 505
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.totalPrice).toBe fromObject.price.base

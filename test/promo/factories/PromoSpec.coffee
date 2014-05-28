@@ -27,4 +27,4 @@ describe 'Promo', ->
   describe "apply functionality", ->
 
     it 'should return same thing', ->
-      expect(promo.apply {}).toBe {}
+      expect(promo.apply {}).toBeFalsy()
