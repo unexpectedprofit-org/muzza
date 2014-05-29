@@ -85,7 +85,7 @@ describe 'Empanada', ->
     it "should create hash - case 1", ->
       newEmpanada = new Empanada fromObject
 
-      expect(newEmpanada.getHash()).toBe '505-description-alhorno'
+      expect(newEmpanada.getHash()).toBe 'ID_BRAND|505|HORNO||'
 
   it 'should generate a description from default values', ->
     empanada = new Empanada fromObject

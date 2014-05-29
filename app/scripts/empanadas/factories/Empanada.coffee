@@ -27,9 +27,6 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @desc + @type
 
   Empanada::getHash = () ->
-    _desc = @desc.toLowerCase().replace(/\s+/g, "")
-    _type = @type.toLowerCase().replace(/\s+/g, "")
-
-    @id + "-" + _desc + "-" + _type
+    "ID_BRAND|" + @id + "|" + (if @type is "Frita" then "FRITA" else "HORNO") + "||"
 
   return Empanada
