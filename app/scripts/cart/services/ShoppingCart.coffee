@@ -17,6 +17,7 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
       removeItem id
     else
       item.cartItemKey = generateItemKey()
+      item.hashKey = item.getHash()
     products.push item
     notifyTotalPriceChange()
 
