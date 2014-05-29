@@ -35,10 +35,26 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     if @qty <= 0 then @qty = 1
 
   Pizza::getHash = ()->
-    _desc = @desc.toLowerCase().replace(/\s+/g, "")
-    _size = @size.toLowerCase().replace(/\s+/g, "")
-    _dough = @dough.toLowerCase().replace(/\s+/g, "")
-    @id + "-" + _desc + "-" + _size + "-" + _dough
+    switch @size
+      when "grande"
+        _size = "GRANDE"
+      when "chica"
+        _size = "CHICA"
+      when "individual"
+        _size = "INDIVIDUAL"
+      else
+        _size = ""
+
+    switch @dough
+      when "molde"
+        _dough = "MOLDE"
+      when "piedra"
+        _dough = "PIEDRA"
+      else
+        _dough = ""
+
+    "ID_BRAND|" + @id + "|ESPECIAL|" + _size + "|" + _dough
+
 
 #  TODO:  calculate total price
 #  TODO:  handle adding price

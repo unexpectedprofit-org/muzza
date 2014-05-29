@@ -14,7 +14,7 @@ describe 'Empanada', ->
       desc: "description"
       price:
         base: 1020
-      type: "Al Horno"
+      type: "horno"
 
   describe "init", ->
 
@@ -86,6 +86,17 @@ describe 'Empanada', ->
       newEmpanada = new Empanada fromObject
 
       expect(newEmpanada.getHash()).toBe 'ID_BRAND|505|HORNO||'
+
+    it "should create a hash - case 2", ->
+      newEmpanada = new Empanada {id:909,type:"frita"}
+
+      expect(newEmpanada.getHash()).toBe 'ID_BRAND|909|FRITA||'
+
+    it "should create a hash - case 3", ->
+      newEmpanada = new Empanada {id:777}
+
+      expect(newEmpanada.getHash()).toBe 'ID_BRAND|777|||'
+
 
   it 'should generate a description from default values', ->
     empanada = new Empanada fromObject

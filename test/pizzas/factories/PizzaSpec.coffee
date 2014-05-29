@@ -28,14 +28,14 @@ describe 'Pizza', ->
         desc: 'Muzza'
         qty: 2
         size: 'chica'
-        dough: 'al molde'
+        dough: 'molde'
         price:
           base: 50
       pizza = new Pizza(param)
       expect(pizza.totalPrice).toBe undefined
       expect(pizza.size).toBe 'chica'
       expect(pizza.price.base).toBe 50
-      expect(pizza.dough).toBe 'al molde'
+      expect(pizza.dough).toBe 'molde'
       expect(pizza.cat).toBe 'PIZZA'
       expect(pizza.qty).toBe 2
       expect(pizza.desc).toBe 'Muzza'
@@ -47,9 +47,9 @@ describe 'Pizza', ->
     expect(description).toBe ' de  '
 
   it 'should generate a description from changes values', ->
-    pizza = new Pizza({size:'grande', dough:'al molde', desc: 'Muzza'})
+    pizza = new Pizza({size:'grande', dough:'molde', desc: 'Muzza'})
     description = pizza.description()
-    expect(description).toBe 'grande de Muzza al molde'
+    expect(description).toBe 'grande de Muzza molde'
 
   it 'should reset the totalPrice to the base price', ->
     pizza = new Pizza({price:{base:50}})
@@ -57,21 +57,29 @@ describe 'Pizza', ->
     expect(pizza.totalPrice).toBe 50
 
   it 'should generate the identifier hash dynamically', ->
-    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde' } )
-    expect(pizza.getHash()).toBe '1-muzza-grande-almolde'
+    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde' } )
+    expect(pizza.getHash()).toBe 'ID_BRAND|1|ESPECIAL|GRANDE|MOLDE'
+
+  it 'should generate the identifier hash dynamically - case 2', ->
+    pizza = new Pizza( { id: 200, desc: 'Muzza', size: 'chica', dough: 'molde' } )
+    expect(pizza.getHash()).toBe 'ID_BRAND|200|ESPECIAL|CHICA|MOLDE'
+
+  it 'should generate the identifier hash dynamically - case 3', ->
+    pizza = new Pizza( { id: 100, desc: 'Muzza', size: 'individual', dough: 'piedra' } )
+    expect(pizza.getHash()).toBe 'ID_BRAND|100|ESPECIAL|INDIVIDUAL|PIEDRA'
 
   it 'should update qty if the user adds 1', ->
-    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde', qty: 1 } )
+    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
     pizza.updateQty(+1)
     expect(pizza.qty).toBe 2
 
   it 'should update qty if the user substracts 1', ->
-    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde', qty: 2 } )
+    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde', qty: 2 } )
     pizza.updateQty(-1)
     expect(pizza.qty).toBe 1
 
   it 'should update qty to 1 if the user substracts below 0', ->
-    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'al molde', qty: 1 } )
+    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
     pizza.updateQty(-1)
     expect(pizza.qty).toBe 1
 
