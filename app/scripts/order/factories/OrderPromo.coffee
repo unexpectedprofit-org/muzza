@@ -11,7 +11,7 @@ angular.module('Muzza.order').factory "OrderPromo", (PromoTypeQuantity)->
     @modal.hide()
 
   OrderPromo::applyPromos = (cart)->
-    promo = new PromoTypeQuantity [{cat:'EMPANADA',qty:6}]
+    promo = new PromoTypeQuantity [{cat:'EMPANADA',qty:6,subcat:'|||'}]
     result = promo.validate cart
 
     console.log "apply promo - cart: " + JSON.stringify cart
