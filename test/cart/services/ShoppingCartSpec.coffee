@@ -162,6 +162,8 @@ describe 'ShoppingCart Service', ->
       expect(ShoppingCartService.getPromotions().length).toBe 1
       expect(ShoppingCartService.getPromotions()[0].id).toBe 3
 
+    it "should remove specific promotion", ->
+      ShoppingCartService.addPromo {id:2}
+      ShoppingCartService.removePromotion 2
 
-
-
+      expect(ShoppingCartService.getPromotions().length).toBe 0

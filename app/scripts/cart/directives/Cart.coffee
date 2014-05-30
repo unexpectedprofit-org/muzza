@@ -14,6 +14,10 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, $io
     $scope.remove = (cartItemKey) ->
       ShoppingCartService.remove cartItemKey
 
+    $scope.removePromotion = (promoId) ->
+      ShoppingCartService.removePromotion promoId
+
+
     $scope.cart =
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice

@@ -35,8 +35,8 @@
       Promociones seleccionadas
 
       <ion-list>
-        <ion-item data-ng-repeat="promo in cart.promotions track by promo.id">
-          {{ promo.desc }}
+        <ion-item data-ng-repeat="promo in cart.promotions">
+          <button class="button icon ion-trash-b" data-ng-click="$parent.removePromotion(promo.id)"></button> {{ promo.desc }}
         </ion-item>
       </ion-list>
 
