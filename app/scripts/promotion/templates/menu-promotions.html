@@ -1,0 +1,11 @@
+<div class="item item-divider bar bar-positive " data-bo-if="menu">
+    Promos
+</div>
+
+
+<ion-list>
+    <ion-item bindonce data-ng-repeat="promo in menu" data-ng-click="choose(promo)">
+      <h3 data-bo-bind="promo.desc"></h3>
+      <span data-bo-bind="promo.price"></span>
+    </ion-item>
+</ion-list>

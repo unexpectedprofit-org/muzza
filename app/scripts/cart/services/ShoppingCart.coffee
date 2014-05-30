@@ -1,6 +1,7 @@
 angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
 
   products = []
+  promotions = []
 
 
   getItem = (id) ->
@@ -44,6 +45,16 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
     products = []
     notifyTotalPriceChange()
 
+
+  addPromotion = (promoItem) ->
+    promotions = []
+    promotions.push promoItem
+
+  retrievePromos = () ->
+    promotions
+
+
+
   notifyTotalPriceChange = () ->
     $rootScope.$broadcast 'CART:PRICE_UPDATED', calculateTotalPrice()
 
@@ -55,3 +66,6 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
   add: addItem
   remove: removeItem
   get: getItem
+
+  addPromo: addPromotion
+  getPromos: retrievePromos

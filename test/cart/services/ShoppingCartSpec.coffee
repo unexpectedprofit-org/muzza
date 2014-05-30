@@ -56,7 +56,6 @@ describe 'ShoppingCart Service', ->
           expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 20
 
 
-
   describe "retrieve functionality", ->
 
     it 'should return all items in the cart', ->
@@ -79,6 +78,7 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add item3
 
       expect(ShoppingCartService.get( item2.cartItemKey )).toEqual item2
+
 
   describe "remove functionality", ->
 
@@ -126,6 +126,7 @@ describe 'ShoppingCart Service', ->
         ShoppingCartService.emptyCart()
         expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 0
 
+
   describe "calculate price functionality", ->
 
     it "should calculate total price, only one product", ->
@@ -139,3 +140,27 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add new Empanada {id:22,desc:'Cebolla y Queso',type:'Frita',qty:2, price:{base:3000}}
 
       expect(ShoppingCartService.getTotalPrice()).toBe 14000
+
+
+  describe "Promotion module", ->
+
+    it "should init promotions with empty object", ->
+      expect(ShoppingCartService.getPromos()).toEqual []
+
+    it "should add promotion", ->
+      ShoppingCartService.addPromo {id:2}
+      expect(ShoppingCartService.getPromos().length).toBe 1
+      expect(ShoppingCartService.getPromos()[0].id).toBe 2
+
+    it "should contain only one promotion", ->
+      ShoppingCartService.addPromo {id:2}
+      expect(ShoppingCartService.getPromos().length).toBe 1
+      expect(ShoppingCartService.getPromos()[0].id).toBe 2
+
+      ShoppingCartService.addPromo {id:3}
+      expect(ShoppingCartService.getPromos().length).toBe 1
+      expect(ShoppingCartService.getPromos()[0].id).toBe 3
+
+
+
+

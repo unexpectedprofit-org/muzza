@@ -152,4 +152,36 @@ angular.module('Muzza.constants',[]).constant 'stores',
               "al molde": 0
         ]
       ]
-
+      "promotion": [
+        id: 1
+        desc: "1 docena de empanadas"
+        rules: [
+          cat: 'EMPANADA'
+          qty: 12
+          subcat: '|||'
+        ]
+      ,
+        id: 2
+        desc: "1 pizza grande + 6 empanadas al horno"
+        rules: [
+          cat: 'EMPANADA'
+          qty: 6
+          subcat: '|HORNO||'
+        ,
+          cat: 'PIZZA'
+          qty: 1
+          subcat: '||GRANDE|'
+        ]
+      ,
+        id: 3
+        desc: "6 empanadas fritas + 1 pizza al molde"
+        rules: [
+          cat: 'EMPANADA'
+          qty: 6
+          subcat: '|FRITA||'
+        ,
+          cat: 'PIZZA'
+          qty: 1
+          subcat: '|||MOLDE'
+        ]
+      ]
