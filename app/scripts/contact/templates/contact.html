@@ -1,91 +1,94 @@
 <div class="list">
 
-    <!--<div class="">-->
-
-        <!--<div data-ng-show="contactDetailsForm.name.$error.required">Tell us your name.</div>-->
-        <!--<div data-ng-show="contactDetailsForm.name.$error.maxlength">This is not a valid name.</div>-->
-<!---->
-        <!--<div data-ng-show="contactDetailsForm.tel.$error.required">Tell us your tel.</div>-->
-        <!--<div data-ng-show="contactDetailsForm.tel.$error.maxlength">This is not a valid tel.</div>-->
-<!---->
-        <!--<div data-ng-show="contactDetailsForm.email.$error.required">Tell us your email.</div>-->
-        <!--<div data-ng-show="contactDetailsForm.email.$error.maxlength">This is not a valid email.</div>-->
-<!---->
-        <!--<div data-ng-show="contactDetailsForm.street.$error.required">Tell us your street.</div>-->
-        <!--<div data-ng-show="contactDetailsForm.street.$error.maxlength">This is not a valid street.</div>-->
-<!---->
-        <!--<div data-ng-show="contactDetailsForm.door.$error.required">Tell us your door.</div>-->
-        <!--<div data-ng-show="contactDetailsForm.door.$error.maxlength">This is not a valid door.</div>-->
-<!---->
-        <!--<div data-ng-show="contactDetailsForm.area.$error.required">Tell us your area.</div>-->
-        <!--<div data-ng-show="contactDetailsForm.area.$error.maxlength">This is not a valid area.</div>-->
-<!---->
-        <!--<div data-ng-show="contactDetailsForm.comments.$error.maxlength">This is not a valid comments.</div>-->
-
-    <!--</div>-->
-
-
     <form name="contactDetailsForm" novalidate >
 
-        <label class="item item-input">
-            <input type="text" placeholder="Nombre"
-                   data-ng-required="true"
-                   data-ng-maxlength="15"
-                   data-ng-model="contact.name"
-                   name="name">
-        </label>
+        <div class="list list-inset">
+            <div class="item item-divider">Contacto</div>
 
-        <label class="item item-input">
-            <input type="tel" placeholder="Telefono"
-                   data-ng-required="true"
-                   data-ng-maxlength="15"
-                   data-ng-model="contact.phone"
-                   name="tel">
-        </label>
-
-        <label class="item item-input">
-            <input type="email" placeholder="Email"
-                   data-ng-required="true"
-                   data-ng-maxlength="30"
-                   data-ng-model="contact.email"
-                   name="email">
-        </label>
-
-        <!-- DELIVERY TO HOME REQUIRED DATA-->
-        <div data-ng-if="deliveryOption == 'delivery'">
-
-            <label class="item item-input">
-                <input type="text" placeholder="Calle"
-                       data-ng-required="deliveryOption == 'delivery'"
-                       data-ng-maxlength="20"
-                       data-ng-model="contact.address.street"
-                       name="street">
+            <label class="item item-input"
+                   data-ng-class="(contactDetailsForm.name.$error.required )? 'ng-invalid' : 'ng-valid'">
+                <input type="text" placeholder="Nombre"
+                       data-ng-required="true"
+                       data-ng-model="contact.name"
+                       name="name">
+                <i class="icon ion-alert-circled error"
+                   data-ng-if="contactDetailsForm.name.$error.required"></i>
+                <i class="icon ion-checkmark-circled success"
+                   data-ng-if="contactDetailsForm.name.$error.required == false"></i>
             </label>
 
-            <label class="item item-input">
-                <input type="number" placeholder="Numero"
-                       data-ng-required="deliveryOption == 'delivery'"
-                       data-ng-maxlength="5"
-                       data-ng-model="contact.address.door"
-                       name="door">
+            <label class="item item-input"
+                    data-ng-class="(contactDetailsForm.tel.$error.required)? 'ng-invalid' : 'ng-valid'">
+                <input type="tel" placeholder="Telefono"
+                       data-ng-required="true"
+                       data-ng-model="contact.phone"
+                       name="tel">
+                <i class="icon ion-alert-circled error"
+                   data-ng-if="contactDetailsForm.tel.$error.required"></i>
+                <i class="icon ion-checkmark-circled success"
+                   data-ng-if="contactDetailsForm.tel.$error.required == false"></i>
             </label>
 
-            <label class="item item-input">
-                <input type="text" placeholder="Localidad"
-                       data-ng-required="deliveryOption == 'delivery'"
-                       data-ng-maxlength="20"
-                       data-ng-model="contact.address.area"
-                       name="area">
-            </label>
-            <label class="item item-input">
-                <textarea placeholder="Comentarios"
-                          data-ng-model="contact.address.comments"
-                          data-ng-maxlength="200"
-                          name="comments"></textarea>
+            <label class="item item-input"
+                   data-ng-class="(contactDetailsForm.email.$error.required)? 'ng-invalid' : 'ng-valid'">
+                <input type="email" placeholder="Email"
+                       data-ng-required="true"
+                       data-ng-model="contact.email"
+                       name="email">
+                <i class="icon ion-alert-circled error"
+                   data-ng-if="contactDetailsForm.email.$error.required"></i>
+                <i class="icon ion-checkmark-circled success"
+                   data-ng-if="contactDetailsForm.email.$error.required == false"></i>
             </label>
 
+            <!-- DELIVERY TO HOME REQUIRED DATA-->
+            <div data-ng-if="deliveryOption == 'delivery'">
+
+                <label class="item item-input"
+                       data-ng-class="(contactDetailsForm.street.$error.required)? 'ng-invalid' : 'ng-valid'">
+                    <input type="text" placeholder="Calle"
+                           data-ng-required="deliveryOption == 'delivery'"
+                           data-ng-model="contact.address.street"
+                           name="street">
+                    <i class="icon ion-alert-circled error"
+                       data-ng-if="contactDetailsForm.street.$error.required"></i>
+                    <i class="icon ion-checkmark-circled success"
+                       data-ng-if="contactDetailsForm.street.$error.required == false"></i>
+                </label>
+
+                <label class="item item-input"
+                       data-ng-class="(contactDetailsForm.door.$error.required)? 'ng-invalid' : 'ng-valid'">
+                    <input type="number" placeholder="Numero"
+                           data-ng-required="deliveryOption == 'delivery'"
+                           data-ng-model="contact.address.door"
+                           name="door">
+                    <i class="icon ion-alert-circled error"
+                       data-ng-if="contactDetailsForm.door.$error.required"></i>
+                    <i class="icon ion-checkmark-circled success"
+                       data-ng-if="contactDetailsForm.door.$error.required == false"></i>
+                </label>
+
+                <label class="item item-input"
+                       data-ng-class="(contactDetailsForm.area.$error.required)? 'ng-invalid' : 'ng-valid'">
+                    <input type="text" placeholder="Localidad"
+                           data-ng-required="deliveryOption == 'delivery'"
+                           data-ng-model="contact.address.area"
+                           name="area">
+                    <i class="icon ion-alert-circled error"
+                       data-ng-if="contactDetailsForm.area.$error.required"></i>
+                    <i class="icon ion-checkmark-circled success"
+                       data-ng-if="contactDetailsForm.area.$error.required == false"></i>
+                </label>
+                <label class="item item-input">
+                    <textarea placeholder="Comentarios"
+                              data-ng-model="contact.address.comments"
+                              data-ng-maxlength="200"
+                              name="comments"></textarea>
+                </label>
+
+            </div>
+            <!-- DELIVERY TO HOME REQUIRED DATA-->
         </div>
-        <!-- DELIVERY TO HOME REQUIRED DATA-->
 
         <button class="button button-block button-positive"
                 data-ng-click="continue()"
