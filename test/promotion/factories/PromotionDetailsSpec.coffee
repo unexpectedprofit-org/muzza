@@ -9,18 +9,20 @@ describe 'PromotionDetails', ->
       null
 
 
-  PromotionDetails = Promotion = ShoppingCartService = promoDetails = modal = showSpy = hideSpy = undefined
+  PromotionDetails = Promotion = ShoppingCartService = promoDetails = promo1 = modal = showSpy = hideSpy = undefined
 
   beforeEach ->
     inject (_PromotionDetails_, _ShoppingCartService_, _Promotion_) ->
       PromotionDetails = _PromotionDetails_
       ShoppingCartService = _ShoppingCartService_
       Promotion = _Promotion_
+      promo1 = new Promotion {id:1}
+
       modal =
         show: -> null
         hide: -> null
         scope:
-          promotion: {}
+          promotion: promo1
 
       showSpy = spyOn(modal, 'show').and.callThrough()
       hideSpy = spyOn(modal, 'hide').and.callThrough()
@@ -57,8 +59,14 @@ describe 'PromotionDetails', ->
       internalHideSpy = spyOn(promoDetails, 'hide').and.callThrough()
       addPromoSpy = spyOn(ShoppingCartService, 'addPromo')
 
-      myPromo = new Promotion {id:2}
-      promoDetails.select myPromo
+      promoDetails.select()
 
       expect(internalHideSpy).toHaveBeenCalled()
-      expect(addPromoSpy).toHaveBeenCalledWith myPromo
+
+    it "should call service to add promo", ->
+
+      addPromoSpy = spyOn(ShoppingCartService, 'addPromo')
+
+      promoDetails.select()
+
+      expect(addPromoSpy).toHaveBeenCalledWith promo1

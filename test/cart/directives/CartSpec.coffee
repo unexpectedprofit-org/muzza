@@ -13,6 +13,7 @@ describe "Cart", ->
       $provide.value "ShoppingCartService",
         getCart: ()-> null
         getTotalPrice: () -> null
+        getPromotions: () -> null
 
       $provide.value "$state",
         go: () -> null

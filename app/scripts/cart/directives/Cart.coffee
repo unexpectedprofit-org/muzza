@@ -17,6 +17,7 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, $io
     $scope.cart =
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice
+      promotions: ShoppingCartService.getPromotions()
 
     $scope.checkout = () ->
       $ionicSideMenuDelegate.toggleRight()

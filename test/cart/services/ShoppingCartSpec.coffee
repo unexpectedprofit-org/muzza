@@ -14,6 +14,7 @@ describe 'ShoppingCart Service', ->
   it 'should get an initial empty cart', ->
     expect(ShoppingCartService.getCart().length).toBe 0
     expect(ShoppingCartService.getTotalPrice()).toBe 0
+    expect(ShoppingCartService.getPromotions().length).toBe 0
 
 
   describe "add functionality", ->
@@ -145,21 +146,21 @@ describe 'ShoppingCart Service', ->
   describe "Promotion module", ->
 
     it "should init promotions with empty object", ->
-      expect(ShoppingCartService.getPromos()).toEqual []
+      expect(ShoppingCartService.getPromotions()).toEqual []
 
     it "should add promotion", ->
       ShoppingCartService.addPromo {id:2}
-      expect(ShoppingCartService.getPromos().length).toBe 1
-      expect(ShoppingCartService.getPromos()[0].id).toBe 2
+      expect(ShoppingCartService.getPromotions().length).toBe 1
+      expect(ShoppingCartService.getPromotions()[0].id).toBe 2
 
     it "should contain only one promotion", ->
       ShoppingCartService.addPromo {id:2}
-      expect(ShoppingCartService.getPromos().length).toBe 1
-      expect(ShoppingCartService.getPromos()[0].id).toBe 2
+      expect(ShoppingCartService.getPromotions().length).toBe 1
+      expect(ShoppingCartService.getPromotions()[0].id).toBe 2
 
       ShoppingCartService.addPromo {id:3}
-      expect(ShoppingCartService.getPromos().length).toBe 1
-      expect(ShoppingCartService.getPromos()[0].id).toBe 3
+      expect(ShoppingCartService.getPromotions().length).toBe 1
+      expect(ShoppingCartService.getPromotions()[0].id).toBe 3
 
 
 

@@ -68,4 +68,4 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
   get: getItem
 
   addPromo: addPromotion
-  getPromos: retrievePromos
+  getPromotions: retrievePromos
