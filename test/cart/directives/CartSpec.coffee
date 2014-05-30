@@ -69,6 +69,12 @@ describe "Cart", ->
       expect(isolatedScope.remove).toBeDefined()
       expect(isolatedScope.checkout).toBeDefined()
 
+    it "should have a cart defined", ->
+      $scope.$digest()
+      isolatedScope = element.isolateScope()
+
+      expect(isolatedScope.cart).toBeDefined()
+
 
   describe 'when shopping cart has at least one item', ->
 
@@ -160,8 +166,8 @@ describe "Cart", ->
 
       it "should call the edit function with proper data", ->
 
-        pizza1 = new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10, cat: 'EMPANADA'}
-        pizza2 = new Pizza {id:2, desc:'Fugazzeta',qty:2, totalPrice:5, cat: 'EMPANADA'}
+        pizza1 = new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10}
+        pizza2 = new Pizza {id:2, desc:'Fugazzeta',qty:2, totalPrice:5}
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1, pizza2]
         $scope.$digest()
@@ -253,6 +259,3 @@ describe "Cart", ->
         isolatedScope = element.isolateScope()
         isolatedScope.checkout()
         expect($ionicSideMenuDelegate.toggleRight).toHaveBeenCalled()
-
-
-
