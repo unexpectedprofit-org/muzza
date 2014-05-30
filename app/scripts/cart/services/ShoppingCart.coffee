@@ -47,8 +47,7 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
 
 
   addPromotion = (promoItem) ->
-    promotions = []
-    promotions.push promoItem
+    promotions[0] = promoItem
 
   retrievePromos = () ->
     promotions

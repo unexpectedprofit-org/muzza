@@ -23,37 +23,47 @@
 </ion-header-bar>
 
 <ion-content>
-    <div class="card" data-ng-if="cart.products.length == 0">
-        <div class="item item-text-wrap">
-            El carrito esta vacio
-        </div>
+
+  <div class="card" data-ng-if="cart.products.length == 0">
+    <div class="item item-text-wrap">
+      El carrito esta vacio
     </div>
+  </div>
+
+  <div class="card" data-ng-if="cart.promotions.length > 0">
+    <div class="item item-text-wrap">
+      Promociones seleccionadas
+
+      <ion-list>
+        <ion-item data-ng-repeat="promo in cart.promotions track by promo.id">
+          {{ promo.desc }}
+        </ion-item>
+      </ion-list>
+
+    </div>
+  </div>
 
 
-    <ion-item data-ng-if="cart.promotions.length > 0" data-ng-repeat="promo in cart.promotions">
-      {{ promo.desc }
+  <ion-list show-delete="showDelete">
+    <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
+      <div style="white-space: normal">{{item.cat}} {{item.description()}} - Cant. {{item.qty}}</div>
+      {{item.totalPrice * item.qty | centsToMoney | currency}}
+
+      <button
+              class="button button-light"
+              data-ng-click="$parent.edit(item)"
+              data-ng-show="showEdit">
+        Editar
+      </button>
+
+      <ion-delete-button class="ion-minus-circled" data-ng-click="$parent.remove(item.cartItemKey)"> </ion-delete-button>
+
     </ion-item>
 
-    <ion-list show-delete="showDelete">
-        <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
-          <div style="white-space: normal">{{item.cat}} {{item.description()}} - Cant. {{item.qty}}</div>
-          {{item.totalPrice * item.qty | centsToMoney | currency}}
+  </ion-list>
 
-          <button
-                  class="button button-light"
-                  data-ng-click="$parent.edit(item)"
-                  data-ng-show="showEdit">
-            Editar
-          </button>
-
-          <ion-delete-button class="ion-minus-circled" data-ng-click="$parent.remove(item.cartItemKey)"> </ion-delete-button>
-
-        </ion-item>
-
-    </ion-list>
-
-    <button class="button button-block button-positive"
-            data-ng-if="cart.products.length > 0"
-            data-ng-click="checkout()">Realizar Pedido</button>
+  <button class="button button-block button-positive"
+          data-ng-if="cart.products.length > 0"
+          data-ng-click="checkout()">Realizar Pedido</button>
 
 </ion-content>
