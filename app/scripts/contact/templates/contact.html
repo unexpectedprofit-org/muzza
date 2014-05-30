@@ -22,6 +22,8 @@
                 <input type="tel" placeholder="Telefono"
                        data-ng-required="true"
                        data-ng-model="contact.phone"
+                       data-ng-minlength="8"
+                       data-ng-pattern="/^[0-9]+$/"
                        name="tel">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="contactDetailsForm.tel.$invalid"></i>
@@ -61,6 +63,7 @@
                     <input type="number" placeholder="Numero"
                            data-ng-required="deliveryOption == 'delivery'"
                            data-ng-model="contact.address.door"
+                           data-ng-pattern="/^[0-9]+$/"
                            name="door">
                     <i class="icon ion-alert-circled error"
                        data-ng-if="contactDetailsForm.door.$invalid"></i>
