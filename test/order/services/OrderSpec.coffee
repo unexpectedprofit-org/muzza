@@ -3,6 +3,8 @@ describe 'Order Service', ->
   beforeEach ->
     module 'Muzza.order'
     module 'Muzza.cart'
+    module 'Muzza.pizzas'
+
     module ($provide) ->
       $provide.value 'ShoppingCartService',
         getCart: () -> []
@@ -41,3 +43,14 @@ describe 'Order Service', ->
         email: 'test@test.com'
       OrderService.addContactInfo(contactInfo)
       expect(OrderService.retrieveOrder()).toEqual {contact: contactInfo}
+
+  describe 'createOrder', ->
+
+    it 'should create an order with a cart', ->
+      inject (Pizza)->
+        cart =
+          products: [new Pizza {id:1, desc:'Muzza', qty:1}]
+          promotions: null
+          totalPrice: ()-> null
+        OrderService.createOrder(cart)
+        expect(OrderService.retrieveOrder()).toEqual cart

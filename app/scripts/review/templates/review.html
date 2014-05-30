@@ -1,0 +1,7 @@
+{{ order | json }}
+
+<ion-list>
+    <ion-item bindonce data-ng-repeat="prod in order.products">
+        <h3 data-bo-bind="prod.desc"></h3>
+    </ion-item>
+</ion-list>

@@ -19,6 +19,9 @@ describe "Cart", ->
       $provide.value "$state",
         go: () -> null
 
+      $provide.value "OrderService",
+        createOrder: ()-> null
+
       return null
 
   $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = undefined
@@ -261,6 +264,19 @@ describe "Cart", ->
         isolatedScope = element.isolateScope()
         isolatedScope.checkout()
         expect($ionicSideMenuDelegate.toggleRight).toHaveBeenCalled()
+
+    it "should delegate to OrderService to create the order", ->
+      inject (OrderService)->
+        pizza = new Pizza {id:1, desc:'Muzza', qty:1}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza]
+        spyOn(OrderService, 'createOrder')
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+        isolatedScope.checkout()
+        expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
+          products: [pizza]
+          promotions: null
 
   describe "when dealing with promotions", ->
 

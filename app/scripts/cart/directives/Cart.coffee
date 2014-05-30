@@ -1,4 +1,4 @@
-angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, $ionicSideMenuDelegate) ->
+angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, $ionicSideMenuDelegate, OrderService) ->
   restrict: 'EA'
   scope: {}
   templateUrl: '../app/scripts/cart/templates/cart.html'
@@ -17,13 +17,13 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, $io
     $scope.removePromotion = (promoId) ->
       ShoppingCartService.removePromotion promoId
 
-
     $scope.cart =
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice
       promotions: ShoppingCartService.getPromotions()
 
     $scope.checkout = () ->
+      OrderService.createOrder $scope.cart
       $ionicSideMenuDelegate.toggleRight()
       $state.go 'app.order-delivery'
 

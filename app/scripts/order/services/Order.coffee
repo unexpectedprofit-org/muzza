@@ -24,7 +24,11 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,Place
   setContactInfo = (contact)->
     order.contact = contact
 
+  createOrder = (cart)->
+    angular.extend(order, cart)
+
   place: placeOrder
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
   addContactInfo: setContactInfo
+  createOrder: createOrder
