@@ -6,78 +6,78 @@
             <div class="item item-divider">Contacto</div>
 
             <label class="item item-input"
-                   data-ng-class="(contactDetailsForm.name.$error.required )? 'ng-invalid' : 'ng-valid'">
+                   data-ng-class="(contactDetailsForm.name.$invalid )? 'ng-invalid' : 'ng-valid'">
                 <input type="text" placeholder="Nombre"
                        data-ng-required="true"
                        data-ng-model="contact.name"
                        name="name">
                 <i class="icon ion-alert-circled error"
-                   data-ng-if="contactDetailsForm.name.$error.required"></i>
+                   data-ng-if="contactDetailsForm.name.$invalid"></i>
                 <i class="icon ion-checkmark-circled success"
-                   data-ng-if="contactDetailsForm.name.$error.required == false"></i>
+                   data-ng-if="contactDetailsForm.name.$valid"></i>
             </label>
 
             <label class="item item-input"
-                    data-ng-class="(contactDetailsForm.tel.$error.required)? 'ng-invalid' : 'ng-valid'">
+                    data-ng-class="(contactDetailsForm.tel.$invalid)? 'ng-invalid' : 'ng-valid'">
                 <input type="tel" placeholder="Telefono"
                        data-ng-required="true"
                        data-ng-model="contact.phone"
                        name="tel">
                 <i class="icon ion-alert-circled error"
-                   data-ng-if="contactDetailsForm.tel.$error.required"></i>
+                   data-ng-if="contactDetailsForm.tel.$invalid"></i>
                 <i class="icon ion-checkmark-circled success"
-                   data-ng-if="contactDetailsForm.tel.$error.required == false"></i>
+                   data-ng-if="contactDetailsForm.tel.$valid"></i>
             </label>
 
             <label class="item item-input"
-                   data-ng-class="(contactDetailsForm.email.$error.required)? 'ng-invalid' : 'ng-valid'">
+                   data-ng-class="(contactDetailsForm.email.$invalid)? 'ng-invalid' : 'ng-valid'">
                 <input type="email" placeholder="Email"
                        data-ng-required="true"
                        data-ng-model="contact.email"
                        name="email">
                 <i class="icon ion-alert-circled error"
-                   data-ng-if="contactDetailsForm.email.$error.required"></i>
+                   data-ng-if="contactDetailsForm.email.$invalid"></i>
                 <i class="icon ion-checkmark-circled success"
-                   data-ng-if="contactDetailsForm.email.$error.required == false"></i>
+                   data-ng-if="contactDetailsForm.email.$valid"></i>
             </label>
 
             <!-- DELIVERY TO HOME REQUIRED DATA-->
             <div data-ng-if="deliveryOption == 'delivery'">
 
                 <label class="item item-input"
-                       data-ng-class="(contactDetailsForm.street.$error.required)? 'ng-invalid' : 'ng-valid'">
+                       data-ng-class="(contactDetailsForm.street.$invalid)? 'ng-invalid' : 'ng-valid'">
                     <input type="text" placeholder="Calle"
                            data-ng-required="deliveryOption == 'delivery'"
                            data-ng-model="contact.address.street"
                            name="street">
                     <i class="icon ion-alert-circled error"
-                       data-ng-if="contactDetailsForm.street.$error.required"></i>
+                       data-ng-if="contactDetailsForm.street.$invalid"></i>
                     <i class="icon ion-checkmark-circled success"
-                       data-ng-if="contactDetailsForm.street.$error.required == false"></i>
+                       data-ng-if="contactDetailsForm.street.$valid"></i>
                 </label>
 
                 <label class="item item-input"
-                       data-ng-class="(contactDetailsForm.door.$error.required)? 'ng-invalid' : 'ng-valid'">
+                       data-ng-class="(contactDetailsForm.door.$invalid)? 'ng-invalid' : 'ng-valid'">
                     <input type="number" placeholder="Numero"
                            data-ng-required="deliveryOption == 'delivery'"
                            data-ng-model="contact.address.door"
                            name="door">
                     <i class="icon ion-alert-circled error"
-                       data-ng-if="contactDetailsForm.door.$error.required"></i>
+                       data-ng-if="contactDetailsForm.door.$invalid"></i>
                     <i class="icon ion-checkmark-circled success"
-                       data-ng-if="contactDetailsForm.door.$error.required == false"></i>
+                       data-ng-if="contactDetailsForm.door.$valid"></i>
                 </label>
 
                 <label class="item item-input"
-                       data-ng-class="(contactDetailsForm.area.$error.required)? 'ng-invalid' : 'ng-valid'">
+                       data-ng-class="(contactDetailsForm.area.$invalid)? 'ng-invalid' : 'ng-valid'">
                     <input type="text" placeholder="Localidad"
                            data-ng-required="deliveryOption == 'delivery'"
                            data-ng-model="contact.address.area"
                            name="area">
                     <i class="icon ion-alert-circled error"
-                       data-ng-if="contactDetailsForm.area.$error.required"></i>
+                       data-ng-if="contactDetailsForm.area.$invalid"></i>
                     <i class="icon ion-checkmark-circled success"
-                       data-ng-if="contactDetailsForm.area.$error.required == false"></i>
+                       data-ng-if="contactDetailsForm.area.$valid"></i>
                 </label>
                 <label class="item item-input">
                     <textarea placeholder="Comentarios"
