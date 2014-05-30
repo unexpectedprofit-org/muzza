@@ -4,6 +4,7 @@ describe "Promotions", ->
     module 'ionic'
     module 'Muzza.promo'
     module 'Muzza.templates'
+    module 'Muzza.directives'
 
     module ($provide) ->
       $provide.value 'ShoppingCartService',
