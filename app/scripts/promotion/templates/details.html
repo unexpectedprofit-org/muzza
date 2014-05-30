@@ -1,18 +1,17 @@
 <div class="modal">
 
   <ion-header-bar>
-    <h1 class="title" bindonce data-bo-bind="promotion.desc"></h1>
+    <h1 class="title">{{ promotion.desc }}</h1>
   </ion-header-bar>
 
   <ion-content>
 
 
+    <div class="item item-body">
 
-    <div class="item item-body" bindonce>
+      <div class="item item-text-wrap">{{ promotion.details }}</div>
 
-      <div class="item item-text-wrap" data-bo-bind="promotion.details"></div>
-
-      <div class="item item-text-wrap" data-bo-bind="promotion.price | centsToMoney | currency"></div>
+      <div class="item item-text-wrap">{{ promotion.price | centsToMoney | currency }}</div>
 
 
       <div class="button-bar">
