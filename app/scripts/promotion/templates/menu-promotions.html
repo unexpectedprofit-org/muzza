@@ -6,6 +6,6 @@
 <ion-list>
     <ion-item bindonce data-ng-repeat="promo in menu" data-ng-click="choose(promo)">
       <h3 data-bo-bind="promo.desc"></h3>
-      <span data-bo-bind="promo.price"></span>
+      <span data-bo-bind="promo.price | centsToMoney | currency"></span>
     </ion-item>
 </ion-list>
