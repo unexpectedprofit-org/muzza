@@ -1,4 +1,4 @@
-angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state) ->
+angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, $ionicSideMenuDelegate) ->
   restrict: 'EA'
   scope: {}
   templateUrl: '../app/scripts/cart/templates/cart.html'
@@ -17,3 +17,8 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state) ->
     $scope.cart =
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice
+
+    $scope.checkout = () ->
+      $ionicSideMenuDelegate.toggleRight()
+      $state.go 'app.order-delivery'
+

@@ -9,23 +9,21 @@ describe "Cart", ->
     module 'ionic'
 
     module ($provide) ->
+
       $provide.value "ShoppingCartService",
-        getCart: ()->
-          return null
-        getTotalPrice: () ->
-          return null
-      return null
-    module ($provide) ->
+        getCart: ()-> null
+        getTotalPrice: () -> null
+
       $provide.value "$state",
-        go: () ->
-         return null
+        go: () -> null
+
       return null
 
   $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = undefined
   pizza1 = pizza2 = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _ShoppingCartService_, _Pizza_, _Empanada_) ->
+    inject ($compile, $rootScope, _ShoppingCartService_, _Pizza_, _Empanada_)->
       ShoppingCartService = _ShoppingCartService_
       Pizza = _Pizza_
       Empanada = _Empanada_
@@ -68,6 +66,7 @@ describe "Cart", ->
 
       expect(isolatedScope.edit).toBeDefined()
       expect(isolatedScope.remove).toBeDefined()
+      expect(isolatedScope.checkout).toBeDefined()
 
 
   describe 'when shopping cart has at least one item', ->
@@ -232,3 +231,27 @@ describe "Cart", ->
 
       isolatedScope.remove pizza1.cartItemKey
       expect(removeItem).toHaveBeenCalledWith pizza1.cartItemKey
+
+  describe "when checkout", ->
+
+    it "should redirect to delivery option", ->
+      inject ($state)->
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1}]
+        spyOn($state, 'go').and.callThrough()
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+        isolatedScope.checkout()
+
+        expect($state.go).toHaveBeenCalledWith('app.order-delivery')
+
+    it "should toggle menu", ->
+      inject ($ionicSideMenuDelegate)->
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1}]
+        spyOn($ionicSideMenuDelegate, 'toggleRight').and.callThrough()
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+        isolatedScope.checkout()
+        expect($ionicSideMenuDelegate.toggleRight).toHaveBeenCalled()
+
+
+

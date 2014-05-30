@@ -25,3 +25,19 @@ describe 'Order Service', ->
       expect(getCartSpy).toHaveBeenCalled()
       expect(getCartSpy.calls.count()).toBe 1
 
+
+  describe 'chooseDeliveryOption', ->
+
+    it 'should save the option into the order', ->
+      OrderService.chooseDelivery('pickup')
+      expect(OrderService.retrieveOrder()).toEqual { delivery: 'pickup'}
+
+  describe 'addContactInfo', ->
+
+    it 'should sabe the contact information into the order', ->
+      contactInfo =
+        name: 'Santiago'
+        phone: '1234567890'
+        email: 'test@test.com'
+      OrderService.addContactInfo(contactInfo)
+      expect(OrderService.retrieveOrder()).toEqual {contact: contactInfo}

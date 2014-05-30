@@ -1,5 +1,7 @@
 angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,PlaceOrderResponse) ->
 
+  order = {}
+
   placeOrder = () ->
     products = ShoppingCartService.getCart()
     order = {}
@@ -13,5 +15,16 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,Place
 
     new PlaceOrderResponse response, products
 
+  setDelivery = (option)->
+    order.delivery = option
+
+  getOrder = ()->
+    order
+
+  setContactInfo = (contact)->
+    order.contact = contact
 
   place: placeOrder
+  chooseDelivery: setDelivery
+  retrieveOrder: getOrder
+  addContactInfo: setContactInfo
