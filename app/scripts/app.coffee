@@ -77,6 +77,12 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
       navContent:
         templateUrl: "../app/scripts/contact/templates/contact-info.html"
 
+  .state "app.order-review",
+    url: "/review"
+    views:
+      navContent:
+        templateUrl: "../app/scripts/review/templates/review-order.html"
+
 
 
   # if none of the above states are matched, use this as the fallback

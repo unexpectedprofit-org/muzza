@@ -44,10 +44,10 @@ describe 'Contact', ->
       isolatedScope.continue()
       expect(OrderService.addContactInfo).toHaveBeenCalledWith( { name : 'Santiago', phone : '123455889', email : 'test@test.com' }  )
 
-#    it 'should redirect to the contact route', ->
-#      spyOn($state, 'go')
-#      isolatedScope.continue()
-#      expect($state.go).toHaveBeenCalledWith('')
+    it 'should redirect to the contact route', ->
+      spyOn($state, 'go')
+      isolatedScope.continue()
+      expect($state.go).toHaveBeenCalledWith('app.order-review')
 
 
 
