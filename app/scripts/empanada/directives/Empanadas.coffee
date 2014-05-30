@@ -4,7 +4,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
     menu: '=ngModel'
   }
   require: 'ngModel'
-  templateUrl: '../app/scripts/empanadas/templates/menu-empanadas.html'
+  templateUrl: '../app/scripts/empanada/templates/menu-empanadas.html'
   link: ($scope, ele, attrs, ctrl)->
 
 #   holds temp selection
@@ -14,7 +14,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
     $scope.steps = ['order']
 
 
-    order = $ionicModal.fromTemplateUrl '../app/scripts/empanadas/templates/empanada-order.html',
+    order = $ionicModal.fromTemplateUrl '../app/scripts/empanada/templates/empanada-order.html',
       scope: $scope,
       animation: 'slide-in-up'
 

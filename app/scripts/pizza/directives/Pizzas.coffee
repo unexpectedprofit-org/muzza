@@ -4,7 +4,7 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
     menu: '=ngModel'
   }
   require: 'ngModel'
-  templateUrl: '../app/scripts/pizzas/templates/menu-pizzas.html'
+  templateUrl: '../app/scripts/pizza/templates/menu-pizzas.html'
   link: ($scope, ele, attrs, ctrl)->
 
 #   holds temp selection
@@ -13,15 +13,15 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'dough', 'size']
 
-    size = $ionicModal.fromTemplateUrl '../app/scripts/pizzas/templates/pizza-size.html',
+    size = $ionicModal.fromTemplateUrl '../app/scripts/pizza/templates/pizza-size.html',
       scope: $scope,
       animation: 'slide-in-up'
 
-    dough = $ionicModal.fromTemplateUrl '../app/scripts/pizzas/templates/pizza-dough.html',
+    dough = $ionicModal.fromTemplateUrl '../app/scripts/pizza/templates/pizza-dough.html',
       scope: $scope,
       animation: 'slide-in-up'
 
-    order = $ionicModal.fromTemplateUrl '../app/scripts/pizzas/templates/pizza-order.html',
+    order = $ionicModal.fromTemplateUrl '../app/scripts/pizza/templates/pizza-order.html',
       scope: $scope,
       animation: 'slide-in-up'
 

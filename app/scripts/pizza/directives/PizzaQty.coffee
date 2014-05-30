@@ -4,5 +4,5 @@ angular.module('Muzza.pizzas').directive 'qty', ()->
     item: '=ngModel'
   }
   require: 'ngModel'
-  templateUrl: '../app/scripts/pizzas/templates/pizza-qty.html'
+  templateUrl: '../app/scripts/pizza/templates/pizza-qty.html'
 #  link: ($scope, ele, attrs, ctrl)->
