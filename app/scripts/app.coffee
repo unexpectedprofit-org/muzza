@@ -3,8 +3,12 @@ angular.module("Muzza.empanadas", [])
 angular.module("Muzza.cart", [])
 angular.module("Muzza.order", [])
 angular.module("Muzza.promo", [])
+angular.module("Muzza.delivery", [])
+angular.module("Muzza.contact", [])
 
-angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empanadas", "Muzza.cart", "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants", "Muzza.order", "Muzza.promo"])
+angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empanadas", "Muzza.cart",
+    "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants",
+    "Muzza.order", "Muzza.promo", "Muzza.delivery", "Muzza.contact"])
 
 angular.module("Muzza").run ($ionicPlatform) ->
   $ionicPlatform.ready ->
@@ -60,6 +64,19 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
       navContent:
         templateUrl: "templates/confo.html"
         controller: "PlaceOrderCtrl"
+
+  .state "app.order-delivery",
+    url: "/delivery"
+    views:
+      navContent:
+        templateUrl: "../app/scripts/delivery/templates/delivery-option.html"
+
+  .state "app.order-contact",
+    url: "/contact/:method"
+    views:
+      navContent:
+        templateUrl: "../app/scripts/contact/templates/contact-info.html"
+
 
 
   # if none of the above states are matched, use this as the fallback

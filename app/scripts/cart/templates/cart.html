@@ -47,5 +47,8 @@
 
     </ion-list>
 
-    <checkout-button></checkout-button>
+    <button class="button button-block button-positive"
+            data-ng-if="cart.products.length > 0"
+            data-ng-click="checkout()">Realizar Pedido</button>
+
 </ion-content>
