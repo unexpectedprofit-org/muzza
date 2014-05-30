@@ -160,6 +160,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           qty: 12
           subcat: '|||'
         ]
+        price: 5000
+        details: "Llevando una docena de empanadas de cualquier gusto te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 2
         desc: "1 pizza grande + 6 empanadas al horno"
@@ -172,6 +174,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           qty: 1
           subcat: '||GRANDE|'
         ]
+        price: 10000
+        details: "Llevando media docena de empanadas al horno de cualquier gusto y 1 pizza grande te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 3
         desc: "6 empanadas fritas + 1 pizza al molde"
@@ -184,4 +188,6 @@ angular.module('Muzza.constants',[]).constant 'stores',
           qty: 1
           subcat: '|||MOLDE'
         ]
+        price:8000
+        details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
       ]
