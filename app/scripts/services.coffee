@@ -73,7 +73,7 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
     results =
       pizza: _.map stores.store1.products['pizza'], constructPizzas
       empanada: _.map stores.store1.products['empanada'], constructEmpanadas
-      promotion: stores.store1.products.promotion
+      promo: stores.store1.products.promotion
 
     # This should become two different methods executing either diff queries,
     # or fetching form cache...who knows?
