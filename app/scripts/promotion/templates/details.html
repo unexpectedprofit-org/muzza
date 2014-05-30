@@ -6,19 +6,20 @@
 
   <ion-content>
 
+    <div class="list card">
 
-    <div class="item item-body">
+      <div class="item item-avatar">{{ promotion.details }}</div>
 
-      <div class="item item-text-wrap">{{ promotion.details }}</div>
+      <div class="item item-avatar">{{ promotion.price | centsToMoney | currency }}</div>
 
-      <div class="item item-text-wrap">{{ promotion.price | centsToMoney | currency }}</div>
+      <div class="item item-body">
+        <div class="button-bar">
+          <a class="button" data-ng-click="details.select()">Seleccionar</a>
+        </div>
 
-
-      <div class="button-bar">
-        <a class="button" data-ng-click="details.select()">Seleccionar</a>
+        <cancel-selection></cancel-selection>
       </div>
 
-      <cancel-selection></cancel-selection>
     </div>
 
   </ion-content>
