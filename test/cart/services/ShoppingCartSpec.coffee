@@ -149,21 +149,21 @@ describe 'ShoppingCart Service', ->
       expect(ShoppingCartService.getPromotions()).toEqual []
 
     it "should add promotion", ->
-      ShoppingCartService.addPromo {id:2}
+      ShoppingCartService.addPromotion {id:2}
       expect(ShoppingCartService.getPromotions().length).toBe 1
       expect(ShoppingCartService.getPromotions()[0].id).toBe 2
 
     it "should contain only one promotion", ->
-      ShoppingCartService.addPromo {id:2}
+      ShoppingCartService.addPromotion {id:2}
       expect(ShoppingCartService.getPromotions().length).toBe 1
       expect(ShoppingCartService.getPromotions()[0].id).toBe 2
 
-      ShoppingCartService.addPromo {id:3}
+      ShoppingCartService.addPromotion {id:3}
       expect(ShoppingCartService.getPromotions().length).toBe 1
       expect(ShoppingCartService.getPromotions()[0].id).toBe 3
 
     it "should remove specific promotion", ->
-      ShoppingCartService.addPromo {id:2}
+      ShoppingCartService.addPromotion {id:2}
       ShoppingCartService.removePromotion 2
 
       expect(ShoppingCartService.getPromotions().length).toBe 0

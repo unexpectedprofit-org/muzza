@@ -5,7 +5,7 @@ describe 'PromotionDetails', ->
 
     module ($provide) ->
       $provide.value 'ShoppingCartService',
-        addPromo: (promo) -> null
+        addPromotion: (promo) -> null
       null
 
 
@@ -57,7 +57,7 @@ describe 'PromotionDetails', ->
 
     it 'should call hide', ->
       internalHideSpy = spyOn(promoDetails, 'hide').and.callThrough()
-      addPromoSpy = spyOn(ShoppingCartService, 'addPromo')
+      addPromoSpy = spyOn(ShoppingCartService, 'addPromotion')
 
       promoDetails.select()
 
@@ -65,7 +65,7 @@ describe 'PromotionDetails', ->
 
     it "should call service to add promo", ->
 
-      addPromoSpy = spyOn(ShoppingCartService, 'addPromo')
+      addPromoSpy = spyOn(ShoppingCartService, 'addPromotion')
 
       promoDetails.select()
 

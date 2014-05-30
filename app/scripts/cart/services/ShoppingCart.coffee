@@ -46,7 +46,7 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
     notifyTotalPriceChange()
 
 
-  addPromotion = (promoItem) ->
+  addPromo = (promoItem) ->
     promotions[0] = promoItem
 
   retrievePromos = () ->
@@ -70,6 +70,6 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
   remove: removeItem
   get: getItem
 
-  addPromo: addPromotion
+  addPromotion: addPromo
   getPromotions: retrievePromos
   removePromotion: removePromo

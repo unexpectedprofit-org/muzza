@@ -11,7 +11,7 @@ angular.module('Muzza.promo').factory "PromotionDetails", (ShoppingCartService)-
     @modal.hide()
 
   PromotionDetails::select = ()->
-    ShoppingCartService.addPromo @modal.scope.promotion
+    ShoppingCartService.addPromotion @modal.scope.promotion
     @hide()
 
   return PromotionDetails
