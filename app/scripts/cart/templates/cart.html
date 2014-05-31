@@ -36,15 +36,15 @@
   <ion-list show-delete="showDelete">
     <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
       <div style="white-space: normal">{{item.cat}} {{item.description()}}</div>
-      <div>Cantidad: {{item.qty}}</div>
+      <div>Cantidad: {{item.qty}}
+          <qty ng-model="item" data-ng-show="showEdit" style="font: 0.5em;"></qty>
+      </div>
       <div>Precio: {{item.totalPrice * item.qty | centsToMoney | currency}}</div>
-
-
       <button
               class="button button-light"
               data-ng-click="$parent.edit(item)"
               data-ng-show="showEdit">
-        Editar
+        Editar Opciones
       </button>
 
       <ion-delete-button class="ion-minus-circled" data-ng-click="$parent.remove(item.cartItemKey)"> </ion-delete-button>
