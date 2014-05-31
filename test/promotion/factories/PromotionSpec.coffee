@@ -14,16 +14,9 @@ describe 'Promo', ->
   describe "Init", ->
 
     it 'should construct a Promo object', ->
-      expect(promo.id).toBe 2
-      expect(promo.desc).toBe "Promo 1: 6 empanadas..."
+      expect(promo instanceof Promotion).toBeTruthy()
+      expect(promo.details.id).toBe 2
+      expect(promo.details.description.short).toBe "Promo 1: 6 empanadas..."
+      expect(promo.details.description.long).toBe "alala"
       expect(promo.rules).toEqual []
-      expect(promo.price).toBe 54
-      expect(promo.details).toBe "alala"
-
-    it 'should construct a Promo object - case 2', ->
-      promo = new Promotion {id:5,desc:"Promo 2: aaa"}
-      expect(promo.id).toBe 5
-      expect(promo.desc).toBe "Promo 2: aaa"
-      expect(promo.rules).toEqual []
-      expect(promo.price).toBe 0
-      expect(promo.details).toBeUndefined()
+      expect(promo.details.price).toBe 54

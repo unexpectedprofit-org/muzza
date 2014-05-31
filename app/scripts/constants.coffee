@@ -155,6 +155,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
       "promotion": [
         id: 1
         desc: "1 docena de empanadas"
+        cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
           qty: 12
@@ -165,6 +166,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
       ,
         id: 2
         desc: "1 pizza grande + 6 empanadas al horno"
+        cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
           qty: 6
@@ -179,6 +181,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
       ,
         id: 3
         desc: "6 empanadas fritas + 1 pizza al molde"
+        cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
           qty: 6

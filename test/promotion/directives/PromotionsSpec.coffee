@@ -11,17 +11,17 @@ describe "Promotions", ->
         null
       null
 
-  Promotion = isolatedScope = $scope = element = undefined
+  PromotionTypeFactory = isolatedScope = $scope = element = undefined
   promo1 = promo2 = promo3 = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _Promotion_) ->
-      Promotion = _Promotion_
+    inject ($compile, $rootScope, _PromotionTypeFactory_) ->
+      PromotionTypeFactory = _PromotionTypeFactory_
       $scope = $rootScope
 
-      promo1 = new Promotion {id:3434,desc:'1 docena de empanadas',rules:[{cat:'EMPANADA',qty:12,subcat:'|||'}]}
-      promo2 = new Promotion {id:1100,desc:'1 pizza grande + 6 empanadas al horno',rules:[{cat:'EMPANADA',qty:6,subcat:'|HORNO||'},{cat:'PIZZA',qty:1,subcat:'||GRANDE|'}]}
-      promo3 = new Promotion {id:2222,desc:'6 empanadas fritas + 1 pizza al molde',rules:[{cat:'EMPANADA',qty:6,subcat:'|||MOLDE'}]}
+      promo1 = PromotionTypeFactory.createPromotion {id:3434,cat:1,desc:'1 docena de empanadas',rules:[{cat:'EMPANADA',qty:12,subcat:'|||'}]}
+      promo2 = PromotionTypeFactory.createPromotion {id:1100,cat:1,desc:'1 pizza grande + 6 empanadas al horno',rules:[{cat:'EMPANADA',qty:6,subcat:'|HORNO||'},{cat:'PIZZA',qty:1,subcat:'||GRANDE|'}]}
+      promo3 = PromotionTypeFactory.createPromotion {id:2222,cat:1,desc:'6 empanadas fritas + 1 pizza al molde',rules:[{cat:'EMPANADA',qty:6,subcat:'|||MOLDE'}]}
 
       $scope.menu = [
         promo1
@@ -40,9 +40,7 @@ describe "Promotions", ->
     it "should display the 3 promos listed on the menu", ->
 
       expect(element.find('ion-item').length).toBe 3
-
-      expect(isolatedScope.menu[0] instanceof Promotion).toBeTruthy()
-      expect(isolatedScope.menu[0].id).toBe 3434
+      expect(isolatedScope.menu[0].details.id).toBe 3434
 
     it "should have a click function bind", ->
       onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
@@ -72,9 +70,9 @@ describe "Promotions", ->
 
       expect(showDetails).toHaveBeenCalled()
 
-    it 'should create a Promotion model from the item picked from the menu', ->
+    it 'should set to the scope the Promotion model picked from the menu', ->
       element.find('ion-item')[0].click()
-      expect(isolatedScope.promotion instanceof Promotion).toBeTruthy()
+      expect(isolatedScope.promotion).toBe promo1
 
     it "should replace the previous selection", ->
       isolatedScope.steps = ['details']

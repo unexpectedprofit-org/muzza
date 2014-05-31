@@ -67,7 +67,7 @@ angular.module("Muzza.services").factory "StoreService", () ->
   listStores: getStores
 
 
-angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, PromoTypeQuantity) ->
+angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, PromotionTypeFactory) ->
 
   getProductsByCompanyId = (id, category)->
     results =
@@ -98,7 +98,7 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
 
   constructPromotions = (promotions) ->
     allPromos = _.map promotions, (promotion)->
-      new PromoTypeQuantity promotion
+      PromotionTypeFactory.createPromotion promotion
     allPromos
 
 

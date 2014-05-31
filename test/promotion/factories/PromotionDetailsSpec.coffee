@@ -9,14 +9,14 @@ describe 'PromotionDetails', ->
       null
 
 
-  PromotionDetails = Promotion = ShoppingCartService = promoDetails = promo1 = modal = showSpy = hideSpy = undefined
+  PromotionDetails = PromotionTypeFactory = ShoppingCartService = promoDetails = promo1 = modal = showSpy = hideSpy = undefined
 
   beforeEach ->
-    inject (_PromotionDetails_, _ShoppingCartService_, _Promotion_) ->
-      PromotionDetails = _PromotionDetails_
-      ShoppingCartService = _ShoppingCartService_
-      Promotion = _Promotion_
-      promo1 = new Promotion {id:1}
+    inject ($injector) ->
+      PromotionDetails = $injector.get 'PromotionDetails'
+      ShoppingCartService = $injector.get 'ShoppingCartService'
+      PromotionTypeFactory = $injector.get 'PromotionTypeFactory'
+      promo1 = PromotionTypeFactory.createPromotion {id:1,cat:1}
 
       modal =
         show: -> null
