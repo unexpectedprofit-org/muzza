@@ -14,7 +14,8 @@ describe 'Empanada', ->
       desc: "description"
       price:
         base: 1020
-      type: "horno"
+      subcat: 1
+      type: "Al Horno"
 
   describe "init", ->
 
@@ -36,11 +37,10 @@ describe 'Empanada', ->
       newEmpanada = new Empanada fromObject
       expect(newEmpanada.qty).toBe 1
       expect(newEmpanada.cat).toBe "EMPANADA"
-      expect(newEmpanada.subcat).toBe "H"
+      expect(newEmpanada.subcat).toBe 1
       expect(newEmpanada.id).toBe 505
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.totalPrice).toBe fromObject.price.base
-      expect(newEmpanada.type).toBe fromObject.type
 
   #to EmpanadaOrder
   describe "max/min allowed", ->
@@ -88,7 +88,7 @@ describe 'Empanada', ->
       expect(newEmpanada.getHash()).toBe 'ID_BRAND|505|HORNO||'
 
     it "should create a hash - case 2", ->
-      newEmpanada = new Empanada {id:909,type:"frita"}
+      newEmpanada = new Empanada {id:909,subcat:2}
 
       expect(newEmpanada.getHash()).toBe 'ID_BRAND|909|FRITA||'
 

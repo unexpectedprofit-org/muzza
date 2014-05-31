@@ -185,14 +185,14 @@ describe 'ShoppingCart Service', ->
 
       it "should retrieve no applicable promos", ->
 
-        ShoppingCartService.add new Empanada {id:505,qty:1,desc: "description",price:{base: 1020},type: "horno"}
+        ShoppingCartService.add new Empanada {id:505,qty:1,desc:"description",price:{base: 1020},subcat:1}
         ShoppingCartService.addPromotion PromotionTypeFactory.createPromotion {id:2,cat:1,price:50,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
         expect(ShoppingCartService.getApplicablePromotions().length).toBe 0
 
       it "should retrieve 1 applicable promo", ->
 
-        ShoppingCartService.add new Empanada {id:505,qty:6,desc: "description",price:{base: 1020},type: "horno"}
+        ShoppingCartService.add new Empanada {id:505,qty:6,desc:"description",price:{base: 1020},subcat:1}
         ShoppingCartService.addPromotion PromotionTypeFactory.createPromotion {id:3,cat:1,price:100,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
         expect(ShoppingCartService.getApplicablePromotions().length).toBe 1

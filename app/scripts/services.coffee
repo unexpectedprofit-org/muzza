@@ -92,7 +92,8 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
 
   constructEmpanadas = (empanadaCategory)->
     empanadaCategory.products = _.map empanadaCategory.products, (empanada)->
-      empanada.type = empanadaCategory.desc
+      empanada.subcat = empanadaCategory.id
+      empanada.type = empanadaCategory.description
       new Empanada empanada
     empanadaCategory
 

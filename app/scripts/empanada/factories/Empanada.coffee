@@ -3,7 +3,7 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
   class Empanada
     constructor: (param) ->
       @cat = 'EMPANADA'
-      @subcat = if param.type is 'horno' then 'H' else 'F'
+      @subcat = param.subcat
       @qty = param.qty or 1
       @desc = param.desc or ''
       @type = param.type or ''
@@ -28,11 +28,11 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
 
   Empanada::getHash = () ->
 
-    switch @type
-      when "frita"
-        _type = "FRITA"
-      when "horno"
+    switch @subcat
+      when 1
         _type = "HORNO"
+      when 2
+        _type = "FRITA"
       else
         _type = ""
 

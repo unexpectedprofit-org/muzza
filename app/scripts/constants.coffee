@@ -4,7 +4,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
     products:
       "empanada": [
         "id": 1,
-        "desc": "Al Horno",
+        description: "Al Horno"
         "products": [
           "id": 1
           "desc": "Carne cortada a cuchillo"
@@ -44,7 +44,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ]
       ,
         "id": 2,
-        "desc": "Fritas",
+        description: "Fritas",
         "products": [
           "id": 7
           "desc": "Cebolla y queso"
