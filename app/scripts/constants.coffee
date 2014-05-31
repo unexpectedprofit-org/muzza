@@ -67,7 +67,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
       ],
       "pizza": [
         "id": 1
-        "desc": "Pizzas Especiales"
+        "description": "Pizzas Especiales"
         "products": [
           "id": 90
           "desc": "Muzzarella"
@@ -123,7 +123,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ]
       ,
         "id": 2
-        "desc": "Pizzas de la Casa"
+        "description": "Pizzas de la Casa"
         "products": [
           "id": 94
           "desc": "Muzzarella con tomate al natural y aceitunas"

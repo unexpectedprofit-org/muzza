@@ -4,6 +4,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     constructor: (param)->
       @desc = param?.desc or ''
       @cat = 'PIZZA'
+      @subcat = param?.subcat or 0
       @qty = param?.qty or 1
       @totalPrice = param?.totalPrice or undefined
       @size = param?.size or ''
@@ -53,7 +54,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
       else
         _dough = ""
 
-    "ID_BRAND|" + @id + "|ESPECIAL|" + _size + "|" + _dough
+    "ID_BRAND|" + @id + "|" + @subcat + "|" + _size + "|" + _dough
 
 
 #  TODO:  calculate total price

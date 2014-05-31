@@ -20,23 +20,26 @@ describe 'Pizza', ->
       expect(pizza.size).toBe ''
       expect(pizza.dough).toBe ''
       expect(pizza.cat).toBe 'PIZZA'
+      expect(pizza.subcat).toBe 0
       expect(pizza.qty).toBe 1
       expect(pizza.price.base).toBe 0
 
     it 'should construct a Pizza model from param', ->
       param =
         desc: 'Muzza'
+        subcat: 333
         qty: 2
         size: 'chica'
         dough: 'molde'
         price:
           base: 50
-      pizza = new Pizza(param)
+      pizza = new Pizza param
       expect(pizza.totalPrice).toBe undefined
       expect(pizza.size).toBe 'chica'
       expect(pizza.price.base).toBe 50
       expect(pizza.dough).toBe 'molde'
       expect(pizza.cat).toBe 'PIZZA'
+      expect(pizza.subcat).toBe 333
       expect(pizza.qty).toBe 2
       expect(pizza.desc).toBe 'Muzza'
       expect(pizza.price.base).toBe 50
@@ -57,16 +60,16 @@ describe 'Pizza', ->
     expect(pizza.totalPrice).toBe 50
 
   it 'should generate the identifier hash dynamically', ->
-    pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde' } )
-    expect(pizza.getHash()).toBe 'ID_BRAND|1|ESPECIAL|GRANDE|MOLDE'
+    pizza = new Pizza {id:1,desc:'Muzza',size:'grande',dough: 'molde',subcat:777}
+    expect(pizza.getHash()).toBe 'ID_BRAND|1|777|GRANDE|MOLDE'
 
   it 'should generate the identifier hash dynamically - case 2', ->
-    pizza = new Pizza( { id: 200, desc: 'Muzza', size: 'chica', dough: 'molde' } )
-    expect(pizza.getHash()).toBe 'ID_BRAND|200|ESPECIAL|CHICA|MOLDE'
+    pizza = new Pizza {id:200,desc:'Muzza',size:'chica',dough:'molde',subcat:888}
+    expect(pizza.getHash()).toBe 'ID_BRAND|200|888|CHICA|MOLDE'
 
   it 'should generate the identifier hash dynamically - case 3', ->
-    pizza = new Pizza( { id: 100, desc: 'Muzza', size: 'individual', dough: 'piedra' } )
-    expect(pizza.getHash()).toBe 'ID_BRAND|100|ESPECIAL|INDIVIDUAL|PIEDRA'
+    pizza = new Pizza {id:100,desc:'Muzza',size:'individual',dough:'piedra',subcat:999}
+    expect(pizza.getHash()).toBe 'ID_BRAND|100|999|INDIVIDUAL|PIEDRA'
 
   it 'should update qty if the user adds 1', ->
     pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
