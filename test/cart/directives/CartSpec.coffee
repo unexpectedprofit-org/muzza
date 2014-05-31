@@ -83,19 +83,11 @@ describe "Cart", ->
 
   describe 'when shopping cart has at least one item', ->
 
-    it "should display buttons on header", ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
-      $scope.$digest()
-      header = element.find('ion-header-bar')
-
-      #medio mentiroso
-      expect(header.html()).toContain 'data-ng-show="cart.products.length > 0"'
-
     it 'should list all items in the shopping cart', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]
       $scope.$digest()
       items = element.find('ion-item')
-      expect(items.length).toBe 2
+      expect(items.length).toBe 3
 
     it "should display items sorted by category - 1", ->
       empanada = new Empanada {desc:'Humita',qty:1,cat:'EMPANADA', price: {base: 2000}}
@@ -109,11 +101,11 @@ describe "Cart", ->
 
     it "should show total price", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]
-      spyOn(ShoppingCartService, 'getTotalPrice').and.returnValue 1211
+      spyOn(ShoppingCartService, 'getTotalPrice').and.returnValue 1661
 
       $scope.$digest()
-      msg = element.find('ion-header-bar').html()
-      expect(msg).toMatch(/12.11/)
+      expect(element.html()).toMatch(/Total \$16.61/)
+
 
     it 'should not display the empty msg', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
@@ -161,8 +153,7 @@ describe "Cart", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue []
       $scope.$digest()
       items = element.find('ion-item')
-      msg = element.find('ion-content').html()
-      expect(msg).toMatch(/vacio/)
+      expect(element.html()).toMatch(/vacio/)
       expect(items.length).toBe 0
 
   describe 'when editting', ->
@@ -255,15 +246,6 @@ describe "Cart", ->
         isolatedScope.checkout()
 
         expect($state.go).toHaveBeenCalledWith('app.order-delivery')
-
-    it "should toggle menu", ->
-      inject ($ionicSideMenuDelegate)->
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1}]
-        spyOn($ionicSideMenuDelegate, 'toggleRight').and.callThrough()
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-        isolatedScope.checkout()
-        expect($ionicSideMenuDelegate.toggleRight).toHaveBeenCalled()
 
     it "should delegate to OrderService to create the order", ->
       inject (OrderService)->

@@ -1,28 +1,17 @@
-<ion-header-bar align-title="left" class="bar-positive">
-    <div class="buttons">
-        <button
-                class="button button-icon icon ion-minus-circled"
-                data-ng-show="cart.products.length > 0"
-                data-ng-click="showDelete = !showDelete; showEdit = false">
-        </button>
-    </div>
-
-    <h1 class="title">
-      Mi Pedido
-      <span data-ng-if="cart.products.length > 0">({{ cart.totalPrice()  | centsToMoney | currency }})</span>
-    </h1>
-
-    <div class="buttons">
-        <button
-                class="button"
-                data-ng-show="cart.products.length > 0"
-                data-ng-click="showEdit = !showEdit; showDelete = false">
-          Editar
-        </button>
-    </div>
-</ion-header-bar>
-
-<ion-content>
+<div class="item item-divider">
+    <button
+            class="button button-icon icon ion-minus-circled"
+            data-ng-show="cart.products.length > 0"
+            data-ng-click="showDelete = !showDelete; showEdit = false">
+    </button>
+    <button
+            class="button"
+            style="float: right"
+            data-ng-show="cart.products.length > 0"
+            data-ng-click="showEdit = !showEdit; showDelete = false">
+        Editar
+    </button>
+</div>
 
   <div class="card" data-ng-if="cart.products.length == 0">
     <div class="item item-text-wrap">
@@ -46,8 +35,10 @@
 
   <ion-list show-delete="showDelete">
     <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
-      <div style="white-space: normal">{{item.cat}} {{item.description()}} - Cant. {{item.qty}}</div>
-      {{item.totalPrice * item.qty | centsToMoney | currency}}
+      <div style="white-space: normal">{{item.cat}} {{item.description()}}</div>
+      <div>Cantidad: {{item.qty}}</div>
+      <div>Precio: {{item.totalPrice * item.qty | centsToMoney | currency}}</div>
+
 
       <button
               class="button button-light"
@@ -60,10 +51,13 @@
 
     </ion-item>
 
-  </ion-list>
+    <div data-ng-if="cart.products.length > 0" class="item item-divider" style="text-align: right">
+        Total {{ cart.totalPrice()  | centsToMoney | currency }}
+    </div>
 
+   <ion-item data-ng-if="cart.products.length > 0"></ion-item>
+
+  </ion-list>
   <button class="button button-block button-positive"
           data-ng-if="cart.products.length > 0"
           data-ng-click="checkout()">Realizar Pedido</button>
-
-</ion-content>

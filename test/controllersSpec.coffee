@@ -33,6 +33,14 @@ describe "controllers", ->
             $rootScope: $rootScope
             ShoppingCartService: ShoppingCartService
 
+    it "should redirect to the cart when user clicks the cart icon", ->
+      inject ($state)->
+        spyOn($state, 'go')
+        createController({storeID: 1})
+        scope.viewCart()
+        expect($state.go).toHaveBeenCalledWith 'app.cart'
+
+
     it "should get all menu items", ->
       createController({storeID: 1})
       expect(scope.menu.pizza).toEqual [{products:{id:1}}]

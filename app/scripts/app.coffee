@@ -59,6 +59,12 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
         templateUrl: "templates/stores.html"
         controller: "StoreCtrl"
 
+  .state "app.cart",
+    url: "/cart"
+    views:
+      navContent:
+        templateUrl: "../app/scripts/cart/templates/cart-view.html"
+
   .state "app.orderplace",
     url: "/order/confo"
     views:
