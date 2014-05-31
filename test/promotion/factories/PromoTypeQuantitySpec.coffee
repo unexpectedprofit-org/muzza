@@ -3,16 +3,33 @@ describe 'PromoTypeQuantity', ->
   beforeEach ->
     module 'Muzza.promo'
 
-  PromoTypeQuantity = promo = undefined
+  PromoTypeQuantity = promo = promoDetails = promoRules = undefined
+
+  beforeEach ->
+    inject ($injector) ->
+      PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
+
+      promoDetails = {id:1,price:50,desc:"jojojo",details:"alalal"}
+      promoRules = [qty:6,cat:'EMPANADA',subcat:'|||']
+
+      promo = new PromoTypeQuantity {id:1,price:50,desc:"jojojo",details:"alalal",rules:promoRules}
+
+  describe "init", ->
+
+    it "should create an object from a different object", ->
+
+      expect(promo.details.id).toEqual promoDetails.id
+      expect(promo.details.price).toEqual promoDetails.price
+      expect(promo.details.description.short).toEqual promoDetails.desc
+      expect(promo.details.description.long).toEqual promoDetails.details
+      expect(promo.rules).toEqual promoRules
 
 
   describe "Promo1: 12 empanadas cualquiera", ->
 
     beforeEach ->
-      inject ($injector) ->
-        PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
+        promo = new PromoTypeQuantity {rules:[{qty:6,cat:'EMPANADA',subcat:'|||'}]}
 
-        promo = new PromoTypeQuantity [{qty:6,cat:'EMPANADA',subcat:'|||'}]
 
     describe "Init", ->
 
@@ -92,10 +109,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo2: 6 empanadas Fritas", ->
 
     beforeEach ->
-      inject ($injector) ->
-        PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
-
-        promo = new PromoTypeQuantity [{qty:6,cat:'EMPANADA',subcat:'|FRITA||'}]
+      promo = new PromoTypeQuantity {rules:[{qty:6,cat:'EMPANADA',subcat:'|FRITA||'}]}
 
 
     describe "Init", ->
@@ -196,10 +210,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo3: 2 empanadas cualquiera y 1 pizza especial", ->
 
     beforeEach ->
-      inject ($injector) ->
-        PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
-
-        promo = new PromoTypeQuantity [{qty:1,cat:'PIZZA',subcat:'|ESPECIAL||'},{qty:2,cat:'EMPANADA',subcat:'|||'}]
+      promo = new PromoTypeQuantity {rules:[{qty:1,cat:'PIZZA',subcat:'|ESPECIAL||'},{qty:2,cat:'EMPANADA',subcat:'|||'}]}
 
 
     describe "Init", ->
@@ -280,10 +291,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo4: 6 empanadas horno y 1 pizza especial grande", ->
 
     beforeEach ->
-      inject ($injector) ->
-        PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
-
-        promo = new PromoTypeQuantity [{qty:1,cat:'PIZZA',subcat:'|ESPECIAL|GRANDE|'},{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]
+      promo = new PromoTypeQuantity {rules:[{qty:1,cat:'PIZZA',subcat:'|ESPECIAL|GRANDE|'},{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
 
     describe "Init", ->
@@ -364,10 +372,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo5: 12 empanadas horno y 2 pizza grande", ->
 
     beforeEach ->
-      inject ($injector) ->
-        PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
-
-        promo = new PromoTypeQuantity [{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|||'}]
+      promo = new PromoTypeQuantity {rules:[{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|||'}]}
 
 
     describe "Init", ->
@@ -451,10 +456,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo6: 1 Grande de Jamon", ->
 
     beforeEach ->
-      inject ($injector) ->
-        PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
-
-        promo = new PromoTypeQuantity [{qty:1,cat:'PIZZA',subcat:'ID_JAMON||GRANDE|'}]
+      promo = new PromoTypeQuantity {rules:[{qty:1,cat:'PIZZA',subcat:'ID_JAMON||GRANDE|'}]}
 
 
     describe "Init", ->

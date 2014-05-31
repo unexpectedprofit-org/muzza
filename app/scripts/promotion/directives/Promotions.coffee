@@ -1,4 +1,4 @@
-angular.module("Muzza.promo").directive "promotions", ($ionicModal, Promotion, PromotionDetails, $q) ->
+angular.module("Muzza.promo").directive "promotions", ($ionicModal, PromotionDetails, $q) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -24,7 +24,7 @@ angular.module("Muzza.promo").directive "promotions", ($ionicModal, Promotion, P
       $scope.promotion = undefined
 
       # Reminder: we create a new to avoid modifying the model that comes from the menu
-      if promotion? then  $scope.promotion = new Promotion promotion
+      if promotion? then  $scope.promotion = promotion
 
       if $scope.promotion?
         angular.forEach $scope.steps, (key, val)->

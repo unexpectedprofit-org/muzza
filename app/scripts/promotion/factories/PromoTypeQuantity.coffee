@@ -2,8 +2,14 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
 
   class PromoTypeQuantity
-    constructor: (customRules) ->
-      @rules = createRulesArray customRules
+    constructor: (from) ->
+      @rules = createRulesArray from.rules
+      @details =
+        id: from.id
+        price: from.price
+        description:
+          short: from.desc
+          long: from.details
 
     createRulesArray = (rulesArray) ->
 

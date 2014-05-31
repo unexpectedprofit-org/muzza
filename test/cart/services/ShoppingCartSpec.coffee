@@ -3,6 +3,7 @@ describe 'ShoppingCart Service', ->
   beforeEach ->
     module 'Muzza.cart'
     module 'Muzza.empanadas'
+    module 'Muzza.promo'
 
   ShoppingCartService = Empanada = undefined
 
@@ -145,8 +146,14 @@ describe 'ShoppingCart Service', ->
 
   describe "Promotion module", ->
 
+
+    it "should have funtions defined", ->
+      expect(ShoppingCartService.getPromotions()).toBeDefined()
+      expect(ShoppingCartService.getApplicablePromotions()).toBeDefined()
+
     it "should init promotions with empty object", ->
       expect(ShoppingCartService.getPromotions()).toEqual []
+      expect(ShoppingCartService.getApplicablePromotions()).toEqual []
 
     it "should add promotion", ->
       ShoppingCartService.addPromotion {id:2}
@@ -163,7 +170,29 @@ describe 'ShoppingCart Service', ->
       expect(ShoppingCartService.getPromotions()[0].id).toBe 3
 
     it "should remove specific promotion", ->
-      ShoppingCartService.addPromotion {id:2}
+      ShoppingCartService.addPromotion {details:{id:2}}
       ShoppingCartService.removePromotion 2
 
       expect(ShoppingCartService.getPromotions().length).toBe 0
+
+    describe "retrieveApplicablePromos functionality", ->
+
+      PromoTypeQuantity = undefined
+
+      beforeEach ->
+        inject ($injector) ->
+          PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
+
+      it "should retrieve no applicable promos", ->
+
+        ShoppingCartService.add new Empanada {id:505,qty:1,desc: "description",price:{base: 1020},type: "horno"}
+        ShoppingCartService.addPromotion new PromoTypeQuantity {id:2,price:50,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
+
+        expect(ShoppingCartService.getApplicablePromotions().length).toBe 0
+
+      it "should retrieve 1 applicable promo", ->
+
+        ShoppingCartService.add new Empanada {id:505,qty:6,desc: "description",price:{base: 1020},type: "horno"}
+        ShoppingCartService.addPromotion new PromoTypeQuantity {id:3,price:100,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
+
+        expect(ShoppingCartService.getApplicablePromotions().length).toBe 1

@@ -1,4 +1,4 @@
-angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas'])
+angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas', 'Muzza.promo'])
 
 angular.module("Muzza.services").factory "StoreService", () ->
 
@@ -67,13 +67,13 @@ angular.module("Muzza.services").factory "StoreService", () ->
   listStores: getStores
 
 
-angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada) ->
+angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, PromoTypeQuantity) ->
 
   getProductsByCompanyId = (id, category)->
     results =
       pizza: _.map stores.store1.products['pizza'], constructPizzas
       empanada: _.map stores.store1.products['empanada'], constructEmpanadas
-      promo: stores.store1.products.promotion
+      promo: constructPromotions stores.store1.products['promotion']
 
     # This should become two different methods executing either diff queries,
     # or fetching form cache...who knows?
@@ -95,6 +95,12 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
       empanada.type = empanadaCategory.desc
       new Empanada empanada
     empanadaCategory
+
+  constructPromotions = (promotions) ->
+    allPromos = _.map promotions, (promotion)->
+      new PromoTypeQuantity promotion
+    allPromos
+
 
 
   getMenu: getProductsByCompanyId

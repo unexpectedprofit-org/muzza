@@ -1,16 +1,16 @@
 <div class="modal">
 
   <ion-header-bar>
-    <h1 class="title">{{ promotion.desc }}</h1>
+    <h1 class="title">{{ promotion.details.description.short }}</h1>
   </ion-header-bar>
 
   <ion-content>
 
     <div class="list card">
 
-      <div class="item item-avatar">{{ promotion.details }}</div>
+      <div class="item item-avatar">{{ promotion.details.description.long }}</div>
 
-      <div class="item item-avatar">{{ promotion.price | centsToMoney | currency }}</div>
+      <div class="item item-avatar">{{ promotion.details.price | centsToMoney | currency }}</div>
 
       <div class="item item-body">
         <div class="button-bar">

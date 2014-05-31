@@ -275,4 +275,4 @@ describe "Cart", ->
     it "should list items with remove function bound", ->
       spyOn(ShoppingCartService, 'getPromotions').and.returnValue [{id:1,desc:"alal"}]
       $scope.$digest()
-      expect(element.find('ion-item').html()).toContain "$parent.removePromotion(promo.id)"
+      expect(element.find('ion-item').html()).toContain "$parent.removePromotion(promo.details.id)"

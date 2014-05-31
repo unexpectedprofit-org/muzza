@@ -25,7 +25,7 @@
 
       <ion-list>
         <ion-item data-ng-repeat="promo in cart.promotions">
-          <button class="button icon ion-trash-b" data-ng-click="$parent.removePromotion(promo.id)"></button> {{ promo.desc }}
+          <button class="button icon ion-trash-b" data-ng-click="$parent.removePromotion(promo.details.id)"></button> {{ promo.details.description.short }}
         </ion-item>
       </ion-list>
 
