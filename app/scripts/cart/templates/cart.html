@@ -1,13 +1,15 @@
-<div class="item item-divider">
+<div class="item item-divider" data-ng-show="cart.products.length > 0">
     <button
             class="button button-icon icon ion-minus-circled"
-            data-ng-show="cart.products.length > 0"
             data-ng-click="showDelete = !showDelete; showEdit = false">
     </button>
+    <a class="button button-clear button-positive" href="#/app/menu">
+        Agregar otro...
+    </a>
     <button
             class="button"
             style="float: right"
-            data-ng-show="cart.products.length > 0"
+
             data-ng-click="showEdit = !showEdit; showDelete = false">
         Editar
     </button>
