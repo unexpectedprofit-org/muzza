@@ -1,4 +1,4 @@
-angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,PlaceOrderResponse) ->
+angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,PlaceOrderResponse, $log) ->
 
   order = {}
 
@@ -27,8 +27,12 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,Place
   createOrder = (cart)->
     angular.extend(order, cart)
 
+  sendOrder = ->
+    $log.log order
+
   place: placeOrder
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
   addContactInfo: setContactInfo
   createOrder: createOrder
+  submitOrder: sendOrder

@@ -7,9 +7,9 @@
 </div>
 
 <ion-list data-ng-repeat-end>
-    <ion-item bindonce data-ng-repeat="prod in cat.products" data-ng-click="choose(prod)">
-        <h3 data-bo-bind="prod.desc"></h3>
-        <span data-bo-bind="prod.toppings"></span>
-        <span data-bo-bind="prod.price.base | centsToMoney | currency"></span>
+    <ion-item bindonce data-ng-repeat="product in cat.products" data-ng-click="choose(product)">
+        <h3 data-bo-bind="product.desc"></h3>
+        <span data-bo-bind="product.toppings"></span>
+        <span data-bo-bind="product.price.base | centsToMoney | currency"></span>
     </ion-item>
 </ion-list>

@@ -1,7 +1,30 @@
-{{ order | json }}
+<!--<pre>{{ order | json }}</pre>-->
 
-<ion-list>
-    <ion-item bindonce data-ng-repeat="prod in order.products">
-        <h3 data-bo-bind="prod.desc"></h3>
+<ion-list bindonce="order">
+    <ion-item class="item-divider">Productos</ion-item>
+    <ion-item data-ng-repeat="product in order.products">
+        <h3 data-bo-bind="product.desc"></h3>
+    </ion-item>
+
+    <ion-item data-ng-repeat="promotion in order.promotions">
+        <h3 data-bo-bind="promotion"></h3>
+    </ion-item>
+    <ion-item class="item-divider">
+        Total <span data-bo-bind="order.totalPrice() | centsToMoney | currency"></span>
+    </ion-item>
+    <ion-item data-bo-bind="order.delivery"></ion-item>
+    <ion-item>
+        <span data-bo-bind="order.contact.name"></span> -
+        <span data-bo-bind="order.contact.phone"></span> -
+        <span data-bo-bind="order.contact.email"></span>
     </ion-item>
 </ion-list>
+
+<div class="item item-body">
+    <div class="button-bar">
+        <a class="button positive" data-ng-click="editOrder()">Modificar Mi Pedido</a>
+        <a class="button positive" data-ng-click="submitOrder()">Enviar Mi Pedido</a>
+    </div>
+</div>
+
+

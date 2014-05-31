@@ -66,7 +66,7 @@ describe "Empanadas", ->
     it "should have a click function bind", ->
       onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
 
-      expect(onClickEvent).toContain "choose(prod)"
+      expect(onClickEvent).toContain "choose(product)"
 
     it "should have steps defined in the scope", ->
       expect(isolatedScope.steps).toEqual ['order']

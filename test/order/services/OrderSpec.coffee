@@ -54,3 +54,18 @@ describe 'Order Service', ->
           totalPrice: ()-> null
         OrderService.createOrder(cart)
         expect(OrderService.retrieveOrder()).toEqual cart
+
+  describe 'submitOrder', ->
+
+    it 'should log the order', ->
+      inject (Pizza, $log)->
+        cart =
+          products: [new Pizza {id:1, desc:'Muzza', qty:1}]
+          promotions: null
+          totalPrice: ()-> null
+        spyOn($log, 'log')
+        OrderService.createOrder(cart)
+        order = OrderService.retrieveOrder()
+        OrderService.submitOrder()
+        expect($log.log).toHaveBeenCalledWith(order)
+
