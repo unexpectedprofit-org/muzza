@@ -28,16 +28,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo1: 12 empanadas cualquiera", ->
 
     beforeEach ->
-        promo = new PromoTypeQuantity {rules:[{qty:6,cat:'EMPANADA',subcat:'|||'}]}
-
-
-    describe "Init", ->
-
-      it 'should construct a Promo object', ->
-        expect(promo.validate).toBeDefined()
-        expect(promo.apply).toBeDefined()
-
-        expect(promo.rules).toEqual [{qty:6,cat:'EMPANADA',subcat:'|||'}]
+        promo = new PromoTypeQuantity {price:767,rules:[{qty:6,cat:'EMPANADA',subcat:'|||'}]}
 
 
     describe "Basic Case", ->
@@ -109,16 +100,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo2: 6 empanadas Fritas", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {rules:[{qty:6,cat:'EMPANADA',subcat:'|FRITA||'}]}
-
-
-    describe "Init", ->
-
-      it 'should construct a Promo object', ->
-        expect(promo.validate).toBeDefined()
-        expect(promo.apply).toBeDefined()
-
-        expect(promo.rules).toEqual [{qty:6,cat:'EMPANADA',subcat:'|FRITA||'}]
+      promo = new PromoTypeQuantity {price:555,rules:[{qty:6,cat:'EMPANADA',subcat:'|FRITA||'}]}
 
 
     describe "Basic Case", ->
@@ -210,16 +192,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo3: 2 empanadas cualquiera y 1 pizza especial", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {rules:[{qty:1,cat:'PIZZA',subcat:'|ESPECIAL||'},{qty:2,cat:'EMPANADA',subcat:'|||'}]}
-
-
-    describe "Init", ->
-
-      it 'should construct a Promo object', ->
-        expect(promo.validate).toBeDefined()
-        expect(promo.apply).toBeDefined()
-
-        expect(promo.rules).toEqual [{qty:1,cat:'PIZZA',subcat:'|ESPECIAL||'},{qty:2,cat:'EMPANADA',subcat:'|||'}]
+      promo = new PromoTypeQuantity {price:777,rules:[{qty:1,cat:'PIZZA',subcat:'|ESPECIAL||'},{qty:2,cat:'EMPANADA',subcat:'|||'}]}
 
 
     describe "Basic Case", ->
@@ -291,16 +264,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo4: 6 empanadas horno y 1 pizza especial grande", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {rules:[{qty:1,cat:'PIZZA',subcat:'|ESPECIAL|GRANDE|'},{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
-
-
-    describe "Init", ->
-
-      it 'should construct a Promo object', ->
-        expect(promo.validate).toBeDefined()
-        expect(promo.apply).toBeDefined()
-
-        expect(promo.rules).toEqual [{qty:1,cat:'PIZZA',subcat:'|ESPECIAL|GRANDE|'},{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]
+      promo = new PromoTypeQuantity {price:444,rules:[{qty:1,cat:'PIZZA',subcat:'|ESPECIAL|GRANDE|'},{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
 
     describe "Basic Case", ->
@@ -372,16 +336,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo5: 12 empanadas horno y 2 pizza grande", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {rules:[{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|HORNO||'}]}
-
-
-    describe "Init", ->
-
-      it 'should construct a Promo object', ->
-        expect(promo.validate).toBeDefined()
-        expect(promo.apply).toBeDefined()
-
-        expect(promo.rules).toEqual [{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|HORNO||'}]
+      promo = new PromoTypeQuantity {price:333,rules:[{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
 
     describe "Basic case", ->
@@ -456,16 +411,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo6: 1 Grande de Jamon", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {rules:[{qty:1,cat:'PIZZA',subcat:'ID_JAMON||GRANDE|'}]}
-
-
-    describe "Init", ->
-
-      it 'should construct a Promo object', ->
-        expect(promo.validate).toBeDefined()
-        expect(promo.apply).toBeDefined()
-
-        expect(promo.rules).toEqual [{qty:1,cat:'PIZZA',subcat:'ID_JAMON||GRANDE|'}]
+      promo = new PromoTypeQuantity {price:222,rules:[{qty:1,cat:'PIZZA',subcat:'ID_JAMON||GRANDE|'}]}
 
 
     describe "Basic case", ->
@@ -496,3 +442,37 @@ describe 'PromoTypeQuantity', ->
           hashKey: 'ID_BRAND|ID_JAMON|DELACASA|CHICA|MOLDE'
         ]
         expect(promo.validate shoppingCart).toBeFalsy()
+
+  describe "apply Promo:", ->
+
+    beforeEach ->
+      promo = new PromoTypeQuantity {price:90,rules:[{qty:12,cat:'EMPANADA',subcat:'|||'}]}
+
+
+    it "should apply promo once", ->
+      shoppingCart = [
+        cat: 'EMPANADA'
+        qty: 12
+        hashKey: 'ID_BRAND|ID_PROD|FRITA||'
+        totalPrice: 10
+      ]
+      expect(promo.apply shoppingCart).toBe promo.details.price
+
+    it "should apply promo twice", ->
+      shoppingCart = [
+        cat: 'EMPANADA'
+        qty: 24
+        hashKey: 'ID_BRAND|ID_PROD|FRITA||'
+        price: 10
+      ]
+      expect(promo.apply shoppingCart).toBe promo.details.price * 2
+
+    it "should apply promo twice", ->
+      shoppingCart = [
+        cat: 'EMPANADA'
+        qty: 25
+        hashKey: 'ID_BRAND|ID_PROD|FRITA||'
+        price: 10
+      ]
+      expect(promo.apply shoppingCart).toBe promo.details.price * 2
+

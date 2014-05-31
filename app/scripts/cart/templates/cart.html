@@ -54,12 +54,15 @@
     <div data-ng-if="cart.products.length > 0" class="item item-divider" style="text-align: right">
         Total {{ cart.totalPrice()  | centsToMoney | currency }}
     </div>
+    <div data-ng-if="cart.applicablePromotions().length > 0" class="item item-divider" style="text-align: right">
+      Total With Promos {{ cart.totalPriceWithPromotions() | centsToMoney | currency }}
+    </div>
 
    <ion-item data-ng-if="cart.products.length > 0"></ion-item>
 
   </ion-list>
 
-  <div>PROMO APPLIED?: {{ cart.applicablePromotions() | json }}</div>
+  <div>PROMOS APPLICABLE?: {{ cart.applicablePromotions() | json }}</div>
 
   <button class="button button-block button-positive"
           data-ng-if="cart.products.length > 0"

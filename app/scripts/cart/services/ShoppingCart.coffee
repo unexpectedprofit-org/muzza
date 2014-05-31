@@ -68,6 +68,19 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
       result is true
     applicablePromos
 
+  getTotalPriceWithPromos = () ->
+    promos = retrieveApplicablePromos()
+    if promos.length > 0
+      totalPrice = 0
+      _.forEach promos, (promo) ->
+        promoPrice = promo.apply products
+
+        totalPrice = totalPrice + promoPrice
+
+      return totalPrice
+    else
+      return calculateTotalPrice()
+
   notifyTotalPriceChange = () ->
     $rootScope.$broadcast 'CART:PRICE_UPDATED', calculateTotalPrice()
 
@@ -84,3 +97,4 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
   getPromotions: retrievePromos
   removePromotion: removePromo
   getApplicablePromotions: retrieveApplicablePromos
+  getTotalPriceWithPromotions: getTotalPriceWithPromos

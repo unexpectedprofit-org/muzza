@@ -16,6 +16,8 @@ describe 'ShoppingCart Service', ->
     expect(ShoppingCartService.getCart().length).toBe 0
     expect(ShoppingCartService.getTotalPrice()).toBe 0
     expect(ShoppingCartService.getPromotions().length).toBe 0
+    expect(ShoppingCartService.getApplicablePromotions().length).toBe 0
+    expect(ShoppingCartService.getTotalPriceWithPromotions()).toBe 0
 
 
   describe "add functionality", ->
@@ -150,6 +152,7 @@ describe 'ShoppingCart Service', ->
     it "should have funtions defined", ->
       expect(ShoppingCartService.getPromotions()).toBeDefined()
       expect(ShoppingCartService.getApplicablePromotions()).toBeDefined()
+      expect(ShoppingCartService.getTotalPriceWithPromotions()).toBeDefined()
 
     it "should init promotions with empty object", ->
       expect(ShoppingCartService.getPromotions()).toEqual []
@@ -196,3 +199,27 @@ describe 'ShoppingCart Service', ->
         ShoppingCartService.addPromotion PromotionTypeFactory.createPromotion {id:3,cat:1,price:100,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
         expect(ShoppingCartService.getApplicablePromotions().length).toBe 1
+
+    describe "getTotalPriceWithPromotions", ->
+
+      PromotionTypeFactory = promo = undefined
+
+      beforeEach ->
+        inject ($injector) ->
+          PromotionTypeFactory = $injector.get 'PromotionTypeFactory'
+
+      it "should return totalprice if promos", ->
+        promo = PromotionTypeFactory.createPromotion {id:3,cat:1,price:100,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
+        applySpy = spyOn(promo, 'apply')
+
+        ShoppingCartService.add new Empanada {id:505,qty:6,desc:"description",price:{base: 1020},subcat:1}
+        ShoppingCartService.addPromotion promo
+        ShoppingCartService.getTotalPriceWithPromotions()
+
+        expect(applySpy).toHaveBeenCalled()
+
+
+      it "should call totalprice if no promos", ->
+        ShoppingCartService.add new Empanada {id:505,qty:6,desc:"description",price:{base: 1020},subcat:1}
+
+        expect(ShoppingCartService.getTotalPriceWithPromotions()).toEqual ShoppingCartService.getTotalPrice()
