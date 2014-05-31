@@ -372,7 +372,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo5: 12 empanadas horno y 2 pizza grande", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {rules:[{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|||'}]}
+      promo = new PromoTypeQuantity {rules:[{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|HORNO||'}]}
 
 
     describe "Init", ->
@@ -381,7 +381,7 @@ describe 'PromoTypeQuantity', ->
         expect(promo.validate).toBeDefined()
         expect(promo.apply).toBeDefined()
 
-        expect(promo.rules).toEqual [{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|||'}]
+        expect(promo.rules).toEqual [{qty:2,cat:'PIZZA',subcat:'||GRANDE|'},{qty:12,cat:'EMPANADA',subcat:'|HORNO||'}]
 
 
     describe "Basic case", ->
@@ -394,7 +394,7 @@ describe 'PromoTypeQuantity', ->
         ,
           cat: 'EMPANADA'
           qty: 12
-          hashKey: 'ID_BRAND|ID_PROD|FRITA||'
+          hashKey: 'ID_BRAND|ID_PROD|HORNO||'
         ]
         expect(promo.validate shoppingCart).toBeTruthy()
 

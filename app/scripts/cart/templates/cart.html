@@ -58,6 +58,9 @@
    <ion-item data-ng-if="cart.products.length > 0"></ion-item>
 
   </ion-list>
+
+  <div>PROMO APPLIED?: {{ cart.applicablePromotions() | json }}</div>
+
   <button class="button button-block button-positive"
           data-ng-if="cart.products.length > 0"
           data-ng-click="checkout()">Realizar Pedido</button>

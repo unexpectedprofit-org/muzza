@@ -21,6 +21,7 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
       products: ShoppingCartService.getCart()
       totalPrice: ShoppingCartService.getTotalPrice
       promotions: ShoppingCartService.getPromotions()
+      applicablePromotions: ShoppingCartService.getApplicablePromotions
 
     $scope.checkout = () ->
       OrderService.createOrder $scope.cart

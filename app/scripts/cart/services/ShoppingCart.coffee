@@ -58,6 +58,9 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
     )
 
   retrieveApplicablePromos = () ->
+#    console.log "prod " + products
+#    console.log "promos " + promotions
+
     applicablePromos = _.filter promotions, (elem) ->
 
       #depending on elem.type of promo
