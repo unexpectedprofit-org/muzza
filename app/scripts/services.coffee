@@ -101,7 +101,7 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
       else
         _cat = undefined
 
-    if angular.isUndefined( _menu )
+    if angular.isUndefined( _menu ) or angular.isUndefined( _menu[_cat] )
       getProductsByCompanyId()
 
     angular.copy _menu[_cat]
