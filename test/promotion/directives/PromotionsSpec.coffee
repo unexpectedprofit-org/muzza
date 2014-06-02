@@ -172,3 +172,25 @@ describe "Promotions", ->
       expect(productsList[1].items.length).toBe 2
       expect(productsList[1].items[0].products.length).toBe 4
       expect(productsList[1].items[1].products.length).toBe 2
+
+    it "should retrieve only empanadas HORNO + only pizzas de la casa", ->
+      rules = [
+        cat: 'EMPANADA'
+        qty: 12
+        subcat: '|1||'
+      ,
+        cat: 'PIZZA'
+        qty: 1
+        subcat: '|2||'
+      ]
+
+      productsList = isolatedScope.createPromoComponentsList rules
+
+      expect(productsList.length).toBe 2
+      expect(productsList[0].cat).toBe rules[0].cat
+      expect(productsList[0].items.length).toBe 1
+      expect(productsList[0].items[0].products.length).toBe 6
+
+      expect(productsList[1].cat).toBe rules[1].cat
+      expect(productsList[1].items.length).toBe 1
+      expect(productsList[1].items[0].products.length).toBe 2

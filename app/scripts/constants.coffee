@@ -180,7 +180,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         details: "Llevando media docena de empanadas al horno de cualquier gusto y 1 pizza grande te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 3
-        desc: "6 empanadas fritas + 1 pizza individual + 2 empanadas al horno"
+        desc: "6 empanadas fritas + 1 pizza de la casa + 2 empanadas al horno"
         cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
@@ -193,7 +193,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           cat: 'PIZZA'
           qty: 1
-          subcat: '||INDIVIDUAL|'
+          subcat: '|2||'
         ]
         price:8000
         details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
