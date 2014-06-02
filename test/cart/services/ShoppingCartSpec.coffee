@@ -15,9 +15,6 @@ describe 'ShoppingCart Service', ->
   it 'should get an initial empty cart', ->
     expect(ShoppingCartService.getCart().length).toBe 0
     expect(ShoppingCartService.getTotalPrice()).toBe 0
-    expect(ShoppingCartService.getPromotions().length).toBe 0
-    expect(ShoppingCartService.getApplicablePromotions().length).toBe 0
-    expect(ShoppingCartService.getTotalPriceWithPromotions()).toBe 0
 
 
   describe "add functionality", ->
@@ -144,82 +141,3 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add new Empanada {id:22,desc:'Cebolla y Queso',type:'Frita',qty:2, price:{base:3000}}
 
       expect(ShoppingCartService.getTotalPrice()).toBe 14000
-
-
-  describe "Promotion module", ->
-
-
-    it "should have funtions defined", ->
-      expect(ShoppingCartService.getPromotions()).toBeDefined()
-      expect(ShoppingCartService.getApplicablePromotions()).toBeDefined()
-      expect(ShoppingCartService.getTotalPriceWithPromotions()).toBeDefined()
-
-    it "should init promotions with empty object", ->
-      expect(ShoppingCartService.getPromotions()).toEqual []
-      expect(ShoppingCartService.getApplicablePromotions()).toEqual []
-
-    it "should add promotion", ->
-      ShoppingCartService.addPromotion {id:2}
-      expect(ShoppingCartService.getPromotions().length).toBe 1
-      expect(ShoppingCartService.getPromotions()[0].id).toBe 2
-
-    it "should contain only one promotion", ->
-      ShoppingCartService.addPromotion {id:2}
-      expect(ShoppingCartService.getPromotions().length).toBe 1
-      expect(ShoppingCartService.getPromotions()[0].id).toBe 2
-
-      ShoppingCartService.addPromotion {id:3}
-      expect(ShoppingCartService.getPromotions().length).toBe 1
-      expect(ShoppingCartService.getPromotions()[0].id).toBe 3
-
-    it "should remove specific promotion", ->
-      ShoppingCartService.addPromotion {details:{id:2}}
-      ShoppingCartService.removePromotion 2
-
-      expect(ShoppingCartService.getPromotions().length).toBe 0
-
-    describe "retrieveApplicablePromos functionality", ->
-
-      PromotionTypeFactory = undefined
-
-      beforeEach ->
-        inject ($injector) ->
-          PromotionTypeFactory = $injector.get 'PromotionTypeFactory'
-
-      it "should retrieve no applicable promos", ->
-
-        ShoppingCartService.add new Empanada {id:505,qty:1,desc:"description",price:{base: 1020},subcat:1}
-        ShoppingCartService.addPromotion PromotionTypeFactory.createPromotion {id:2,cat:1,price:50,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
-
-        expect(ShoppingCartService.getApplicablePromotions().length).toBe 0
-
-      it "should retrieve 1 applicable promo", ->
-
-        ShoppingCartService.add new Empanada {id:505,qty:6,desc:"description",price:{base: 1020},subcat:1}
-        ShoppingCartService.addPromotion PromotionTypeFactory.createPromotion {id:3,cat:1,price:100,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
-
-        expect(ShoppingCartService.getApplicablePromotions().length).toBe 1
-
-    describe "getTotalPriceWithPromotions", ->
-
-      PromotionTypeFactory = promo = undefined
-
-      beforeEach ->
-        inject ($injector) ->
-          PromotionTypeFactory = $injector.get 'PromotionTypeFactory'
-
-      it "should return totalprice if promos", ->
-        promo = PromotionTypeFactory.createPromotion {id:3,cat:1,price:100,rules:[{qty:6,cat:'EMPANADA',subcat:'|HORNO||'}]}
-        applySpy = spyOn(promo, 'apply')
-
-        ShoppingCartService.add new Empanada {id:505,qty:6,desc:"description",price:{base: 1020},subcat:1}
-        ShoppingCartService.addPromotion promo
-        ShoppingCartService.getTotalPriceWithPromotions()
-
-        expect(applySpy).toHaveBeenCalled()
-
-
-      it "should call totalprice if no promos", ->
-        ShoppingCartService.add new Empanada {id:505,qty:6,desc:"description",price:{base: 1020},subcat:1}
-
-        expect(ShoppingCartService.getTotalPriceWithPromotions()).toEqual ShoppingCartService.getTotalPrice()

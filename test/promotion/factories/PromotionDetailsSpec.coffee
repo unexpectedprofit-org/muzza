@@ -5,17 +5,18 @@ describe 'PromotionDetails', ->
 
     module ($provide) ->
       $provide.value 'ShoppingCartService',
-        addPromotion: (promo) -> null
+        add: (promo) -> null
       null
 
 
-  PromotionDetails = PromotionTypeFactory = ShoppingCartService = promoDetails = promo1 = modal = showSpy = hideSpy = undefined
+  PromotionDetails = PromotionTypeFactory = ShoppingCartService = Promotion = promoDetails = promo1 = modal = showSpy = hideSpy = undefined
 
   beforeEach ->
     inject ($injector) ->
       PromotionDetails = $injector.get 'PromotionDetails'
       ShoppingCartService = $injector.get 'ShoppingCartService'
       PromotionTypeFactory = $injector.get 'PromotionTypeFactory'
+      Promotion = $injector.get 'Promotion'
       promo1 = PromotionTypeFactory.createPromotion {id:1,cat:1}
 
       modal =
@@ -57,7 +58,7 @@ describe 'PromotionDetails', ->
 
     it 'should call hide', ->
       internalHideSpy = spyOn(promoDetails, 'hide').and.callThrough()
-      addPromoSpy = spyOn(ShoppingCartService, 'addPromotion')
+      addPromoSpy = spyOn(ShoppingCartService, 'add')
 
       promoDetails.select()
 
@@ -65,8 +66,8 @@ describe 'PromotionDetails', ->
 
     it "should call service to add promo", ->
 
-      addPromoSpy = spyOn(ShoppingCartService, 'addPromotion')
+      addPromoSpy = spyOn(ShoppingCartService, 'add')
 
       promoDetails.select()
 
-      expect(addPromoSpy).toHaveBeenCalledWith promo1
+      expect(addPromoSpy).toHaveBeenCalledWith new Promotion promo1

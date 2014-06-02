@@ -19,19 +19,6 @@
     </div>
   </div>
 
-  <div class="card" data-ng-if="cart.promotions.length > 0">
-    <div class="item item-text-wrap">
-      Promociones seleccionadas
-
-      <ion-list>
-        <ion-item data-ng-repeat="promo in cart.promotions">
-          <button class="button icon ion-trash-b" data-ng-click="$parent.removePromotion(promo.details.id)"></button> {{ promo.details.description.short }}
-        </ion-item>
-      </ion-list>
-
-    </div>
-  </div>
-
 
   <ion-list show-delete="showDelete">
     <ion-item nav-clear data-ng-repeat="item in cart.products | orderBy:'+cat'">
@@ -54,15 +41,10 @@
     <div data-ng-if="cart.products.length > 0" class="item item-divider" style="text-align: right">
         Total {{ cart.totalPrice()  | centsToMoney | currency }}
     </div>
-    <div data-ng-if="cart.applicablePromotions().length > 0" class="item item-divider" style="text-align: right">
-      Total With Promos {{ cart.totalPriceWithPromotions() | centsToMoney | currency }}
-    </div>
 
    <ion-item data-ng-if="cart.products.length > 0"></ion-item>
 
   </ion-list>
-
-  <div>PROMOS APPLICABLE?: {{ cart.applicablePromotions() | json }}</div>
 
   <button class="button button-block button-positive"
           data-ng-if="cart.products.length > 0"

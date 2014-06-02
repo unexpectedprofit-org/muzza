@@ -2,40 +2,35 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
 
   class Promotion
     constructor: (from) ->
-      @rules = createRulesArray from.rules
-      @details =
-        id: from.id
-        price: from.price
-        description:
-          short: from.desc
-          long: from.details
+      @cat = "PROMO"
+      @qty = 1
 
-    createRulesArray = (rulesArray) ->
+      @totalPrice = from?.details?.price
+      @id = from?.details?.id
+      @desc = from?.details?.description?.short
 
-      rules = []
+      @rules = from.rules
+      @items = getItems from?.components
 
-      if angular.isUndefined( rulesArray ) or !(rulesArray instanceof Array) or rulesArray.length < 1
-        #break / exit
-#        console.log "ERROR - NO RULES DEFINED - WHOLE OBJECT"
-        return []
+    getItems = (components) ->
 
-      angular.forEach rulesArray, (element) ->
+      items = []
 
-        tempRule =
-          cat: element.cat
-          subcat: element.subcat
-          qty: element.qty
+      _.forEach components, (component) ->
+        _.forEach component.items, (currentCategory) ->
+          _temp = _.filter currentCategory.products, (elem) ->
+            elem.qty >= 1
 
-        rules.push tempRule
+          items = items.concat _temp
 
-      return rules
+      items
 
-  Promotion::validate = (shoppingCart) ->
-    console.log "Promotion::validate ---> NOT IMPLEMENTED"
-    false
-  Promotion::apply = (shoppingCart) ->
-    console.log "Promotion::apply ---> NOT IMPLEMENTED"
-    false
+  Promotion::getHash = () ->
+    @id + "|" + @totalPrice
+
+  Promotion::description = () ->
+    @desc
+
 
   return Promotion
 

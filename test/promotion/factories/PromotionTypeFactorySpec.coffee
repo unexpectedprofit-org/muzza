@@ -13,10 +13,10 @@ describe 'PromotionTypeFactory', ->
 
   describe "Object creation", ->
 
-    it 'should retrieve a generic Promotion object', ->
+    it 'should retrieve null', ->
       myPromo = PromotionTypeFactory.createPromotion {id:1}
 
-      expect(myPromo instanceof Promotion).toBeTruthy()
+      expect(myPromo).toBe null
 
     it 'should retrieve a PromoTypeQuantity object', ->
       myPromo = PromotionTypeFactory.createPromotion {id:1,cat:1}

@@ -1,4 +1,4 @@
-angular.module('Muzza.promo').factory "PromotionDetails", (ShoppingCartService)->
+angular.module('Muzza.promo').factory "PromotionDetails", (ShoppingCartService, Promotion)->
 
   class PromotionDetails
     constructor: (modal) ->
@@ -11,7 +11,7 @@ angular.module('Muzza.promo').factory "PromotionDetails", (ShoppingCartService)-
     @modal.hide()
 
   PromotionDetails::select = ()->
-    ShoppingCartService.addPromotion @modal.scope.promotion
+    ShoppingCartService.add new Promotion @modal.scope.promotion
     @hide()
 
   return PromotionDetails
