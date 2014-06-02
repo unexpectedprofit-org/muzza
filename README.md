@@ -66,6 +66,10 @@ Linux only - You may need to install the following:
     sudo apt-get install lib32z1
     sudo apt-get install lib32stdc++6
 
+## Plugins
+
+grunt plugins:add:org.apache.cordova.inappbrowser
+
 ## Flow
 
 Build web version:
@@ -102,3 +106,5 @@ Run IOS emulator (requires additional setup)
 Serve to Android Device
 
     grunt run:android
+
+

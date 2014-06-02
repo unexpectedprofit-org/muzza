@@ -15,6 +15,10 @@ module.exports = function(config){
         'app/bower_components/ionic/release/js/ionic.js',
         'app/bower_components/ionic/release/js/ionic-angular.js',
         'app/bower_components/lodash/dist/lodash.compat.js',
+        'app/bower_components/firebase/firebase.js',
+        'app/bower_components/firebase-simple-login/firebase-simple-login.js',
+        'app/bower_components/angularfire/angularfire.js',
+        'app/bower_components/angular-bindonce/bindonce.js',
         'app/scripts/**/*.coffee',
         '.tmp/templates.js'
     ],
