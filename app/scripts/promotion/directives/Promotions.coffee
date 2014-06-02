@@ -13,7 +13,6 @@ angular.module("Muzza.promo", ["Muzza.services"]).directive "promotions", ($ioni
 
       result = products
 
-      #|FRITA||
       subCatComponents = ruleSubCat.split('|')
 
       #ID_PROD
@@ -27,18 +26,10 @@ angular.module("Muzza.promo", ["Muzza.services"]).directive "promotions", ($ioni
       # DOUGH
       ruleProp4 = (if subCatComponents[3].length > 0 then subCatComponents[3] else undefined)
 
-
       #filter by type only for the moment
       if ruleProp2 isnt undefined
-
-        #FOR EMPANADA: TO BE REFACTORED
-        if ruleProp2 is "HORNO" then ruleProp2 = 1
-        if ruleProp2 is "FRITA" then ruleProp2 = 2
-        #FOR EMPANADA: TO BE REFACTORED
-
         result = _.filter products, (prod) ->
-          prod.id is ruleProp2
-
+          prod.id is parseInt(ruleProp2)
 
       return result
 

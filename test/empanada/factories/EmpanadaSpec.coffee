@@ -14,7 +14,7 @@ describe 'Empanada', ->
       desc: "description"
       price:
         base: 1020
-      subcat: 1
+      subcat: 98
       type: "Al Horno"
 
   describe "init", ->
@@ -37,7 +37,7 @@ describe 'Empanada', ->
       newEmpanada = new Empanada fromObject
       expect(newEmpanada.qty).toBe 1
       expect(newEmpanada.cat).toBe "EMPANADA"
-      expect(newEmpanada.subcat).toBe 1
+      expect(newEmpanada.subcat).toBe 98
       expect(newEmpanada.id).toBe 505
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.totalPrice).toBe fromObject.price.base
@@ -85,17 +85,12 @@ describe 'Empanada', ->
     it "should create hash - case 1", ->
       newEmpanada = new Empanada fromObject
 
-      expect(newEmpanada.getHash()).toBe 'ID_BRAND|505|HORNO||'
+      expect(newEmpanada.getHash()).toBe 'ID_BRAND|505|98||'
 
     it "should create a hash - case 2", ->
-      newEmpanada = new Empanada {id:909,subcat:2}
+      newEmpanada = new Empanada {id:909,subcat:55}
 
-      expect(newEmpanada.getHash()).toBe 'ID_BRAND|909|FRITA||'
-
-    it "should create a hash - case 3", ->
-      newEmpanada = new Empanada {id:777}
-
-      expect(newEmpanada.getHash()).toBe 'ID_BRAND|777|||'
+      expect(newEmpanada.getHash()).toBe 'ID_BRAND|909|55||'
 
 
   it 'should generate a description from default values', ->

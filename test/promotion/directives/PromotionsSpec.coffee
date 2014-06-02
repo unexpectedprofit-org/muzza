@@ -21,8 +21,8 @@ describe "Promotions", ->
       $scope = $rootScope
 
       promo1 = PromotionTypeFactory.createPromotion {id:3434,cat:1,desc:'1 docena de empanadas',rules:[{cat:'EMPANADA',qty:12,subcat:'|||'}]}
-      promo2 = PromotionTypeFactory.createPromotion {id:1100,cat:1,desc:'1 pizza grande + 6 empanadas al horno',rules:[{cat:'EMPANADA',qty:6,subcat:'|HORNO||'},{cat:'PIZZA',qty:1,subcat:'||GRANDE|'}]}
-      promo3 = PromotionTypeFactory.createPromotion {id:2222,cat:1,desc:'6 empanadas fritas + 1 pizza al molde',rules:[{cat:'EMPANADA',qty:6,subcat:'|||MOLDE'}]}
+      promo2 = PromotionTypeFactory.createPromotion {id:1100,cat:1,desc:'1 pizza grande + 6 empanadas al horno',rules:[{cat:'EMPANADA',qty:6,subcat:'|1||'},{cat:'PIZZA',qty:1,subcat:'||GRANDE|'}]}
+      promo3 = PromotionTypeFactory.createPromotion {id:2222,cat:1,desc:'6 empanadas fritas + 1 pizza INDIVIDUAL',rules:[{cat:'EMPANADA',qty:6,subcat:'|2||'},{cat:'PIZZA',qty:1,subcat:'||INVIDUAL|'}]}
 
       $scope.menu = [
         promo1
@@ -140,7 +140,7 @@ describe "Promotions", ->
       rules = [
         cat: 'EMPANADA'
         qty: 12
-        subcat: '|FRITA||'
+        subcat: '|2||'
       ]
 
       productsList = isolatedScope.createPromoComponentsList rules
@@ -154,7 +154,7 @@ describe "Promotions", ->
       rules = [
         cat: 'EMPANADA'
         qty: 12
-        subcat: '|HORNO||'
+        subcat: '|1||'
       ,
         cat: 'PIZZA'
         qty: 1

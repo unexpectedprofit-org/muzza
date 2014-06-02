@@ -27,15 +27,6 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @desc + @type
 
   Empanada::getHash = () ->
-
-    switch @subcat
-      when 1
-        _type = "HORNO"
-      when 2
-        _type = "FRITA"
-      else
-        _type = ""
-
-    "ID_BRAND|" + @id + "|" + _type + "||"
+    "ID_BRAND|" + @id + "|" + @subcat + "||"
 
   return Empanada

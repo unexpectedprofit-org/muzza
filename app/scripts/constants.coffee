@@ -170,7 +170,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         rules: [
           cat: 'EMPANADA'
           qty: 6
-          subcat: '|HORNO||'
+          subcat: '|1||'
         ,
           cat: 'PIZZA'
           qty: 1
@@ -185,11 +185,11 @@ angular.module('Muzza.constants',[]).constant 'stores',
         rules: [
           cat: 'EMPANADA'
           qty: 6
-          subcat: '|FRITA||'
+          subcat: '|2||'
         ,
           cat: 'EMPANADA'
           qty: 2
-          subcat: '|HORNO||'
+          subcat: '|1||'
         ,
           cat: 'PIZZA'
           qty: 1
