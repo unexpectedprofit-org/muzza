@@ -3,12 +3,15 @@
 <ion-list bindonce="order">
     <ion-item class="item-divider">Productos</ion-item>
     <ion-item data-ng-repeat="product in order.products track by $index">
-        <h3 data-bo-bind="product.desc"></h3>
+        <span data-bo-bind="product.qty"></span>: <span data-bo-bind="product.description()"></span>
+
+      <div data-ng-if="product.cat == 'PROMO'">
+        <div bindonce data-ng-repeat="item in product.items">
+          <span data-bo-bind="item.qty"></span> - <span data-bo-bind="item.desc"></span>
+        </div>
+      </div>
     </ion-item>
 
-    <ion-item data-ng-repeat="promotion in order.promotions track by $index">
-        <h3 data-bo-bind="promotion"></h3>
-    </ion-item>
     <ion-item class="item-divider">
         Total <span data-bo-bind="order.totalPrice() | centsToMoney | currency"></span>
     </ion-item>
