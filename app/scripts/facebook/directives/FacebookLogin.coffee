@@ -11,9 +11,10 @@ angular.module('Muzza.facebook').directive 'facebookLogin', ($firebase, $firebas
     auth = $firebaseSimpleLogin(ref)
 
     $scope.login = ()->
-      auth.$login('facebook').then (user)->
+      auth.$login('facebook', {rememberMe: true, scope: 'email,user_friends'}).then (user)->
         $scope.user.facebookId =  user.uid
         $scope.user.name = user.thirdPartyUserData.name
+        $scope.user.email = user.thirdPartyUserData.email
 
     $scope.logout = ()->
       auth.$logout()

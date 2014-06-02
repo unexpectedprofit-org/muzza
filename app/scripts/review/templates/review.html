@@ -2,11 +2,11 @@
 
 <ion-list bindonce="order">
     <ion-item class="item-divider">Productos</ion-item>
-    <ion-item data-ng-repeat="product in order.products">
+    <ion-item data-ng-repeat="product in order.products track by $index">
         <h3 data-bo-bind="product.desc"></h3>
     </ion-item>
 
-    <ion-item data-ng-repeat="promotion in order.promotions">
+    <ion-item data-ng-repeat="promotion in order.promotions track by $index">
         <h3 data-bo-bind="promotion"></h3>
     </ion-item>
     <ion-item class="item-divider">

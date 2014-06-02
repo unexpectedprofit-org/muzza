@@ -4,7 +4,7 @@
 
 
 <ion-list>
-    <ion-item bindonce data-ng-repeat="promo in menu" data-ng-click="choose(promo)">
+    <ion-item bindonce data-ng-repeat="promo in menu track by $index" data-ng-click="choose(promo)">
       <h3 data-bo-bind="promo.details.description.short"></h3>
       <span data-bo-bind="promo.details.price | centsToMoney | currency"></span>
     </ion-item>

@@ -138,9 +138,6 @@ describe "Pizzas", ->
         expect(isolatedScope.pizza instanceof Pizza).toBeTruthy()
 
       it "should replace the previous selection", ->
-        spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
-        spyOn(isolatedScope.dough, 'show').and.callFake( ()-> 1 )
-
         #Choose First Product
         element.find('ion-item')[0].click()
         isolatedScope.pizza.size = 'b'
@@ -148,7 +145,6 @@ describe "Pizzas", ->
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-
         expect(isolatedScope.pizza).not.toEqual pizza2
         expect(isolatedScope.pizza).toEqual jasmine.objectContaining
           desc : 'Fugazetta'
