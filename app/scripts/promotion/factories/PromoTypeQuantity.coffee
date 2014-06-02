@@ -143,33 +143,5 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
       return isValid
 
-    PromoTypeQuantity::apply = (shoppingCart) ->
-
-      #PRICE CALCULATION
-      qtyNeeded = @rules[0].qty
-      qtyInCart = getQuantityFromCart shoppingCart
-
-      if qtyInCart is qtyNeeded
-        #docena
-        return @details.price
-
-      else
-        #mas de una docena
-        return parseInt(qtyInCart / qtyNeeded) * @details.price
-
-  #      remainder = qtyIncart % qtyNeeded
-  #      if reminder is 0
-  #        #cantidad exacta de docenas
-  #        return qtyIncart / qtyNeeded * rules[0].price
-  #      else
-  #        #
-  #        dozens = parseInt(qtyIncart / qtyNeeded)
-  #        return dozens * rules[0].price + remainder * 1
-      #PRICE CALCULATION
-
-
-
-    PromoTypeQuantity::getHash = () ->
-      "aa"
 
   return PromoTypeQuantity

@@ -442,37 +442,3 @@ describe 'PromoTypeQuantity', ->
           hashKey: 'ID_BRAND|ID_JAMON|DELACASA|CHICA|MOLDE'
         ]
         expect(promo.validate shoppingCart).toBeFalsy()
-
-  describe "apply Promo:", ->
-
-    beforeEach ->
-      promo = new PromoTypeQuantity {price:90,rules:[{qty:12,cat:'EMPANADA',subcat:'|||'}]}
-
-
-    it "should apply promo once", ->
-      shoppingCart = [
-        cat: 'EMPANADA'
-        qty: 12
-        hashKey: 'ID_BRAND|ID_PROD|FRITA||'
-        totalPrice: 10
-      ]
-      expect(promo.apply shoppingCart).toBe promo.details.price
-
-    it "should apply promo twice", ->
-      shoppingCart = [
-        cat: 'EMPANADA'
-        qty: 24
-        hashKey: 'ID_BRAND|ID_PROD|FRITA||'
-        price: 10
-      ]
-      expect(promo.apply shoppingCart).toBe promo.details.price * 2
-
-    it "should apply promo twice", ->
-      shoppingCart = [
-        cat: 'EMPANADA'
-        qty: 25
-        hashKey: 'ID_BRAND|ID_PROD|FRITA||'
-        price: 10
-      ]
-      expect(promo.apply shoppingCart).toBe promo.details.price * 2
-
