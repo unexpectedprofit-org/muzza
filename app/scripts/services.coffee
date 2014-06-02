@@ -69,6 +69,8 @@ angular.module("Muzza.services").factory "StoreService", () ->
 
 angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, PromotionTypeFactory) ->
 
+  _menu = undefined
+
   getProductsByCompanyId = (id, category)->
     results =
       pizza: _.map stores.store1.products['pizza'], constructPizzas
@@ -83,7 +85,30 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
     else
       menu = results
 
+    _menu = menu
+
     menu
+
+
+  retrieveProdFromCategory = (categoryId) ->
+
+    switch categoryId
+      when "EMPANADA"
+        _cat = "empanada"
+
+      when "PIZZA"
+        _cat = "pizza"
+      else
+        _cat = undefined
+
+    if angular.isUndefined( _menu )
+      getProductsByCompanyId()
+
+    angular.copy _menu[_cat]
+
+
+
+
 
   constructPizzas = (pizzaCategory)->
     pizzaCategory.products = _.map pizzaCategory.products, (pizza)->
@@ -106,6 +131,7 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
 
 
   getMenu: getProductsByCompanyId
+  getProductsFromCategory: retrieveProdFromCategory
 
 
 

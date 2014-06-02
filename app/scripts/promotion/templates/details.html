@@ -8,11 +8,33 @@
 
     <div class="list card">
 
-      <div class="item item-avatar">{{ promotion.details.description.long }}</div>
-
-      <div class="item item-avatar">{{ promotion.details.price | centsToMoney | currency }}</div>
+      <div class="item item-avatar">
+        {{ promotion.details.description.long }}
+        <br/>
+        {{ promotion.details.price | centsToMoney | currency }}
+      </div>
 
       <div class="item item-body">
+
+        <div class="item" data-ng-repeat="component in promotion.components">
+          <strong bindonce data-bo-bind="component.cat">RUBRO NUMERO: </strong>
+
+          <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="category in component.items">
+            <strong data-bo-bind="category.description"></strong>
+          </div>
+          <ion-list data-ng-repeat-end>
+            <ion-item bindonce data-ng-repeat="product in category.products">
+              <h3 bindonce data-bo-bind="product.desc"></h3>
+              <qty ng-model="product"></qty>
+
+            </ion-item>
+          </ion-list>
+
+        </div>
+
+
+
+
         <div class="button-bar">
           <a class="button" data-ng-click="details.select()">Seleccionar</a>
         </div>

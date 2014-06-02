@@ -169,5 +169,7 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
 
 
+    PromoTypeQuantity::getHash = () ->
+      "aa"
 
   return PromoTypeQuantity

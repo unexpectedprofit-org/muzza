@@ -1,4 +1,4 @@
-angular.module('Muzza.promo').factory 'PromotionTypeFactory', (Promotion,PromoTypeQuantity) ->
+angular.module('Muzza.promo').factory 'PromotionTypeFactory', (PromoTypeQuantity) ->
 
   PromotionTypeFactory = {}
 
@@ -7,6 +7,6 @@ angular.module('Muzza.promo').factory 'PromotionTypeFactory', (Promotion,PromoTy
       when 1
         return new PromoTypeQuantity object
       else
-        return new Promotion object
+        return null
 
   return PromotionTypeFactory

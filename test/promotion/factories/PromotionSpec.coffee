@@ -3,20 +3,74 @@ describe 'Promo', ->
   beforeEach ->
     module 'Muzza.promo'
 
-  Promotion = promo = undefined
+  Promotion = promo = promoTypeQty = undefined
 
   beforeEach ->
     inject (_Promotion_) ->
       Promotion = _Promotion_
 
-      promo = new Promotion {id:2,desc:"Promo 1: 6 empanadas...",price:54,details:"alala"}
+      promoTypeQty = {rules:[],components:[],details:{id:2,description:{short:"Promo 1: 6 empanadas...",long:"description loooong"},price:54}}
+      promo = new Promotion promoTypeQty
 
   describe "Init", ->
 
     it 'should construct a Promo object', ->
       expect(promo instanceof Promotion).toBeTruthy()
-      expect(promo.details.id).toBe 2
-      expect(promo.details.description.short).toBe "Promo 1: 6 empanadas..."
-      expect(promo.details.description.long).toBe "alala"
+      expect(promo.description).toBeDefined()
+      expect(promo.getHash).toBeDefined()
+
+      expect(promo.qty).toBe 1
+      expect(promo.cat).toBe "PROMO"
+
+      expect(promo.id).toBe 2
+      expect(promo.totalPrice).toBe 54
+      expect(promo.desc).toBe "Promo 1: 6 empanadas..."
+
+      expect(promo.items).toEqual []
       expect(promo.rules).toEqual []
-      expect(promo.details.price).toBe 54
+
+
+  it "should create a hash", ->
+    expect(promo.getHash()).toBe promoTypeQty.details.id + "|" + promoTypeQty.details.price
+
+
+  it "should create a description", ->
+    expect(promo.description()).toBe promoTypeQty.details.description.short
+
+  describe "getItems functionality", ->
+
+    it "should retrieve items with qty >= 1", ->
+
+      components = [
+        id:1
+        desc: "Empanadas"
+        items: [
+          desc: "Categ 1"
+          products: [
+            id:1
+            qty:2
+          ,
+            id:2
+            qty:1
+          ,
+            id:3
+            qty:0
+          ]
+        ,
+          desc: "Categ 2"
+          products:[
+            id:9
+            qty:0
+          ,
+            id:8
+            qty:3
+          ,
+            id:7
+            qty:0
+          ]
+        ]
+      ]
+      promoTypeQty = {rules:[],components:components,details:{id:2,description:{short:"Promo 1: 6 empanadas...",long:"description loooong"},price:54}}
+      promo = new Promotion promoTypeQty
+
+      expect(promo.items.length).toBe 3

@@ -72,7 +72,6 @@ describe "Cart", ->
       expect(isolatedScope.edit).toBeDefined()
       expect(isolatedScope.remove).toBeDefined()
       expect(isolatedScope.checkout).toBeDefined()
-      expect(isolatedScope.removePromotion).toBeDefined()
 
     it "should have a cart defined", ->
       $scope.$digest()
@@ -258,21 +257,3 @@ describe "Cart", ->
         isolatedScope.checkout()
         expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
           products: [pizza]
-          promotions: null
-
-  describe "when dealing with promotions", ->
-
-    it "should call the service if trying to remove it", ->
-
-      removeSpy = spyOn(ShoppingCartService, 'removePromotion')
-
-      $scope.$digest()
-      isolatedScope = element.isolateScope()
-
-      isolatedScope.removePromotion 2
-      expect(removeSpy).toHaveBeenCalledWith 2
-
-    it "should list items with remove function bound", ->
-      spyOn(ShoppingCartService, 'getPromotions').and.returnValue [{id:1,desc:"alal"}]
-      $scope.$digest()
-      expect(element.find('ion-item').html()).toContain "$parent.removePromotion(promo.details.id)"
