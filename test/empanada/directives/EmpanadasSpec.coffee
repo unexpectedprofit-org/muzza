@@ -176,3 +176,32 @@ describe "Empanadas", ->
       isolatedScope.remove()
 
       expect(isolatedScope.empanada).toBeUndefined()
+
+
+  describe "details section", ->
+
+    beforeEach ->
+      inject ( $compile, $rootScope) ->
+        $scope = $rootScope
+        $scope.menu =
+          empanada: [
+            "id": 1,
+            "desc": "Al Horno",
+            "products": [ empanada1, empanada2 ]
+          ,
+            "id": 2,
+            "desc": "Fritas",
+            "products": [ empanada3, empanada4, empanada5 ]
+          ]
+        element = angular.element('<empanadas ng-model="menu.empanada" data-nodetails="true"></empanadas>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+
+    it "should not show toppings", ->
+      expect(element.html()).not.toContain "product.toppings"
+
+    it "should not show price", ->
+      expect(element.html()).not.toContain "product.price"
+
+    it "should not show quantity", ->
+      expect(element.html()).not.toContain "item.qty"

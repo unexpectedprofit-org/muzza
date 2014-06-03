@@ -2,6 +2,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
+    hideDetails: '=nodetails'
   }
   require: 'ngModel'
   templateUrl: '../app/scripts/empanada/templates/menu-empanadas.html'
