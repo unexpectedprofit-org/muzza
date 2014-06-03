@@ -31,6 +31,14 @@ angular.module("Muzza.promo").directive "promotions", ($ionicModal, PromotionDet
 
       $scope.$watch 'promotion.components', (newObject) ->
         $scope.isSelectionValid = promotion.validate()
+
+
+        $scope.isPromoValid = {}
+        _.each $scope.promotion.rules, (rule) ->
+          ruleID = rule.id
+          response = promotion.validateRule ruleID
+          $scope.isPromoValid[ruleID] = response
+
       , true
 
 

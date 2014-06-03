@@ -26,6 +26,7 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
       angular.forEach object.rules, (element) ->
 
         tempRule =
+          id: "rule:" + element.cat + "-" + element.subcat
           cat: element.cat
           subcat: element.subcat
           qty: element.qty
@@ -43,7 +44,7 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
 
 
-    PromoTypeQuantity::validate = () ->
+    PromoTypeQuantity::validate = (otherRules) ->
 
       response =
         success: true
@@ -54,9 +55,13 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 #      console.log "usando rules: " + JSON.stringify @rules
 #      console.log "components: " + JSON.stringify @components
 
+      rulesToValidate = @rules
+      if angular.isDefined( otherRules )
+        rulesToValidate = otherRules
+
 
       components = @components
-      _.forEach @rules, (rule) ->
+      _.forEach rulesToValidate, (rule) ->
         elementsMatchingProps = []
 
         if !isValid then return
@@ -172,5 +177,13 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
       return response
 
+    PromoTypeQuantity::validateRule = (ruleId) ->
+      _rules = _.filter @rules, (elem) ->
+        elem.id is ruleId
+
+      if _rules.length is 0
+        return {success:false,details:[]}
+
+      @validate createRulesArray {rules:_rules,price:0}
 
   return PromoTypeQuantity

@@ -42,6 +42,7 @@ angular.module('Muzza.promo').service 'PromotionService', ($log, ProductService)
         filteredProducts[ruleCat] = []
 
       _.each _tempWithZero, (elem) ->
+        elem.ruleId = rule.id
         filteredProducts[ruleCat].push elem
 
     returnResults = {}

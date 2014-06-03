@@ -21,17 +21,21 @@
         {{ promotion.details.description.long }}
         <br/>
         {{ promotion.details.price | centsToMoney | currency }}
+
+        <pre>
+        TODOS: {{isSelectionValid | json }}
+        </pre>
       </div>
 
       <div class="item item-body">
 
         <pizzas bindonce data-ng-model="promotion.components.PIZZA" data-nodetails="true"></pizzas>
-        <empanadas bindonce data-ng-model="promotion.components.EMPANADA" data-nodetails="true"></empanadas>
+        <empanadas bindonce data-ng-model="promotion.components.EMPANADA" data-nodetails="true" validationrules="isPromoValid"></empanadas>
 
         <div class="button-bar">
           <a class="button"
              data-ng-click="details.select()"
-             data-ng-disabled="isSelectionValid.success">Seleccionar</a>
+             data-ng-disabled="!isSelectionValid.success">Seleccionar</a>
         </div>
 
         <cancel-selection></cancel-selection>

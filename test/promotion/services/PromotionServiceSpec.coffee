@@ -54,6 +54,7 @@ describe 'PromotionService', ->
 
       expect(result['EMPANADA']).toBeDefined()
       expect(result['EMPANADA'].length).toBe 1
+      expect(result['EMPANADA'][0].ruleId).toBe rules[0].id
       expect(result['EMPANADA'][0].description).toBe "Fritanga"
       expect(result['EMPANADA'][0].products.length).toBe 2
 

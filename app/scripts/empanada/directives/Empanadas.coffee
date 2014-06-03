@@ -3,6 +3,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
   scope: {
     menu: '=ngModel'
     hideDetails: '=nodetails'
+    isPromoValid: '=validationrules'
   }
   require: 'ngModel'
   templateUrl: '../app/scripts/empanada/templates/menu-empanadas.html'
