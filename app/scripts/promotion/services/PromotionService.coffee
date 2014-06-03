@@ -26,7 +26,7 @@ angular.module('Muzza.promo').service 'PromotionService', ($log, ProductService)
       result = _.filter products, (prod) ->
         prod.id is parseInt(ruleProp2)
 
-    return result
+    result
 
   getPromoComponentsList = (promotionRules) ->
     filteredProducts = {}
@@ -50,6 +50,6 @@ angular.module('Muzza.promo').service 'PromotionService', ($log, ProductService)
       cate = rule.cat
       returnResults[cate] = filteredProducts[cate]
 
-    return returnResults
+    returnResults
 
   createPromotionComponentsList: getPromoComponentsList
