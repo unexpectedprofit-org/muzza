@@ -1,9 +1,3 @@
-angular.module('Muzza.order').factory 'OrderRef', (Firebase, ORDERURL)->
-
-  return (toAppend)->
-    new Firebase(ORDERURL + toAppend)
-
-
 angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$firebase, OrderRef) ->
 
   order = {}
