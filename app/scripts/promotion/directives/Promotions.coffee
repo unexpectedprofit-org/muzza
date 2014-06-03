@@ -1,4 +1,4 @@
-angular.module("Muzza.promo", ["Muzza.services"]).directive "promotions", ($ionicModal, PromotionDetails, $q, PromotionService) ->
+angular.module("Muzza.promo").directive "promotions", ($ionicModal, PromotionDetails, $q, PromotionService) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
