@@ -1,5 +1,23 @@
 describe 'Order Service', ->
 
+  firebaseStub = ->
+    # https://github.com/firebase/angularFire-seed/blob/master/test/unit/servicesSpec.js
+    # firebase is invoked using new Firebase, but we need a static ref
+    # to the functions before it is instantiated, so we cheat here by
+    # attaching the functions as Firebase.fns, and ignore new (we don't use `this` or `prototype`)
+    FirebaseStub = ->
+      FirebaseStub.fns
+
+    FirebaseStub.fns = callbackVal: null
+    customSpy FirebaseStub.fns, "$set", (value, cb) ->
+      cb and cb(FirebaseStub.fns.callbackVal)
+
+    FirebaseStub
+
+  customSpy = (obj, m, fn) ->
+    obj[m] = fn
+    spyOn(obj, m).and.callThrough()
+
   beforeEach ->
     module 'Muzza.order'
     module 'Muzza.cart'
@@ -8,6 +26,9 @@ describe 'Order Service', ->
     module ($provide) ->
       $provide.value 'ShoppingCartService',
         getCart: () -> []
+      $provide.value '$firebase', firebaseStub()
+      $provide.value 'Firebase', firebaseStub()
+      $provide.value 'OrderRef', firebaseStub()
       return null
 
   OrderService = ShoppingCartService = getCartSpy = undefined
@@ -18,15 +39,6 @@ describe 'Order Service', ->
       OrderService = _OrderService_
 
     getCartSpy = spyOn(ShoppingCartService, 'getCart').and.callThrough()
-
-  describe "place functionality", ->
-
-    it "should call Shopping cart to get product", ->
-      OrderService.place {}
-
-      expect(getCartSpy).toHaveBeenCalled()
-      expect(getCartSpy.calls.count()).toBe 1
-
 
   describe 'chooseDeliveryOption', ->
 
@@ -57,15 +69,15 @@ describe 'Order Service', ->
 
   describe 'submitOrder', ->
 
-    it 'should log the order', ->
-      inject (Pizza, $log)->
+    it 'should push the order to firebase', ->
+      inject (Pizza, $firebase)->
         cart =
           products: [new Pizza {id:1, desc:'Muzza', qty:1}]
           promotions: null
+          contact: {name: 'San'}
           totalPrice: ()-> null
-        spyOn($log, 'log')
         OrderService.createOrder(cart)
         order = OrderService.retrieveOrder()
         OrderService.submitOrder()
-        expect($log.log).toHaveBeenCalledWith(order)
+        expect($firebase.fns.$set).toHaveBeenCalledWith(order)
 

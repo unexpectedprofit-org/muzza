@@ -10,11 +10,12 @@ angular.module("Muzza.qty", [])
 angular.module("Muzza.facebook", ['firebase'])
 angular.module("Muzza.google", ['firebase'])
 angular.module("Muzza.twitter", ['firebase'])
+angular.module("Muzza.config",[])
 
 angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empanadas", "Muzza.cart",
     "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants",
     "Muzza.order", "Muzza.promo", "Muzza.delivery", "Muzza.contact", "Muzza.review", "Muzza.qty", "Muzza.facebook"
-    , "Muzza.google", "Muzza.twitter"])
+    , "Muzza.google", "Muzza.twitter", "Muzza.config"])
 
 angular.module("Muzza").run ($ionicPlatform) ->
   $ionicPlatform.ready ->

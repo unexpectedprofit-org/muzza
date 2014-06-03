@@ -12,7 +12,6 @@ angular.module('Muzza.twitter').directive 'twitterLogin', ($firebase, $firebaseS
 
     $scope.login = ()->
       auth.$login('twitter', {rememberMe: true}).then (user)->
-        console.log user
         $scope.user.twitterId =  user.uid
         $scope.user.name = user.thirdPartyUserData.name
         $scope.user.email = user.thirdPartyUserData.email

@@ -1,19 +1,12 @@
-angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,PlaceOrderResponse, $log) ->
+angular.module('Muzza.order').factory 'OrderRef', (Firebase, ORDERURL)->
+
+  return (toAppend)->
+    new Firebase(ORDERURL + toAppend)
+
+
+angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$firebase, OrderRef) ->
 
   order = {}
-
-  placeOrder = () ->
-    products = ShoppingCartService.getCart()
-    order = {}
-
-    #response/call to backend (order, products)
-
-    response =
-      status: "success"
-      ordenNumber: 'AXFFJ182J'
-      date: new Date()
-
-    new PlaceOrderResponse response, products
 
   setDelivery = (option)->
     order.delivery = option
@@ -28,9 +21,12 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,Place
     angular.extend(order, cart)
 
   sendOrder = ->
-    $log.log order
+    order.totalPrice = order.totalPrice()
+    ref = OrderRef(order.contact.phone)
+    fireOrder = $firebase(ref)
+    fireOrder.$set(order)
+#   TODO: clean order and references
 
-  place: placeOrder
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
   addContactInfo: setContactInfo
