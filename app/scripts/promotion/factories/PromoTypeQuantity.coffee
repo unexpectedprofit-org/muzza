@@ -45,6 +45,10 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
     PromoTypeQuantity::validate = () ->
 
+      response =
+        success: true
+        details: []
+
       isValid = true
 
 #      console.log "usando rules: " + JSON.stringify @rules
@@ -69,6 +73,8 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
         if resultSetArray.length is 0
 #          console.log "NO VALIDA - CATEGORY"
           isValid = false
+          response.details.push {rule: rule, cause: "category"}
+          response.success = false
           return
         ############################filter by category############################
 
@@ -157,11 +163,14 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 #          console.log "rule qty: " + rule.qty
 #          console.log "current qty: " + total
 
+          response.details.push {rule:rule,cause:"quantity",qty:total}
+          response.success = false
+
           isValid = false
           return
         ############################filter by quantity############################
 
-      return isValid
+      return response
 
 
   return PromoTypeQuantity

@@ -8,6 +8,15 @@
 
     <div class="list card">
 
+      <div class="item item-avatar" data-ng-show="!isSelectionValid.success" style="background-color:#008800">
+
+        Debe seleccionar {{isSelectionValid.details[0].rule.qty}} {{isSelectionValid.details[0].rule.cat}}
+        <br/>
+        Te falta {{ isSelectionValid.details[0].rule.qty - isSelectionValid.details[0].qty }}
+
+        <!--<pre>{{ isSelectionValid | json }}</pre>-->
+      </div>
+
       <div class="item item-avatar">
         {{ promotion.details.description.long }}
         <br/>
@@ -22,7 +31,7 @@
         <div class="button-bar">
           <a class="button"
              data-ng-click="details.select()"
-             data-ng-disabled="!isSelectionValid">Seleccionar</a>
+             data-ng-disabled="isSelectionValid.success">Seleccionar</a>
         </div>
 
         <cancel-selection></cancel-selection>

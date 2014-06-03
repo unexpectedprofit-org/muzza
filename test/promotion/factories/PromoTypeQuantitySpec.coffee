@@ -47,7 +47,8 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
 
     describe "More Cases", ->
@@ -64,7 +65,8 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1, empanada2, empanada3 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
       it "should validate when more than 1 subcat, different flavors", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:4}
@@ -83,7 +85,8 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada4 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
       it "should NOT validate if quantity not met, only one product", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:4}
@@ -95,7 +98,9 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
+        expect(response.details).toContain {rule:promo.rules[0],cause:"quantity",qty:4}
 
       it "should NOT validate if quantity not met, several products", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:8}
@@ -109,7 +114,9 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1, empanada2, empanada3 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
+        expect(response.details).toContain {rule:promo.rules[0],cause:"quantity",qty:9}
 
   describe "Promo2: 6 empanadas Fritas", ->
 
@@ -129,7 +136,8 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
 
     describe "More Cases", ->
@@ -146,7 +154,8 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1, empanada2, empanada3 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
       it "should validate when more than 1 subcat, different flavors", ->
         empanada1 = new Empanada {id:1,subcat:2,qty:1}
@@ -164,7 +173,8 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada3 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
   describe "Promo3: 2 empanadas cualquiera y 1 pizza especial", ->
 
@@ -198,7 +208,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
 
     describe "More Cases", ->
@@ -227,7 +238,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
       it "should NOT validate if not pizza especial", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:1}
@@ -248,7 +260,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
   describe "Promo4: 6 empanadas horno y 1 pizza especial grande", ->
 
@@ -274,7 +287,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
     describe "More Cases", ->
 
@@ -302,7 +316,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
       it "should NOT validate when empanadas not horno", ->
         empanada1 = new Empanada {id:2,subcat:2,qty:6}
@@ -320,7 +335,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
       it "should NOT validate when not 1 pizza grande", ->
         empanada1 = new Empanada {id:3,subcat:1,qty:6}
@@ -341,7 +357,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
       it "should NOT validate when not 1 pizza especial", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:6}
@@ -359,7 +376,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
   describe "Promo5: 12 empanadas horno y 2 pizza chica", ->
 
@@ -385,7 +403,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
 
     describe "More cases", ->
@@ -409,7 +428,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
       it "should NOT validate when no pizza chica", ->
         empanada1 = new Empanada {id:8,subcat:1,qty:12}
@@ -427,7 +447,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
       it "should NOT validate when only one pizza chica", ->
         empanada1 = new Empanada {id:8,subcat:1,qty:12}
@@ -447,7 +468,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
   describe "Promo6: 1 Grande de Jamon", ->
 
@@ -467,7 +489,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
 
 
     describe "More cases", ->
@@ -483,7 +506,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
       it "should NOT validate when pizza NOT jamon", ->
         pizza1 = new Pizza {id:99,subcat:1,qty:1,}
@@ -496,7 +520,8 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
-        expect(promo.validate()).toBeFalsy()
+        response = promo.validate()
+        expect(response.success).toBeFalsy()
 
   describe "Promo7: 5 empanadas horno, 6 fritas, 1 pizza de la casa", ->
 
@@ -536,4 +561,5 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1 ]
           ]
 
-        expect(promo.validate()).toBeTruthy()
+        response = promo.validate()
+        expect(response.success).toBeTruthy()
