@@ -59,17 +59,19 @@ describe 'Pizza', ->
     pizza.resetPrice()
     expect(pizza.totalPrice).toBe 50
 
-  it 'should generate the identifier hash dynamically', ->
-    pizza = new Pizza {id:1,desc:'Muzza',size:'grande',dough: 'molde',subcat:777}
-    expect(pizza.getHash()).toBe 'ID_BRAND|1|777|GRANDE|MOLDE'
+  describe 'getHash', ->
 
-  it 'should generate the identifier hash dynamically - case 2', ->
-    pizza = new Pizza {id:200,desc:'Muzza',size:'chica',dough:'molde',subcat:888}
-    expect(pizza.getHash()).toBe 'ID_BRAND|200|888|CHICA|MOLDE'
+    it 'should generate the identifier hash dynamically', ->
+      pizza = new Pizza {id:1,desc:'Muzza',size:'grande',dough: 'molde',subcat:777}
+      expect(pizza.getHash()).toBe 'ID_BRAND|1|777|GRANDE|MOLDE'
 
-  it 'should generate the identifier hash dynamically - case 3', ->
-    pizza = new Pizza {id:100,desc:'Muzza',size:'individual',dough:'piedra',subcat:999}
-    expect(pizza.getHash()).toBe 'ID_BRAND|100|999|INDIVIDUAL|PIEDRA'
+    it 'should generate the identifier hash dynamically - case 2', ->
+      pizza = new Pizza {id:200,desc:'Muzza',size:'chica',dough:'molde',subcat:888}
+      expect(pizza.getHash()).toBe 'ID_BRAND|200|888|CHICA|MOLDE'
+
+    it 'should generate the identifier hash dynamically - case 3', ->
+      pizza = new Pizza {id:100,desc:'Muzza',size:'individual',dough:'piedra',subcat:999}
+      expect(pizza.getHash()).toBe 'ID_BRAND|100|999|INDIVIDUAL|PIEDRA'
 
   it 'should update qty if the user adds 1', ->
     pizza = new Pizza( { id: 1, desc: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )

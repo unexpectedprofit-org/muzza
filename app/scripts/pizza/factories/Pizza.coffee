@@ -36,23 +36,8 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     if @qty <= 0 then @qty = 1
 
   Pizza::getHash = ()->
-    switch @size
-      when "grande"
-        _size = "GRANDE"
-      when "chica"
-        _size = "CHICA"
-      when "individual"
-        _size = "INDIVIDUAL"
-      else
-        _size = ""
-
-    switch @dough
-      when "molde"
-        _dough = "MOLDE"
-      when "piedra"
-        _dough = "PIEDRA"
-      else
-        _dough = ""
+    _size =  @size.toUpperCase() or ''
+    _dough = @dough.toUpperCase() or ''
 
     "ID_BRAND|" + @id + "|" + @subcat + "|" + _size + "|" + _dough
 
