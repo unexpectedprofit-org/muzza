@@ -198,3 +198,76 @@ angular.module('Muzza.constants',[]).constant 'stores',
         price:8000
         details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
       ]
+      "bebida": [
+        id:1
+        description:"Sin Alcohol"
+        products: [
+          id:1
+          desc:"Agua sin gas"
+          price:
+            base: 1000
+            size:
+              individual: 0
+              chica: 1000
+              grande: 2000
+          options: []
+        ,
+          id:2
+          desc:"Gaseosa Linea CocaCola"
+          price:
+            base: 1000
+            size:
+              individual: 0
+              chica: 1000
+              grande: 2000
+          options: ["Coca","Fanta","Sprite","Coca diet"]
+        ,
+          id:3
+          desc:"Agua saborizada Levite"
+          price:
+            base: 1500
+            size:
+              individual: 0
+              chica: 1000
+              grande: 2000
+          options: ["Naranja","Manzana","Pomelo"]
+        ,
+          id:4
+          desc:"Agua saborizada Aquarius"
+          price:
+            base: 1500
+            size:
+              individual: 0
+              chica: 1000
+              grande: 2000
+          options: ["Durazno","Pera"]
+        ]
+      ,
+        id:2
+        description:"Cervezas"
+        products: [
+          id:1
+          desc:"Heineken"
+          price:
+            base: 1000
+            size:
+              individual: -1
+              chica: 1000
+        ,
+          id:2
+          desc:"Quilmes"
+          price:
+            base: 1000
+            size:
+              individual: 0
+              chica: 1000
+        ,
+          id:3
+          desc:"Stella Artois"
+          price:
+            base: 1000
+            size:
+              individual: 0
+              chica: 1000
+        ]
+      ]

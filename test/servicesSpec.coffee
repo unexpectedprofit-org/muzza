@@ -39,16 +39,21 @@ describe "services", ->
     )
 
     it 'should retrieve a list of categories with products and produce an array of models', ->
-      menu = ProductService.getMenu(1, undefined)
+      menu = ProductService.getMenu undefined, undefined
+
+      expect(_.toArray(menu).length).toBe 4
+      expect(menu.pizza.length > 0).toBeTruthy()
+      expect(menu.empanada.length > 0).toBeTruthy()
+      expect(menu.bebida.length > 0).toBeTruthy()
+      expect(menu.promo.length > 0).toBeTruthy()
+
       expect(menu.pizza[0].products[0].description()).toBeDefined()
-      expect( menu.empanada.length ).toBe 2
-      expect( menu.empanada[0].products.length ).toBe 6
-      expect( menu.promo.length ).toBe 3
 
     it 'should return only the array from an specific category', ->
-      menu = ProductService.getMenu(1, 'pizza')
+      menu = ProductService.getMenu 1, 'pizza'
+
+      expect(_.toArray(menu).length).toBe 1
       expect(menu.pizza).toBeDefined()
-      expect(menu.empanada).toBeUndefined()
 
 
 
