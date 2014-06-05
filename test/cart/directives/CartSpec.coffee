@@ -28,11 +28,11 @@ describe "Cart", ->
   pizza1 = pizza2 = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _ShoppingCartService_, _Pizza_, _Empanada_, _Bebida_)->
-      ShoppingCartService = _ShoppingCartService_
-      Pizza = _Pizza_
-      Empanada = _Empanada_
-      Bebida = _Bebida_
+    inject ($compile, $rootScope, $injector) ->
+      ShoppingCartService = $injector.get 'ShoppingCartService'
+      Pizza = $injector.get 'Pizza'
+      Empanada = $injector.get 'Empanada'
+      Bebida = $injector.get 'Bebida'
       $scope = $rootScope
       element = angular.element('<cart></cart>')
       $compile(element)($rootScope)
