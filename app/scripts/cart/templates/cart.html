@@ -26,7 +26,7 @@
     <ion-item nav-clear data-ng-repeat="item in cart.products track by $index | orderBy:'+cat'">
       <div style="white-space: normal">{{item.cat}} {{item.description()}}</div>
       <div>Cantidad: {{item.qty}}
-          <qty ng-model="item" data-ng-show="showEdit" style="font: 0.5em;"></qty>
+          <qty ng-model="item" min="1" data-ng-show="showEdit" style="font: 0.5em;"></qty>
       </div>
       <div>Precio: {{item.totalPrice * item.qty | centsToMoney | currency}}</div>
       <button
