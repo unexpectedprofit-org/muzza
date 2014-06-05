@@ -195,20 +195,6 @@ describe "Cart", ->
         isolatedScope.edit(pizza)
         expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:1}
 
-      it "should redirect to EMPANADA edit view", ->
-        empanada = new Empanada {desc:'Pollo',qty:1,totalPrice:2000,cat:'EMPANADA', id:45, type:'alhorno', price:{base:2000}, cartItemKey: 1}
-
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [empanada]
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-
-        onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
-        editItem = spyOn(isolatedScope, 'edit').and.callThrough()
-
-
-        isolatedScope.edit(empanada)
-        expect(onState).toHaveBeenCalledWith 'app.empanada', {empanadaId:1}
-
       it "should redirect to menu default view if no categ matches", ->
 
         spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '45-newproduct',cat: 'NEW_CATEGORY'}]
