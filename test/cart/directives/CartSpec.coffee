@@ -14,7 +14,6 @@ describe "Cart", ->
       $provide.value "ShoppingCartService",
         getCart: ()-> null
         getTotalPrice: () -> null
-        getPromotions: () -> null
         removePromotion: () -> null
 
       $provide.value "$state",
@@ -175,7 +174,7 @@ describe "Cart", ->
         isolatedScope.edit(pizza1)
         expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza', qty:1, totalPrice: 10}
 
-    ddescribe "edit function show redirect to proper view", ->
+    describe "edit function show redirect to proper view", ->
 
       onState = $mystate = undefined
 
