@@ -60,7 +60,7 @@ describe 'Bebida', ->
 
   it 'should generate the identifier hash dynamically', ->
     bebida = new Bebida {id:878,desc:'Quilmes',size:'grande',option: 'Stout',subcat:777}
-    expect(bebida.getHash()).toBe 'ID_BRAND|878|777|GRANDE|Stout'
+    expect(bebida.getHash()).toBe 'ID_BRAND|878|777|GRANDE|STOUT'
 
   it 'should generate the identifier hash dynamically - case 2', ->
     bebida = new Bebida {id:200,desc:'Muzza',size:'chica',subcat:888}

@@ -32,20 +32,8 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
     if @qty < 0 then @qty = 0
 
   Bebida::getHash = ()->
-    switch @size
-      when "grande"
-        _size = "GRANDE"
-      when "chica"
-        _size = "CHICA"
-      when "individual"
-        _size = "INDIVIDUAL"
-      else
-        _size = ""
-
-    if @option is undefined
-      _option = ""
-    else
-      _option = @option
+    _size = @size.toUpperCase() or ''
+    _option = @option?.toUpperCase() or ''
 
     "ID_BRAND|" + @id + "|" + @subcat + "|" + _size + "|" + _option
 
