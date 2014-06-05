@@ -8,6 +8,7 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
 
       switch item.cat
         when 'PIZZA'    then $state.go 'app.pizza', { pizzaId: item.cartItemKey }
+        when 'BEBIDA'   then $state.go 'app.bebida', { bebidaId: item.cartItemKey }
         else $state.go 'app.menu'
 
     $scope.remove = (cartItemKey) ->

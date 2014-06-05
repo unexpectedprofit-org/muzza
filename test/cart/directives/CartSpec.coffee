@@ -6,6 +6,7 @@ describe "Cart", ->
     module 'Muzza.directives'
     module 'Muzza.pizzas'
     module 'Muzza.empanadas'
+    module 'Muzza.bebidas'
     module 'ionic'
 
     module ($provide) ->
@@ -24,14 +25,15 @@ describe "Cart", ->
 
       return null
 
-  $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = undefined
+  $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = Bebida = undefined
   pizza1 = pizza2 = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _ShoppingCartService_, _Pizza_, _Empanada_)->
+    inject ($compile, $rootScope, _ShoppingCartService_, _Pizza_, _Empanada_, _Bebida_)->
       ShoppingCartService = _ShoppingCartService_
       Pizza = _Pizza_
       Empanada = _Empanada_
+      Bebida = _Bebida_
       $scope = $rootScope
       element = angular.element('<cart></cart>')
       $compile(element)($rootScope)
@@ -173,7 +175,7 @@ describe "Cart", ->
         isolatedScope.edit(pizza1)
         expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza', qty:1, totalPrice: 10}
 
-    describe "edit function show redirect to proper view", ->
+    ddescribe "edit function show redirect to proper view", ->
 
       onState = $mystate = undefined
 
@@ -194,6 +196,19 @@ describe "Cart", ->
 
         isolatedScope.edit(pizza)
         expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:1}
+
+      it "should redirect to BEBIDA edit view", ->
+        bebida = new Bebida {desc:'Muzza',qty:1,totalPrice:1000,cat:'BEBIDA',size:"chica",id:1,price:{base:1000},cartItemKey: 1}
+
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [bebida]
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+        onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
+        editItem = spyOn(isolatedScope, 'edit').and.callThrough()
+
+        isolatedScope.edit bebida
+        expect(onState).toHaveBeenCalledWith 'app.bebida', {bebidaId:1}
 
       it "should redirect to menu default view if no categ matches", ->
 
