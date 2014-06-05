@@ -36,7 +36,6 @@ describe 'EmpanadaOrder', ->
 
       expect(order.add).toBeDefined()
       expect(order.cancel).toBeDefined()
-      expect(order.edit).toBeDefined()
       expect(order.show).toBeDefined()
       expect(order.hide).toBeDefined()
 
@@ -94,14 +93,3 @@ describe 'EmpanadaOrder', ->
 
       expect(removeSpy).toHaveBeenCalled()
       expect(removeSpy.calls.count()).toBe 1
-
-
-  describe "When user decides to edit the selected product and options", ->
-
-    it "should display quantity modal", ->
-      empanadaToEdit = {id:1, desc:'Pollo', type:'Al Horno', qty:3, price: 10}
-      chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
-      order.edit empanadaToEdit
-
-      expect(chooseSpy).toHaveBeenCalledWith empanadaToEdit
-      expect(chooseSpy.calls.count()).toBe 1

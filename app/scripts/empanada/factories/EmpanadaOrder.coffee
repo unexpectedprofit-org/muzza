@@ -19,7 +19,4 @@ angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService,
     @hide()
     @modal.scope.remove()
 
-  EmpanadaOrder::edit = (empanada) ->
-    @modal.scope.choose empanada
-
   return EmpanadaOrder
