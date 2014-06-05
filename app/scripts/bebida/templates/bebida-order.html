@@ -12,7 +12,7 @@
                 <div>{{bebida.totalPrice * bebida.qty | centsToMoney | currency}}</div>
             </div>
             <div class="item item-avatar">
-                <qty ng-model="bebida"></qty>
+                <qty ng-model="bebida" min="1"></qty>
             </div>
 
             <div class="item item-body">

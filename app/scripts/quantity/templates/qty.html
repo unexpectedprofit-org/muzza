@@ -1,4 +1,4 @@
-<button class="button" data-ng-click="item.updateQty(-1)">
+<button class="button" data-ng-click="item.updateQty(-1)" data-ng-disabled="item.qty <= minAllowed">
     <i class="icon ion-minus"></i>
 </button>
 <button class="button button-clear button-positive" data-ng-disabled="true">

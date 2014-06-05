@@ -2,6 +2,7 @@ angular.module('Muzza.qty').directive 'qty', ()->
   restrict: 'EA'
   scope: {
     item: '=ngModel'
+    minAllowed: '=min'
     addButtonDisable: '=disableaddbutton'
   }
   require: 'ngModel'

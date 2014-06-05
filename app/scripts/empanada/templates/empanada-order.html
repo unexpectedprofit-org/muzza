@@ -13,26 +13,7 @@
           </div>
 
           <div class="item item-avatar">
-
-            <button
-                    class="button"
-                    data-ng-disabled="empanada.minReached()"
-                    data-ng-click="empanada.updateQty(-1)"
-                    >
-              <i class="icon ion-minus"></i>
-            </button>
-
-            <button class="button button-clear button-positive" data-ng-disabled="true">
-              {{empanada.qty}}
-            </button>
-
-            <button class="button"
-                    data-ng-disabled="empanada.maxReached()"
-                    data-ng-click="empanada.updateQty(+1)"
-                    >
-              <i class="icon ion-plus-round"></i>
-            </button>
-
+            <qty ng-model="empanada" min="1"></qty>
           </div>
 
 
