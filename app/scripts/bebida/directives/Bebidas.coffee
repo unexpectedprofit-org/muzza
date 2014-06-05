@@ -1,4 +1,4 @@
-angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, ShoppingCartService, BebidaSize, BebidaOrder, $state, $stateParams, $q, Bebida) ->
+angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, ShoppingCartService, BebidaSize, BebidaOrder, BebidaPromoOrder, $state, $stateParams, $q, Bebida) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
@@ -15,14 +15,29 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'size']
+    $scope.stepsPromo = ['orderPromo', 'size']
 
     size = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-size.html',
+      scope: $scope,
+      animation: 'slide-in-up'
+
+    orderPromo = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-promo.html',
       scope: $scope,
       animation: 'slide-in-up'
 
     order = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-order.html',
       scope: $scope,
       animation: 'slide-in-up'
+
+
+    $scope.choosePromoItem = (bebida) ->
+
+      $scope.bebida = new Bebida bebida
+
+      if $scope.bebida?
+        angular.forEach $scope.stepsPromo, (key, val)->
+          modal = $scope[key]
+          modal.show()
 
     $scope.choose = (bebida, hashKey)->
 
@@ -46,10 +61,11 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
 
     init = ->
 
-      $q.all([order,size]).then (views)->
+      $q.all([order,size,orderPromo]).then (views)->
 
         $scope.order = new BebidaOrder views[0]
         $scope.size = new BebidaSize views[1]
+        $scope.orderPromo = new BebidaPromoOrder views[2]
 
         #        If its coming from the shopping cart
         if $stateParams.bebidaId then $scope.choose(null, $stateParams.bebidaId)

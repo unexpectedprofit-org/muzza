@@ -197,6 +197,21 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ]
         price:8000
         details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
+      ,
+        id: 4
+        desc: "6 empanadas + 1 agua levite"
+        cat: 1 #PromoTypeQuantity
+        rules: [
+          cat: 'EMPANADA'
+          qty: 6
+          subcat: '|||'
+        ,
+          cat: 'BEBIDA'
+          qty: 1
+          subcat: '|1||'
+        ]
+        price: 5000
+        details: "Llevando 6 empanadas de cualquier gusto + 1 levite te ahorras una bocha. Aprovechala!!!!!"
       ]
       "bebida": [
         id:1

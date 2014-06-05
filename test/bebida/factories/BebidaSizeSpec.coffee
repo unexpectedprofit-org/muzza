@@ -32,7 +32,7 @@ describe 'BebidaSize', ->
       expect(size.show).toBeDefined()
       expect(size.hide).toBeDefined()
 
-  describe "When the user is displayed is the list of options", ->
+  describe "When the user is displayed the list of options", ->
 
     it "should calculate the initial total price to match the base price when no other options has been selected yet", ->
       modal.scope.bebida.totalPrice = undefined
