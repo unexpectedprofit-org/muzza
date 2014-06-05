@@ -44,19 +44,19 @@ describe 'Bebida', ->
 
   it 'should generate a description from default values', ->
     bebida = new Bebida()
-    expect(bebida.description()).toBeUndefined()
+    expect(bebida.getDescription()).toBeUndefined()
 
   it 'should generate a description from changed values', ->
     bebida = new Bebida {desc:'Quilmes',size:'grande',option:'Stout'}
-    expect(bebida.description()).toBe 'Quilmes grande Stout'
+    expect(bebida.getDescription()).toBe 'Quilmes grande Stout'
 
   it 'should generate a description from changed values - no size', ->
     bebida = new Bebida {desc:'Quilmes'}
-    expect(bebida.description()).toBe 'Quilmes'
+    expect(bebida.getDescription()).toBe 'Quilmes'
 
   it 'should generate a description from changed values - no option', ->
     bebida = new Bebida {size:'grande', desc: 'Quilmes'}
-    expect(bebida.description()).toBe 'Quilmes grande'
+    expect(bebida.getDescription()).toBe 'Quilmes grande'
 
   it 'should generate the identifier hash dynamically', ->
     bebida = new Bebida {id:878,desc:'Quilmes',size:'grande',option: 'Stout',subcat:777}

@@ -7,7 +7,7 @@
         <div class="list card">
             <div class="item item-avatar">
                 <img src="">
-                <h2>Bebida {{bebida.desc}}</h2>
+                <h2>Bebida {{bebida.getDescription()}}</h2>
                 <p>{{bebida.size}} {{bebida.option}}</p>
                 <div>{{bebida.totalPrice * bebida.qty | centsToMoney | currency}}</div>
             </div>

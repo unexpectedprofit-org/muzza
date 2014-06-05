@@ -24,6 +24,7 @@ describe 'Empanada', ->
       expect(newEmpanada.updateQty).toBeDefined()
       expect(newEmpanada.minReached).toBeDefined()
       expect(newEmpanada.maxReached).toBeDefined()
+      expect(newEmpanada.getDescription).toBeDefined()
 
 #    it "should init the object", ->
 #      newEmpanada = new Empanada {}
@@ -37,8 +38,9 @@ describe 'Empanada', ->
       newEmpanada = new Empanada fromObject
       expect(newEmpanada.qty).toBe 1
       expect(newEmpanada.cat).toBe "EMPANADA"
-      expect(newEmpanada.subcat).toBe 98
-      expect(newEmpanada.id).toBe 505
+      expect(newEmpanada.subcat).toBe fromObject.subcat
+      expect(newEmpanada.type).toBe fromObject.type
+      expect(newEmpanada.id).toBe fromObject.id
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.totalPrice).toBe fromObject.price.base
 
@@ -95,11 +97,9 @@ describe 'Empanada', ->
 
   it 'should generate a description from default values', ->
     empanada = new Empanada fromObject
-    description = empanada.description()
-    expect(description).toBe fromObject.desc + fromObject.type
+    expect(empanada.getDescription()).toBe fromObject.desc + fromObject.type
 
   it 'should generate a description from changes values', ->
     empanada = new Empanada fromObject
     empanada.desc = 'JyQ'
-    description = empanada.description()
-    expect(description).toBe 'JyQ' + fromObject.type
+    expect(empanada.getDescription()).toBe 'JyQ' + fromObject.type

@@ -47,7 +47,7 @@ describe "services", ->
       expect(menu.bebida.length > 0).toBeTruthy()
       expect(menu.promo.length > 0).toBeTruthy()
 
-      expect(menu.pizza[0].products[0].description()).toBeDefined()
+      expect(menu.pizza[0].products[0].getDescription()).toBeDefined()
 
     it 'should return only the array from an specific category', ->
       menu = ProductService.getMenu 1, 'pizza'

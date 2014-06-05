@@ -46,13 +46,11 @@ describe 'Pizza', ->
 
   it 'should generate a description from default values', ->
     pizza = new Pizza()
-    description = pizza.description()
-    expect(description).toBe ' de  '
+    expect(pizza.getDescription()).toBe ' de  '
 
   it 'should generate a description from changes values', ->
     pizza = new Pizza({size:'grande', dough:'molde', desc: 'Muzza'})
-    description = pizza.description()
-    expect(description).toBe 'grande de Muzza molde'
+    expect(pizza.getDescription()).toBe 'grande de Muzza molde'
 
   it 'should reset the totalPrice to the base price', ->
     pizza = new Pizza({price:{base:50}})

@@ -16,7 +16,7 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
   Bebida::resetPrice = () ->
     @totalPrice = @price.base
 
-  Bebida::description = ()->
+  Bebida::getDescription = ()->
     _result = @desc
 
     if @size isnt undefined

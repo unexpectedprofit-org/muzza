@@ -96,8 +96,8 @@ describe "Cart", ->
       $scope.$digest()
       items = element.find('ion-list').html()
 
-      expect(items).toContain empanada.description()
-      expect(items).toContain pizza1.description()
+      expect(items).toContain empanada.getDescription()
+      expect(items).toContain pizza1.getDescription()
 
     it "should show total price", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]

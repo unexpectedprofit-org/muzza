@@ -88,7 +88,7 @@ describe 'PizzaOrder', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
       item = new Pizza({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
       order.add item
-      expect(item.description).toBeDefined()
+      expect(item.getDescription()).toBeDefined()
 
   describe "When user eliminates selected product and options", ->
 

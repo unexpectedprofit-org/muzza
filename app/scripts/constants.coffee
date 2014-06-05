@@ -7,37 +7,37 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "Al Horno"
         "products": [
           "id": 1
-          "desc": "Carne cortada a cuchillo"
+          description: "Carne cortada a cuchillo"
           "toppings": "Carne / Huevo / Morron"
           "price":
             base:1800
         ,
           "id": 2
-          "desc": "Calabresa"
+          description: "Calabresa"
           "toppings": "Muzzarella / Longaniza / Salsa"
           "price":
             base: 1800
         ,
           "id": 3
-          "desc": "Cebolla y queso"
+          description: "Cebolla y queso"
           "toppings": "Muzzarella / Cebolla"
           "price":
             base: 1800
         ,
           "id": 4
-          "desc": "Pollo"
+          description: "Pollo"
           "toppings": "Pollo / Cebolla"
           "price":
             base: 1800
         ,
           "id": 5
-          "desc": "Carne picante"
+          description: "Carne picante"
           "toppings": "Carne / Cebolla"
           "price":
             base: 1800
         ,
           "id": 6
-          "desc": "Verdura"
+          description: "Verdura"
           "toppings": "Espinaca / Huevo / Salsa Blanca"
           "price":
             base: 1800
@@ -47,19 +47,19 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "Fritas",
         "products": [
           "id": 7
-          "desc": "Cebolla y queso"
+          description: "Cebolla y queso"
           "toppings": "Muzzarella / Cebolla"
           "price":
             base: 1800
         ,
           "id": 8
-          "desc": "Pollo"
+          description: "Pollo"
           "toppings": "Pollo / Cebolla"
           "price":
             base: 2000
         ,
           "id": 9
-          "desc": "Verdura"
+          description: "Verdura"
           "toppings": "Espinaca / Huevo / Salsa Blanca"
           "price":
             base: 2000
@@ -70,7 +70,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         "description": "Pizzas Especiales"
         "products": [
           "id": 90
-          "desc": "Muzzarella"
+          description: "Muzzarella"
           "toppings": "Muzzarella / Salsa tomate / Aceitunas"
           "price":
             base: 5000
@@ -83,7 +83,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
               "al molde": 3
         ,
           "id": 91
-          "desc": "Fuggazetta"
+          description: "Fuggazetta"
           "toppings": "Muzzarella / Cebollas"
           "price":
             base: 5500
@@ -96,7 +96,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
               "al molde": 0
         ,
           "id": 92
-          "desc": "Jamon y Morrones"
+          description: "Jamon y Morrones"
           "toppings": "Muzzarella / Jamon / Morron"
           "price":
             base: 7500
@@ -109,7 +109,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
               "al molde": 0
         ,
           "id": 93
-          "desc": "Calabresa"
+          description: "Calabresa"
           "toppings": "Muzzarella / Longaniza / Salsa"
           "price":
             base: 5000
@@ -126,7 +126,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         "description": "Pizzas de la Casa"
         "products": [
           "id": 94
-          "desc": "Muzzarella con tomate al natural y aceitunas"
+          description: "Muzzarella con tomate al natural y aceitunas"
           "toppings": "Muzzarella / tomate / Aceitunas"
           "price":
             base: 8000
@@ -139,7 +139,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
               "al molde": 3
         ,
           "id": 95
-          "desc": "Espinaca con salsa blanca o muzzarella"
+          description: "Espinaca con salsa blanca o muzzarella"
           "toppings": "Espinaca / muzzarella"
           "price":
             base: 7500

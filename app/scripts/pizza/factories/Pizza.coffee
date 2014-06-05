@@ -25,7 +25,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     if @totalPrice is undefined then @totalPrice = 0
     formatPrice(@totalPrice)
 
-  Pizza::description = ()->
+  Pizza::getDescription = ()->
     @size + ' de ' + @desc + ' ' + @dough
 
   Pizza::resetPrice = ()->
