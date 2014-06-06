@@ -4,7 +4,7 @@ angular.module('Muzza.contact').directive 'contact', (OrderService,$state, $stat
   templateUrl: '../app/scripts/contact/templates/contact.html'
   link: ($scope, ele, attrs, ctrl)->
 
-    $scope.contact = {}
+    $scope.contact = OrderService.retrieveConnectionInfo() or {}
 
     $scope.deliveryOption = $stateParams.method
 

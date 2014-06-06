@@ -83,8 +83,14 @@ describe 'Order Service', ->
 
   describe 'retrieveDelivery', ->
 
-    it ' should return the selected delivery option', ->
+    it 'should return the selected delivery option', ->
       OrderService.chooseDelivery('pickup')
       option = OrderService.retrieveDelivery()
       expect(option).toBe 'pickup'
+
+  describe 'getContactInfo', ->
+
+    it 'should return the filled contact information', ->
+      OrderService.addContactInfo({name:'San'})
+      expect(OrderService.retrieveConnectionInfo()).toEqual {name:'San'}
 

@@ -12,6 +12,7 @@ describe 'Contact', ->
       $provide.value 'OrderService',
         chooseDelivery: ()-> null
         addContactInfo: ()-> null
+        retrieveConnectionInfo: ()-> {name:'San'}
       return null
 
   OrderService = isolatedScope = $state = _stateParams_ = undefined
@@ -48,6 +49,12 @@ describe 'Contact', ->
       spyOn($state, 'go')
       isolatedScope.continue()
       expect($state.go).toHaveBeenCalledWith('app.menu')
+
+  describe 'when user has previosuly filled the form', ->
+
+    it 'should display the contact information', ->
+      spyOn(OrderService, 'retrieveConnectionInfo')
+      expect(isolatedScope.contact).toEqual {name:'San'}
 
 
 

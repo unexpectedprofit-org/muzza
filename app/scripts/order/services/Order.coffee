@@ -24,9 +24,13 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
   getDelivery =  ->
     order.delivery
 
+  getContactInfo = ->
+    order.contact
+
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
   addContactInfo: setContactInfo
   createOrder: createOrder
   submitOrder: sendOrder
   retrieveDelivery: getDelivery
+  retrieveConnectionInfo: getContactInfo
