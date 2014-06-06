@@ -21,8 +21,12 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
     fireOrder.$set(order)
 #   TODO: clean order and references
 
+  getDelivery =  ->
+    order.delivery
+
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
   addContactInfo: setContactInfo
   createOrder: createOrder
   submitOrder: sendOrder
+  retrieveDelivery: getDelivery

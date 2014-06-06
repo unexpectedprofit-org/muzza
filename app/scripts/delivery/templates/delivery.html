@@ -1,13 +1,15 @@
 <div class="list">
     <label class="item item-radio">
-        <input type="radio" name="deliveryOption" data-ng-click="chooseDelivery('delivery')">
+        <input type="radio" name="deliveryOption" data-ng-click="chooseDelivery('delivery')"
+               value="delivery" data-ng-model="option">
         <div class="item-content">
             Delivery
         </div>
         <i class="radio-icon ion-checkmark"></i>
     </label>
     <label class="item item-radio">
-        <input type="radio" name="deliveryOption" data-ng-click="chooseDelivery('pickup')">
+        <input type="radio" name="deliveryOption" data-ng-click="chooseDelivery('pickup')"
+               value="pickup" data-ng-model="option">
         <div class="item-content">
             Retira en Local
         </div>

@@ -9,6 +9,7 @@ describe 'Delivery', ->
         go: ()-> null
       $provide.value 'OrderService',
         chooseDelivery: ()-> null
+        retrieveDelivery: ()-> 'pickup'
       return null
 
   OrderService = isolatedScope = $state = undefined
@@ -34,6 +35,13 @@ describe 'Delivery', ->
       spyOn($state, 'go')
       isolatedScope.chooseDelivery('pickup')
       expect($state.go).toHaveBeenCalledWith('app.order-contact', {method: 'pickup'})
+
+  describe 'when user has previously selected an option and comes back', ->
+
+    it 'should retrieve the selected option', ->
+      spyOn(OrderService, 'retrieveDelivery')
+      expect(isolatedScope.option).toBe 'pickup'
+
 
 
 

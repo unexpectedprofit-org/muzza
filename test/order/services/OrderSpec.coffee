@@ -81,3 +81,10 @@ describe 'Order Service', ->
         OrderService.submitOrder()
         expect($firebase.fns.$set).toHaveBeenCalledWith(order)
 
+  describe 'retrieveDelivery', ->
+
+    it ' should return the selected delivery option', ->
+      OrderService.chooseDelivery('pickup')
+      option = OrderService.retrieveDelivery()
+      expect(option).toBe 'pickup'
+
