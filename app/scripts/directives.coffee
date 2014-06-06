@@ -11,7 +11,5 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
     $scope.cancel = ->
       angular.forEach $scope.steps, (key, val)->
         modal = $scope[key]
-        modal.hide()
-#      console.log "cancelar button: "
-#      console.log "empa: " + JSON.stringify $scope.empanada
-#      console.log "pizza: " + JSON.stringify  $scope.pizza
+        if modal isnt undefined
+          modal.hide()

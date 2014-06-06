@@ -27,30 +27,52 @@ describe "directives", ->
 
   describe "CancelSelection", ->
 
-    isolatedScope = $scope = element = undefined
+    directiveScope = $scope = element = undefined
 
     beforeEach ->
       inject ($compile, $rootScope) ->
         $scope = $rootScope
+
+
+    it 'should hide all modals included on current scope - case 1', ->
+      inject ($rootScope, $compile) ->
+
+        $scope.steps = ['step1', 'step2']
+        $scope.step1 =
+          hide: () -> null
+        $scope.step2 =
+          hide: () -> null
+
         element = angular.element('<cancel-selection></cancel-selection>')
         $compile(element)($rootScope)
         $scope.$digest()
-        isolatedScope = element.scope()
+        directiveScope = element.scope()
 
 
-    it 'should hide all modals included on current scope', ->
+        hideStep1 = spyOn(directiveScope.step1, 'hide')
+        hideStep2 = spyOn(directiveScope.step2, 'hide')
 
-      isolatedScope.steps = ['order', 'size']
-      isolatedScope.order =
-        hide: -> null
-      isolatedScope.size =
-        hide: -> null
-      hideOrder = spyOn(isolatedScope.order, 'hide')
-      hideSize = spyOn(isolatedScope.size, 'hide')
+        directiveScope.cancel()
 
-      isolatedScope.cancel()
+        expect(hideStep1).toHaveBeenCalled()
+        expect(hideStep2).toHaveBeenCalled()
 
-      expect(hideOrder).toHaveBeenCalled()
-      expect(hideOrder.calls.count()).toBe 1
-      expect(hideSize).toHaveBeenCalled()
-      expect(hideSize.calls.count()).toBe 1
+    it 'should hide all modals included on current scope - case 2', ->
+      inject ($rootScope, $compile) ->
+
+        $scope.steps = ['step1', 'step2']
+        $scope.step1 =
+          hide: () -> null
+
+        element = angular.element('<cancel-selection></cancel-selection>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        directiveScope = element.scope()
+
+
+        hideStep1 = spyOn(directiveScope.step1, 'hide')
+
+        directiveScope.cancel()
+
+        expect(hideStep1).toHaveBeenCalled()
+        expect(directiveScope.step2).toBeUndefined()
