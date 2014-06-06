@@ -24,14 +24,14 @@ describe 'Promo', ->
 
       expect(promo.id).toBe 2
       expect(promo.totalPrice).toBe 54
-      expect(promo.desc).toBe "Promo 1: 6 empanadas..."
+      expect(promo.description).toBe "Promo 1: 6 empanadas..."
 
       expect(promo.items).toEqual []
       expect(promo.rules).toEqual []
 
     it 'should have functions defined', ->
       expect(promo.getHash).toBeDefined()
-      expect(promo.description).toBeDefined()
+      expect(promo.getDescription).toBeDefined()
       expect(promo.isEditable).toBeDefined()
 
 
@@ -40,7 +40,7 @@ describe 'Promo', ->
 
 
   it "should create a description", ->
-    expect(promo.description()).toBe promoTypeQty.details.description.short
+    expect(promo.getDescription()).toBe promoTypeQty.details.description.short
 
   describe "getItems functionality", ->
 

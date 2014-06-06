@@ -7,7 +7,7 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
 
       @totalPrice = from?.details?.price
       @id = from?.details?.id
-      @desc = from?.details?.description?.short
+      @description = from?.details?.description?.short
 
       @rules = from.rules
       @items = getItems from?.components
@@ -28,12 +28,11 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
   Promotion::getHash = () ->
     @id + "|" + @totalPrice
 
-  Promotion::description = () ->
-    @desc
+  Promotion::getDescription = () ->
+    @description
 
   Promotion::isEditable = () ->
     false
 
 
   return Promotion
-

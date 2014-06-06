@@ -13,10 +13,10 @@ describe 'PromoTypeQuantity', ->
       Empanada = $injector.get 'Empanada'
       Pizza = $injector.get 'Pizza'
 
-      promoDetails = {id:1,price:50,desc:"jojojo",details:"alalal"}
+      promoDetails = {id:1,price:50,description:"jojojo",details:"alalal"}
       promoRules = [qty:6,cat:'EMPANADA',subcat:'|||']
 
-      promo = new PromoTypeQuantity {id:1,price:50,desc:"jojojo",details:"alalal",rules:promoRules}
+      promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:promoRules}
 
   describe "init", ->
 
@@ -24,7 +24,7 @@ describe 'PromoTypeQuantity', ->
 
       expect(promo.details.id).toEqual promoDetails.id
       expect(promo.details.price).toEqual promoDetails.price
-      expect(promo.details.description.short).toEqual promoDetails.desc
+      expect(promo.details.description.short).toEqual promoDetails.description
       expect(promo.details.description.long).toEqual promoDetails.details
       expect(promo.rules.length).toBe 1
       expect(promo.rules[0].id).toBe "rule:EMPANADA-|||"
@@ -39,7 +39,7 @@ describe 'PromoTypeQuantity', ->
       rule1 = {qty:6,cat:'EMPANADA',subcat:'|||'}
       rule2 = {qty:1,cat:'PIZZA',subcat:'|||'}
 
-      promo = new PromoTypeQuantity {id:1,price:50,desc:"jojojo",details:"alalal",rules:[rule1,rule2]}
+      promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:[rule1,rule2]}
 
       empanada = new Empanada {id:1,subcat:1,qty:6}
 
@@ -66,7 +66,7 @@ describe 'PromoTypeQuantity', ->
       rule1 = {qty:6,cat:'EMPANADA',subcat:'|||'}
       rule2 = {qty:1,cat:'PIZZA',subcat:'|||'}
 
-      promo = new PromoTypeQuantity {id:1,price:50,desc:"jojojo",details:"alalal",rules:[rule1,rule2]}
+      promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:[rule1,rule2]}
 
       empanada = new Empanada {id:1,subcat:1,qty:2}
 
@@ -86,14 +86,6 @@ describe 'PromoTypeQuantity', ->
       response = promo.validateRule "rule:EMPANADA-|||"
       expect(response.success).toBeFalsy()
       expect(response.details).toContain {rule:rule1id,cause:"quantity",qty:2}
-
-
-  describe "isEditable functionality", ->
-
-    it "should return false", ->
-
-      promo = new PromoTypeQuantity {}
-      expect(promo.isEditable()).toBeFalsy()
 
 
   describe "Promo1: 12 empanadas cualquiera", ->

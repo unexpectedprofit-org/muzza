@@ -8,7 +8,7 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
         id: from.id
         price: from.price
         description:
-          short: from.desc
+          short: from.description
           long: from.details
 
     createRulesArray = (object) ->
@@ -185,8 +185,5 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
         return {success:false,details:[]}
 
       @validate createRulesArray {rules:_rules,price:0}
-
-  PromoTypeQuantity::isEditable = () ->
-    false
 
   return PromoTypeQuantity
