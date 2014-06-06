@@ -25,6 +25,8 @@ describe 'Empanada', ->
       expect(newEmpanada.minReached).toBeDefined()
       expect(newEmpanada.maxReached).toBeDefined()
       expect(newEmpanada.getDescription).toBeDefined()
+      expect(newEmpanada.reset).toBeDefined()
+      expect(newEmpanada.isEditable).toBeDefined()
 
 #    it "should init the object", ->
 #      newEmpanada = new Empanada {}
@@ -122,3 +124,10 @@ describe 'Empanada', ->
       expect(empanada.cat).toBe 'EMPANADA'
       expect(empanada.totalPrice).toBe 0
       expect(empanada.qty).toBe 1
+
+  describe "isEditable functionality", ->
+
+    it "should return false", ->
+
+      empanada = new Empanada {}
+      expect(empanada.isEditable()).toBeFalsy()

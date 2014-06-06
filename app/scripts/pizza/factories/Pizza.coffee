@@ -46,6 +46,9 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     @totalPrice = 0
     @qty = 1
 
+  Pizza::isEditable = () ->
+    true
+
 #  TODO:  calculate total price
 #  TODO:  handle adding price
 

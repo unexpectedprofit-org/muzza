@@ -88,6 +88,13 @@ describe 'PromoTypeQuantity', ->
       expect(response.details).toContain {rule:rule1id,cause:"quantity",qty:2}
 
 
+  describe "isEditable functionality", ->
+
+    it "should return false", ->
+
+      promo = new PromoTypeQuantity {}
+      expect(promo.isEditable()).toBeFalsy()
+
 
   describe "Promo1: 12 empanadas cualquiera", ->
 

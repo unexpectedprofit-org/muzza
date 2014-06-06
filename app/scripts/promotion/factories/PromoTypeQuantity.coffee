@@ -186,4 +186,7 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', () ->
 
       @validate createRulesArray {rules:_rules,price:0}
 
+  PromoTypeQuantity::isEditable = () ->
+    false
+
   return PromoTypeQuantity

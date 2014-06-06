@@ -31,6 +31,9 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
   Promotion::description = () ->
     @desc
 
+  Promotion::isEditable = () ->
+    false
+
 
   return Promotion
 

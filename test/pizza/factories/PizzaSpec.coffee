@@ -143,3 +143,10 @@ describe 'Pizza', ->
     it 'should return a formatted total price of 0 when value is undefined', ->
       pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: undefined}, qty: 1 } )
       expect(pizza.getTotalPrice()).toBe '$0.00'
+
+  describe "isEditable functionality", ->
+
+    it "should return true", ->
+
+      pizza = new Pizza {}
+      expect(pizza.isEditable()).toBeTruthy()

@@ -32,7 +32,7 @@
       <button
               class="button button-light"
               data-ng-click="$parent.edit(item)"
-              data-ng-show="showEdit && item.cat != 'EMPANADA' && item.cat != 'PROMO'">
+              data-ng-show="showEdit && item.isEditable()">
         Editar Opciones
       </button>
 

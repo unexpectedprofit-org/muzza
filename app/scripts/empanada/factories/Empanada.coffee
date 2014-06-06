@@ -30,6 +30,9 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @totalPrice = 0
     @qty = 1
 
+  Empanada::isEditable = () ->
+    false
+
   Empanada::getHash = () ->
     "ID_BRAND|" + @id + "|" + @subcat + "||"
 

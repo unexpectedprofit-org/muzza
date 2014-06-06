@@ -123,3 +123,10 @@ describe 'Bebida', ->
     bebida = new Bebida {description:'Quilmes',size:'grande',option:'Stout',price:{base:50}}
     bebida.resetPrice()
     expect(bebida.totalPrice).toBe 50
+
+  describe "isEditable functionality", ->
+
+    it "should return true", ->
+
+      bebida = new Bebida {}
+      expect(bebida.isEditable()).toBeTruthy()

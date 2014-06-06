@@ -36,6 +36,9 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
     @totalPrice = 0
     @qty = 1
 
+  Bebida::isEditable = () ->
+    true
+
   Bebida::getHash = ()->
     _size = @size.toUpperCase() or ''
     _option = @option?.toUpperCase() or ''
