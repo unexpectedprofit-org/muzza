@@ -44,6 +44,17 @@ describe 'Pizza', ->
       expect(pizza.description).toBe 'Muzza'
       expect(pizza.price.base).toBe 50
 
+    it 'should have functions defined', ->
+      pizza = new Pizza {}
+      expect(pizza.getBasePrice).toBeDefined()
+      expect(pizza.getTotalPrice).toBeDefined()
+      expect(pizza.getDescription).toBeDefined()
+      expect(pizza.resetPrice).toBeDefined()
+      expect(pizza.updateQty).toBeDefined()
+      expect(pizza.getHash).toBeDefined()
+      expect(pizza.reset).toBeDefined()
+      expect(pizza.isEditable).toBeDefined()
+
   it 'should generate a description from default values', ->
     pizza = new Pizza()
     expect(pizza.getDescription()).toBe ' de  '

@@ -42,6 +42,16 @@ describe 'Bebida', ->
       expect(bebida.price.base).toBe 50
       expect(bebida.option).toBe 'Negra'
 
+    it 'should have functions defined', ->
+      bebida = new Bebida {}
+      expect(bebida.resetPrice).toBeDefined()
+      expect(bebida.getDescription).toBeDefined()
+      expect(bebida.updateQty).toBeDefined()
+      expect(bebida.reset).toBeDefined()
+      expect(bebida.isEditable).toBeDefined()
+      expect(bebida.getHash).toBeDefined()
+
+
   describe "reset functionality", ->
 
     it 'should reset item', ->

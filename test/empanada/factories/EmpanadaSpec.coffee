@@ -25,6 +25,7 @@ describe 'Empanada', ->
       expect(newEmpanada.minReached).toBeDefined()
       expect(newEmpanada.maxReached).toBeDefined()
       expect(newEmpanada.getDescription).toBeDefined()
+      expect(newEmpanada.getHash).toBeDefined()
       expect(newEmpanada.reset).toBeDefined()
       expect(newEmpanada.isEditable).toBeDefined()
 
