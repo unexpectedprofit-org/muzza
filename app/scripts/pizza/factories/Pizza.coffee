@@ -2,7 +2,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
 
   class Pizza
     constructor: (param)->
-      @desc = param?.desc or ''
+      @description = param?.description or ''
       @cat = 'PIZZA'
       @subcat = param?.subcat or 0
       @qty = param?.qty or 1
@@ -26,7 +26,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     formatPrice(@totalPrice)
 
   Pizza::getDescription = ()->
-    @size + ' de ' + @desc + ' ' + @dough
+    @size + ' de ' + @description + ' ' + @dough
 
   Pizza::resetPrice = ()->
     @totalPrice = @price.base
