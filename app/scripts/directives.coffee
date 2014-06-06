@@ -13,3 +13,6 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
         modal = $scope[key]
         if modal isnt undefined
           modal.hide()
+
+      if attrs.resetModel isnt undefined
+        $scope[attrs.resetModel].reset()

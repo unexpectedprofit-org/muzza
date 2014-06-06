@@ -76,3 +76,50 @@ describe "directives", ->
 
         expect(hideStep1).toHaveBeenCalled()
         expect(directiveScope.step2).toBeUndefined()
+
+    it "should reset model", ->
+      inject ($rootScope, $compile,$injector) ->
+        Empanada = $injector.get 'Empanada'
+
+        $scope.steps = ['step1']
+        $scope.step1 =
+          hide: () -> null
+
+        $scope.item = new Empanada {}
+
+        element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        directiveScope = element.scope()
+
+
+        spyOn(directiveScope.step1, 'hide')
+        resetSpy = spyOn(directiveScope.item, 'reset')
+
+        directiveScope.cancel()
+
+        expect(resetSpy).toHaveBeenCalled()
+
+    it "should reset model", ->
+      inject ($rootScope, $compile,$injector) ->
+        Empanada = $injector.get 'Empanada'
+
+        $scope.steps = ['step1']
+        $scope.step1 =
+          hide: () -> null
+
+        $scope.item = new Empanada {}
+
+        element = angular.element('<cancel-selection></cancel-selection>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        directiveScope = element.scope()
+
+
+        hideStep1 = spyOn(directiveScope.step1, 'hide')
+        resetSpy = spyOn(directiveScope.item, 'reset')
+
+        directiveScope.cancel()
+
+        expect(hideStep1).toHaveBeenCalled()
+        expect(resetSpy).not.toHaveBeenCalled()
