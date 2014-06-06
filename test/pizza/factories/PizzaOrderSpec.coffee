@@ -52,7 +52,7 @@ describe 'PizzaOrder', ->
   describe "Hide", ->
 
     it 'should delegate the hide call to the modal', ->
-      modal.scope.pizza = {}
+      modal.scope.pizzaSelection = {}
       order.hide()
 
       expect(hideSpy).toHaveBeenCalled()
@@ -61,7 +61,7 @@ describe 'PizzaOrder', ->
     it 'should redirect to the menu', ->
       inject ($state) ->
         spyOn($state, 'go').and.callThrough()
-        modal.scope.pizza = {}
+        modal.scope.pizzaSelection = {}
         order.hide()
         expect($state.go).toHaveBeenCalledWith('app.menu')
 
@@ -72,7 +72,7 @@ describe 'PizzaOrder', ->
 
     beforeEach ->
       item = new Pizza({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
-      modal.scope.pizza = item
+      modal.scope.pizzaSelection = item
 
     it 'should call ShoppingCart to add a product and hide', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
@@ -85,7 +85,7 @@ describe 'PizzaOrder', ->
       expect(internalHideSpy).toHaveBeenCalled()
       expect(internalHideSpy.calls.count()).toBe 1
 
-    it 'should decorate the pizza object', ->
+    it 'should decorate the pizzaSelection object', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
       item = new Pizza({id:1, desc:'Muzza', size:'chica', dough:'a la piedra'})
       order.add item
@@ -95,7 +95,7 @@ describe 'PizzaOrder', ->
 
     it "should hide confirmation modal", ->
       internalHideSpy = spyOn(order, 'hide').and.callThrough()
-      modal.scope.pizza =
+      modal.scope.pizzaSelection =
         size: 'chica'
         dough: 'a la piedra'
         totalPrice: 60
@@ -122,25 +122,25 @@ describe 'PizzaOrder', ->
   describe "min/max allowance", ->
 
     it "should check minimum quantities", ->
-      modal.scope.pizza =
+      modal.scope.pizzaSelection =
         qty: 8
 
       expect(order.isMinAllowed()).toBeFalsy()
 
-      modal.scope.pizza.qty = 0
+      modal.scope.pizzaSelection.qty = 0
       expect(order.isMinAllowed()).toBeTruthy()
 
-      modal.scope.pizza.qty = 1
+      modal.scope.pizzaSelection.qty = 1
       expect(order.isMinAllowed()).toBeTruthy()
 
     it "should check maximum quantities", ->
-      modal.scope.pizza =
+      modal.scope.pizzaSelection =
         qty: 8
 
       expect(order.isMaxAllowed()).toBeFalsy()
 
-      modal.scope.pizza.qty = 0
+      modal.scope.pizzaSelection.qty = 0
       expect(order.isMaxAllowed()).toBeFalsy()
 
-      modal.scope.pizza.qty = 10
+      modal.scope.pizzaSelection.qty = 10
       expect(order.isMaxAllowed()).toBeTruthy()

@@ -47,7 +47,7 @@ describe 'BebidaOrder', ->
   describe "Hide", ->
 
     it 'should delegate the hide call to the modal', ->
-      modal.scope.bebida = {}
+      modal.scope.bebidaSelection = {}
       order.hide()
 
       expect(hideSpy).toHaveBeenCalled()
@@ -55,7 +55,7 @@ describe 'BebidaOrder', ->
     it 'should redirect to the menu', ->
       inject ($state) ->
         spyOn($state, 'go').and.callThrough()
-        modal.scope.bebida = {}
+        modal.scope.bebidaSelection = {}
         order.hide()
         expect($state.go).toHaveBeenCalledWith('app.menu')
 
@@ -70,27 +70,27 @@ describe 'BebidaOrder', ->
   describe "min/max allowance", ->
 
     it "should check minimum quantities", ->
-      modal.scope.bebida =
+      modal.scope.bebidaSelection =
         qty: 8
 
       expect(order.isMinAllowed()).toBeFalsy()
 
-      modal.scope.bebida.qty = 0
+      modal.scope.bebidaSelection.qty = 0
       expect(order.isMinAllowed()).toBeTruthy()
 
-      modal.scope.bebida.qty = 1
+      modal.scope.bebidaSelection.qty = 1
       expect(order.isMinAllowed()).toBeTruthy()
 
     it "should check maximum quantities", ->
-      modal.scope.bebida =
+      modal.scope.bebidaSelection =
         qty: 8
 
       expect(order.isMaxAllowed()).toBeFalsy()
 
-      modal.scope.bebida.qty = 0
+      modal.scope.bebidaSelection.qty = 0
       expect(order.isMaxAllowed()).toBeFalsy()
 
-      modal.scope.bebida.qty = 10
+      modal.scope.bebidaSelection.qty = 10
       expect(order.isMaxAllowed()).toBeTruthy()
       
   describe "When the user confirms the product selection and options", ->
@@ -99,7 +99,7 @@ describe 'BebidaOrder', ->
 
     beforeEach ->
       item = new Bebida {id:1,desc:'Gaseosa lala',size:'chica'}
-      modal.scope.bebida = item
+      modal.scope.bebidaSelection = item
 
     it 'should call ShoppingCart to add a product and hide', ->
       addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()

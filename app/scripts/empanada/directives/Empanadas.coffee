@@ -10,7 +10,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
   link: ($scope, ele, attrs, ctrl)->
 
 #   holds temp selection
-    $scope.empanada = {}
+    $scope.empanadaSelection = {}
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order']
@@ -21,18 +21,18 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
       animation: 'slide-in-up'
 
     $scope.remove = () ->
-      $scope.empanada = undefined
+      $scope.empanadaSelection = undefined
 
     $scope.choose = (empanada, hashKey)->
 
-      $scope.empanada = undefined
+      $scope.empanadaSelection = undefined
 
       # Reminder: we create a new to avoid modifying the model that comes from the menu
-      if empanada? then  $scope.empanada = new Empanada empanada
+      if empanada? then  $scope.empanadaSelection = new Empanada empanada
 
       if hashKey then editCartItem hashKey
 
-      if $scope.empanada?
+      if $scope.empanadaSelection?
         angular.forEach $scope.steps, (key, val)->
           modal = $scope[key]
           modal.show()
@@ -40,7 +40,7 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
     editCartItem = (id)->
       item = angular.copy (ShoppingCartService.get id)
       if item.cat == 'EMPANADA'
-        $scope.empanada = item
+        $scope.empanadaSelection = item
 
     init = ->
       $q.all([order]).then (views)->

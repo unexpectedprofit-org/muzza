@@ -45,7 +45,7 @@ describe 'BebidaPromoOrder', ->
   describe "Hide", ->
 
     it 'should delegate the hide call to the modal', ->
-      modal.scope.bebida = {}
+      modal.scope.bebidaSelection = {}
       order.hide()
 
       expect(hideSpy).toHaveBeenCalled()
@@ -67,7 +67,7 @@ describe 'BebidaPromoOrder', ->
       bebida2 = new Bebida {id:22,desc:"Agua sin gas",price:{base: 1000,size:{individual: 0,chica: 1000,grande: 2000}},options: []}
       bebida3 = new Bebida {id:33,desc:"Gaseosa Linea CocaCola",price:{base: 1000,size:{individual: 0,chica: 1000,grande: 2000}},options: ["Coca","Fanta","Sprite","Coca diet"]}
 
-      modal.scope.bebida = bebida1
+      modal.scope.bebidaSelection = bebida1
 
       modal.scope.menu = [
         id:1
@@ -106,7 +106,7 @@ describe 'BebidaPromoOrder', ->
       bebida2 = new Bebida {id:22,desc:"Agua sin gas",price:{base: 1000,size:{individual: 0,chica: 1000,grande: 2000}},options: []}
       bebida3 = new Bebida {id:33,desc:"Gaseosa Linea CocaCola",price:{base: 1000,size:{individual: 0,chica: 1000,grande: 2000}},options: ["Coca","Fanta","Sprite","Coca diet"]}
 
-      modal.scope.bebida = bebida1
+      modal.scope.bebidaSelection = bebida1
 
       modal.scope.menu = [
         id:1

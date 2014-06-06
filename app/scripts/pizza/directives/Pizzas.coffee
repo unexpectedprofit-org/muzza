@@ -8,7 +8,7 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
   link: ($scope, ele, attrs, ctrl)->
 
 #   holds temp selection
-    $scope.pizza = {}
+    $scope.pizzaSelection = {}
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'dough', 'size']
@@ -27,13 +27,13 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
 
     $scope.choose = (pizza, hashKey)->
 
-      $scope.pizza = undefined
+      $scope.pizzaSelection = undefined
       # Reminder: we create a new to avoid modifying the model that comes from the menu
-      if pizza? then $scope.pizza = new Pizza pizza
+      if pizza? then $scope.pizzaSelection = new Pizza pizza
 
       if hashKey then editCartItem hashKey
 
-      if $scope.pizza?
+      if $scope.pizzaSelection?
         angular.forEach $scope.steps, (key, val)->
           modal = $scope[key]
           modal.show()
@@ -42,7 +42,7 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
       item = angular.copy (ShoppingCartService.get id)
       if item.cat == 'PIZZA'
         item.resetPrice()
-        $scope.pizza = item
+        $scope.pizzaSelection = item
 
 
     init = ->

@@ -76,7 +76,7 @@ describe "Empanadas", ->
       expect(isolatedScope.order).toBeDefined()
 
     it "should have a product defined in the scope", ->
-      expect(isolatedScope.empanada).toBeDefined()
+      expect(isolatedScope.empanadaSelection).toBeDefined()
 
     it "should have functions defined in the scope", ->
       expect(isolatedScope.choose).toBeDefined()
@@ -95,7 +95,7 @@ describe "Empanadas", ->
 
     it 'should create a Pizza model from the item picked form the menu', ->
       element.find('ion-item')[0].click()
-      expect(isolatedScope.empanada instanceof Empanada).toBeTruthy()
+      expect(isolatedScope.empanadaSelection instanceof Empanada).toBeTruthy()
 
     it "should replace the previous selection", ->
       inject (ShoppingCartService) ->
@@ -106,8 +106,8 @@ describe "Empanadas", ->
         #Choose First Product
         element.find('ion-item')[0].click()
 
-        isolatedScope.empanada.qty = 2
-        isolatedScope.order.add isolatedScope.empanada
+        isolatedScope.empanadaSelection.qty = 2
+        isolatedScope.order.add isolatedScope.empanadaSelection
 
         expected = empanada1
         expected.qty = 2
@@ -120,8 +120,8 @@ describe "Empanadas", ->
         #Choose Second Product
         element.find('ion-item')[1].click()
 
-        expect(isolatedScope.empanada).not.toBe empanada2
-        expect(isolatedScope.empanada).toEqual jasmine.objectContaining
+        expect(isolatedScope.empanadaSelection).not.toBe empanada2
+        expect(isolatedScope.empanadaSelection).toEqual jasmine.objectContaining
           id: empanada2.id
           qty: empanada2.qty
           desc: empanada2.desc
@@ -149,7 +149,7 @@ describe "Empanadas", ->
       it 'should copy the item from the shopping cart into a new one to avoid changing the cart item', ->
         inject (ShoppingCartService)->
           cartItem = ShoppingCartService.get $stateParams.empanadaId
-          expect(cartItem).not.toEqual isolatedScope.empanada
+          expect(cartItem).not.toEqual isolatedScope.empanadaSelection
 
     describe "and the item is not an empanada", ->
 
@@ -175,7 +175,7 @@ describe "Empanadas", ->
       element.find('ion-item')[0].click()
       isolatedScope.remove()
 
-      expect(isolatedScope.empanada).toBeUndefined()
+      expect(isolatedScope.empanadaSelection).toBeUndefined()
 
 
   describe "details section", ->

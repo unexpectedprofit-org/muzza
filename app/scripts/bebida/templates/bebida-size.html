@@ -1,34 +1,34 @@
 <div class="modal">
     <ion-header-bar>
-        <h1 class="title">Bebida {{bebida.getDescription()}}</h1>
+        <h1 class="title">Bebida {{bebidaSelection.getDescription()}}</h1>
     </ion-header-bar>
     <ion-content>
 
         <div class="list">
-            <label class="item item-radio" data-ng-if="bebida.price.size.individual != undefined">
-                <input type="radio" value="individual" data-ng-click="size.choose('individual')"  data-ng-model="bebida.size">
+            <label class="item item-radio" data-ng-if="bebidaSelection.price.size.individual != undefined">
+                <input type="radio" value="individual" data-ng-click="size.choose('individual')"  data-ng-model="bebidaSelection.size">
                 <div class="item-content">
 
-                    Individual  -  {{ bebida.totalPrice + bebida.price.size.individual | centsToMoney | currency}}
+                    Individual  -  {{ bebidaSelection.totalPrice + bebidaSelection.price.size.individual | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
-            <label class="item item-radio" data-ng-if="bebida.price.size.chica != undefined">
-                <input type="radio" value="chica" data-ng-click="size.choose('chica')" data-ng-model="bebida.size">
+            <label class="item item-radio" data-ng-if="bebidaSelection.price.size.chica != undefined">
+                <input type="radio" value="chica" data-ng-click="size.choose('chica')" data-ng-model="bebidaSelection.size">
                 <div class="item-content">
-                    Chica  -  {{ bebida.totalPrice + bebida.price.size.chica | centsToMoney | currency}}
+                    Chica  -  {{ bebidaSelection.totalPrice + bebidaSelection.price.size.chica | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
-            <label class="item item-radio" data-ng-if="bebida.price.size.grande != undefined">
-                <input type="radio" value="grande" data-ng-click="size.choose('grande')" data-ng-model="bebida.size">
+            <label class="item item-radio" data-ng-if="bebidaSelection.price.size.grande != undefined">
+                <input type="radio" value="grande" data-ng-click="size.choose('grande')" data-ng-model="bebidaSelection.size">
                 <div class="item-content">
-                    Grande  -  {{ bebida.totalPrice + bebida.price.size.grande | centsToMoney | currency}}
+                    Grande  -  {{ bebidaSelection.totalPrice + bebidaSelection.price.size.grande | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
         </div>
 
-        <cancel-selection reset-model="bebida"></cancel-selection>
+        <cancel-selection reset-model="bebidaSelection"></cancel-selection>
     </ion-content>
 </div>

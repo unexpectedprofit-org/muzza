@@ -7,24 +7,24 @@
         <div class="list card">
             <div class="item item-avatar">
                 <img src="">
-                <h2>Pizza {{pizza.description}}</h2>
-                <p>{{pizza.size}} {{pizza.dough}}</p>
-                <div>{{pizza.totalPrice * pizza.qty | centsToMoney | currency}}</div>
+                <h2>Pizza {{pizzaSelection.description}}</h2>
+                <p>{{pizzaSelection.size}} {{pizzaSelection.dough}}</p>
+                <div>{{pizzaSelection.totalPrice * pizzaSelection.qty | centsToMoney | currency}}</div>
             </div>
             <div class="item item-avatar">
-                <qty ng-model="pizza" min="1"></qty>
+                <qty ng-model="pizzaSelection" min="1"></qty>
             </div>
 
             <div class="item item-body">
-                <div class="button-bar" data-ng-if="pizza.cartItemKey">
-                    <a class="button" data-ng-click="order.add(pizza)"
+                <div class="button-bar" data-ng-if="pizzaSelection.cartItemKey">
+                    <a class="button" data-ng-click="order.add(pizzaSelection)"
                        data-ng-disabled="order.isMinAllowed()">Actualizar Mi Pedido</a>
                 </div>
-                <div class="button-bar" data-ng-if="!pizza.cartItemKey">
-                    <a class="button" data-ng-click="order.add(pizza)">Agregar a Mi Pedido</a>
-                    <a class="button" data-ng-click="order.edit(pizza)">Modificar</a>
+                <div class="button-bar" data-ng-if="!pizzaSelection.cartItemKey">
+                    <a class="button" data-ng-click="order.add(pizzaSelection)">Agregar a Mi Pedido</a>
+                    <a class="button" data-ng-click="order.edit(pizzaSelection)">Modificar</a>
                 </div>
-                <cancel-selection reset-model="pizza"></cancel-selection>
+                <cancel-selection reset-model="pizzaSelection"></cancel-selection>
             </div>
         </div>
     </ion-content>

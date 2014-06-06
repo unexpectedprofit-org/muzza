@@ -1,6 +1,6 @@
 <div class="modal">
     <ion-header-bar>
-        <h1 class="title">Pizza {{pizza.getDescription()}} </h1>
+        <h1 class="title">Pizza {{pizzaSelection.getDescription()}} </h1>
     </ion-header-bar>
     <ion-content>
         <!--https://github.com/driftyco/ionic/issues/1464-->
@@ -29,29 +29,29 @@
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" value="individual" data-ng-click="size.choose('individual')"  data-ng-model="pizza.size">
+                <input type="radio" value="individual" data-ng-click="size.choose('individual')"  data-ng-model="pizzaSelection.size">
                 <div class="item-content">
 
-                    Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
+                    Individual  -  {{ pizzaSelection.totalPrice + pizzaSelection.price.size.individual | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" value="chica" data-ng-click="size.choose('chica')" data-ng-model="pizza.size">
+                <input type="radio" value="chica" data-ng-click="size.choose('chica')" data-ng-model="pizzaSelection.size">
                 <div class="item-content">
-                    Chica  -  {{ pizza.totalPrice + pizza.price.size.chica | centsToMoney | currency}}
+                    Chica  -  {{ pizzaSelection.totalPrice + pizzaSelection.price.size.chica | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" value="grande" data-ng-click="size.choose('grande')" data-ng-model="pizza.size">
+                <input type="radio" value="grande" data-ng-click="size.choose('grande')" data-ng-model="pizzaSelection.size">
                 <div class="item-content">
-                    Grande  -  {{ pizza.totalPrice + pizza.price.size.grande | centsToMoney | currency}}
+                    Grande  -  {{ pizzaSelection.totalPrice + pizzaSelection.price.size.grande | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
         </div>
 
-        <cancel-selection reset-model="pizza"></cancel-selection>
+        <cancel-selection reset-model="pizzaSelection"></cancel-selection>
     </ion-content>
 </div>

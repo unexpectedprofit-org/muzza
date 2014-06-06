@@ -112,7 +112,7 @@ describe "Pizzas", ->
         expect(isolatedScope.order).toBeDefined()
 
       it "should have a product defined in the scope", ->
-        expect(isolatedScope.pizza).toBeDefined()
+        expect(isolatedScope.pizzaSelection).toBeDefined()
 
       it "should have a choose function defined in the scope", ->
         expect(isolatedScope.choose).toBeDefined()
@@ -135,18 +135,18 @@ describe "Pizzas", ->
 
       it 'should create a Pizza model from the item picked form the menu', ->
         element.find('ion-item')[0].click()
-        expect(isolatedScope.pizza instanceof Pizza).toBeTruthy()
+        expect(isolatedScope.pizzaSelection instanceof Pizza).toBeTruthy()
 
       it "should replace the previous selection", ->
         #Choose First Product
         element.find('ion-item')[0].click()
-        isolatedScope.pizza.size = 'b'
-        isolatedScope.pizza.dough = 'a'
+        isolatedScope.pizzaSelection.size = 'b'
+        isolatedScope.pizzaSelection.dough = 'a'
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.pizza).not.toEqual pizza2
-        expect(isolatedScope.pizza).toEqual jasmine.objectContaining
+        expect(isolatedScope.pizzaSelection).not.toEqual pizza2
+        expect(isolatedScope.pizzaSelection).toEqual jasmine.objectContaining
           desc : 'Fugazetta'
           id : 2
 
@@ -176,10 +176,10 @@ describe "Pizzas", ->
 
       it 'should copy the item from the shopping cart into a new one to avoid resetting the price on cart item', ->
         cartItem = ShoppingCartService.get $stateParams.pizzaId
-        expect(cartItem).not.toEqual isolatedScope.pizza
+        expect(cartItem).not.toEqual isolatedScope.pizzaSelection
 
       it "should reset the items price to the base price", ->
-        expect(isolatedScope.pizza.totalPrice).toBe 50
+        expect(isolatedScope.pizzaSelection.totalPrice).toBe 50
 
     describe "and the item is not a pizza", ->
 

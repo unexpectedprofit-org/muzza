@@ -5,17 +5,17 @@ angular.module('Muzza.bebidas').factory "BebidaSize", ()->
       @modal = modal
 
   BebidaSize::show = ->
-    totalPrice = @modal.scope.bebida.totalPrice
+    totalPrice = @modal.scope.bebidaSelection.totalPrice
     if totalPrice == undefined or totalPrice == 0
-      @modal.scope.bebida.totalPrice = @modal.scope.bebida.price.base
+      @modal.scope.bebidaSelection.totalPrice = @modal.scope.bebidaSelection.price.base
     @modal.show()
 
   BebidaSize::hide = ->
     @modal.hide()
 
   BebidaSize::choose = (selection)->
-    bebida = @modal.scope.bebida
-    @modal.scope.bebida.totalPrice = bebida.totalPrice + bebida.price.size[selection]
+    bebida = @modal.scope.bebidaSelection
+    @modal.scope.bebidaSelection.totalPrice = bebida.totalPrice + bebida.price.size[selection]
     @hide()
 
   return BebidaSize

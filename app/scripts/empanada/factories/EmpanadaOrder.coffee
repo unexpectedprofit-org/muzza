@@ -20,9 +20,9 @@ angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService,
     @modal.scope.remove()
 
   EmpanadaOrder::isMinAllowed = () ->
-    @modal.scope.empanada.qty <= 1
+    @modal.scope.empanadaSelection.qty <= 1
 
   EmpanadaOrder::isMaxAllowed = () ->
-    @modal.scope.empanada.qty >= 100
+    @modal.scope.empanadaSelection.qty >= 100
 
   return EmpanadaOrder

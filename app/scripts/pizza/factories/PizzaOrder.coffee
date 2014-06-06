@@ -21,12 +21,12 @@ angular.module('Muzza.pizzas').factory "PizzaOrder", (ShoppingCartService, $stat
 
   PizzaOrder::edit = (pizza)->
     pizza.resetPrice()
-    @modal.scope.choose(pizza)
+    @modal.scope.choose pizza
 
   PizzaOrder::isMinAllowed = () ->
-    @modal.scope.pizza.qty <= 1
+    @modal.scope.pizzaSelection.qty <= 1
 
   PizzaOrder::isMaxAllowed = () ->
-    @modal.scope.pizza.qty >= 10
+    @modal.scope.pizzaSelection.qty >= 10
 
   return PizzaOrder

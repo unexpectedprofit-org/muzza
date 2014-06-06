@@ -1,24 +1,24 @@
 <div class="modal">
     <ion-header-bar>
-        <h1 class="title">Pizza {{pizza.getDescription()}} </h1>
+        <h1 class="title">Pizza {{pizzaSelection.getDescription()}} </h1>
     </ion-header-bar>
     <ion-content>
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" value="molde" data-ng-click="dough.choose('al molde')" data-ng-model="pizza.dough">
+                <input type="radio" value="molde" data-ng-click="dough.choose('al molde')" data-ng-model="pizzaSelection.dough">
                 <div class="item-content">
-                    Al Molde  -  {{ pizza.totalPrice + pizza.price.dough['al molde'] | centsToMoney | currency}}
+                    Al Molde  -  {{ pizzaSelection.totalPrice + pizzaSelection.price.dough['al molde'] | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
             <label class="item item-radio">
-                <input type="radio" value="piedra" data-ng-click="dough.choose('a la piedra')" data-ng-model="pizza.dough">
+                <input type="radio" value="piedra" data-ng-click="dough.choose('a la piedra')" data-ng-model="pizzaSelection.dough">
                 <div class="item-content">
-                    A la Piedra  -  {{ pizza.totalPrice + pizza.price.dough['a la piedra'] | centsToMoney | currency}}
+                    A la Piedra  -  {{ pizzaSelection.totalPrice + pizzaSelection.price.dough['a la piedra'] | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
         </div>
-        <cancel-selection reset-model="pizza"></cancel-selection>
+        <cancel-selection reset-model="pizzaSelection"></cancel-selection>
     </ion-content>
 </div>

@@ -7,20 +7,20 @@
         <div class="list card">
             <div class="item item-avatar">
                 <img src="">
-                <h2>Bebida {{bebida.desc}}</h2>
-                <p>{{bebida.size}} {{bebida.option}}</p>
-                <div>{{bebida.totalPrice * bebida.qty | centsToMoney | currency}}</div>
+                <h2>Bebida {{bebidaSelection.desc}}</h2>
+                <p>{{bebidaSelection.size}} {{bebidaSelection.option}}</p>
+                <div>{{bebidaSelection.totalPrice * bebidaSelection.qty | centsToMoney | currency}}</div>
             </div>
             <div class="item item-avatar">
-                <qty ng-model="bebida" min="1"></qty>
+                <qty ng-model="bebidaSelection" min="1"></qty>
             </div>
 
             <div class="item item-body">
                 <div class="button-bar">
-                    <a class="button" data-ng-click="orderPromo.add(bebida)">Agregar a la Promo</a>
-                    <a class="button" data-ng-click="orderPromo.edit(bebida)">Modificar</a>
+                    <a class="button" data-ng-click="orderPromo.add(bebidaSelection)">Agregar a la Promo</a>
+                    <a class="button" data-ng-click="orderPromo.edit(bebidaSelection)">Modificar</a>
                 </div>
-                <cancel-selection reset-model="bebida"></cancel-selection>
+                <cancel-selection reset-model="bebidaSelection"></cancel-selection>
             </div>
         </div>
     </ion-content>

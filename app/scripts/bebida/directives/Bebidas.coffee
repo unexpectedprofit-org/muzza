@@ -11,7 +11,7 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
   link: ($scope, ele, attrs, ctrl)->
 
 #   holds temp selection
-    $scope.bebida = {}
+    $scope.bebidaSelection = {}
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
     $scope.steps = ['order', 'size']
@@ -21,7 +21,7 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
       scope: $scope,
       animation: 'slide-in-up'
 
-    orderPromo = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-promo.html',
+    orderPromo = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-order-promo.html',
       scope: $scope,
       animation: 'slide-in-up'
 
@@ -32,22 +32,22 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
 
     $scope.choosePromoItem = (bebida) ->
 
-      $scope.bebida = new Bebida bebida
+      $scope.bebidaSelection = new Bebida bebida
 
-      if $scope.bebida?
+      if $scope.bebidaSelection?
         angular.forEach $scope.stepsPromo, (key, val)->
           modal = $scope[key]
           modal.show()
 
     $scope.choose = (bebida, hashKey)->
 
-      $scope.bebida = undefined
+      $scope.bebidaSelection = undefined
       # Reminder: we create a new to avoid modifying the model that comes from the menu
-      if bebida? then $scope.bebida = new Bebida bebida
+      if bebida? then $scope.bebidaSelection = new Bebida bebida
 
       if hashKey then editCartItem hashKey
 
-      if $scope.bebida?
+      if $scope.bebidaSelection?
         angular.forEach $scope.steps, (key, val)->
           modal = $scope[key]
           modal.show()
@@ -56,7 +56,7 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
       item = angular.copy (ShoppingCartService.get id)
       if item.cat == 'BEBIDA'
         item.resetPrice()
-        $scope.bebida = item
+        $scope.bebidaSelection = item
 
 
     init = ->

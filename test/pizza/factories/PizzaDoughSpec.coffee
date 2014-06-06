@@ -13,7 +13,7 @@ describe 'PizzaDough', ->
         show: -> null
         hide: -> null
         scope:
-          pizza:
+          pizzaSelection:
             price: new Pizza
               base: 50
               dough:
@@ -35,19 +35,19 @@ describe 'PizzaDough', ->
     describe "When the user is displayed is the list of options", ->
 
       it "should calculate the initial total price to match the base price when no other options has been selected yet", ->
-        modal.scope.pizza.totalPrice = undefined
+        modal.scope.pizzaSelection.totalPrice = undefined
         dough.show()
-        expect(modal.scope.pizza.totalPrice).toBe modal.scope.pizza.price.base
+        expect(modal.scope.pizzaSelection.totalPrice).toBe modal.scope.pizzaSelection.price.base
 
       it "should calculate the initial total price to match the base price when totalPrice is 0", ->
-        modal.scope.pizza.totalPrice = 0
+        modal.scope.pizzaSelection.totalPrice = 0
         dough.show()
-        expect(modal.scope.pizza.totalPrice).toBe modal.scope.pizza.price.base
+        expect(modal.scope.pizzaSelection.totalPrice).toBe modal.scope.pizzaSelection.price.base
 
       it "should leave the total price as it is if other options have alrady been selected", ->
-        modal.scope.pizza.totalPrice = 50 + 15
+        modal.scope.pizzaSelection.totalPrice = 50 + 15
         dough.show()
-        expect(modal.scope.pizza.totalPrice).toBe 65
+        expect(modal.scope.pizzaSelection.totalPrice).toBe 65
 
       it 'should delegate the show call to the modal', ->
         dough.show()
@@ -64,9 +64,9 @@ describe 'PizzaDough', ->
   describe 'When the user choose a pizza dough', ->
 
     it 'should calculate price suming totalPrice + current option', ->
-      modal.scope.pizza.totalPrice =  50 + 15
+      modal.scope.pizzaSelection.totalPrice =  50 + 15
       dough.choose('al molde')
-      expect(modal.scope.pizza.totalPrice).toBe 65
+      expect(modal.scope.pizzaSelection.totalPrice).toBe 65
 
     it 'should call hide', ->
       internalHideSpy = spyOn(dough, 'hide').and.callThrough()

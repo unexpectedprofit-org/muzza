@@ -24,7 +24,7 @@ describe 'EmpanadaOrder', ->
         scope:
           choose: -> null
           remove: -> null
-          empanada:
+          empanadaSelection:
             qty: 1
 
       showSpy = spyOn(modal, 'show').and.callThrough()
@@ -65,7 +65,7 @@ describe 'EmpanadaOrder', ->
     it 'should redirect to the menu', ->
       inject ($state) ->
         spyOn($state, 'go').and.callThrough()
-        modal.scope.empanada = {}
+        modal.scope.empanadaSelection = {}
         order.hide()
         expect($state.go).toHaveBeenCalledWith('app.menu')
 
@@ -101,21 +101,21 @@ describe 'EmpanadaOrder', ->
   describe "min/max allowance", ->
 
     it "should check minimum quantities", ->
-      modal.scope.empanada.qty = 8
+      modal.scope.empanadaSelection.qty = 8
       expect(order.isMinAllowed()).toBeFalsy()
 
-      modal.scope.empanada.qty = 0
+      modal.scope.empanadaSelection.qty = 0
       expect(order.isMinAllowed()).toBeTruthy()
 
-      modal.scope.empanada.qty = 1
+      modal.scope.empanadaSelection.qty = 1
       expect(order.isMinAllowed()).toBeTruthy()
 
     it "should check maximum quantities", ->
-      modal.scope.empanada.qty = 8
+      modal.scope.empanadaSelection.qty = 8
       expect(order.isMaxAllowed()).toBeFalsy()
 
-      modal.scope.empanada.qty = 0
+      modal.scope.empanadaSelection.qty = 0
       expect(order.isMaxAllowed()).toBeFalsy()
 
-      modal.scope.empanada.qty = 100
+      modal.scope.empanadaSelection.qty = 100
       expect(order.isMaxAllowed()).toBeTruthy()

@@ -102,7 +102,7 @@ describe "Bebidas", ->
         expect(isolatedScope.orderPromo).toBeDefined()
 
       it "should have a product defined in the scope", ->
-        expect(isolatedScope.bebida).toBeDefined()
+        expect(isolatedScope.bebidaSelection).toBeDefined()
 
       it "should have a functions defined in the scope", ->
         expect(isolatedScope.choose).toBeDefined()
@@ -121,17 +121,17 @@ describe "Bebidas", ->
 
       it 'should create a Bebida model from the item picked from the menu', ->
         element.find('ion-item')[0].click()
-        expect(isolatedScope.bebida instanceof Bebida).toBeTruthy()
+        expect(isolatedScope.bebidaSelection instanceof Bebida).toBeTruthy()
 
       it "should replace the previous selection", ->
         #Choose First Product
         element.find('ion-item')[0].click()
-        isolatedScope.bebida.size = 'mediana'
+        isolatedScope.bebidaSelection.size = 'mediana'
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.bebida).not.toEqual bebida1
-        expect(isolatedScope.bebida).toEqual jasmine.objectContaining
+        expect(isolatedScope.bebidaSelection).not.toEqual bebida1
+        expect(isolatedScope.bebidaSelection).toEqual jasmine.objectContaining
           desc : 'Jugo exprimido'
           id : 2
 
@@ -161,10 +161,10 @@ describe "Bebidas", ->
 
       it 'should copy the item from the shopping cart into a new one to avoid resetting the price on cart item', ->
         cartItem = ShoppingCartService.get $stateParams.bebidaId
-        expect(cartItem).not.toEqual isolatedScope.bebida
+        expect(cartItem).not.toEqual isolatedScope.bebidaSelection
 
       it "should reset the items price to the base price", ->
-        expect(isolatedScope.bebida.totalPrice).toBe 50
+        expect(isolatedScope.bebidaSelection.totalPrice).toBe 50
 
     describe "and the item is not a bebida", ->
 
@@ -237,7 +237,7 @@ describe "Bebidas", ->
         expect(onClickEvent).toContain "choosePromoItem(product)"
 
       it "should have a product defined in the scope", ->
-        expect(isolatedScope.bebida).toBeDefined()
+        expect(isolatedScope.bebidaSelection).toBeDefined()
 
     describe "When user chooses a product", ->
 
@@ -252,16 +252,16 @@ describe "Bebidas", ->
 
       it 'should create a Bebida model from the item picked from the menu', ->
         element.find('ion-item')[0].click()
-        expect(isolatedScope.bebida instanceof Bebida).toBeTruthy()
+        expect(isolatedScope.bebidaSelection instanceof Bebida).toBeTruthy()
 
       it "should replace the previous selection", ->
         #Choose First Product
         element.find('ion-item')[0].click()
-        isolatedScope.bebida.size = 'mediana'
+        isolatedScope.bebidaSelection.size = 'mediana'
 
         #Choose Second Product
         element.find('ion-item')[1].click()
-        expect(isolatedScope.bebida).not.toEqual bebida1
-        expect(isolatedScope.bebida).toEqual jasmine.objectContaining
+        expect(isolatedScope.bebidaSelection).not.toEqual bebida1
+        expect(isolatedScope.bebidaSelection).toEqual jasmine.objectContaining
           desc : 'Jugo exprimido'
           id : 2

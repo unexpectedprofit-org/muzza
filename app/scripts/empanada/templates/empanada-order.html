@@ -7,26 +7,26 @@
         <div class="list card">
           <div class="item item-avatar">
               <img src="">
-              <h2>Empanada {{empanada.description}}</h2>
-              <p>{{empanada.type}}</p>
-              <div>{{empanada.totalPrice * empanada.qty | centsToMoney | currency}}</div>
+              <h2>Empanada {{empanadaSelection.description}}</h2>
+              <p>{{empanadaSelection.type}}</p>
+              <div>{{empanadaSelection.totalPrice * empanadaSelection.qty | centsToMoney | currency}}</div>
           </div>
 
           <div class="item item-avatar">
-            <qty ng-model="empanada" min="1"></qty>
+            <qty ng-model="empanadaSelection" min="1"></qty>
           </div>
 
 
           <div class="item item-body">
-              <div class="button-bar" data-ng-if="empanada.cartItemKey">
-                  <a class="button" data-ng-click="order.add(empanada)"
+              <div class="button-bar" data-ng-if="empanadaSelection.cartItemKey">
+                  <a class="button" data-ng-click="order.add(empanadaSelection)"
                           data-ng-disabled="order.isMinAllowed()">Actualizar Mi Pedido</a>
               </div>
-              <div class="button-bar" data-ng-if="!empanada.cartItemKey">
-                  <a class="button" data-ng-click="order.add(empanada)">Agregar a Mi Pedido</a>
+              <div class="button-bar" data-ng-if="!empanadaSelection.cartItemKey">
+                  <a class="button" data-ng-click="order.add(empanadaSelection)">Agregar a Mi Pedido</a>
               </div>
 
-              <cancel-selection reset-model="empanada"></cancel-selection>
+              <cancel-selection reset-model="empanadaSelection"></cancel-selection>
           </div>
 
         </div>

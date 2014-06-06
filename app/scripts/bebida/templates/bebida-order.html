@@ -7,24 +7,24 @@
         <div class="list card">
             <div class="item item-avatar">
                 <img src="">
-                <h2>Bebida {{bebida.getDescription()}}</h2>
-                <p>{{bebida.size}} {{bebida.option}}</p>
-                <div>{{bebida.totalPrice * bebida.qty | centsToMoney | currency}}</div>
+                <h2>Bebida {{bebidaSelection.getDescription()}}</h2>
+                <p>{{bebidaSelection.size}} {{bebidaSelection.option}}</p>
+                <div>{{bebidaSelection.totalPrice * bebidaSelection.qty | centsToMoney | currency}}</div>
             </div>
             <div class="item item-avatar">
-                <qty ng-model="bebida" min="1"></qty>
+                <qty ng-model="bebidaSelection" min="1"></qty>
             </div>
 
             <div class="item item-body">
-                <div class="button-bar" data-ng-if="bebida.cartItemKey">
-                    <a class="button" data-ng-click="order.add(bebida)"
+                <div class="button-bar" data-ng-if="bebidaSelection.cartItemKey">
+                    <a class="button" data-ng-click="order.add(bebidaSelection)"
                        data-ng-disabled="order.isMinAllowed()">Actualizar Mi Pedido</a>
                 </div>
-                <div class="button-bar" data-ng-if="!bebida.cartItemKey">
-                    <a class="button" data-ng-click="order.add(bebida)">Agregar a Mi Pedido</a>
-                    <a class="button" data-ng-click="order.edit(bebida)">Modificar</a>
+                <div class="button-bar" data-ng-if="!bebidaSelection.cartItemKey">
+                    <a class="button" data-ng-click="order.add(bebidaSelection)">Agregar a Mi Pedido</a>
+                    <a class="button" data-ng-click="order.edit(bebidaSelection)">Modificar</a>
                 </div>
-                <cancel-selection reset-model="bebida"></cancel-selection>
+                <cancel-selection reset-model="bebidaSelection"></cancel-selection>
             </div>
         </div>
     </ion-content>
