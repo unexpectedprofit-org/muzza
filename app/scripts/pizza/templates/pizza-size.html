@@ -5,6 +5,9 @@
     <ion-content>
         <!--https://github.com/driftyco/ionic/issues/1464-->
         <!--
+        <ion-radio ng-model="pizza.size" ng-value="porcion" ng-click="size.choose('porcion')">
+            Porcion  -  {{ pizza.totalPrice + pizza.price.size.porcion | centsToMoney | currency}}
+        </ion-radio>
         <ion-radio ng-model="pizza.size" ng-value="individual" ng-click="size.choose('individual')">
             Individual  -  {{ pizza.totalPrice + pizza.price.size.individual | centsToMoney | currency}}
         </ion-radio>
@@ -17,6 +20,14 @@
         -->
 
         <div class="list">
+            <label class="item item-radio">
+                <input type="radio" value="porcion" data-ng-click="size.choose('porcion')"  data-ng-model="pizza.size">
+                <div class="item-content">
+
+                    Porcion  -  {{ pizza.totalPrice + pizza.price.size.porcion | centsToMoney | currency}}
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+            </label>
             <label class="item item-radio">
                 <input type="radio" value="individual" data-ng-click="size.choose('individual')"  data-ng-model="pizza.size">
                 <div class="item-content">

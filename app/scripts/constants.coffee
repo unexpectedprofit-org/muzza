@@ -75,7 +75,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "price":
             base: 5000
             size:
-              individual: 0
+              porcion: 0
+              individual: 500
               chica: 1000
               grande: 2000
             dough:
@@ -88,7 +89,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "price":
             base: 5500
             size:
-              individual: 0
+              porcion: 0
+              individual: 500
               chica: 1500
               grande: 2000
             dough:
@@ -101,7 +103,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "price":
             base: 7500
             size:
-              individual: 0
+              porcion: 0
+              individual: 500
               chica: 1000
               grande: 1500
             dough:
@@ -114,7 +117,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "price":
             base: 5000
             size:
-              individual: 0
+              porcion: 0
+              individual: 500
               chica: 1000
               grande: 2000
             dough:
@@ -131,7 +135,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "price":
             base: 8000
             size:
-              individual: 0
+              porcion: 0
+              individual: 500
               chica: 1000
               grande: 2000
             dough:
@@ -144,7 +149,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
           "price":
             base: 7500
             size:
-              individual: 0
+              porcion: 0
+              individual: 500
               chica: 1500
               grande: 2000
             dough:
