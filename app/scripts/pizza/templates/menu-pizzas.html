@@ -9,7 +9,7 @@
 
 <ion-list data-ng-repeat-end>
     <ion-item bindonce data-ng-repeat="product in cat.products track by $index" data-ng-click="choose(product)">
-      <h3 data-bo-bind="product.desc"></h3>
+      <h3 data-bo-bind="product.description"></h3>
       <span data-bo-bind="product.toppings"></span>
       <span data-bo-bind="product.price.base | centsToMoney | currency"></span>
     </ion-item>
