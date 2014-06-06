@@ -20,4 +20,4 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
 
     $scope.checkout = () ->
       OrderService.createOrder $scope.cart
-      $state.go 'app.order-delivery'
+      $state.go 'app.order-review'

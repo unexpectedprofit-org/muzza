@@ -244,7 +244,7 @@ describe "Cart", ->
         isolatedScope = element.isolateScope()
         isolatedScope.checkout()
 
-        expect($state.go).toHaveBeenCalledWith('app.order-delivery')
+        expect($state.go).toHaveBeenCalledWith('app.order-review')
 
     it "should delegate to OrderService to create the order", ->
       inject (OrderService)->

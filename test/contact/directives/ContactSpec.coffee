@@ -47,7 +47,7 @@ describe 'Contact', ->
     it 'should redirect to the contact route', ->
       spyOn($state, 'go')
       isolatedScope.continue()
-      expect($state.go).toHaveBeenCalledWith('app.order-review')
+      expect($state.go).toHaveBeenCalledWith('app.menu')
 
 
 

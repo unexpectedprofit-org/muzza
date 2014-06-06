@@ -10,7 +10,7 @@ angular.module('Muzza.contact').directive 'contact', (OrderService,$state, $stat
 
     $scope.continue =  ()->
       OrderService.addContactInfo($scope.contact)
-      $state.go 'app.order-review'
+      $state.go 'app.menu'
 
 
 

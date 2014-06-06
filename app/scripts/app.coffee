@@ -18,9 +18,11 @@ angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empa
     "Muzza.order", "Muzza.promo", "Muzza.delivery", "Muzza.contact", "Muzza.review", "Muzza.qty", "Muzza.facebook"
     , "Muzza.google", "Muzza.twitter", "Muzza.config"])
 
-angular.module("Muzza").run ($ionicPlatform) ->
+angular.module("Muzza").run ($ionicPlatform, $state) ->
   $ionicPlatform.ready ->
     StatusBar.styleDefault() if window.StatusBar
+    $state.go 'app.order-delivery'
+
 
 angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "app",
