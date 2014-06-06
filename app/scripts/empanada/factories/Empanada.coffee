@@ -16,12 +16,6 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @qty = @qty + value
     if @qty < 0 then @qty = 0
 
-  Empanada::minReached = () ->
-    @qty <= 1
-
-  Empanada::maxReached = () ->
-    @qty >= 100
-
   Empanada::getDescription = () ->
     @description + @type
 

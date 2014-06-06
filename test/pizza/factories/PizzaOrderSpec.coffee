@@ -40,6 +40,8 @@ describe 'PizzaOrder', ->
       expect(order.edit).toBeDefined()
       expect(order.show).toBeDefined()
       expect(order.hide).toBeDefined()
+      expect(order.isMinAllowed).toBeDefined()
+      expect(order.isMaxAllowed).toBeDefined()
 
     it 'should delegate the show call to the modal', ->
       order.show()
@@ -62,7 +64,6 @@ describe 'PizzaOrder', ->
         modal.scope.pizza = {}
         order.hide()
         expect($state.go).toHaveBeenCalledWith('app.menu')
-
 
 
   describe "When the user confirms the product selection and options", ->
@@ -116,3 +117,30 @@ describe 'PizzaOrder', ->
       chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
       order.edit(new Pizza({id:1, totalPrice: 60, price: {base: 50 }}))
       expect(chooseSpy).toHaveBeenCalledWith jasmine.objectContaining totalPrice: 50
+
+
+  describe "min/max allowance", ->
+
+    it "should check minimum quantities", ->
+      modal.scope.pizza =
+        qty: 8
+
+      expect(order.isMinAllowed()).toBeFalsy()
+
+      modal.scope.pizza.qty = 0
+      expect(order.isMinAllowed()).toBeTruthy()
+
+      modal.scope.pizza.qty = 1
+      expect(order.isMinAllowed()).toBeTruthy()
+
+    it "should check maximum quantities", ->
+      modal.scope.pizza =
+        qty: 8
+
+      expect(order.isMaxAllowed()).toBeFalsy()
+
+      modal.scope.pizza.qty = 0
+      expect(order.isMaxAllowed()).toBeFalsy()
+
+      modal.scope.pizza.qty = 10
+      expect(order.isMaxAllowed()).toBeTruthy()

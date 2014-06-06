@@ -40,6 +40,8 @@ describe 'BebidaOrder', ->
       expect(order.edit).toBeDefined()
       expect(order.show).toBeDefined()
       expect(order.hide).toBeDefined()
+      expect(order.isMinAllowed).toBeDefined()
+      expect(order.isMaxAllowed).toBeDefined()
 
 
   describe "Hide", ->
@@ -65,6 +67,32 @@ describe 'BebidaOrder', ->
       expect(showSpy).toHaveBeenCalled()
 
 
+  describe "min/max allowance", ->
+
+    it "should check minimum quantities", ->
+      modal.scope.bebida =
+        qty: 8
+
+      expect(order.isMinAllowed()).toBeFalsy()
+
+      modal.scope.bebida.qty = 0
+      expect(order.isMinAllowed()).toBeTruthy()
+
+      modal.scope.bebida.qty = 1
+      expect(order.isMinAllowed()).toBeTruthy()
+
+    it "should check maximum quantities", ->
+      modal.scope.bebida =
+        qty: 8
+
+      expect(order.isMaxAllowed()).toBeFalsy()
+
+      modal.scope.bebida.qty = 0
+      expect(order.isMaxAllowed()).toBeFalsy()
+
+      modal.scope.bebida.qty = 10
+      expect(order.isMaxAllowed()).toBeTruthy()
+      
   describe "When the user confirms the product selection and options", ->
 
     item = Bebida = undefined

@@ -12,12 +12,13 @@
                 <div>{{pizza.totalPrice * pizza.qty | centsToMoney | currency}}</div>
             </div>
             <div class="item item-avatar">
-                <qty ng-model="pizza"></qty>
+                <qty ng-model="pizza" min="1"></qty>
             </div>
 
             <div class="item item-body">
                 <div class="button-bar" data-ng-if="pizza.cartItemKey">
-                    <a class="button" data-ng-click="order.add(pizza)">Actualizar Mi Pedido</a>
+                    <a class="button" data-ng-click="order.add(pizza)"
+                       data-ng-disabled="order.isMinAllowed()">Actualizar Mi Pedido</a>
                 </div>
                 <div class="button-bar" data-ng-if="!pizza.cartItemKey">
                     <a class="button" data-ng-click="order.add(pizza)">Agregar a Mi Pedido</a>

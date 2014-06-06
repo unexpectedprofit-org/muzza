@@ -33,7 +33,7 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
 
   Pizza::updateQty = (value)->
     @qty = @qty + value
-    if @qty <= 0 then @qty = 1
+    if @qty < 0 then @qty = 0
 
   Pizza::getHash = ()->
     _size =  @size.toUpperCase() or ''

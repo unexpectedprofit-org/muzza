@@ -23,4 +23,10 @@ angular.module('Muzza.bebidas').factory "BebidaOrder", (ShoppingCartService, $st
     bebida.resetPrice()
     @modal.scope.choose bebida
 
+  BebidaOrder::isMinAllowed = () ->
+    @modal.scope.bebida.qty <= 1
+
+  BebidaOrder::isMaxAllowed = () ->
+    @modal.scope.bebida.qty >= 10
+
   return BebidaOrder

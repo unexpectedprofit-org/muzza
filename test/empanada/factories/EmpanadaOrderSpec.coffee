@@ -24,6 +24,8 @@ describe 'EmpanadaOrder', ->
         scope:
           choose: -> null
           remove: -> null
+          empanada:
+            qty: 1
 
       showSpy = spyOn(modal, 'show').and.callThrough()
       hideSpy = spyOn(modal, 'hide').and.callThrough()
@@ -38,6 +40,8 @@ describe 'EmpanadaOrder', ->
       expect(order.cancel).toBeDefined()
       expect(order.show).toBeDefined()
       expect(order.hide).toBeDefined()
+      expect(order.isMinAllowed).toBeDefined()
+      expect(order.isMaxAllowed).toBeDefined()
 
     it "should init the object", ->
       expect(order.modal).toBe modal
@@ -93,3 +97,25 @@ describe 'EmpanadaOrder', ->
 
       expect(removeSpy).toHaveBeenCalled()
       expect(removeSpy.calls.count()).toBe 1
+
+  describe "min/max allowance", ->
+
+    it "should check minimum quantities", ->
+      modal.scope.empanada.qty = 8
+      expect(order.isMinAllowed()).toBeFalsy()
+
+      modal.scope.empanada.qty = 0
+      expect(order.isMinAllowed()).toBeTruthy()
+
+      modal.scope.empanada.qty = 1
+      expect(order.isMinAllowed()).toBeTruthy()
+
+    it "should check maximum quantities", ->
+      modal.scope.empanada.qty = 8
+      expect(order.isMaxAllowed()).toBeFalsy()
+
+      modal.scope.empanada.qty = 0
+      expect(order.isMaxAllowed()).toBeFalsy()
+
+      modal.scope.empanada.qty = 100
+      expect(order.isMaxAllowed()).toBeTruthy()

@@ -126,7 +126,7 @@ describe 'Pizza', ->
     it 'should update qty to 1 if the user substracts below 0', ->
       pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
       pizza.updateQty(-1)
-      expect(pizza.qty).toBe 1
+      expect(pizza.qty).toBe 0
 
 
   describe "totalPrice formatted funtionality", ->

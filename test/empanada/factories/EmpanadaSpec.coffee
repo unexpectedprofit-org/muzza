@@ -22,8 +22,6 @@ describe 'Empanada', ->
     it "should construct a Empanada object", ->
       newEmpanada = new Empanada {}
       expect(newEmpanada.updateQty).toBeDefined()
-      expect(newEmpanada.minReached).toBeDefined()
-      expect(newEmpanada.maxReached).toBeDefined()
       expect(newEmpanada.getDescription).toBeDefined()
       expect(newEmpanada.getHash).toBeDefined()
       expect(newEmpanada.reset).toBeDefined()
@@ -47,22 +45,6 @@ describe 'Empanada', ->
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.totalPrice).toBe fromObject.price.base
 
-  #to EmpanadaOrder
-  describe "max/min allowed", ->
-
-    it "should validate min quantity", ->
-      newEmpanada = new Empanada fromObject
-      expect(newEmpanada.minReached()).toBeTruthy()
-
-      newEmpanada.qty = 10
-      expect(newEmpanada.minReached()).toBeFalsy()
-
-    it "should validate max quantity", ->
-      newEmpanada = new Empanada fromObject
-      expect(newEmpanada.maxReached()).toBeFalsy()
-
-      newEmpanada.qty = 100
-      expect(newEmpanada.maxReached()).toBeTruthy()
 
   describe "update quantity functionality", ->
 
