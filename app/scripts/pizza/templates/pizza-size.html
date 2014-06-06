@@ -21,10 +21,10 @@
 
         <div class="list">
             <label class="item item-radio">
-                <input type="radio" value="porcion" data-ng-click="size.choose('porcion')"  data-ng-model="pizza.size">
+                <input type="radio" value="porcion" data-ng-click="size.choose('porcion')"  data-ng-model="pizzaSelection.size">
                 <div class="item-content">
 
-                    Porcion  -  {{ pizza.totalPrice + pizza.price.size.porcion | centsToMoney | currency}}
+                    Porcion  -  {{ pizzaSelection.totalPrice + pizzaSelection.price.size.porcion | centsToMoney | currency}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
