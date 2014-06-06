@@ -31,6 +31,11 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
     @qty = @qty + value
     if @qty < 0 then @qty = 0
 
+  Bebida::reset = () ->
+    @cat = 'BEBIDA'
+    @totalPrice = 0
+    @qty = 1
+
   Bebida::getHash = ()->
     _size = @size.toUpperCase() or ''
     _option = @option?.toUpperCase() or ''

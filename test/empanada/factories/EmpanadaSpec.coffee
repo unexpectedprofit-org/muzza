@@ -11,7 +11,7 @@ describe 'Empanada', ->
 
     fromObject =
       id: 505
-      desc: "description"
+      description: "description"
       price:
         base: 1020
       subcat: 98
@@ -95,11 +95,30 @@ describe 'Empanada', ->
       expect(newEmpanada.getHash()).toBe 'ID_BRAND|909|55||'
 
 
-  it 'should generate a description from default values', ->
-    empanada = new Empanada fromObject
-    expect(empanada.getDescription()).toBe fromObject.desc + fromObject.type
+  describe "getDescription functionality", ->
 
-  it 'should generate a description from changes values', ->
-    empanada = new Empanada fromObject
-    empanada.desc = 'JyQ'
-    expect(empanada.getDescription()).toBe 'JyQ' + fromObject.type
+    it 'should generate a description from default values', ->
+      empanada = new Empanada fromObject
+      expect(empanada.getDescription()).toBe fromObject.description + fromObject.type
+
+    it 'should generate a description from changes values', ->
+      empanada = new Empanada fromObject
+      empanada.description = 'JyQ'
+      expect(empanada.getDescription()).toBe 'JyQ' + fromObject.type
+
+
+  describe "reset functionality", ->
+
+    it 'should reset item', ->
+      empanada = new Empanada fromObject
+      empanada.reset()
+
+      expect(empanada.id).toBe fromObject.id
+      expect(empanada.description).toBe fromObject.description
+      expect(empanada.type).toBe fromObject.type
+      expect(empanada.subcat).toBe fromObject.subcat
+      expect(empanada.price.base).toBe fromObject.price.base
+
+      expect(empanada.cat).toBe 'EMPANADA'
+      expect(empanada.totalPrice).toBe 0
+      expect(empanada.qty).toBe 1

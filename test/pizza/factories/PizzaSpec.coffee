@@ -71,6 +71,34 @@ describe 'Pizza', ->
       pizza = new Pizza {id:100,description:'Muzza',size:'individual',dough:'piedra',subcat:999}
       expect(pizza.getHash()).toBe 'ID_BRAND|100|999|INDIVIDUAL|PIEDRA'
 
+
+  describe "reset functionality", ->
+
+    it 'should reset item', ->
+      param =
+        id:888
+        description: 'Muzza'
+        subcat: 333
+        qty: 2
+        size: 'chica'
+        dough: 'molde'
+        price:
+          base: 50
+
+      pizza = new Pizza param
+      pizza.reset()
+
+      expect(pizza.id).toBe param.id
+      expect(pizza.description).toBe param.description
+      expect(pizza.subcat).toBe param.subcat
+      expect(pizza.size).toBe param.size
+      expect(pizza.dough).toBe param.dough
+      expect(pizza.price.base).toBe param.price.base
+
+      expect(pizza.cat).toBe 'PIZZA'
+      expect(pizza.totalPrice).toBe 0
+      expect(pizza.qty).toBe 1
+
   it 'should update qty if the user adds 1', ->
     pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
     pizza.updateQty(+1)

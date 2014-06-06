@@ -41,6 +41,10 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
 
     "ID_BRAND|" + @id + "|" + @subcat + "|" + _size + "|" + _dough
 
+  Pizza::reset = () ->
+    @cat = 'PIZZA'
+    @totalPrice = 0
+    @qty = 1
 
 #  TODO:  calculate total price
 #  TODO:  handle adding price

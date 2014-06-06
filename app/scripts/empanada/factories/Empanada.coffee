@@ -25,6 +25,11 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
   Empanada::getDescription = () ->
     @description + @type
 
+  Empanada::reset = () ->
+    @cat = 'EMPANADA'
+    @totalPrice = 0
+    @qty = 1
+
   Empanada::getHash = () ->
     "ID_BRAND|" + @id + "|" + @subcat + "||"
 

@@ -42,6 +42,31 @@ describe 'Bebida', ->
       expect(bebida.price.base).toBe 50
       expect(bebida.option).toBe 'Negra'
 
+  describe "reset functionality", ->
+
+    it 'should reset item', ->
+      param =
+        id:999
+        desc: 'Coca colaaa'
+        subcat: 24
+        qty: 2
+        size: 'chica'
+        price:
+          base: 50
+
+      bebida = new Bebida param
+      bebida.reset()
+
+      expect(bebida.id).toBe param.id
+      expect(bebida.desc).toBe param.desc
+      expect(bebida.subcat).toBe param.subcat
+      expect(bebida.size).toBe param.size
+      expect(bebida.price.base).toBe param.price.base
+
+      expect(bebida.cat).toBe 'BEBIDA'
+      expect(bebida.totalPrice).toBe 0
+      expect(bebida.qty).toBe 1
+
   it 'should generate a description from default values', ->
     bebida = new Bebida()
     expect(bebida.getDescription()).toBeUndefined()
