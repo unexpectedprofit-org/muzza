@@ -154,7 +154,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
       ]
       "promotion": [
         id: 1
-        desc: "1 docena de empanadas"
+        description: "1 docena de empanadas"
         cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
@@ -165,7 +165,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         details: "Llevando una docena de empanadas de cualquier gusto te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 2
-        desc: "1 pizza grande + 6 empanadas al horno"
+        description: "1 pizza grande + 6 empanadas al horno"
         cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
@@ -180,7 +180,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         details: "Llevando media docena de empanadas al horno de cualquier gusto y 1 pizza grande te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 3
-        desc: "6 empanadas fritas + 1 pizza de la casa + 2 empanadas al horno"
+        description: "6 empanadas fritas + 1 pizza de la casa + 2 empanadas al horno"
         cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
@@ -199,7 +199,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 4
-        desc: "6 empanadas + 1 agua levite"
+        description: "6 empanadas + 1 agua levite"
         cat: 1 #PromoTypeQuantity
         rules: [
           cat: 'EMPANADA'
@@ -218,7 +218,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description:"Sin Alcohol"
         products: [
           id:1
-          desc:"Agua sin gas"
+          description:"Agua sin gas"
           price:
             base: 1000
             size:
@@ -228,7 +228,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
           options: []
         ,
           id:2
-          desc:"Gaseosa Linea CocaCola"
+          description:"Gaseosa Linea CocaCola"
           price:
             base: 1000
             size:
@@ -238,7 +238,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
           options: ["Coca","Fanta","Sprite","Coca diet"]
         ,
           id:3
-          desc:"Agua saborizada Levite"
+          description:"Agua saborizada Levite"
           price:
             base: 1500
             size:
@@ -248,7 +248,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
           options: ["Naranja","Manzana","Pomelo"]
         ,
           id:4
-          desc:"Agua saborizada Aquarius"
+          description:"Agua saborizada Aquarius"
           price:
             base: 1500
             size:
@@ -262,7 +262,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description:"Cervezas"
         products: [
           id:1
-          desc:"Heineken"
+          description:"Heineken"
           price:
             base: 1000
             size:
@@ -270,7 +270,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
               chica: 1000
         ,
           id:2
-          desc:"Quilmes"
+          description:"Quilmes"
           price:
             base: 1000
             size:
@@ -278,7 +278,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
               chica: 1000
         ,
           id:3
-          desc:"Stella Artois"
+          description:"Stella Artois"
           price:
             base: 1000
             size:
