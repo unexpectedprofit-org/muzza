@@ -67,48 +67,57 @@ describe 'Bebida', ->
       expect(bebida.totalPrice).toBe 0
       expect(bebida.qty).toBe 1
 
-  it 'should generate a description from default values', ->
-    bebida = new Bebida()
-    expect(bebida.getDescription()).toBeUndefined()
 
-  it 'should generate a description from changed values', ->
-    bebida = new Bebida {description:'Quilmes',size:'grande',option:'Stout'}
-    expect(bebida.getDescription()).toBe 'Quilmes grande Stout'
+  describe "getDescription functionality", ->
 
-  it 'should generate a description from changed values - no size', ->
-    bebida = new Bebida {description:'Quilmes'}
-    expect(bebida.getDescription()).toBe 'Quilmes'
+    it 'should generate a description from default values', ->
+      bebida = new Bebida()
+      expect(bebida.getDescription()).toBeUndefined()
 
-  it 'should generate a description from changed values - no option', ->
-    bebida = new Bebida {size:'grande', description: 'Quilmes'}
-    expect(bebida.getDescription()).toBe 'Quilmes grande'
+    it 'should generate a description from changed values', ->
+      bebida = new Bebida {description:'Quilmes',size:'grande',option:'Stout'}
+      expect(bebida.getDescription()).toBe 'Quilmes grande Stout'
 
-  it 'should generate the identifier hash dynamically', ->
-    bebida = new Bebida {id:878,description:'Quilmes',size:'grande',option: 'Stout',subcat:777}
-    expect(bebida.getHash()).toBe 'ID_BRAND|878|777|GRANDE|STOUT'
+    it 'should generate a description from changed values - no size', ->
+      bebida = new Bebida {description:'Quilmes'}
+      expect(bebida.getDescription()).toBe 'Quilmes'
 
-  it 'should generate the identifier hash dynamically - case 2', ->
-    bebida = new Bebida {id:200,description:'Muzza',size:'chica',subcat:888}
-    expect(bebida.getHash()).toBe 'ID_BRAND|200|888|CHICA|'
+    it 'should generate a description from changed values - no option', ->
+      bebida = new Bebida {size:'grande', description: 'Quilmes'}
+      expect(bebida.getDescription()).toBe 'Quilmes grande'
 
-  it 'should generate the identifier hash dynamically - case 3', ->
-    bebida = new Bebida {id:100,description:'Muzza',size:'individual',subcat:999}
-    expect(bebida.getHash()).toBe 'ID_BRAND|100|999|INDIVIDUAL|'
 
-  it 'should update qty if the user adds 1', ->
-    bebida = new Bebida {description:'Quilmes',size:'grande',qty:1}
-    bebida.updateQty(+1)
-    expect(bebida.qty).toBe 2
+  describe "getHash functionality", ->
 
-  it 'should update qty if the user substracts 1', ->
-    bebida = new Bebida {description:'Quilmes',size:'grande',qty:2}
-    bebida.updateQty(-1)
-    expect(bebida.qty).toBe 1
+    it 'should generate the identifier hash dynamically', ->
+      bebida = new Bebida {id:878,description:'Quilmes',size:'grande',option: 'Stout',subcat:777}
+      expect(bebida.getHash()).toBe 'ID_BRAND|878|777|GRANDE|STOUT'
 
-  it 'should update qty to 0 if the user substracts below 0', ->
-    bebida = new Bebida {description:'Quilmes',size:'grande',qty:1}
-    bebida.updateQty(-1)
-    expect(bebida.qty).toBe 0
+    it 'should generate the identifier hash dynamically - case 2', ->
+      bebida = new Bebida {id:200,description:'Muzza',size:'chica',subcat:888}
+      expect(bebida.getHash()).toBe 'ID_BRAND|200|888|CHICA|'
+
+    it 'should generate the identifier hash dynamically - case 3', ->
+      bebida = new Bebida {id:100,description:'Muzza',size:'individual',subcat:999}
+      expect(bebida.getHash()).toBe 'ID_BRAND|100|999|INDIVIDUAL|'
+
+
+  describe "update qty functionality", ->
+
+    it 'should update qty if the user adds 1', ->
+      bebida = new Bebida {description:'Quilmes',size:'grande',qty:1}
+      bebida.updateQty +1
+      expect(bebida.qty).toBe 2
+
+    it 'should update qty if the user substracts 1', ->
+      bebida = new Bebida {description:'Quilmes',size:'grande',qty:2}
+      bebida.updateQty -1
+      expect(bebida.qty).toBe 1
+
+    it 'should update qty to 0 if the user substracts below 0', ->
+      bebida = new Bebida {description:'Quilmes',size:'grande',qty:1}
+      bebida.updateQty -1
+      expect(bebida.qty).toBe 0
 
   it 'should reset the totalPrice to the base price', ->
     bebida = new Bebida {description:'Quilmes',size:'grande',option:'Stout',price:{base:50}}

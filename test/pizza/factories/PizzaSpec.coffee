@@ -99,41 +99,47 @@ describe 'Pizza', ->
       expect(pizza.totalPrice).toBe 0
       expect(pizza.qty).toBe 1
 
-  it 'should update qty if the user adds 1', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
-    pizza.updateQty(+1)
-    expect(pizza.qty).toBe 2
 
-  it 'should update qty if the user substracts 1', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 2 } )
-    pizza.updateQty(-1)
-    expect(pizza.qty).toBe 1
+  describe "update qty functionality", ->
 
-  it 'should update qty to 1 if the user substracts below 0', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
-    pizza.updateQty(-1)
-    expect(pizza.qty).toBe 1
+    it 'should update qty if the user adds 1', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
+      pizza.updateQty(+1)
+      expect(pizza.qty).toBe 2
 
-  it 'should return a formatted base price when value is greater than 0', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 5000}, qty: 1 } )
-    expect(pizza.getBasePrice()).toBe '$50.00'
+    it 'should update qty if the user substracts 1', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 2 } )
+      pizza.updateQty(-1)
+      expect(pizza.qty).toBe 1
 
-  it 'should return a formatted base price when value is 0', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 0}, qty: 1 } )
-    expect(pizza.getBasePrice()).toBe '$0.00'
+    it 'should update qty to 1 if the user substracts below 0', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', size: 'grande', dough: 'molde', qty: 1 } )
+      pizza.updateQty(-1)
+      expect(pizza.qty).toBe 1
 
-  it 'should return a formatted base price of 0 when value is undefined', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: undefined}, qty: 1 } )
-    expect(pizza.getBasePrice()).toBe '$0.00'
 
-  it 'should return a formatted total price when value is greater than 0', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 5000}, qty: 1, totalPrice: 5000 } )
-    expect(pizza.getTotalPrice()).toBe '$50.00'
+  describe "totalPrice formatted funtionality", ->
 
-  it 'should return a formatted total price when value is 0', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 0}, qty: 1, totalPrice: 0 } )
-    expect(pizza.getTotalPrice()).toBe '$0.00'
+    it 'should return a formatted base price when value is greater than 0', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 5000}, qty: 1 } )
+      expect(pizza.getBasePrice()).toBe '$50.00'
 
-  it 'should return a formatted total price of 0 when value is undefined', ->
-    pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: undefined}, qty: 1 } )
-    expect(pizza.getTotalPrice()).toBe '$0.00'
+    it 'should return a formatted base price when value is 0', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 0}, qty: 1 } )
+      expect(pizza.getBasePrice()).toBe '$0.00'
+
+    it 'should return a formatted base price of 0 when value is undefined', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: undefined}, qty: 1 } )
+      expect(pizza.getBasePrice()).toBe '$0.00'
+
+    it 'should return a formatted total price when value is greater than 0', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 5000}, qty: 1, totalPrice: 5000 } )
+      expect(pizza.getTotalPrice()).toBe '$50.00'
+
+    it 'should return a formatted total price when value is 0', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: 0}, qty: 1, totalPrice: 0 } )
+      expect(pizza.getTotalPrice()).toBe '$0.00'
+
+    it 'should return a formatted total price of 0 when value is undefined', ->
+      pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: undefined}, qty: 1 } )
+      expect(pizza.getTotalPrice()).toBe '$0.00'
