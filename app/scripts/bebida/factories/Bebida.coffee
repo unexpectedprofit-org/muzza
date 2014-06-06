@@ -2,13 +2,13 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
 
   class Bebida
     constructor: (param)->
-      @description = param?.description or undefined
+      @description = param?.description or ''
       @cat = 'BEBIDA'
       @subcat = param?.subcat or 0
       @qty = param?.qty or 1
-      @size = param?.size or undefined
-      @option = param?.option or undefined
-      @totalPrice = param?.totalPrice or undefined
+      @size = param?.size or ''
+      @option = param?.option or ''
+      @totalPrice = param?.totalPrice or 0
       @price =
         base: 0
       angular.extend(@, param)
@@ -19,10 +19,10 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
   Bebida::getDescription = ()->
     _result = @description
 
-    if @size isnt undefined
+    if @size isnt ''
       _result = _result + " " + @size
 
-    if @option isnt undefined
+    if @option isnt ''
       _result = _result + " " + @option
 
     _result

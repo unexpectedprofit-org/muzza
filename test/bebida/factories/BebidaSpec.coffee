@@ -14,17 +14,17 @@ describe 'Bebida', ->
 
     it 'should construct a Bebida model with default values', ->
       bebida = new Bebida()
-      expect(bebida.desc).toBeUndefined()
-      expect(bebida.size).toBeUndefined()
+      expect(bebida.description).toBe ''
+      expect(bebida.size).toBe ''
       expect(bebida.cat).toBe 'BEBIDA'
       expect(bebida.subcat).toBe 0
       expect(bebida.qty).toBe 1
-      expect(bebida.totalPrice).toBeUndefined()
+      expect(bebida.totalPrice).toBe 0
       expect(bebida.price.base).toBe 0
 
     it 'should construct a Bebida model from param', ->
       param =
-        desc: 'Heineken'
+        description: 'Heineken'
         subcat: 333
         qty: 2
         size: 'chica'
@@ -33,12 +33,12 @@ describe 'Bebida', ->
           base: 50
       
       bebida = new Bebida param
-      expect(bebida.desc).toBe 'Heineken'
+      expect(bebida.description).toBe 'Heineken'
       expect(bebida.size).toBe 'chica'
       expect(bebida.cat).toBe 'BEBIDA'
       expect(bebida.subcat).toBe 333
       expect(bebida.qty).toBe 2
-      expect(bebida.totalPrice).toBeUndefined()
+      expect(bebida.totalPrice).toBe 0
       expect(bebida.price.base).toBe 50
       expect(bebida.option).toBe 'Negra'
 
@@ -82,7 +82,7 @@ describe 'Bebida', ->
 
     it 'should generate a description from default values', ->
       bebida = new Bebida()
-      expect(bebida.getDescription()).toBeUndefined()
+      expect(bebida.getDescription()).toBe ''
 
     it 'should generate a description from changed values', ->
       bebida = new Bebida {description:'Quilmes',size:'grande',option:'Stout'}
