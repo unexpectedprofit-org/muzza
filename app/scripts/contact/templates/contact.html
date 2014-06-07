@@ -1,8 +1,53 @@
 <div class="list">
 
-    <facebook-login data-ng-model="contact"></facebook-login>
-    <google-login data-ng-model="contact"></google-login>
-    <twitter-login data-ng-model="contact"></twitter-login>
+    <form name="addressForm" novalidate data-ng-if="deliveryOption == 'delivery'">
+        <div class="list list-inset">
+            <div class="item item-divider">Direccion</div>
+            <label class="item item-input"
+                   data-ng-class="(addressForm.street.$invalid)? 'ng-invalid' : 'ng-valid'">
+                <input type="text" placeholder="Calle"
+                       data-ng-required="deliveryOption == 'delivery'"
+                       data-ng-model="contact.address.street"
+                       name="street">
+                <i class="icon ion-alert-circled error"
+                   data-ng-if="addressForm.street.$invalid"></i>
+                <i class="icon ion-checkmark-circled success"
+                   data-ng-if="addressForm.street.$valid"></i>
+            </label>
+
+            <label class="item item-input"
+                   data-ng-class="(addressForm.door.$invalid)? 'ng-invalid' : 'ng-valid'">
+                <input type="number" placeholder="Numero"
+                       data-ng-required="deliveryOption == 'delivery'"
+                       data-ng-model="contact.address.door"
+                       data-ng-pattern="/^[0-9]+$/"
+                       name="door">
+                <i class="icon ion-alert-circled error"
+                   data-ng-if="addressForm.door.$invalid"></i>
+                <i class="icon ion-checkmark-circled success"
+                   data-ng-if="addressForm.door.$valid"></i>
+            </label>
+
+            <label class="item item-input"
+                   data-ng-class="(addressForm.area.$invalid)? 'ng-invalid' : 'ng-valid'">
+                <input type="text" placeholder="Localidad"
+                       data-ng-required="deliveryOption == 'delivery'"
+                       data-ng-model="contact.address.area"
+                       name="area">
+                <i class="icon ion-alert-circled error"
+                   data-ng-if="addressForm.area.$invalid"></i>
+                <i class="icon ion-checkmark-circled success"
+                   data-ng-if="addressForm.area.$valid"></i>
+            </label>
+        </div>
+    </form>
+
+    <div class="button-bar">
+        <facebook-login data-ng-model="contact"></facebook-login>
+        <google-login data-ng-model="contact"></google-login>
+        <twitter-login data-ng-model="contact"></twitter-login>
+    </div>
+
 
     <form name="contactDetailsForm" novalidate >
 
@@ -47,54 +92,6 @@
                    data-ng-if="contactDetailsForm.email.$valid"></i>
             </label>
 
-            <!-- DELIVERY TO HOME REQUIRED DATA-->
-            <div data-ng-if="deliveryOption == 'delivery'">
-
-                <label class="item item-input"
-                       data-ng-class="(contactDetailsForm.street.$invalid)? 'ng-invalid' : 'ng-valid'">
-                    <input type="text" placeholder="Calle"
-                           data-ng-required="deliveryOption == 'delivery'"
-                           data-ng-model="contact.address.street"
-                           name="street">
-                    <i class="icon ion-alert-circled error"
-                       data-ng-if="contactDetailsForm.street.$invalid"></i>
-                    <i class="icon ion-checkmark-circled success"
-                       data-ng-if="contactDetailsForm.street.$valid"></i>
-                </label>
-
-                <label class="item item-input"
-                       data-ng-class="(contactDetailsForm.door.$invalid)? 'ng-invalid' : 'ng-valid'">
-                    <input type="number" placeholder="Numero"
-                           data-ng-required="deliveryOption == 'delivery'"
-                           data-ng-model="contact.address.door"
-                           data-ng-pattern="/^[0-9]+$/"
-                           name="door">
-                    <i class="icon ion-alert-circled error"
-                       data-ng-if="contactDetailsForm.door.$invalid"></i>
-                    <i class="icon ion-checkmark-circled success"
-                       data-ng-if="contactDetailsForm.door.$valid"></i>
-                </label>
-
-                <label class="item item-input"
-                       data-ng-class="(contactDetailsForm.area.$invalid)? 'ng-invalid' : 'ng-valid'">
-                    <input type="text" placeholder="Localidad"
-                           data-ng-required="deliveryOption == 'delivery'"
-                           data-ng-model="contact.address.area"
-                           name="area">
-                    <i class="icon ion-alert-circled error"
-                       data-ng-if="contactDetailsForm.area.$invalid"></i>
-                    <i class="icon ion-checkmark-circled success"
-                       data-ng-if="contactDetailsForm.area.$valid"></i>
-                </label>
-                <label class="item item-input">
-                    <textarea placeholder="Comentarios"
-                              data-ng-model="contact.address.comments"
-                              data-ng-maxlength="200"
-                              name="comments"></textarea>
-                </label>
-
-            </div>
-            <!-- DELIVERY TO HOME REQUIRED DATA-->
         </div>
 
         <button class="button button-block button-positive"
