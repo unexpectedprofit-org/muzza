@@ -178,7 +178,7 @@ describe "Empanadas", ->
       expect(isolatedScope.empanadaSelection).toBeUndefined()
 
 
-  describe "details section", ->
+  describe "when details are requested not to be shown", ->
 
     beforeEach ->
       inject ( $compile, $rootScope) ->
@@ -197,11 +197,14 @@ describe "Empanadas", ->
         $compile(element)($rootScope)
         $scope.$digest()
 
-    it "should not show toppings", ->
-      expect(element.html()).not.toContain "product.toppings"
+    it "should show minimum data", ->
+      expect(element.html()).toContain "product.description"
+      expect(element.html()).toContain "product.toppings"
 
-    it "should not show price", ->
+    it "should not show product details", ->
       expect(element.html()).not.toContain "product.price"
-
-    it "should not show quantity", ->
       expect(element.html()).not.toContain "item.qty"
+
+    it "should show qty buttons", ->
+      expect(element.html()).toContain "<qty"
+      expect(element.html()).toContain "isPromoValid[cat.ruleId].success"

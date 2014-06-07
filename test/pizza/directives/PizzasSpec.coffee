@@ -198,11 +198,21 @@ describe "Pizzas", ->
 
   describe "when details are requested not to be shown", ->
 
-    it "should not display price", ->
-      inject ($compile, $rootScope) ->
+    beforeEach ->
+      inject ( $compile, $rootScope) ->
         $scope = $rootScope
         element = angular.element('<pizzas ng-model="menu" data-nodetails="true"></pizzas>')
         $compile(element)($rootScope)
         $scope.$digest()
 
-        expect(element.html()).not.toContain "product.price.base"
+    it "should show minimum data", ->
+      expect(element.html()).toContain "product.description"
+      expect(element.html()).toContain "product.toppings"
+
+    it "should not show product details", ->
+      expect(element.html()).not.toContain "product.price"
+      expect(element.html()).not.toContain "item.qty"
+
+    it "should show qty buttons", ->
+      expect(element.html()).toContain "<qty"
+      expect(element.html()).toContain "isPromoValid[cat.ruleId].success"

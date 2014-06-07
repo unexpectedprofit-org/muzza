@@ -265,3 +265,12 @@ describe "Bebidas", ->
         expect(isolatedScope.bebidaSelection).toEqual jasmine.objectContaining
           desc : 'Jugo exprimido'
           id : 2
+
+    describe "when details are requested not to be shown", ->
+
+      it "should show minimum data", ->
+        expect(element.html()).toContain "product.description"
+
+      it "should not show product details", ->
+        expect(element.html()).not.toContain "product.price"
+        expect(element.html()).not.toContain "item.qty"
