@@ -46,10 +46,8 @@ describe 'Promo', ->
 
     it "should retrieve items with qty >= 1", ->
 
-      components = [
-        id:1
-        desc: "Empanadas"
-        items: [
+      components = {
+        "EMPANADA": [
           desc: "Categ 1"
           products: [
             id:1
@@ -74,8 +72,22 @@ describe 'Promo', ->
             qty:0
           ]
         ]
-      ]
+        "PIZZA": [
+          desc: "Categ x"
+          products: [
+            id:1
+            qty:10
+          ,
+            id:2
+            qty:3
+          ,
+            id:3
+            qty:0
+          ]
+        ]
+      }
+
       promoTypeQty = {rules:[],components:components,details:{id:2,description:{short:"Promo 1: 6 empanadas...",long:"description loooong"},price:54}}
       promo = new Promotion promoTypeQty
 
-      expect(promo.items.length).toBe 3
+      expect(promo.items.length).toBe 5

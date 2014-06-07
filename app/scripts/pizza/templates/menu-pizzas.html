@@ -2,15 +2,39 @@
     Pizzas
 </div>
 
+<div data-ng-if="!hideDetails">
 
-<div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
-    <strong data-bo-bind="cat.description"></strong>
+  <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
+      <strong data-bo-bind="cat.description"></strong>
+  </div>
+
+
+  <ion-list data-ng-repeat-end>
+      <ion-item bindonce data-ng-repeat="product in cat.products track by $index" data-ng-click="choose(product)">
+        <h3 data-bo-bind="product.description"></h3>
+        <span data-bo-bind="product.toppings"></span>
+        <span data-bo-bind="product.price.base | centsToMoney | currency"></span>
+      </ion-item>
+  </ion-list>
+
 </div>
 
-<ion-list data-ng-repeat-end>
-    <ion-item bindonce data-ng-repeat="product in cat.products track by $index" data-ng-click="choose(product)">
+
+<div data-ng-if="hideDetails">
+
+  <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
+    <strong data-bo-bind="cat.description"></strong>
+    <span>{{ isPromoValid[cat.ruleId].success }}</span>
+  </div>
+
+
+  <ion-list data-ng-repeat-end>
+    <ion-item bindonce data-ng-repeat="product in cat.products track by $index">
+
+      <qty ng-model="product" style="font: 0.5em;" data-disableaddbutton="isPromoValid[cat.ruleId].success"></qty>
       <h3 data-bo-bind="product.description"></h3>
       <span data-bo-bind="product.toppings"></span>
-      <span data-bo-bind="product.price.base | centsToMoney | currency"></span>
     </ion-item>
-</ion-list>
+  </ion-list>
+
+</div>

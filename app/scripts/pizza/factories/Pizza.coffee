@@ -45,6 +45,8 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     @cat = 'PIZZA'
     @totalPrice = 0
     @qty = 1
+    @size = ''
+    @dough = ''
 
   Pizza::isEditable = () ->
     true

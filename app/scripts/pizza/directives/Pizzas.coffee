@@ -2,6 +2,8 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
+    hideDetails: '=nodetails'
+    isPromoValid: '=validationrules'
   }
   require: 'ngModel'
   templateUrl: '../app/scripts/pizza/templates/menu-pizzas.html'
@@ -49,9 +51,9 @@ angular.module('Muzza.pizzas').directive 'pizzas', ($log, $ionicModal, ShoppingC
 
       $q.all([order, dough, size]).then (views)->
 
-        $scope.order = new PizzaOrder(views[0])
-        $scope.dough = new PizzaDough(views[1])
-        $scope.size = new PizzaSize(views[2])
+        $scope.order = new PizzaOrder views[0]
+        $scope.dough = new PizzaDough views[1]
+        $scope.size = new PizzaSize views[2]
 
         #        If its coming from the shopping cart
         if $stateParams.pizzaId then $scope.choose(null, $stateParams.pizzaId)

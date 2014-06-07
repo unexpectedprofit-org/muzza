@@ -13,15 +13,13 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
       @items = getItems from?.components
 
     getItems = (components) ->
-
       items = []
-
-      _.forEach components, (component) ->
-        _.forEach component.items, (currentCategory) ->
+      _.forEach (_.keys components), (key) ->
+        _.forEach components[key], (currentCategory) ->
+          _temp = []
           _temp = _.filter currentCategory.products, (elem) ->
             elem.qty >= 1
-
-          items = items.concat _temp
+          items = items.concat _temp if _temp.length > 0
 
       items
 

@@ -16,3 +16,4 @@ angular.module('Muzza.directives').directive 'cancelSelection', ()->
 
       if attrs.resetModel isnt undefined
         $scope[attrs.resetModel].reset()
+        $scope[attrs.resetModel].qty = 0 if $scope.isPromoView

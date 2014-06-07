@@ -77,49 +77,98 @@ describe "directives", ->
         expect(hideStep1).toHaveBeenCalled()
         expect(directiveScope.step2).toBeUndefined()
 
-    it "should reset model", ->
-      inject ($rootScope, $compile,$injector) ->
-        Empanada = $injector.get 'Empanada'
+    describe "reset model", ->
 
-        $scope.steps = ['step1']
-        $scope.step1 =
-          hide: () -> null
+      it "should call model to reset", ->
+        inject ($rootScope, $compile,$injector) ->
+          Empanada = $injector.get 'Empanada'
 
-        $scope.item = new Empanada {}
+          $scope.steps = ['step1']
+          $scope.step1 =
+            hide: () -> null
 
-        element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
-        $compile(element)($rootScope)
-        $scope.$digest()
-        directiveScope = element.scope()
+          $scope.item = new Empanada {}
 
-
-        spyOn(directiveScope.step1, 'hide')
-        resetSpy = spyOn(directiveScope.item, 'reset')
-
-        directiveScope.cancel()
-
-        expect(resetSpy).toHaveBeenCalled()
-
-    it "should reset model", ->
-      inject ($rootScope, $compile,$injector) ->
-        Empanada = $injector.get 'Empanada'
-
-        $scope.steps = ['step1']
-        $scope.step1 =
-          hide: () -> null
-
-        $scope.item = new Empanada {}
-
-        element = angular.element('<cancel-selection></cancel-selection>')
-        $compile(element)($rootScope)
-        $scope.$digest()
-        directiveScope = element.scope()
+          element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          directiveScope = element.scope()
 
 
-        hideStep1 = spyOn(directiveScope.step1, 'hide')
-        resetSpy = spyOn(directiveScope.item, 'reset')
+          spyOn(directiveScope.step1, 'hide')
+          resetSpy = spyOn(directiveScope.item, 'reset')
 
-        directiveScope.cancel()
+          directiveScope.cancel()
 
-        expect(hideStep1).toHaveBeenCalled()
-        expect(resetSpy).not.toHaveBeenCalled()
+          expect(resetSpy).toHaveBeenCalled()
+
+      it "should NOT call model to reset", ->
+        inject ($rootScope, $compile,$injector) ->
+          Empanada = $injector.get 'Empanada'
+
+          $scope.steps = ['step1']
+          $scope.step1 =
+            hide: () -> null
+
+          $scope.item = new Empanada {}
+
+          element = angular.element('<cancel-selection></cancel-selection>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          directiveScope = element.scope()
+
+
+          hideStep1 = spyOn(directiveScope.step1, 'hide')
+          resetSpy = spyOn(directiveScope.item, 'reset')
+
+          directiveScope.cancel()
+
+          expect(hideStep1).toHaveBeenCalled()
+          expect(resetSpy).not.toHaveBeenCalled()
+
+      it "should set qty to zero if promo", ->
+        inject ($rootScope, $compile,$injector) ->
+          Empanada = $injector.get 'Empanada'
+
+          $scope.steps = ['step1']
+          $scope.step1 =
+            hide: () -> null
+
+          $scope.item = new Empanada {qty:4}
+          $scope.isPromoView = true
+
+          element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          directiveScope = element.scope()
+
+
+          spyOn(directiveScope.step1, 'hide')
+          spyOn(directiveScope.item, 'reset')
+
+          directiveScope.cancel()
+
+          expect($scope.item.qty).toBe 0
+
+      it "should NOT set qty to zero if not promo", ->
+        inject ($rootScope, $compile,$injector) ->
+          Empanada = $injector.get 'Empanada'
+
+          $scope.steps = ['step1']
+          $scope.step1 =
+            hide: () -> null
+
+          $scope.item = new Empanada {qty:4}
+
+          element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          directiveScope = element.scope()
+
+
+          spyOn(directiveScope.step1, 'hide')
+          spyOn(directiveScope.item, 'reset')
+
+          directiveScope.cancel()
+
+          expect($scope.item.qty).toBe 4

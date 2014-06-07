@@ -195,3 +195,14 @@ describe "Pizzas", ->
 
       it "should not retrieve the product", ->
         expect(getItemSpy).not.toHaveBeenCalled()
+
+  describe "when details are requested not to be shown", ->
+
+    it "should not display price", ->
+      inject ($compile, $rootScope) ->
+        $scope = $rootScope
+        element = angular.element('<pizzas ng-model="menu" data-nodetails="true"></pizzas>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+
+        expect(element.html()).not.toContain "product.price.base"

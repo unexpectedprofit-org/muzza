@@ -102,13 +102,13 @@ describe 'Pizza', ->
       expect(pizza.id).toBe param.id
       expect(pizza.description).toBe param.description
       expect(pizza.subcat).toBe param.subcat
-      expect(pizza.size).toBe param.size
-      expect(pizza.dough).toBe param.dough
       expect(pizza.price.base).toBe param.price.base
 
       expect(pizza.cat).toBe 'PIZZA'
       expect(pizza.totalPrice).toBe 0
       expect(pizza.qty).toBe 1
+      expect(pizza.size).toBe ''
+      expect(pizza.dough).toBe ''
 
 
   describe "update qty functionality", ->

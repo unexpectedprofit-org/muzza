@@ -32,8 +32,16 @@ angular.module('Muzza.promo').service 'PromotionService', ($log, ProductService)
     filteredProducts = {}
 
     _.forEach promotionRules, (rule) ->
-      products = ProductService.getProductsFromCategory rule.cat
-      _temp = filterProductsBySelection products, rule.subcat
+      productsList = ProductService.getProductsFromCategory rule.cat
+
+      ## temp to populate pizzas with default size
+      if rule.cat is "PIZZA"
+        _.forEach productsList, (category) ->
+          _.forEach category.products, (product) ->
+            product.size = "grande"
+      ## temp to populate pizzas with default size
+
+      _temp = filterProductsBySelection productsList, rule.subcat
       _tempWithZero = setQuantitiesToZero _temp
 
       ruleCat = rule.cat
