@@ -3,6 +3,7 @@ describe 'PromotionService', ->
   beforeEach ->
     module 'Muzza.promo'
     module 'Muzza.empanadas'
+    module 'Muzza.services'
 
     module ($provide) ->
       $provide.value 'ProductService',
@@ -40,7 +41,7 @@ describe 'PromotionService', ->
 
     it "should call service", ->
       rules = [
-        {id:1,cat:'EMPANADA',subcat:'|2||'}
+        {id:1,price:50,cat:'EMPANADA',subcat:2}
       ]
       PromotionService.createPromotionComponentsList rules
 
@@ -48,7 +49,7 @@ describe 'PromotionService', ->
 
     it "should retrieve only one empanadas subcat", ->
       rules = [
-        {id:1,cat:'EMPANADA',subcat:'|2||'}
+        {id:1,price:50,cat:'EMPANADA',subcat:2}
       ]
       result = PromotionService.createPromotionComponentsList rules
 
@@ -60,23 +61,9 @@ describe 'PromotionService', ->
 
     it "should set all quantities to zero", ->
       rules = [
-        {id:1,cat:'EMPANADA',subcat:'|2||'}
+        {id:1,price:50,cat:'EMPANADA',subcat:2}
       ]
       result = PromotionService.createPromotionComponentsList rules
 
       expect(result['EMPANADA'][0].products[0].qty).toBe 0
       expect(result['EMPANADA'][0].products[1].qty).toBe 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-

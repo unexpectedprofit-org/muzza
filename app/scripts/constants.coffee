@@ -163,9 +163,10 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "1 docena de empanadas"
         cat: 1 #PromoTypeQuantity
         rules: [
-          cat: 'EMPANADA'
           qty: 12
-          subcat: '|||'
+          properties: {
+            cat: 'EMPANADA'
+          }
         ]
         price: 5000
         details: "Llevando una docena de empanadas de cualquier gusto te ahorras una bocha. Aprovechala!!!!!"
@@ -174,13 +175,17 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "1 pizza grande + 6 empanadas al horno"
         cat: 1 #PromoTypeQuantity
         rules: [
-          cat: 'EMPANADA'
           qty: 6
-          subcat: '|1||'
+          properties: {
+            cat: 'EMPANADA'
+            subcat:1
+          }
         ,
-          cat: 'PIZZA'
           qty: 1
-          subcat: '||GRANDE|'
+          properties: {
+            cat: 'PIZZA'
+            size: 'grande'
+          }
         ]
         price: 10000
         details: "Llevando media docena de empanadas al horno de cualquier gusto y 1 pizza grande te ahorras una bocha. Aprovechala!!!!!"
@@ -189,17 +194,24 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "6 empanadas fritas + 1 pizza de la casa grande + 2 empanadas al horno"
         cat: 1 #PromoTypeQuantity
         rules: [
-          cat: 'EMPANADA'
           qty: 6
-          subcat: '|2||'
+          properties: {
+            cat: 'EMPANADA'
+            subcat:2
+          }
         ,
-          cat: 'EMPANADA'
           qty: 2
-          subcat: '|1||'
+          properties: {
+            cat: 'EMPANADA'
+            subcat:1
+          }
         ,
-          cat: 'PIZZA'
           qty: 1
-          subcat: '|2|GRANDE|'
+          properties: {
+            cat: 'PIZZA'
+            subcat:2
+            size: 'grande'
+          }
         ]
         price:8000
         details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
@@ -208,13 +220,16 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "6 empanadas + 1 agua levite"
         cat: 1 #PromoTypeQuantity
         rules: [
-          cat: 'EMPANADA'
           qty: 6
-          subcat: '|||'
+          properties: {
+            cat: 'EMPANADA'
+          }
         ,
-          cat: 'BEBIDA'
           qty: 1
-          subcat: '|1||'
+          properties: {
+            cat: 'BEBIDA'
+            subcat:1
+          }
         ]
         price: 5000
         details: "Llevando 6 empanadas de cualquier gusto + 1 levite te ahorras una bocha. Aprovechala!!!!!"
@@ -223,13 +238,17 @@ angular.module('Muzza.constants',[]).constant 'stores',
         description: "1 pizza de la casa  + 1 pizza especial"
         cat: 1 #PromoTypeQuantity
         rules: [
-          cat: 'PIZZA'
           qty: 1
-          subcat: '|1||'
+          properties: {
+            cat: 'PIZZA'
+            subcat:1
+          }
         ,
-          cat: 'PIZZA'
           qty: 1
-          subcat: '|2||'
+          properties: {
+            cat: 'PIZZA'
+            subcat:2
+          }
         ]
         price:8000
         details: "Llevando una 1 pizza de la casa grande y 1 pizza especial te ahorras una bocha. Aprovechala!!!!!"

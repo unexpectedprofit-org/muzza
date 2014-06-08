@@ -4,40 +4,76 @@ describe 'PromoTypeQuantity', ->
     module 'Muzza.promo'
     module 'Muzza.empanadas'
     module 'Muzza.pizzas'
+    module 'Muzza.services'
 
-  PromoTypeQuantity = Empanada = Pizza = promo = promoDetails = promoRules = undefined
+    module ($provide) ->
+      $provide.value 'ProductService',
+        getProductsFromCategory: () -> []
+      return
+
+
+  PromoTypeQuantity = Empanada = Pizza = PromotionUtil = ProductService = promo = promoRules = undefined
 
   beforeEach ->
     inject ($injector) ->
       PromoTypeQuantity = $injector.get 'PromoTypeQuantity'
       Empanada = $injector.get 'Empanada'
       Pizza = $injector.get 'Pizza'
-
-      promoDetails = {id:1,price:50,description:"jojojo",details:"alalal"}
-      promoRules = [qty:6,cat:'EMPANADA',subcat:'|||']
-
-      promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:promoRules}
+      PromotionUtil = $injector.get 'PromotionUtil'
 
   describe "init", ->
 
     it "should create an object from a different object", ->
 
-      expect(promo.details.id).toEqual promoDetails.id
-      expect(promo.details.price).toEqual promoDetails.price
-      expect(promo.details.description.short).toEqual promoDetails.description
-      expect(promo.details.description.long).toEqual promoDetails.details
-      expect(promo.rules.length).toBe 1
-      expect(promo.rules[0].id).toBe "rule:EMPANADA-|||"
-      expect(promo.rules[0].cat).toBe "EMPANADA"
-      expect(promo.rules[0].subcat).toBe "|||"
+      promoRules = [{qty:6,properties:{cat:'EMPANADA'}}]
 
+      promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:promoRules}
+
+      expect(promo.details.id).toEqual 1
+      expect(promo.details.price).toEqual 50
+      expect(promo.details.description.short).toEqual "jojojo"
+      expect(promo.details.description.long).toEqual "alalal"
+      expect(promo.rules.length).toBe 1
+      expect(promo.rules[0].qty).toBe promoRules[0].qty
+
+      expect(_.keys(promo.rules[0]).length).toBe (2 + _.keys(promoRules[0].properties).length)
+      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[0]))
+
+    it "should create an object from a different object - case 2", ->
+
+      promoRules = [{qty:6,properties:{cat:'EMPANADA',subcat:2,otherProp:'otherValue'}}]
+
+      promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:promoRules}
+
+      expect(promo.details.id).toEqual 1
+      expect(promo.details.price).toEqual 50
+      expect(promo.details.description.short).toEqual "jojojo"
+      expect(promo.details.description.long).toEqual "alalal"
+      expect(promo.rules.length).toBe 1
+      expect(promo.rules[0].qty).toBe promoRules[0].qty
+      expect(_.keys(promo.rules[0]).length).toBe (2 + _.keys(promoRules[0].properties).length)
+      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[0]))
+      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[1]))
+      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[2]))
+
+    it "should create a proper rule ID", ->
+      promoRules = [{qty:6,properties:{cat:'EMPANADA',subcat:1}},
+      {qty:6,properties:{subcat:2,otherProp:'otherValue',cat:'EMPANADA'}},
+      {qty:6,properties:{size:'grande',cat:'PIZZA',subcat:4,newProp:'newPropValue'}}
+      ]
+
+      promo = new PromoTypeQuantity {rules:promoRules,price:100}
+
+      expect(promo.rules[0].id).toEqual 'rule:EMPANADA|1'
+      expect(promo.rules[1].id).toEqual 'rule:EMPANADA|2|otherValue'
+      expect(promo.rules[2].id).toEqual 'rule:PIZZA|grande|4|newPropValue'
 
   describe "validateRule functionality", ->
 
     it "should validate only one promo", ->
 
-      rule1 = {qty:6,cat:'EMPANADA',subcat:'|||'}
-      rule2 = {qty:1,cat:'PIZZA',subcat:'|||'}
+      rule1 = {qty:6,properties:{cat:'EMPANADA'}}
+      rule2 = {qty:1,properties:{cat:'PIZZA'}}
 
       promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:[rule1,rule2]}
 
@@ -52,19 +88,19 @@ describe 'PromoTypeQuantity', ->
         PIZZA: [
           id:2
           description:"Categoria 1 pizza"
-          products: [ {} ]
+          products: []
         ]
 
       response = promo.validate()
       expect(response.success).toBeFalsy()
 
-      response = promo.validateRule "rule:EMPANADA-|||"
+      response = promo.validateRule "rule:EMPANADA"
       expect(response.success).toBeTruthy()
       expect(response.details).toEqual []
 
     it "should not validate individual promo", ->
-      rule1 = {qty:6,cat:'EMPANADA',subcat:'|||'}
-      rule2 = {qty:1,cat:'PIZZA',subcat:'|||'}
+      rule1 = {qty:6,properties:{cat:'EMPANADA'}}
+      rule2 = {qty:1,properties:{cat:'PIZZA'}}
 
       promo = new PromoTypeQuantity {id:1,price:50,description:"jojojo",details:"alalal",rules:[rule1,rule2]}
 
@@ -82,16 +118,15 @@ describe 'PromoTypeQuantity', ->
           products: [ {} ]
         ]
 
-      rule1id = {qty:6,cat:'EMPANADA',subcat:'|||',id:'rule:EMPANADA-|||'}
-      response = promo.validateRule "rule:EMPANADA-|||"
+      response = promo.validateRule "rule:EMPANADA"
       expect(response.success).toBeFalsy()
-      expect(response.details).toContain {rule:rule1id,cause:"quantity",qty:2}
+      expect(response.details).toContain {rule:{cat:'EMPANADA',qty:6,id:'rule:EMPANADA'},cause:"NO_QTY_MATCHED",qtyDiff:2}
 
 
   describe "Promo1: 12 empanadas cualquiera", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:767,rules:[{qty:12,cat:'EMPANADA',subcat:'|||'}]}
+      promo = new PromoTypeQuantity {price:767,rules:[{qty:12,properties:{cat:'EMPANADA'}}]}
 
 
     describe "Basic Case", ->
@@ -129,9 +164,9 @@ describe 'PromoTypeQuantity', ->
 
       it "should validate when more than 1 subcat, different flavors", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:4}
-        empanada2 = new Empanada {id:2,subcat:2,qty:4}
-        empanada3 = new Empanada {id:3,subcat:2,qty:4}
-        empanada4 = new Empanada {id:4,subcat:2,qty:0}
+        empanada2 = new Empanada {id:2,subcat:1,qty:4}
+        empanada3 = new Empanada {id:3,subcat:1,qty:2}
+        empanada4 = new Empanada {id:4,subcat:2,qty:2}
 
         promo.components =
           EMPANADA: [
@@ -159,7 +194,7 @@ describe 'PromoTypeQuantity', ->
 
         response = promo.validate()
         expect(response.success).toBeFalsy()
-        expect(response.details).toContain {rule:promo.rules[0],cause:"quantity",qty:4}
+        expect(response.details).toContain {rule:promo.rules[0],cause:"NO_QTY_MATCHED",qtyDiff:4}
 
       it "should NOT validate if quantity not met, several products", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:8}
@@ -175,12 +210,12 @@ describe 'PromoTypeQuantity', ->
 
         response = promo.validate()
         expect(response.success).toBeFalsy()
-        expect(response.details).toContain {rule:promo.rules[0],cause:"quantity",qty:9}
+        expect(response.details).toContain {rule:promo.rules[0],cause:"NO_QTY_MATCHED",qtyDiff:9}
 
   describe "Promo2: 6 empanadas Fritas", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:555,rules:[{qty:6,cat:'EMPANADA',subcat:'|2||'}]}
+      promo = new PromoTypeQuantity {price:555,rules:[{qty:6,properties:{cat:'EMPANADA',subcat:2}}]}
 
 
     describe "Basic Case", ->
@@ -238,7 +273,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo3: 2 empanadas cualquiera y 1 pizza especial", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:777,rules:[{qty:1,cat:'PIZZA',subcat:'|33||'},{qty:2,cat:'EMPANADA',subcat:'|||'}]}
+      promo = new PromoTypeQuantity {price:777,rules:[{qty:1,properties:{cat:'PIZZA',subcat:33}},{qty:2,properties:{cat:'EMPANADA'}}]}
 
 
     describe "Basic Case", ->
@@ -325,7 +360,7 @@ describe 'PromoTypeQuantity', ->
   describe "Promo4: 6 empanadas horno y 1 pizza especial grande", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:444,rules:[{qty:1,cat:'PIZZA',subcat:'|99|GRANDE|'},{qty:6,cat:'EMPANADA',subcat:'|1||'}]}
+      promo = new PromoTypeQuantity {price:444,rules:[{qty:1,properties:{cat:'PIZZA',subcat:99,size:"grande"}},{qty:6,properties:{cat:'EMPANADA',subcat:1}}]}
 
 
     describe "Basic Case", ->
@@ -441,14 +476,15 @@ describe 'PromoTypeQuantity', ->
   describe "Promo5: 12 empanadas horno y 2 pizza chica", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:333,rules:[{qty:2,cat:'PIZZA',subcat:'||CHICA|'},{qty:12,cat:'EMPANADA',subcat:'|1||'}]}
-
+      promo = new PromoTypeQuantity {price:333,rules:[{qty:2,properties:{cat:'PIZZA',size:"chica"}},{qty:12,properties:{cat:'EMPANADA',subcat:1}}]}
 
     describe "Basic case", ->
 
       it "should validate when exact same products", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:12}
-        pizza1 = new Pizza {id:9,subcat:1,qty:2,size:"chica"}
+        pizza1 = new Pizza {id:9,subcat:10,qty:1,size:"chica"}
+        pizza2 = new Pizza {id:8,subcat:10,qty:0,size:"chica"}
+        pizza3 = new Pizza {id:7,subcat:11,qty:1,size:"chica"}
 
         promo.components =
           EMPANADA: [
@@ -457,9 +493,13 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1 ]
           ]
           PIZZA: [
-            id:1
-            description:"Another category not especial"
-            products: [ pizza1 ]
+            id:10
+            description:"Some category"
+            products: [ pizza1, pizza2 ]
+          ,
+            id:11
+            description:"Another category"
+            products: [ pizza3 ]
           ]
 
         response = promo.validate()
@@ -533,17 +573,17 @@ describe 'PromoTypeQuantity', ->
   describe "Promo6: 1 Grande de Jamon", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:222,rules:[{qty:1,cat:'PIZZA',subcat:'21||GRANDE|'}]}
+      promo = new PromoTypeQuantity {price:222,rules:[{qty:1,properties:{cat:'PIZZA',id:8888,size:"grande"}}]}
 
 
     describe "Basic case", ->
 
       it "should validate when exact same product", ->
-        pizza1 = new Pizza {id:21,subcat:1,qty:1,size:"grande"}
+        pizza1 = new Pizza {id:8888,subcat:12,qty:1,size:"grande"}
 
         promo.components =
           PIZZA: [
-            id:4
+            id:12
             description:"Another category not especial"
             products: [ pizza1 ]
           ]
@@ -571,6 +611,7 @@ describe 'PromoTypeQuantity', ->
       it "should NOT validate when pizza NOT jamon", ->
         pizza1 = new Pizza {id:99,subcat:1,qty:1,}
         pizza2 = new Pizza {id:44,subcat:2,qty:0}
+        pizza3 = new Pizza {id:1,subcat:12,qty:1,size:"grande"}
 
         promo.components =
           PIZZA: [
@@ -579,13 +620,20 @@ describe 'PromoTypeQuantity', ->
             products: [ pizza1, pizza2 ]
           ]
 
+#        promo.components =
+#          PIZZA: [
+#            id:4
+#            description:"Another category not especial"
+#            products: [ pizza3 ]
+#          ]
+
         response = promo.validate()
         expect(response.success).toBeFalsy()
 
   describe "Promo7: 5 empanadas horno, 6 fritas, 1 pizza de la casa", ->
 
     beforeEach ->
-      promo = new PromoTypeQuantity {price:222,rules:[{qty:1,cat:'PIZZA',subcat:'|55||'},{qty:5,cat:'EMPANADA',subcat:'|1||'},{qty:6,cat:'EMPANADA',subcat:'|2||'}]}
+      promo = new PromoTypeQuantity {price:222,rules:[{qty:1,properties:{cat:'PIZZA',subcat:55}},{qty:5,properties:{cat:'EMPANADA',subcat:1}},{qty:6,properties:{cat:'EMPANADA',subcat:2}}]}
 
     describe "Basic", ->
 
