@@ -1,6 +1,12 @@
-angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$firebase, OrderRef) ->
+angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$firebase, OrderRef, Geo, $q) ->
 
   order = {}
+  store =
+    delivery:
+      latLong:
+        k: -34.591809
+        A: -58.3959331
+      radio: 2
 
   setDelivery = (option)->
     order.delivery = option
@@ -9,7 +15,33 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
     order
 
   setContactInfo = (contact)->
-    order.contact = contact
+
+    deferred = $q.defer()
+
+    success = ->
+      order.contact = contact
+      deferred.resolve()
+
+    fail = (errorMsg)->
+      deferred.reject(errorMsg)
+
+    delivery = getDelivery()
+
+    if delivery is 'pickup' then success()
+
+    if delivery is 'delivery'
+
+      validateDelivery = Geo.validateDeliveryRadio(contact.address, store.delivery)
+
+      validateDelivery.then (isWithinDeliveryRadio)->
+
+        if isWithinDeliveryRadio then success() else fail('No esta en el radio de delivery del local')
+
+      , (errorMsg)->
+        fail(errorMsg)
+
+    deferred.promise
+
 
   createOrder = (cart)->
     angular.extend(order, cart)

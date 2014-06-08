@@ -1,6 +1,13 @@
 <div class="list">
+    <div class="bar bar-header bar-assertive" ng-if="error">
+        {{error}} - Queres pasar a buscar el pedido por local?
+        <div>
+            <a href="#/app/delivery">Volver</a>
+        </div>
+    </div>
 
     <form name="addressForm" novalidate data-ng-if="deliveryOption == 'delivery'">
+        <pre>Poner Junin 1477 Buenos Aires para que pase</pre>
         <div class="list list-inset">
             <div class="item item-divider">Direccion</div>
             <label class="item item-input"

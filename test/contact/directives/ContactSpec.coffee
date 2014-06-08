@@ -11,14 +11,15 @@ describe 'Contact', ->
         {}
       $provide.value 'OrderService',
         chooseDelivery: ()-> null
-        addContactInfo: ()-> null
+        addContactInfo: ()-> {then: (callback)-> callback()}
         retrieveConnectionInfo: ()-> {name:'San'}
       return null
 
-  OrderService = isolatedScope = $state = _stateParams_ = undefined
+  OrderService = isolatedScope = $state = _stateParams_ = $q = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _OrderService_, _$state_, _$stateParams_) ->
+    inject ($compile, $rootScope, _OrderService_, _$state_, _$stateParams_, _$q_) ->
+      $q = _$q_
       OrderService = _OrderService_
       $state = _$state_
       $stateParams = _$stateParams_
@@ -37,7 +38,7 @@ describe 'Contact', ->
   describe 'when user fills in the form', ->
 
     it 'should delegate to Order Service', ->
-      spyOn(OrderService, 'addContactInfo')
+      spyOn(OrderService, 'addContactInfo').and.callThrough()
       isolatedScope.contact =
         name: 'Santiago'
         phone: '123455889'
@@ -49,6 +50,13 @@ describe 'Contact', ->
       spyOn($state, 'go')
       isolatedScope.continue()
       expect($state.go).toHaveBeenCalledWith('app.menu')
+
+    it 'should load an error if the Order service rejected the promise for some reason', ->
+      spyOn(OrderService, 'addContactInfo').and.callFake ()-> {then: (callback, fallback)-> fallback('Error 101')}
+      isolatedScope.contact = {}
+      isolatedScope.continue()
+      expect(isolatedScope.error).toBe 'Error 101'
+
 
   describe 'when user has previosuly filled the form', ->
 

@@ -28,37 +28,37 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "app",
     url: "/app"
     abstract: true
-    templateUrl: "templates/nav.html"
+    templateUrl: "../app/templates/nav.html"
 
   .state "app.menu",
     url: "/menu"
     views:
       navContent:
-        templateUrl: "templates/menu.html"
+        templateUrl: "../app/templates/menu.html"
 
   .state "app.category",
     url: "/menu/:category"
     views:
       'navContent':
-        templateUrl: "templates/menu.html"
+        templateUrl: "../app/templates/menu.html"
 
   .state "app.pizza",
     url: "/menu/pizza/:pizzaId"
     views:
       'navContent':
-        templateUrl: "templates/menu.html"
+        templateUrl: "../app/templates/menu.html"
 
   .state "app.bebida",
     url: "/menu/bebida/:bebidaId"
     views:
       'navContent':
-        templateUrl: "templates/menu.html"
+        templateUrl: "../app/templates/menu.html"
 
   .state "app.store",
     url: "/menu/:storeID"
     views:
       navContent:
-        templateUrl: "templates/menu.html"
+        templateUrl: "../app/templates/menu.html"
         controller: "MenuCtrl"
 
   .state "app.stores",

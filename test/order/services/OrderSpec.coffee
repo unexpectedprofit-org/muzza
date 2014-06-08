@@ -29,6 +29,8 @@ describe 'Order Service', ->
       $provide.value '$firebase', firebaseStub()
       $provide.value 'Firebase', firebaseStub()
       $provide.value 'OrderRef', firebaseStub()
+      $provide.value 'Geo',
+        validateDeliveryRadio: ()-> null
       return null
 
   OrderService = ShoppingCartService = getCartSpy = undefined
@@ -48,13 +50,114 @@ describe 'Order Service', ->
 
   describe 'addContactInfo', ->
 
-    it 'should sabe the contact information into the order', ->
-      contactInfo =
-        name: 'Santiago'
-        phone: '1234567890'
-        email: 'test@test.com'
-      OrderService.addContactInfo(contactInfo)
-      expect(OrderService.retrieveOrder()).toEqual {contact: contactInfo}
+    describe 'when the user has selected pikcup', ->
+
+      it 'should save the contact information into the order', ->
+        OrderService.chooseDelivery('pickup')
+        contactInfo =
+          name: 'Santiago'
+          phone: '1234567890'
+          email: 'test@test.com'
+        OrderService.addContactInfo(contactInfo)
+        expect(OrderService.retrieveOrder()).toEqual {delivery: 'pickup', contact: contactInfo}
+
+    describe 'when the user has selected delivery', ->
+
+      it 'should add the contact if the user is within the delivery radio', ->
+        inject (Geo)->
+          spyOn(Geo, 'validateDeliveryRadio').and.callFake ()-> {then: (callback, fallback)-> callback(true)}
+          OrderService.chooseDelivery('delivery')
+          contactInfo =
+            address:
+              street: 'Junin'
+              door: '1477'
+              area: 'Buenos Aires'
+            name: 'San'
+            phone: '12345678'
+            email: 'test@test.com'
+          OrderService.addContactInfo(contactInfo)
+          expect(OrderService.retrieveOrder()).toEqual {delivery: 'delivery', contact: contactInfo}
+
+      describe 'but the user is not within the delivery radio', ->
+
+        it 'should not add the contact', ->
+          inject (Geo, $rootScope)->
+            spyOn(Geo, 'validateDeliveryRadio').and.callFake ()-> {then: (callback, fallback)-> callback(false)}
+            OrderService.chooseDelivery('delivery')
+            contactInfo =
+              address:
+                street: 'Junin'
+                door: '1477'
+                area: 'Buenos Aires'
+              name: 'San'
+              phone: '12345678'
+              email: 'test@test.com'
+            OrderService.addContactInfo(contactInfo)
+            expect(OrderService.retrieveOrder()).toEqual {delivery: 'delivery'}
+
+        it 'should send an error msg upwards', ->
+          inject (Geo, $rootScope)->
+            spyOn(Geo, 'validateDeliveryRadio').and.callFake ()-> {then: (callback, fallback)-> callback(false)}
+            OrderService.chooseDelivery('delivery')
+            contactInfo =
+              address:
+                street: 'Junin'
+                door: '1477'
+                area: 'Buenos Aires'
+              name: 'San'
+              phone: '12345678'
+              email: 'test@test.com'
+            promise  = OrderService.addContactInfo(contactInfo)
+
+            error = undefined
+
+            promise.then null, (errorMsg)->
+              error = errorMsg
+
+            # forcing digest so promises get resolved
+            $rootScope.$digest()
+            expect(error).toBe 'No esta en el radio de delivery del local'
+
+      describe 'when Geo is not able to validate the address for any reason', ->
+
+        it 'should not add the contact', ->
+          inject (Geo, $rootScope)->
+            spyOn(Geo, 'validateDeliveryRadio').and.callFake ()-> {then: (callback, fallback)-> fallback('Error 101')}
+            OrderService.chooseDelivery('delivery')
+            contactInfo =
+              address:
+                street: 'Junin'
+                door: '1477'
+                area: 'Buenos Aires'
+              name: 'San'
+              phone: '12345678'
+              email: 'test@test.com'
+            OrderService.addContactInfo(contactInfo)
+            expect(OrderService.retrieveOrder()).toEqual {delivery: 'delivery'}
+
+      it 'should reject passing the error upwards', ->
+        inject (Geo, $rootScope)->
+          spyOn(Geo, 'validateDeliveryRadio').and.callFake ()-> {then: (callback, fallback)-> fallback('Error 101')}
+          OrderService.chooseDelivery('delivery')
+          contactInfo =
+            address:
+              street: 'Junin'
+              door: '1477'
+              area: 'Buenos Aires'
+            name: 'San'
+            phone: '12345678'
+            email: 'test@test.com'
+          promise  = OrderService.addContactInfo(contactInfo)
+
+          error = undefined
+
+          promise.then null, (errorMsg)->
+            error = errorMsg
+
+          # forcing digest so promises get resolved
+          $rootScope.$digest()
+
+          expect(error).toBe 'Error 101'
 
   describe 'createOrder', ->
 
@@ -91,6 +194,7 @@ describe 'Order Service', ->
   describe 'getContactInfo', ->
 
     it 'should return the filled contact information', ->
+      OrderService.chooseDelivery('pickup')
       OrderService.addContactInfo({name:'San'})
       expect(OrderService.retrieveConnectionInfo()).toEqual {name:'San'}
 
