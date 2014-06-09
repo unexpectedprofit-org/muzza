@@ -8,19 +8,21 @@
 
     <div class="list card">
 
-      <div class="item item-avatar" data-ng-show="!isSelectionValid.success" style="background-color:#008800">
-
-        Debe seleccionar {{isSelectionValid.details[0].rule.qty}} {{isSelectionValid.details[0].rule.properties.cat}}
-        <br/>
-        Te falta {{ isSelectionValid.details[0].rule.qty - isSelectionValid.details[0].qty }}
-
-        <!--<pre>{{ isSelectionValid | json }}</pre>-->
-      </div>
-
-      <div class="item item-avatar">
+      <div class="item item-text-wrap">
         {{ promotion.details.description.long }}
         <br/>
         {{ promotion.details.price | centsToMoney | currency }}
+      </div>
+
+
+      <div class="item item-text-wrap" data-ng-show="isSelectionValid.success" style="background:limegreen">
+        <i class="ion-android-checkmark"></i>
+        Listo! Da click en "Seleccionar" para agregar la promo al carrito!
+      </div>
+
+      <div class="item item-text-wrap" data-ng-show="!isSelectionValid.success" style="background:indianred">
+        Te falta agregar {{ isSelectionValid.details[0].qtyDiff }} {{isSelectionValid.details[0].rule.properties.cat}}
+        <!--<pre>{{ isSelectionValid | json }}</pre>-->
       </div>
 
       <div class="item item-body">

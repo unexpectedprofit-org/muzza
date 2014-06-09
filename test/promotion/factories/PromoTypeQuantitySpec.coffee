@@ -120,7 +120,7 @@ describe 'PromoTypeQuantity', ->
 
       response = promo.validateRule "rule:EMPANADA"
       expect(response.success).toBeFalsy()
-      expect(response.details).toContain {rule:{qty:6,id:'rule:EMPANADA',properties:{cat:'EMPANADA'}},cause:"NO_QTY_MATCHED",qtyDiff:2}
+      expect(response.details).toContain {rule:{qty:6,id:'rule:EMPANADA',properties:{cat:'EMPANADA'}},cause:"NO_QTY_MATCHED",qtyDiff:4}
 
 
   describe "Promo1: 12 empanadas cualquiera", ->
@@ -194,7 +194,7 @@ describe 'PromoTypeQuantity', ->
 
         response = promo.validate()
         expect(response.success).toBeFalsy()
-        expect(response.details).toContain {rule:promo.rules[0],cause:"NO_QTY_MATCHED",qtyDiff:4}
+        expect(response.details).toContain {rule:promo.rules[0],cause:"NO_QTY_MATCHED",qtyDiff:8}
 
       it "should NOT validate if quantity not met, several products", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:8}
@@ -210,7 +210,7 @@ describe 'PromoTypeQuantity', ->
 
         response = promo.validate()
         expect(response.success).toBeFalsy()
-        expect(response.details).toContain {rule:promo.rules[0],cause:"NO_QTY_MATCHED",qtyDiff:9}
+        expect(response.details).toContain {rule:promo.rules[0],cause:"NO_QTY_MATCHED",qtyDiff:3}
 
   describe "Promo2: 6 empanadas Fritas", ->
 

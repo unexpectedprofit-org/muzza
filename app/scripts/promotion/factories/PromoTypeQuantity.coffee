@@ -97,7 +97,7 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', (PromotionUtil) ->
 
         if totalQuantity isnt rule.qty
 #          console.log "NO VALIDA - QUANTITY"
-          response.details.push {rule:rule,cause:"NO_QTY_MATCHED",qtyDiff:totalQuantity}
+          response.details.push {rule:rule,cause:"NO_QTY_MATCHED",qtyDiff:rule.qty-totalQuantity}
           response.success = false
           return response
 
