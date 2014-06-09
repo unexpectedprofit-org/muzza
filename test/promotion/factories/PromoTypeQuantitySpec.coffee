@@ -432,12 +432,9 @@ describe 'PromoTypeQuantity', ->
         response = promo.validate()
         expect(response.success).toBeFalsy()
 
-      it "should NOT validate when not 1 pizza grande", ->
+      it "should validate when no pizza grande", ->
         empanada1 = new Empanada {id:3,subcat:1,qty:6}
-        empanada2 = new Empanada {id:2,subcat:1,qty:1}
-        empanada3 = new Empanada {id:3,subcat:2,qty:1}
-
-        pizza1 = new Pizza {id:2,subcat:99,qty:1}
+        pizza1 = new Pizza {id:1,subcat:99,qty:1,size:"chica"}
 
         promo.components =
           EMPANADA: [
@@ -446,13 +443,13 @@ describe 'PromoTypeQuantity', ->
             products: [ empanada1 ]
           ]
           PIZZA: [
-            id:99
-            description:"Categoria 1 Ejemplo pizzas especial"
+            id:1
+            description:"Categoria 1112343"
             products: [ pizza1 ]
           ]
 
         response = promo.validate()
-        expect(response.success).toBeFalsy()
+        expect(response.success).toBeTruthy()
 
       it "should NOT validate when not 1 pizza especial", ->
         empanada1 = new Empanada {id:1,subcat:1,qty:6}
@@ -530,9 +527,9 @@ describe 'PromoTypeQuantity', ->
         response = promo.validate()
         expect(response.success).toBeTruthy()
 
-      it "should NOT validate when no pizza chica", ->
+      it "should validate ", ->
         empanada1 = new Empanada {id:8,subcat:1,qty:12}
-        pizza1 = new Pizza {id:22,subcat:1,qty:1,size:"mediana"}
+        pizza1 = new Pizza {id:22,subcat:1,qty:1}
 
         promo.components =
           EMPANADA: [
@@ -549,7 +546,7 @@ describe 'PromoTypeQuantity', ->
         response = promo.validate()
         expect(response.success).toBeFalsy()
 
-      it "should NOT validate when only one pizza chica", ->
+      it "should validate when only one pizza chica", ->
         empanada1 = new Empanada {id:8,subcat:1,qty:12}
 
         pizza1 = new Pizza {id:21,subcat:2,qty:1,size:"chica"}
@@ -568,7 +565,7 @@ describe 'PromoTypeQuantity', ->
           ]
 
         response = promo.validate()
-        expect(response.success).toBeFalsy()
+        expect(response.success).toBeTruthy()
 
   describe "Promo6: 1 Grande de Jamon", ->
 

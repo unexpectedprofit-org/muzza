@@ -58,12 +58,3 @@ describe 'PromotionService', ->
       expect(result['EMPANADA'][0].ruleId).toBe rules[0].id
       expect(result['EMPANADA'][0].description).toBe "Fritanga"
       expect(result['EMPANADA'][0].products.length).toBe 2
-
-    it "should set all quantities to zero", ->
-      rules = [
-        {properties:{cat:'EMPANADA',subcat:2}}
-      ]
-      result = PromotionService.createPromotionComponentsList rules
-
-      expect(result['EMPANADA'][0].products[0].qty).toBe 0
-      expect(result['EMPANADA'][0].products[1].qty).toBe 0
