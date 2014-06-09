@@ -21,6 +21,8 @@ describe 'Bebida', ->
       expect(bebida.qty).toBe 1
       expect(bebida.totalPrice).toBe 0
       expect(bebida.price.base).toBe 0
+      expect(bebida.isEditable.options).toBeFalsy()
+      expect(bebida.isEditable.qty).toBeTruthy()
 
     it 'should construct a Bebida model from param', ->
       param =
@@ -41,6 +43,8 @@ describe 'Bebida', ->
       expect(bebida.totalPrice).toBe 0
       expect(bebida.price.base).toBe 50
       expect(bebida.option).toBe 'Negra'
+      expect(bebida.isEditable.options).toBeFalsy()
+      expect(bebida.isEditable.qty).toBeTruthy()
 
     it 'should have functions defined', ->
       bebida = new Bebida {}
@@ -48,7 +52,6 @@ describe 'Bebida', ->
       expect(bebida.getDescription).toBeDefined()
       expect(bebida.updateQty).toBeDefined()
       expect(bebida.reset).toBeDefined()
-      expect(bebida.isEditable).toBeDefined()
       expect(bebida.getHash).toBeDefined()
 
 
@@ -133,10 +136,3 @@ describe 'Bebida', ->
     bebida = new Bebida {description:'Quilmes',size:'grande',option:'Stout',price:{base:50}}
     bebida.resetPrice()
     expect(bebida.totalPrice).toBe 50
-
-  describe "isEditable functionality", ->
-
-    it "should return true", ->
-
-      bebida = new Bebida {}
-      expect(bebida.isEditable()).toBeTruthy()

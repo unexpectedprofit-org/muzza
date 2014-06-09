@@ -23,6 +23,8 @@ describe 'Pizza', ->
       expect(pizza.subcat).toBe 0
       expect(pizza.qty).toBe 1
       expect(pizza.price.base).toBe 0
+      expect(pizza.isEditable.options).toBeTruthy()
+      expect(pizza.isEditable.qty).toBeTruthy()
 
     it 'should construct a Pizza model from param', ->
       param =
@@ -43,6 +45,8 @@ describe 'Pizza', ->
       expect(pizza.qty).toBe 2
       expect(pizza.description).toBe 'Muzza'
       expect(pizza.price.base).toBe 50
+      expect(pizza.isEditable.options).toBeTruthy()
+      expect(pizza.isEditable.qty).toBeTruthy()
 
     it 'should have functions defined', ->
       pizza = new Pizza {}
@@ -53,7 +57,6 @@ describe 'Pizza', ->
       expect(pizza.updateQty).toBeDefined()
       expect(pizza.getHash).toBeDefined()
       expect(pizza.reset).toBeDefined()
-      expect(pizza.isEditable).toBeDefined()
 
   it 'should generate a description from default values', ->
     pizza = new Pizza()
@@ -154,10 +157,3 @@ describe 'Pizza', ->
     it 'should return a formatted total price of 0 when value is undefined', ->
       pizza = new Pizza( { id: 1, description: 'Muzza', price: {base: undefined}, qty: 1 } )
       expect(pizza.getTotalPrice()).toBe '$0.00'
-
-  describe "isEditable functionality", ->
-
-    it "should return true", ->
-
-      pizza = new Pizza {}
-      expect(pizza.isEditable()).toBeTruthy()

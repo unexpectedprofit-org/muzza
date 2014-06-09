@@ -25,7 +25,6 @@ describe 'Empanada', ->
       expect(newEmpanada.getDescription).toBeDefined()
       expect(newEmpanada.getHash).toBeDefined()
       expect(newEmpanada.reset).toBeDefined()
-      expect(newEmpanada.isEditable).toBeDefined()
 
 #    it "should init the object", ->
 #      newEmpanada = new Empanada {}
@@ -44,6 +43,8 @@ describe 'Empanada', ->
       expect(newEmpanada.id).toBe fromObject.id
       expect(newEmpanada.desc).toBe fromObject.desc
       expect(newEmpanada.totalPrice).toBe fromObject.price.base
+      expect(newEmpanada.isEditable.options).toBeFalsy()
+      expect(newEmpanada.isEditable.qty).toBeTruthy()
 
 
   describe "update quantity functionality", ->
@@ -107,10 +108,3 @@ describe 'Empanada', ->
       expect(empanada.cat).toBe 'EMPANADA'
       expect(empanada.totalPrice).toBe 0
       expect(empanada.qty).toBe 1
-
-  describe "isEditable functionality", ->
-
-    it "should return false", ->
-
-      empanada = new Empanada {}
-      expect(empanada.isEditable()).toBeFalsy()

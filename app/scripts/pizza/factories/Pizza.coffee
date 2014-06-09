@@ -2,8 +2,12 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
 
   class Pizza
     constructor: (param)->
-      @description = param?.description or ''
       @cat = 'PIZZA'
+      @isEditable =
+        options:true
+        qty:true
+
+      @description = param?.description or ''
       @subcat = param?.subcat or 0
       @qty = param?.qty or 1
       @totalPrice = param?.totalPrice or undefined
@@ -47,9 +51,6 @@ angular.module('Muzza.pizzas').factory 'Pizza', ($filter)->
     @qty = 1
     @size = ''
     @dough = ''
-
-  Pizza::isEditable = () ->
-    true
 
 #  TODO:  calculate total price
 #  TODO:  handle adding price

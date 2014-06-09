@@ -106,7 +106,6 @@ describe "Cart", ->
       $scope.$digest()
       expect(element.html()).toMatch(/Total \$16.61/)
 
-
     it 'should not display the empty msg', ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
       $scope.$digest()
@@ -124,6 +123,13 @@ describe "Cart", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
       $scope.$digest()
       expect(element.find('ion-item').html()).toContain "$parent.remove(item.cartItemKey)"
+
+    it "should have edit functions set", ->
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]
+      $scope.$digest()
+
+      expect(element.html()).toContain "item.isEditable.qty"
+      expect(element.html()).toContain "item.isEditable.options"
 
 
   describe 'when shopping cart is empty', ->

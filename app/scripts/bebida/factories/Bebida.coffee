@@ -2,8 +2,12 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
 
   class Bebida
     constructor: (param)->
-      @description = param?.description or ''
       @cat = 'BEBIDA'
+      @isEditable =
+        options:false
+        qty:true
+
+      @description = param?.description or ''
       @subcat = param?.subcat or 0
       @qty = param?.qty or 1
       @size = param?.size or ''
@@ -35,9 +39,6 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
     @cat = 'BEBIDA'
     @totalPrice = 0
     @qty = 1
-
-  Bebida::isEditable = () ->
-    true
 
   Bebida::getHash = ()->
     _size = @size.toUpperCase() or ''

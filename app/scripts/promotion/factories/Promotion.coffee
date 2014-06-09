@@ -3,6 +3,10 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
   class Promotion
     constructor: (from) ->
       @cat = "PROMO"
+      @isEditable =
+        options:false
+        qty:false
+
       @qty = 1
 
       @totalPrice = from?.details?.price
@@ -28,9 +32,5 @@ angular.module('Muzza.promo').factory 'Promotion', () ->
 
   Promotion::getDescription = () ->
     @description
-
-  Promotion::isEditable = () ->
-    false
-
 
   return Promotion

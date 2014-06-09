@@ -3,6 +3,10 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
   class Empanada
     constructor: (param) ->
       @cat = 'EMPANADA'
+      @isEditable =
+        options:false
+        qty:true
+
       @subcat = param.subcat
       @type = param.type or ''
       @qty = param.qty or 1
@@ -23,9 +27,6 @@ angular.module('Muzza.empanadas').factory "Empanada", () ->
     @cat = 'EMPANADA'
     @totalPrice = 0
     @qty = 1
-
-  Empanada::isEditable = () ->
-    false
 
   Empanada::getHash = () ->
     "ID_BRAND|" + @id + "|" + @subcat + "||"

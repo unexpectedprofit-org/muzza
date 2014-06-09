@@ -29,10 +29,12 @@ describe 'Promo', ->
       expect(promo.items).toEqual []
       expect(promo.rules).toEqual []
 
+      expect(promo.isEditable.options).toBeFalsy()
+      expect(promo.isEditable.qty).toBeFalsy()
+
     it 'should have functions defined', ->
       expect(promo.getHash).toBeDefined()
       expect(promo.getDescription).toBeDefined()
-      expect(promo.isEditable).toBeDefined()
 
 
   it "should create a hash", ->
