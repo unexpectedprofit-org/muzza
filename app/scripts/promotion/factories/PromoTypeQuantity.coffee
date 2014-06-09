@@ -22,9 +22,10 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', (PromotionUtil) ->
         return []
 
       angular.forEach object.rules, (currentRule) ->
-        tempRule = angular.copy currentRule.properties
-        tempRule.qty = currentRule.qty
-        tempRule.id = generateRuleId currentRule.properties
+        tempRule =
+          id: generateRuleId currentRule.properties
+          qty: currentRule.qty
+          properties: angular.copy currentRule.properties
 
         rules.push tempRule
 
@@ -74,16 +75,16 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', (PromotionUtil) ->
       validationResponse
 
 
-    validateComponents = (components, propertiesRule) ->
+    validateComponents = (components, rule) ->
       acumProd = []
       response =
         details: []
         success: true
 
-      _.forEach components[propertiesRule.cat], (subCat) ->
+      _.forEach components[rule.properties.cat], (subCat) ->
 
         prodMatching = _.filter subCat.products, (product) ->
-          PromotionUtil.productMatchesRule product, propertiesRule
+          PromotionUtil.productMatchesRule product, rule.properties
 
         _.forEach prodMatching, (pro) ->
           acumProd.push pro
@@ -94,15 +95,15 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', (PromotionUtil) ->
         totalQuantity = _.reduce quantitiesArray, (a, b) ->
           a + b
 
-        if totalQuantity isnt propertiesRule.qty
+        if totalQuantity isnt rule.qty
 #          console.log "NO VALIDA - QUANTITY"
-          response.details.push {rule:propertiesRule,cause:"NO_QTY_MATCHED",qtyDiff:totalQuantity}
+          response.details.push {rule:rule,cause:"NO_QTY_MATCHED",qtyDiff:totalQuantity}
           response.success = false
           return response
 
       else
 #        console.log "NO VALIDA - no prod matching all props"
-        response.details.push {rule:propertiesRule,cause:"NO_PROD_MATCHED"}
+        response.details.push {rule:rule,cause:"NO_PROD_MATCHED"}
         response.success = false
         return response
 

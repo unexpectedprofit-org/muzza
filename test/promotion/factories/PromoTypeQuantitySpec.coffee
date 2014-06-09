@@ -36,8 +36,8 @@ describe 'PromoTypeQuantity', ->
       expect(promo.rules.length).toBe 1
       expect(promo.rules[0].qty).toBe promoRules[0].qty
 
-      expect(_.keys(promo.rules[0]).length).toBe (2 + _.keys(promoRules[0].properties).length)
-      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[0]))
+      expect(_.keys(promo.rules[0].properties).length).toBe _.keys(promoRules[0].properties).length
+      expect(_.keys(promo.rules[0].properties)).toContain _.keys(promoRules[0].properties)[0]
 
     it "should create an object from a different object - case 2", ->
 
@@ -51,10 +51,10 @@ describe 'PromoTypeQuantity', ->
       expect(promo.details.description.long).toEqual "alalal"
       expect(promo.rules.length).toBe 1
       expect(promo.rules[0].qty).toBe promoRules[0].qty
-      expect(_.keys(promo.rules[0]).length).toBe (2 + _.keys(promoRules[0].properties).length)
-      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[0]))
-      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[1]))
-      expect(_.keys(promo.rules[0])).toContain ((_.keys(promoRules[0].properties)[2]))
+      expect(_.keys(promo.rules[0]).length).toBe _.keys(promoRules[0].properties).length
+      expect(_.keys(promo.rules[0].properties)).toContain (_.keys promoRules[0].properties)[0]
+      expect(_.keys(promo.rules[0].properties)).toContain (_.keys promoRules[0].properties)[1]
+      expect(_.keys(promo.rules[0].properties)).toContain (_.keys promoRules[0].properties)[2]
 
     it "should create a proper rule ID", ->
       promoRules = [{qty:6,properties:{cat:'EMPANADA',subcat:1}},
@@ -120,7 +120,7 @@ describe 'PromoTypeQuantity', ->
 
       response = promo.validateRule "rule:EMPANADA"
       expect(response.success).toBeFalsy()
-      expect(response.details).toContain {rule:{cat:'EMPANADA',qty:6,id:'rule:EMPANADA'},cause:"NO_QTY_MATCHED",qtyDiff:2}
+      expect(response.details).toContain {rule:{qty:6,id:'rule:EMPANADA',properties:{cat:'EMPANADA'}},cause:"NO_QTY_MATCHED",qtyDiff:2}
 
 
   describe "Promo1: 12 empanadas cualquiera", ->
@@ -609,23 +609,15 @@ describe 'PromoTypeQuantity', ->
         expect(response.success).toBeFalsy()
 
       it "should NOT validate when pizza NOT jamon", ->
-        pizza1 = new Pizza {id:99,subcat:1,qty:1,}
-        pizza2 = new Pizza {id:44,subcat:2,qty:0}
-        pizza3 = new Pizza {id:1,subcat:12,qty:1,size:"grande"}
+        pizza1 = new Pizza {id:99,subcat:33,qty:1,size:"grande"}
+        pizza2 = new Pizza {id:44,subcat:33,qty:0,size:"grande"}
 
         promo.components =
           PIZZA: [
-            id:4
-            description:"Another category not especial"
+            id:33
+            description:"Some category"
             products: [ pizza1, pizza2 ]
           ]
-
-#        promo.components =
-#          PIZZA: [
-#            id:4
-#            description:"Another category not especial"
-#            products: [ pizza3 ]
-#          ]
 
         response = promo.validate()
         expect(response.success).toBeFalsy()

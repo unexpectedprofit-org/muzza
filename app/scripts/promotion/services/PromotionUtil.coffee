@@ -2,16 +2,14 @@ angular.module('Muzza.promo').service 'PromotionUtil', () ->
 
 
   #validate all product properties
-  #BUT price/qty/id
-  #TODO filter by prod ID
+  #BUT price/qty
   isProductApplicableToRule = (product, rule) ->
     continueSearch = true
 
     _.forEach (_.keys rule), (key) ->
       if continueSearch and
       key isnt 'price' and
-      key isnt 'qty' and
-      key isnt 'id'
+      key isnt 'qty'
         if product[key] is undefined or product[key] isnt rule[key]
           continueSearch = false
           return

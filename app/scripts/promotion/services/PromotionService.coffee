@@ -10,35 +10,34 @@ angular.module('Muzza.promo').service 'PromotionService', ($log, PromotionUtil, 
   getPromoComponentsList = (promotionRules) ->
     filteredProducts = {}
 
-    _.forEach promotionRules, (rule) ->
-      productsListByCategory = ProductService.getProductsFromCategory rule.cat
+    _.forEach promotionRules, (promoRule) ->
+      ruleProperties = promoRule.properties
+
+      productsListByCategory = ProductService.getProductsFromCategory ruleProperties.cat
 #      console.log "productsListByCategory: " + JSON.stringify productsListByCategory
 
-
       ## temp to populate pizzas with default size
-      if rule.cat is "PIZZA"
+      if ruleProperties.cat is "PIZZA"
         _.forEach productsListByCategory, (category) ->
           _.forEach category.products, (product) ->
             product.size = "grande"
       ## temp to populate pizzas with default size
 
-      _temp = PromotionUtil.filterProductsBySelection productsListByCategory, rule
+      _temp = PromotionUtil.filterProductsBySelection productsListByCategory, ruleProperties
       _tempWithZero = setQuantitiesToZero _temp
 
-      ruleCat = rule.cat
-
-      if angular.isUndefined( filteredProducts[ruleCat] )
-        filteredProducts[ruleCat] = []
+      if angular.isUndefined( filteredProducts[ruleProperties.cat] )
+        filteredProducts[ruleProperties.cat] = []
 
       _.each _tempWithZero, (elem) ->
-        elem.ruleId = rule.id
-        filteredProducts[ruleCat].push elem
+        elem.ruleId = ruleProperties.id
+        filteredProducts[ruleProperties.cat].push elem
 
     returnResults = {}
 
-    _.forEach promotionRules, (rule) ->
-      cate = rule.cat
-      returnResults[cate] = filteredProducts[cate]
+    _.forEach promotionRules, (promoRule) ->
+      ruleProperties = promoRule.properties
+      returnResults[ruleProperties.cat] = filteredProducts[ruleProperties.cat]
 
     returnResults
 

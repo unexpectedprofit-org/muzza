@@ -41,15 +41,15 @@ describe 'PromotionService', ->
 
     it "should call service", ->
       rules = [
-        {id:1,price:50,cat:'EMPANADA',subcat:2}
+        {properties:{cat:'EMPANADA',subcat:2}}
       ]
       PromotionService.createPromotionComponentsList rules
 
-      expect(productsSpy).toHaveBeenCalledWith rules[0].cat
+      expect(productsSpy).toHaveBeenCalledWith rules[0].properties.cat
 
     it "should retrieve only one empanadas subcat", ->
       rules = [
-        {id:1,price:50,cat:'EMPANADA',subcat:2}
+        {properties:{cat:'EMPANADA',subcat:2}}
       ]
       result = PromotionService.createPromotionComponentsList rules
 
@@ -61,7 +61,7 @@ describe 'PromotionService', ->
 
     it "should set all quantities to zero", ->
       rules = [
-        {id:1,price:50,cat:'EMPANADA',subcat:2}
+        {properties:{cat:'EMPANADA',subcat:2}}
       ]
       result = PromotionService.createPromotionComponentsList rules
 
