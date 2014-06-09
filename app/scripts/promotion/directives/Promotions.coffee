@@ -16,7 +16,7 @@ angular.module("Muzza.promo").directive "promotions", ($ionicModal, PromotionDet
     $scope.steps = ['details']
 
 
-    details = $ionicModal.fromTemplateUrl '../app/scripts/promotion/templates/details.html',
+    details = $ionicModal.fromTemplateUrl '../app/scripts/promotion/templates/promotion-details.html',
       scope: $scope,
       animation: 'slide-in-up'
 
