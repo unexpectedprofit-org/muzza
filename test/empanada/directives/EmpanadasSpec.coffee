@@ -127,47 +127,6 @@ describe "Empanadas", ->
           desc: empanada2.desc
 
 
-  describe "when system requests the menu an specific item view", ->
-
-    getItemSpy = undefined
-
-    describe "and the item is an EMPANADA", ->
-
-      beforeEach ->
-        inject ($compile, $rootScope, _ShoppingCartService_) ->
-          ShoppingCartService = _ShoppingCartService_
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue empanada1
-          $stateParams.empanadaId = 1
-          element = angular.element('<empanadas ng-model="menu"></empanadas>')
-          $compile(element)($rootScope)
-          $scope.$digest()
-          isolatedScope = element.isolateScope()
-
-      it "should retrieve the item from the shopping cart", ->
-        expect(getItemSpy).toHaveBeenCalled()
-
-      it 'should copy the item from the shopping cart into a new one to avoid changing the cart item', ->
-        inject (ShoppingCartService)->
-          cartItem = ShoppingCartService.get $stateParams.empanadaId
-          expect(cartItem).not.toEqual isolatedScope.empanadaSelection
-
-    describe "and the item is not an empanada", ->
-
-      beforeEach ->
-        inject ($rootScope, $compile, _ShoppingCartService_) ->
-          ShoppingCartService = _ShoppingCartService_
-          $stateParams.empanadaId = undefined
-          $stateParams.pizzaId = 2
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue empanada1
-          element = angular.element('<empanadas ng-model="menu"></empanadas>')
-          $compile(element)($rootScope)
-          $scope.$digest()
-          isolatedScope = element.isolateScope()
-
-      it "should not retrieve the product", ->
-        expect(getItemSpy).not.toHaveBeenCalled()
-
-
   describe "when user deletes a product", ->
 
     it "should remove the item from the modal scope", ->

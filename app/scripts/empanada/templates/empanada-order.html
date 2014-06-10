@@ -18,11 +18,7 @@
 
 
           <div class="item item-body">
-              <div class="button-bar" data-ng-if="empanadaSelection.cartItemKey">
-                  <a class="button" data-ng-click="order.add(empanadaSelection)"
-                          data-ng-disabled="order.isMinAllowed()">Actualizar Mi Pedido</a>
-              </div>
-              <div class="button-bar" data-ng-if="!empanadaSelection.cartItemKey">
+              <div class="button-bar">
                   <a class="button" data-ng-click="order.add(empanadaSelection)">Agregar a Mi Pedido</a>
               </div>
 

@@ -23,30 +23,21 @@ angular.module('Muzza.empanadas').directive 'empanadas', ($log, $ionicModal, Sho
     $scope.remove = () ->
       $scope.empanadaSelection = undefined
 
-    $scope.choose = (empanada, hashKey)->
+    $scope.choose = (empanada)->
 
       $scope.empanadaSelection = undefined
 
       # Reminder: we create a new to avoid modifying the model that comes from the menu
       if empanada? then  $scope.empanadaSelection = new Empanada empanada
 
-      if hashKey then editCartItem hashKey
-
       if $scope.empanadaSelection?
         angular.forEach $scope.steps, (key, val)->
           modal = $scope[key]
           modal.show()
 
-    editCartItem = (id)->
-      item = angular.copy (ShoppingCartService.get id)
-      if item.cat == 'EMPANADA'
-        $scope.empanadaSelection = item
-
     init = ->
       $q.all([order]).then (views)->
         $scope.order = new EmpanadaOrder views[0]
 
-        # If its coming from the shopping cart
-        if $stateParams.empanadaId then $scope.choose(null, $stateParams.empanadaId)
 
     init()
