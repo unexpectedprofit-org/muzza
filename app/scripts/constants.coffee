@@ -217,7 +217,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
         details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 4
-        description: "6 empanadas + 1 agua levite"
+        description: "6 empanadas + 1 Gaseosa 600 cc"
         cat: 1 #PromoTypeQuantity
         rules: [
           qty: 6
@@ -232,7 +232,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
           }
         ]
         price: 5000
-        details: "Llevando 6 empanadas de cualquier gusto + 1 levite te ahorras una bocha. Aprovechala!!!!!"
+        details: "Llevando 6 empanadas de cualquier gusto + 1 Gaseosa 600 cc te ahorras una bocha. Aprovechala!!!!!"
       ,
         id: 5
         description: "1 pizza de la casa  + 1 pizza especial"
@@ -256,74 +256,99 @@ angular.module('Muzza.constants',[]).constant 'stores',
       ]
       "bebida": [
         id:1
-        description:"Sin Alcohol"
+        description:"Gaseosa 600 cc"
         products: [
           id:1
-          description:"Agua sin gas"
+          description:"Coca Cola"
           price:
             base: 1000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-          options: []
         ,
           id:2
-          description:"Gaseosa Linea CocaCola"
+          description:"Coca Cola Zero"
           price:
             base: 1000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-          options: ["Coca","Fanta","Sprite","Coca diet"]
         ,
           id:3
-          description:"Agua saborizada Levite"
+          description:"Fanta"
           price:
-            base: 1500
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-          options: ["Naranja","Manzana","Pomelo"]
+            base: 1000
         ,
           id:4
-          description:"Agua saborizada Aquarius"
+          description:"Sprite"
           price:
-            base: 1500
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
-          options: ["Durazno","Pera"]
+            base: 1000
+        ,
+          id:5
+          description:"Levite Manzana"
+          price:
+            base: 1100
+        ,
+          id:6
+          description:"Levita Naranja"
+          price:
+            base: 1100
+        ,
+          id:7
+          description:"Ser Citrus"
+          price:
+            base: 1150
+        ,
+          id:8
+          description:"Ser Lima"
+          price:
+            base: 1150
         ]
       ,
         id:2
+        description:"Gaseosa 1.5 L"
+        products: [
+          id:1
+          description:"Coca Cola"
+          price:
+            base: 1000
+        ,
+          id:2
+          description:"Coca Cola Zero"
+          price:
+            base: 1000
+        ,
+          id:3
+          description:"Sprite"
+          price:
+            base: 1000
+        ]
+
+        id:3
         description:"Cervezas"
         products: [
           id:1
-          description:"Heineken"
+          description:"Cerveza warsteiner 1 L"
           price:
-            base: 1000
-            size:
-              individual: -1
-              chica: 1000
+            base: 1200
         ,
           id:2
-          description:"Quilmes"
+          description:"Cerveza Isenbeck 1 L"
           price:
-            base: 1000
-            size:
-              individual: 0
-              chica: 1000
+            base: 1200
         ,
           id:3
-          description:"Stella Artois"
+          description:"Cerveza Isenbeck porrón de 355 cc"
           price:
-            base: 1000
-            size:
-              individual: 0
-              chica: 1000
+            base: 600
+        ,
+          id:4
+          description:"Cerveza Quilmes 473 cc"
+          price:
+            base: 800
+        ,
+          id:5
+          description:"Cerveza heinekken 354 cc"
+          price:
+            base: 9000
+        ,
+          id:6
+          description:"Cerveza Corona"
+          price:
+            base: 1600
         ]
       ]

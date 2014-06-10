@@ -40,7 +40,7 @@ describe 'Bebida', ->
       expect(bebida.cat).toBe 'BEBIDA'
       expect(bebida.subcat).toBe 333
       expect(bebida.qty).toBe 2
-      expect(bebida.totalPrice).toBe 0
+      expect(bebida.totalPrice).toBe 50
       expect(bebida.price.base).toBe 50
       expect(bebida.option).toBe 'Negra'
       expect(bebida.isEditable.options).toBeFalsy()

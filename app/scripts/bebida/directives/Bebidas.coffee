@@ -14,12 +14,8 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
     $scope.bebidaSelection = {}
 
     #   this could come from firebase, or we can override when starting the app with a decorator at config phase
-    $scope.steps = ['order', 'size']
-    $scope.stepsPromo = ['orderPromo', 'size']
-
-    size = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-size.html',
-      scope: $scope,
-      animation: 'slide-in-up'
+    $scope.steps = ['order']
+    $scope.stepsPromo = ['orderPromo']
 
     orderPromo = $ionicModal.fromTemplateUrl '../app/scripts/bebida/templates/bebida-order-promo.html',
       scope: $scope,
@@ -61,11 +57,10 @@ angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, Shoppin
 
     init = ->
 
-      $q.all([order,size,orderPromo]).then (views)->
+      $q.all([order,orderPromo]).then (views)->
 
         $scope.order = new BebidaOrder views[0]
-        $scope.size = new BebidaSize views[1]
-        $scope.orderPromo = new BebidaPromoOrder views[2]
+        $scope.orderPromo = new BebidaPromoOrder views[1]
 
         #        If its coming from the shopping cart
         if $stateParams.bebidaId then $scope.choose(null, $stateParams.bebidaId)

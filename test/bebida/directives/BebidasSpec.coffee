@@ -39,29 +39,16 @@ describe "Bebidas", ->
         desc: "Agua saborizada"
         price:
           base: 8000
-          size:
-            individual: 0
-            chica: 1000
-            grande: 2000
       bebida2 = new Bebida
         id: 2,
         desc: "Jugo exprimido"
         price:
           base: 7500
-          size:
-            individual: 0
-            chica: 1500
-            grande: 2000
       bebida3 = new Bebida
         id: 3
         desc: "agua mineral"
         price:
           base: 5000
-          size:
-            individual: 0
-            chica: 1000
-            grande: 2000
-
       $scope.menu = [
         id: 1
         desc: "Categ 1"
@@ -92,12 +79,12 @@ describe "Bebidas", ->
         expect(onClickEvent).toContain "choose(product)"
 
       it "should have steps defined in the scope", ->
-        expect(isolatedScope.steps).toEqual ['order', 'size']
-        expect(isolatedScope.stepsPromo).toEqual ['orderPromo', 'size']
+        expect(isolatedScope.steps).toEqual ['order']
+        expect(isolatedScope.stepsPromo).toEqual ['orderPromo']
 
       it "should load the templates for all the steps", ->
-        isolatedScope.steps = ['order','size']
-        expect(isolatedScope.size).toBeDefined()
+        isolatedScope.steps = ['step1']
+        isolatedScope.stepsPromo = ['otherStep']
         expect(isolatedScope.order).toBeDefined()
         expect(isolatedScope.orderPromo).toBeDefined()
 
@@ -111,13 +98,11 @@ describe "Bebidas", ->
     describe "When user chooses a product", ->
 
       it "should show all modals for available steps", ->
-        isolatedScope.steps = ['order', 'size']
+        isolatedScope.steps = ['order']
         showOrder = spyOn(isolatedScope.order, 'show').and.callFake( ()-> 1 )
-        showSize = spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
         element.find('ion-item')[0].click()
 
         expect(showOrder).toHaveBeenCalled()
-        expect(showSize).toHaveBeenCalled()
 
       it 'should create a Bebida model from the item picked from the menu', ->
         element.find('ion-item')[0].click()
@@ -126,7 +111,6 @@ describe "Bebidas", ->
       it "should replace the previous selection", ->
         #Choose First Product
         element.find('ion-item')[0].click()
-        isolatedScope.bebidaSelection.size = 'mediana'
 
         #Choose Second Product
         element.find('ion-item')[1].click()
@@ -193,28 +177,16 @@ describe "Bebidas", ->
           desc: "Agua saborizada"
           price:
             base: 8000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
         bebida2 = new Bebida
           id: 2,
           desc: "Jugo exprimido"
           price:
             base: 7500
-            size:
-              individual: 0
-              chica: 1500
-              grande: 2000
         bebida3 = new Bebida
           id: 3
           desc: "agua mineral"
           price:
             base: 5000
-            size:
-              individual: 0
-              chica: 1000
-              grande: 2000
 
         $scope.menu = [
           id: 1
@@ -232,39 +204,10 @@ describe "Bebidas", ->
 
     describe "init", ->
 
-      it "should have a click function bind", ->
-        onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
-        expect(onClickEvent).toContain "choosePromoItem(product)"
+      it "should NOT have a click function bind", ->
+        onClickEvent = element.find('ion-item')[0].attributes['data-ng-click']
+        expect(onClickEvent).toBeUndefined()
 
-      it "should have a product defined in the scope", ->
-        expect(isolatedScope.bebidaSelection).toBeDefined()
-
-    describe "When user chooses a product", ->
-
-      it "should show all modals for available steps", ->
-        isolatedScope.steps = ['orderPromo', 'size']
-        showOrder = spyOn(isolatedScope.orderPromo, 'show').and.callFake( ()-> 1 )
-        showSize = spyOn(isolatedScope.size, 'show').and.callFake( ()-> 1 )
-        element.find('ion-item')[0].click()
-
-        expect(showOrder).toHaveBeenCalled()
-        expect(showSize).toHaveBeenCalled()
-
-      it 'should create a Bebida model from the item picked from the menu', ->
-        element.find('ion-item')[0].click()
-        expect(isolatedScope.bebidaSelection instanceof Bebida).toBeTruthy()
-
-      it "should replace the previous selection", ->
-        #Choose First Product
-        element.find('ion-item')[0].click()
-        isolatedScope.bebidaSelection.size = 'mediana'
-
-        #Choose Second Product
-        element.find('ion-item')[1].click()
-        expect(isolatedScope.bebidaSelection).not.toEqual bebida1
-        expect(isolatedScope.bebidaSelection).toEqual jasmine.objectContaining
-          desc : 'Jugo exprimido'
-          id : 2
 
     describe "when details are requested not to be shown", ->
 

@@ -12,7 +12,7 @@ angular.module('Muzza.bebidas').factory 'Bebida', ()->
       @qty = param?.qty or 1
       @size = param?.size or ''
       @option = param?.option or ''
-      @totalPrice = param?.totalPrice or 0
+      @totalPrice = param?.price?.base or 0
       @price =
         base: 0
       angular.extend(@, param)

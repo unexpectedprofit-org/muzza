@@ -28,9 +28,11 @@
   </div>
 
   <ion-list data-ng-repeat-end>
-    <ion-item bindonce data-ng-repeat="product in cat.products track by $index" data-ng-click="choosePromoItem(product)">
+    <ion-item bindonce data-ng-repeat="product in cat.products track by $index">
       <h3 data-bo-bind="product.description"></h3>
-      <!--<qty ng-model="product" style="font: 0.5em;" data-disableaddbutton="isPromoValid[cat.ruleId].success"></qty>-->
+      <div>
+        <qty ng-model="product" style="font: 0.5em;" data-disableaddbutton="isPromoValid[cat.ruleId].success"></qty>
+      </div>
     </ion-item>
   </ion-list>
 
