@@ -80,20 +80,16 @@ describe "Bebidas", ->
 
       it "should have steps defined in the scope", ->
         expect(isolatedScope.steps).toEqual ['order']
-        expect(isolatedScope.stepsPromo).toEqual ['orderPromo']
 
       it "should load the templates for all the steps", ->
         isolatedScope.steps = ['step1']
-        isolatedScope.stepsPromo = ['otherStep']
         expect(isolatedScope.order).toBeDefined()
-        expect(isolatedScope.orderPromo).toBeDefined()
 
       it "should have a product defined in the scope", ->
         expect(isolatedScope.bebidaSelection).toBeDefined()
 
       it "should have a functions defined in the scope", ->
         expect(isolatedScope.choose).toBeDefined()
-        expect(isolatedScope.choosePromoItem).toBeDefined()
 
     describe "When user chooses a product", ->
 
@@ -120,7 +116,7 @@ describe "Bebidas", ->
           id : 2
 
 
-  describe "when user selects an item from a promo", ->
+  describe "promotion view", ->
 
     beforeEach ->
       inject ($injector, $compile, $rootScope)->
