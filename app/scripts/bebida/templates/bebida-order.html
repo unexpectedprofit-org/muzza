@@ -16,11 +16,7 @@
             </div>
 
             <div class="item item-body">
-                <div class="button-bar" data-ng-if="bebidaSelection.cartItemKey">
-                    <a class="button" data-ng-click="order.add(bebidaSelection)"
-                       data-ng-disabled="order.isMinAllowed()">Actualizar Mi Pedido</a>
-                </div>
-                <div class="button-bar" data-ng-if="!bebidaSelection.cartItemKey">
+                <div class="button-bar">
                     <a class="button" data-ng-click="order.add(bebidaSelection)">Agregar a Mi Pedido</a>
                 </div>
                 <cancel-selection reset-model="bebidaSelection"></cancel-selection>

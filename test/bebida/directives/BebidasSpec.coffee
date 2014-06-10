@@ -119,51 +119,6 @@ describe "Bebidas", ->
           desc : 'Jugo exprimido'
           id : 2
 
-  describe "when system requests the menu an specific item view", ->
-
-    ShoppingCartService = $stateParams = getItemSpy = undefined
-
-    beforeEach ->
-      inject (_$stateParams_, _ShoppingCartService_, $rootScope) ->
-        ShoppingCartService = _ShoppingCartService_
-        $stateParams = _$stateParams_
-
-    describe "and the item is a bebida", ->
-
-      beforeEach ->
-        inject ($compile, $rootScope, $stateParams, $state) ->
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue(new Bebida({id:1,desc: "Muzza",totalPrice:60,price:{base:50}}))
-          $stateParams.bebidaId = 1
-          element = angular.element('<bebidas ng-model="menu"></bebidas>')
-          $compile(element)($rootScope)
-          $scope.$digest()
-          isolatedScope = element.isolateScope()
-
-
-      it "should retrieve the item from the shopping cart", ->
-        expect(getItemSpy).toHaveBeenCalled()
-
-      it 'should copy the item from the shopping cart into a new one to avoid resetting the price on cart item', ->
-        cartItem = ShoppingCartService.get $stateParams.bebidaId
-        expect(cartItem).not.toEqual isolatedScope.bebidaSelection
-
-      it "should reset the items price to the base price", ->
-        expect(isolatedScope.bebidaSelection.totalPrice).toBe 50
-
-    describe "and the item is not a bebida", ->
-
-      beforeEach ->
-        inject ($rootScope, $compile) ->
-          $stateParams.bebidaId = undefined
-          $stateParams.empanadaId = 2
-          getItemSpy = spyOn(ShoppingCartService, 'get').and.returnValue({id:2,desc:"Other",cat:'Other',totalPrice:60,price:{base:50}})
-          element = angular.element('<bebidas ng-model="menu"></bebidas>')
-          $compile(element)($rootScope)
-          $scope.$digest()
-          isolatedScope = element.isolateScope()
-
-      it "should not retrieve the product", ->
-        expect(getItemSpy).not.toHaveBeenCalled()
 
   describe "when user selects an item from a promo", ->
 
