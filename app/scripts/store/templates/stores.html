@@ -1,0 +1,17 @@
+<ion-view title="Locales">
+
+    <ion-content class="has-header">
+
+        <ion-list data-ng-controller="StoresCtrl">
+            <ion-item ng-repeat="store in stores" data-ng-click="continue(store)">
+                <i class="icon icon-home"></i>
+                <strong>{{store.name}}</strong><br>
+                {{ store.address }}<br>
+                {{ store.tel }}
+            </ion-item>
+        </ion-list>
+
+
+    </ion-content>
+
+</ion-view>

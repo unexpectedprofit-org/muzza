@@ -12,11 +12,12 @@ angular.module("Muzza.facebook", ['firebase'])
 angular.module("Muzza.google", ['firebase'])
 angular.module("Muzza.twitter", ['firebase'])
 angular.module("Muzza.config",[])
+angular.module("Muzza.stores",[])
 
 angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empanadas", "Muzza.bebidas","Muzza.cart",
     "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants",
     "Muzza.order", "Muzza.promo", "Muzza.delivery", "Muzza.contact", "Muzza.review", "Muzza.qty", "Muzza.facebook"
-    , "Muzza.google", "Muzza.twitter", "Muzza.config"])
+    , "Muzza.google", "Muzza.twitter", "Muzza.config", "Muzza.stores"])
 
 angular.module("Muzza").run ($ionicPlatform, $state) ->
   $ionicPlatform.ready ->
@@ -54,19 +55,18 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
       'navContent':
         templateUrl: "../app/templates/menu.html"
 
-  .state "app.store",
-    url: "/menu/:storeID"
-    views:
-      navContent:
-        templateUrl: "../app/templates/menu.html"
-        controller: "MenuCtrl"
+#  .state "app.store",
+#    url: "/menu/:storeID"
+#    views:
+#      navContent:
+#        templateUrl: "../app/templates/menu.html"
+#        controller: "MenuCtrl"
 
   .state "app.stores",
     url: "/stores"
     views:
       navContent:
-        templateUrl: "templates/stores.html"
-        controller: "StoreCtrl"
+        templateUrl: "../app/scripts/store/templates/stores.html"
 
   .state "app.cart",
     url: "/cart"

@@ -10,7 +10,8 @@ angular.module('Muzza.contact').directive 'contact', (OrderService,$state, $stat
 
     $scope.continue =  ()->
       OrderService.addContactInfo($scope.contact).then ()->
-        $state.go 'app.menu'
+        if $scope.deliveryOption is 'delivery' then $state.go 'app.menu'
+        if $scope.deliveryOption is 'pickup' then $state.go 'app.stores'
       , (errorMsg)->
         $scope.error = errorMsg
 

@@ -46,10 +46,17 @@ describe 'Contact', ->
       isolatedScope.continue()
       expect(OrderService.addContactInfo).toHaveBeenCalledWith( { name : 'Santiago', phone : '123455889', email : 'test@test.com' }  )
 
-    it 'should redirect to the contact route', ->
+    it 'should redirect to the menu if the user selected delivery option', ->
+      isolatedScope.deliveryOption = 'delivery'
       spyOn($state, 'go')
       isolatedScope.continue()
       expect($state.go).toHaveBeenCalledWith('app.menu')
+
+    it 'should redirect to the store selection if the user selected pickup option', ->
+      isolatedScope.deliveryOption = 'pickup'
+      spyOn($state, 'go')
+      isolatedScope.continue()
+      expect($state.go).toHaveBeenCalledWith('app.stores')
 
     it 'should load an error if the Order service rejected the promise for some reason', ->
       spyOn(OrderService, 'addContactInfo').and.callFake ()-> {then: (callback, fallback)-> fallback('Error 101')}

@@ -59,6 +59,13 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
   getContactInfo = ->
     order.contact
 
+  setPickupStore = (store)->
+    deferred = $q.defer()
+    order.pickupStore = store
+    deferred.resolve()
+    deferred.promise
+
+
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
   addContactInfo: setContactInfo
@@ -66,3 +73,4 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
   submitOrder: sendOrder
   retrieveDelivery: getDelivery
   retrieveConnectionInfo: getContactInfo
+  chooseStore: setPickupStore

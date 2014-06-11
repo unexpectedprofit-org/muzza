@@ -62,32 +62,6 @@ describe "controllers", ->
 
       expect(scope.cartTotalPrice).toBe 1200
 
-  describe "Store Controller", ->
-
-    scope = undefined
-    returnObject = {
-      some: "thing"
-    }
-
-    _fakeStoreService =
-      listStores: () ->
-        returnObject
-
-    beforeEach ->
-      module ($provide) ->
-        $provide.value('StoreService', _fakeStoreService )
-        null
-
-      inject ($controller, $rootScope) ->
-        scope = $rootScope.$new()
-        $controller "StoreCtrl",
-          $scope: scope
-          StoreService: _fakeStoreService
-
-    it "should call the service", ->
-      expect(scope.stores).toEqual returnObject
-
-
   describe "PlaceOrder Controller", ->
 
     scope = placeSpy = OrderService = undefined

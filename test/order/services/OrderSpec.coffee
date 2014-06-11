@@ -198,3 +198,11 @@ describe 'Order Service', ->
       OrderService.addContactInfo({name:'San'})
       expect(OrderService.retrieveConnectionInfo()).toEqual {name:'San'}
 
+  describe 'chooseStore', ->
+
+    it 'should save the selected pickup store into the order', ->
+      store =
+        id: 1
+      OrderService.chooseStore(store)
+      expect(OrderService.retrieveOrder()).toEqual { pickupStore: {id: 1}}
+

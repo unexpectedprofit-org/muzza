@@ -13,11 +13,6 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
 
   $scope.menu = ProductService.getMenu($rootScope.storeId, $stateParams.category)
 
-angular.module("Muzza.controllers").controller "StoreCtrl", ($scope, StoreService) ->
-
-  $scope.stores = StoreService.listStores()
-
-
 angular.module("Muzza.controllers").controller "PlaceOrderCtrl", ($scope, OrderService) ->
 
   $scope.response = OrderService.place()
