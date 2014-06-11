@@ -61,31 +61,3 @@ describe "controllers", ->
       rootScope.$broadcast 'CART:PRICE_UPDATED', 1200
 
       expect(scope.cartTotalPrice).toBe 1200
-
-  describe "PlaceOrder Controller", ->
-
-    scope = placeSpy = OrderService = undefined
-
-    beforeEach ->
-      module ($provide) ->
-        $provide.value 'OrderService',
-          place: () -> 1
-        null
-
-      inject ($controller, $rootScope, _OrderService_) ->
-        scope = $rootScope.$new()
-        OrderService = _OrderService_
-
-        placeSpy = spyOn(OrderService, 'place').and.callThrough()
-
-        $controller "PlaceOrderCtrl",
-          $scope: scope
-        OrderService: _OrderService_
-
-
-
-    it "should call the service", ->
-      expect(scope.response).toEqual 1
-
-      expect(placeSpy).toHaveBeenCalled()
-      expect(placeSpy.calls.count()).toBe 1

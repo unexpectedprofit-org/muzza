@@ -2,6 +2,7 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
 
   order = {}
   store =
+    id: 3
     delivery:
       latLong:
         k: -34.591809
@@ -35,7 +36,11 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
 
       validateDelivery.then (isWithinDeliveryRadio)->
 
-        if isWithinDeliveryRadio then success() else fail('No esta en el radio de delivery del local')
+        if isWithinDeliveryRadio
+          order.store = store
+          success()
+        else
+          fail('No esta en el radio de delivery del local')
 
       , (errorMsg)->
         fail(errorMsg)
@@ -49,7 +54,7 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
   sendOrder = ->
     deferred = $q.defer()
     order.totalPrice = order.totalPrice()
-    ref = OrderRef(order.contact.phone)
+    ref = OrderRef(order.store.id, order.contact.phone)
     fireOrder = $firebase(ref)
     fireOrder.$set(order)
     deferred.resolve()
@@ -64,7 +69,7 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
 
   setPickupStore = (store)->
     deferred = $q.defer()
-    order.pickupStore = store
+    order.store = store
     deferred.resolve()
     deferred.promise
 

@@ -78,8 +78,7 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
     url: "/order/confo"
     views:
       navContent:
-        templateUrl: "templates/confo.html"
-        controller: "PlaceOrderCtrl"
+        templateUrl: "../app/scripts/confirmation/templates/confirmation.html"
 
   .state "app.order-delivery",
     url: "/delivery"

@@ -1,4 +1,5 @@
 angular.module('Muzza.order').factory 'OrderRef', (Firebase, ORDERURL)->
 
-  return (toAppend)->
-    new Firebase(ORDERURL + toAppend)
+  return (storeId, userPhone)->
+    url = ORDERURL + 'local' + storeId + '/orders/' + userPhone
+    new Firebase(url)

@@ -76,11 +76,12 @@ describe 'Order Service', ->
             phone: '12345678'
             email: 'test@test.com'
           OrderService.addContactInfo(contactInfo)
-          expect(OrderService.retrieveOrder()).toEqual {delivery: 'delivery', contact: contactInfo}
+          expect(OrderService.retrieveOrder()).toEqual { delivery : 'delivery', contact : contactInfo, store : { id : 3, delivery : { latLong : { k : -34.591809, A : -58.3959331 }, radio : 2 } } }
+
 
       describe 'but the user is not within the delivery radio', ->
 
-        it 'should not add the contact', ->
+        it 'should not add the contact and store', ->
           inject (Geo, $rootScope)->
             spyOn(Geo, 'validateDeliveryRadio').and.callFake ()-> {then: (callback, fallback)-> callback(false)}
             OrderService.chooseDelivery('delivery')
@@ -180,6 +181,8 @@ describe 'Order Service', ->
           contact: {name: 'San'}
           totalPrice: ()-> null
         OrderService.createOrder(cart)
+        OrderService.chooseDelivery('pickup')
+        OrderService.chooseStore({id:1})
         order = OrderService.retrieveOrder()
         OrderService.submitOrder()
         expect($firebase.fns.$set).toHaveBeenCalledWith(order)
@@ -204,5 +207,5 @@ describe 'Order Service', ->
       store =
         id: 1
       OrderService.chooseStore(store)
-      expect(OrderService.retrieveOrder()).toEqual { pickupStore: {id: 1}}
+      expect(OrderService.retrieveOrder()).toEqual { store: {id: 1}}
 
