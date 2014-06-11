@@ -47,10 +47,13 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
     angular.extend(order, cart)
 
   sendOrder = ->
+    deferred = $q.defer()
     order.totalPrice = order.totalPrice()
     ref = OrderRef(order.contact.phone)
     fireOrder = $firebase(ref)
     fireOrder.$set(order)
+    deferred.resolve()
+    deferred.promise
 #   TODO: clean order and references
 
   getDelivery =  ->

@@ -19,7 +19,7 @@ describe 'Review', ->
       OrderService = _OrderService_
       $state = _$state_
       spyOn(OrderService, 'retrieveOrder').and.callThrough()
-      spyOn(OrderService, 'submitOrder')
+      spyOn(OrderService, 'submitOrder').and.callFake ()-> {then: (callback, fallback)-> callback()}
       spyOn($state, 'go')
       $scope = $rootScope
       element = angular.element('<review></review>')
@@ -31,9 +31,15 @@ describe 'Review', ->
     expect(OrderService.retrieveOrder).toHaveBeenCalled()
     expect(isolatedScope.order.id).toBe 1
 
-  it 'should delegate to OrderService when user submits the order', ->
-    isolatedScope.submitOrder()
-    expect(OrderService.submitOrder).toHaveBeenCalled()
+  describe 'when the user submits the order', ->
+
+    it 'should delegate to OrderService', ->
+      isolatedScope.submitOrder()
+      expect(OrderService.submitOrder).toHaveBeenCalled()
+
+    it 'should redirect to order confirmation view', ->
+      isolatedScope.submitOrder()
+      expect($state.go).toHaveBeenCalledWith 'app.orderplace'
 
   it 'should redirect to the menu if user wants to edit the order items ' , ->
     isolatedScope.editOrder()

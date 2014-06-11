@@ -7,7 +7,8 @@ angular.module('Muzza.review').directive 'review', (OrderService, $state)->
     $scope.order = OrderService.retrieveOrder()
 
     $scope.submitOrder = ->
-      OrderService.submitOrder()
+      OrderService.submitOrder().then ()->
+        $state.go 'app.orderplace'
 
     $scope.editOrder = ->
       $state.go 'app.menu'
