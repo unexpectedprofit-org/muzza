@@ -67,7 +67,9 @@ angular.module('Muzza.promo').factory 'PromoTypeQuantity', (PromotionUtil) ->
       validationResponse =
         success: rulesToValidate.length > 0
 
-      _.forEach rulesToValidate, (rule) ->
+      sortedRules = PromotionUtil.sortRulesByRuleId rulesToValidate
+
+      _.forEach sortedRules, (rule) ->
           if !validationResponse.success then return
           #so that it does not do any logic over next elements since it's already NOT valid
           validationResponse = validateComponents components, rule

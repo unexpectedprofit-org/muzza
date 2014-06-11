@@ -12,7 +12,6 @@ angular.module('Muzza.promo').service 'PromotionUtil', () ->
 
     continueSearch
 
-
   getApplicableProductsByRule = (prodByCategory, rule) ->
     acumProd = []
 
@@ -52,5 +51,10 @@ angular.module('Muzza.promo').service 'PromotionUtil', () ->
     _result = getApplicableProductsByRule productsListByCategory, ruleProperties
     setDefaultValues _result, ruleProperties
 
+  sortRulesById = (rules) ->
+    _.sortBy rules, (rule) ->
+      rule.id
+
   productMatchesRule: isProductApplicableToRule
   getPromotionProducts: retrieveProducts
+  sortRulesByRuleId: sortRulesById
