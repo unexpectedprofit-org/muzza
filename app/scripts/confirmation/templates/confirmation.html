@@ -1,6 +1,34 @@
 <ion-view title="Confirmacion">
 
-    <ion-content class="has-header">
+    <ion-content class="has-header" data-ng-controller="ConfirmationCtrl">
+
+        <div class="list card">
+
+            <div class="item item-avatar">
+                <img src="">
+                <h2>Local</h2>
+                <p>Direccion: {{order.store.address}}</p>
+                <p>Telefono: {{order.store.phone}}</p>
+            </div>
+
+            <div class="item item-body">
+                Total: {{order.totalPrice | centsToMoney | currency}}
+            </div>
+
+            <div class="item item-body" data-ng-repeat="product in order.products">
+                {{product.cat}} {{product.type}} {{product.description}} - Cant: {{product.qty}}
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#">
+                    <i class="icon ion-share"></i>
+                    Share
+                </a>
+            </div>
+
+        </div>
+
+        <!--<pre>{{order | json}}</pre>-->
 
 
 
