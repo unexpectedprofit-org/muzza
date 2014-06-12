@@ -19,14 +19,22 @@ describe "services", ->
         name: "La pizzeria de Juancho"
         address: "Av. Rivadavia 5100 - Caballito (Capital Federal)"
         tel: "4444 5555 / 1111 2222 / 15 4444 9999"
+        hours: [
+          {day:"Domingo",hours:"Cerrado"}
+          {day:"Lunes",hours:"12:00 - 14:00"}
+          {day:"Martes",hours:"11:30 - 15:00  /  19:30 - 22:00"}
+          {day:"Miercoles",hours:"11:30 - 15:00  /  19:30 - 22:00"}
+          {day:"Jueves",hours:"11:30 - 15:00  /  19:30 - 22:00"}
+          {day:"Viernes",hours:"11:30 - 15:00  /  19:30 - 22:00"}
+          {day:"Sabado",hours:"18:30 - 02:00"}
+        ]
       }
 
       newObject = StoreService.listStores()
-      expect( newObject[0].name ).toBe expected.name
-      expect( newObject[0].address).toBe expected.address
-      expect( newObject[0].tel ).toBe expected.tel
-
-
+      expect( newObject[0].name ).toEqual expected.name
+      expect( newObject[0].address).toEqual expected.address
+      expect( newObject[0].tel ).toEqual expected.tel
+      expect( newObject[0].hours ).toEqual expected.hours
 
 
   describe "Product Service", ->

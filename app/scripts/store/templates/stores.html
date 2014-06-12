@@ -8,6 +8,10 @@
                 <strong>{{store.name}}</strong><br>
                 {{ store.address }}<br>
                 {{ store.tel }}
+
+                <div data-ng-repeat="dayHours in store.hours">
+                  {{ dayHours.day }}: {{dayHours.hours}}
+                </div>
             </ion-item>
         </ion-list>
 

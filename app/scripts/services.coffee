@@ -1,6 +1,6 @@
 angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas', 'Muzza.bebidas', 'Muzza.promo'])
 
-angular.module("Muzza.services").factory "StoreService", () ->
+angular.module("Muzza.services").factory "StoreService", (days) ->
 
   class StoreDetailsObject
     constructor: ( data ) ->
@@ -8,6 +8,37 @@ angular.module("Muzza.services").factory "StoreService", () ->
       @name = data.name_fantasy
       @address = data.address.street + " " + data.address.door + " - " + data.address.hood + " (" +  data.address.area + ")"
       @tel = data.phone.main + " / " + data.phone.other + " / " + data.phone.cel
+      @hours = contructHours data.hours
+
+
+  contructHours = (hours) ->
+    storeHours = []
+
+    _.forEach (_.keys hours), (day) ->
+      currentDayHours = hours[day]
+      dayName = days.names[day]
+
+      ###### no hours at all
+      if angular.isUndefined( currentDayHours[0] ) and angular.isUndefined( currentDayHours[1] )
+        storeHours.push {day:dayName, hours:"Cerrado"}
+
+      ###### some hours
+      else
+
+        if angular.isDefined( currentDayHours[0] ) and angular.isDefined( currentDayHours[1] )
+          currentHours = currentDayHours[0].start + " - " + currentDayHours[0].end
+          currentHours = currentHours + "  /  "
+          currentHours = currentHours + currentDayHours[1].start + " - " + currentDayHours[1].end
+          storeHours.push {day:dayName, hours:currentHours}
+
+        else if angular.isDefined( currentDayHours[0] )
+          storeHours.push {day:dayName, hours:currentDayHours[0].start + " - " + currentDayHours[0].end}
+
+        else
+          storeHours.push {day:dayName, hours:currentDayHours[1].start + " - " + currentDayHours[1].end}
+
+    storeHours
+
 
 
   getStores = () ->
@@ -32,7 +63,18 @@ angular.module("Muzza.services").factory "StoreService", () ->
           "main": "4444 5555",
           "other": "1111 2222",
           "cel": "15 4444 9999"
+        },
+
+        "hours": {
+          0: [undefined,undefined],
+          1: [{start:"12:00",end:"14:00"},undefined],
+          2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          3: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          4: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          5: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          6: [undefined,{start:"18:30",end:"02:00"}]
         }
+
       },
       {
         "id": 2,
@@ -52,6 +94,16 @@ angular.module("Muzza.services").factory "StoreService", () ->
           "main": "2222 8898",
           "other": "1234 4444",
           "cel": "15 0000 2222"
+        },
+
+        "hours": {
+          0: [{start:"10:30",end:"13:00"},undefined],
+          1: [{start:"12:00",end:"14:00"},{start:"19:00",end:"21:00"}],
+          2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          3: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          4: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+          5: [undefined,undefined],
+          6: [undefined,undefined]
         }
       }
     ]
