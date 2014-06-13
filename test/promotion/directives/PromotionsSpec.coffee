@@ -1,11 +1,8 @@
 describe "Promotions", ->
 
   beforeEach ->
-    module 'ionic'
     module 'Muzza.promo'
     module 'Muzza.templates'
-    module 'Muzza.directives'
-    module 'Muzza.services'
 
     module ($provide) ->
       $provide.value 'ShoppingCartService',
@@ -43,48 +40,12 @@ describe "Promotions", ->
       expect(element.find('ion-item').length).toBe 3
       expect(isolatedScope.menu[0].details.id).toBe 3434
 
-    it "should have a click function bind", ->
-      onClickEvent = element.find('ion-item')[0].attributes['data-ng-click'].nodeValue
+    it "should have a href bind", ->
+      onClickEvent = element.find('ion-item')[0].attributes['href'].nodeValue
+      expect(onClickEvent).toContain "#/app/menu/promo/3434"
 
-      expect(onClickEvent).toContain "choose(promo)"
+      onClickEvent = element.find('ion-item')[1].attributes['href'].nodeValue
+      expect(onClickEvent).toContain "#/app/menu/promo/1100"
 
-    it "should have steps defined in the scope", ->
-      expect(isolatedScope.steps).toEqual ['details']
-
-    it "should load the templates for all the steps", ->
-      isolatedScope.steps = ['details']
-      expect(isolatedScope.details).toBeDefined()
-
-    it "should have a product defined in the scope", ->
-      expect(isolatedScope.promotion).toBeDefined()
-
-    it "should have functions defined in the scope", ->
-      expect(isolatedScope.choose).toBeDefined()
-
-
-  describe "When user chooses a promotion", ->
-
-    it "should show all modals for available steps", ->
-      isolatedScope.steps = ['details']
-      showDetails = spyOn(isolatedScope.details, 'show')
-      element.find('ion-item')[0].click()
-
-      expect(showDetails).toHaveBeenCalled()
-
-    it 'should set to the scope the Promotion model picked from the menu', ->
-      element.find('ion-item')[0].click()
-      expect(isolatedScope.promotion).toBe promo1
-
-    it "should replace the previous selection", ->
-      isolatedScope.steps = ['details']
-      showType = spyOn(isolatedScope.details, 'show')
-
-      #Choose First Product
-      element.find('ion-item')[0].click()
-
-      expect(isolatedScope.promotion.id).toEqual promo1.id
-
-      #Choose Second Product
-      element.find('ion-item')[1].click()
-
-      expect(isolatedScope.promotion.id).toEqual promo2.id
+      onClickEvent = element.find('ion-item')[2].attributes['href'].nodeValue
+      expect(onClickEvent).toContain "#/app/menu/promo/2222"

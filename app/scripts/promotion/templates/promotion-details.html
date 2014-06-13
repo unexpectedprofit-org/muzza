@@ -1,12 +1,16 @@
-<div class="modal">
+<ion-view title="PROMO">
 
-  <ion-header-bar>
-    <h1 class="title">{{ promotion.details.description.short }}</h1>
-  </ion-header-bar>
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
 
-  <ion-content>
+  <ion-content class="has-header">
 
     <div class="list card">
+
+      <div class="item item-text-wrap">
+        {{ promotion.details.description.short }}
+      </div>
 
       <div class="item item-text-wrap">
         {{ promotion.details.description.long }}
@@ -33,14 +37,14 @@
 
         <div class="button-bar">
           <a class="button"
-             data-ng-click="details.select()"
+             data-ng-click="choose(promotion)"
              data-ng-disabled="!isSelectionValid.success">Seleccionar</a>
         </div>
 
-        <cancel-selection></cancel-selection>
       </div>
 
     </div>
 
   </ion-content>
-</div>
+
+</ion-view>
