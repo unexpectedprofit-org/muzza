@@ -34,7 +34,23 @@ describe "services", ->
       expect( newObject[0].name ).toEqual expected.name
       expect( newObject[0].address).toEqual expected.address
       expect( newObject[0].tel ).toEqual expected.tel
-      expect( newObject[0].hours ).toEqual expected.hours
+
+      expect( newObject[0].hours[0].day ).toBe 'Domingo'
+      expect( newObject[0].hours[0].hours ).toBe 'Cerrado'
+
+      expect( newObject[0].hours[1].day ).toBe 'Lunes'
+      expect( newObject[0].hours[1].hours ).toBe '12:00 - 14:00'
+
+      expect( newObject[0].hours[3].day ).toBe 'Miercoles'
+      expect( newObject[0].hours[3].hours ).toBe '11:30 - 15:00  /  19:30 - 22:00'
+
+      expect( newObject[0].hours[6].day ).toBe 'Sabado'
+      expect( newObject[0].hours[6].hours ).toBe '18:30 - 02:00'
+
+      todayDay = _.filter newObject[0].hours, (elem) ->
+        elem.today
+
+      expect(todayDay.length).toBe 1
 
 
   describe "Product Service", ->

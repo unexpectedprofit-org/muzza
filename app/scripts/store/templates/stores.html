@@ -9,7 +9,7 @@
                 {{ store.address }}<br>
                 {{ store.tel }}
 
-                <div data-ng-repeat="dayHours in store.hours">
+                <div data-ng-repeat="dayHours in store.hours" data-ng-class="{todayHours: dayHours.today}">
                   {{ dayHours.day }}: {{dayHours.hours}}
                 </div>
             </ion-item>

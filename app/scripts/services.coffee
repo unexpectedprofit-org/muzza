@@ -14,13 +14,17 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
   contructHours = (hours) ->
     storeHours = []
 
+    todayDayOfWeek = new Date().getDay()
+
     _.forEach (_.keys hours), (day) ->
       currentDayHours = hours[day]
       dayName = days.names[day]
 
+      isToday = if todayDayOfWeek is parseInt(day) then true else false
+
       ###### no hours at all
       if angular.isUndefined( currentDayHours[0] ) and angular.isUndefined( currentDayHours[1] )
-        storeHours.push {day:dayName, hours:"Cerrado"}
+        storeHours.push {day:dayName, hours:"Cerrado", today:isToday}
 
       ###### some hours
       else
@@ -29,13 +33,13 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
           currentHours = currentDayHours[0].start + " - " + currentDayHours[0].end
           currentHours = currentHours + "  /  "
           currentHours = currentHours + currentDayHours[1].start + " - " + currentDayHours[1].end
-          storeHours.push {day:dayName, hours:currentHours}
+          storeHours.push {day:dayName, hours:currentHours,today:isToday}
 
         else if angular.isDefined( currentDayHours[0] )
-          storeHours.push {day:dayName, hours:currentDayHours[0].start + " - " + currentDayHours[0].end}
+          storeHours.push {day:dayName, hours:currentDayHours[0].start + " - " + currentDayHours[0].end,today:isToday}
 
         else
-          storeHours.push {day:dayName, hours:currentDayHours[1].start + " - " + currentDayHours[1].end}
+          storeHours.push {day:dayName, hours:currentDayHours[1].start + " - " + currentDayHours[1].end,today:isToday}
 
     storeHours
 
