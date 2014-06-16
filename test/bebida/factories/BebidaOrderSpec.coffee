@@ -9,12 +9,10 @@ describe 'BebidaOrder', ->
     module ($provide) ->
       $provide.value "ShoppingCartService",
         add: () ->
-          return null
+          null
         getCart: ()->
-          return null
-      $provide.value "$state",
-        go: ()-> ''
-      return null
+          null
+      null
 
   beforeEach ->
     inject ($injector) ->
@@ -47,13 +45,6 @@ describe 'BebidaOrder', ->
       order.hide()
 
       expect(hideSpy).toHaveBeenCalled()
-
-    it 'should redirect to the menu', ->
-      inject ($state) ->
-        spyOn($state, 'go').and.callThrough()
-        modal.scope.bebidaSelection = {}
-        order.hide()
-        expect($state.go).toHaveBeenCalledWith('app.menu')
 
   describe "Show", ->
 

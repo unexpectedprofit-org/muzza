@@ -1,4 +1,4 @@
-angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService, $state) ->
+angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService) ->
 
   class EmpanadaOrder
     constructor: (modal) ->
@@ -9,7 +9,6 @@ angular.module('Muzza.empanadas').factory "EmpanadaOrder", (ShoppingCartService,
 
   EmpanadaOrder::hide = ->
     @modal.hide()
-    $state.go('app.menu')
 
   EmpanadaOrder::add = (empanada)->
     ShoppingCartService.add empanada

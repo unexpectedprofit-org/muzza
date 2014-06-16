@@ -1,4 +1,4 @@
-angular.module('Muzza.bebidas').factory "BebidaPromoOrder", ($state)->
+angular.module('Muzza.bebidas').factory "BebidaPromoOrder", ()->
 
   class BebidaPromoOrder
     constructor: (modal) ->
