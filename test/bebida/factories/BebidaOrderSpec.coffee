@@ -36,12 +36,8 @@ describe 'BebidaOrder', ->
 
     it 'should construct a BebidaOrder object', ->
       expect(order.add).toBeDefined()
-      expect(order.cancel).toBeDefined()
-      expect(order.edit).toBeDefined()
       expect(order.show).toBeDefined()
       expect(order.hide).toBeDefined()
-      expect(order.isMinAllowed).toBeDefined()
-      expect(order.isMaxAllowed).toBeDefined()
 
 
   describe "Hide", ->
@@ -67,32 +63,6 @@ describe 'BebidaOrder', ->
       expect(showSpy).toHaveBeenCalled()
 
 
-  describe "min/max allowance", ->
-
-    it "should check minimum quantities", ->
-      modal.scope.bebidaSelection =
-        qty: 8
-
-      expect(order.isMinAllowed()).toBeFalsy()
-
-      modal.scope.bebidaSelection.qty = 0
-      expect(order.isMinAllowed()).toBeTruthy()
-
-      modal.scope.bebidaSelection.qty = 1
-      expect(order.isMinAllowed()).toBeTruthy()
-
-    it "should check maximum quantities", ->
-      modal.scope.bebidaSelection =
-        qty: 8
-
-      expect(order.isMaxAllowed()).toBeFalsy()
-
-      modal.scope.bebidaSelection.qty = 0
-      expect(order.isMaxAllowed()).toBeFalsy()
-
-      modal.scope.bebidaSelection.qty = 10
-      expect(order.isMaxAllowed()).toBeTruthy()
-      
   describe "When the user confirms the product selection and options", ->
 
     item = Bebida = undefined
@@ -108,23 +78,3 @@ describe 'BebidaOrder', ->
 
       expect(addSpy).toHaveBeenCalledWith  jasmine.objectContaining {id:1,desc:'Gaseosa lala',size:'chica'}
       expect(internalHideSpy).toHaveBeenCalled()
-
-  describe "When user eliminates selected product and options", ->
-
-    it "should hide confirmation modal", ->
-      internalHideSpy = spyOn(order, 'hide').and.callThrough()
-      order.cancel()
-
-      expect(internalHideSpy).toHaveBeenCalled()
-
-  describe "When user decides to edit the selected product and options", ->
-
-    it "should display all option modals", ->
-      chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
-      order.edit(new Bebida({id:1, totalPrice: 60, price: {base: 50 }}))
-      expect(chooseSpy).toHaveBeenCalled()
-
-    it "should reset price to its base price", ->
-      chooseSpy = spyOn(modal.scope, 'choose').and.callThrough()
-      order.edit(new Bebida({id:1, totalPrice: 60, price: {base: 50 }}))
-      expect(chooseSpy).toHaveBeenCalledWith jasmine.objectContaining totalPrice: 50
