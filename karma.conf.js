@@ -19,6 +19,8 @@ module.exports = function(config){
         'app/bower_components/firebase-simple-login/firebase-simple-login.js',
         'app/bower_components/angularfire/angularfire.js',
         'app/bower_components/angular-bindonce/bindonce.js',
+        'app/bower_components/moment/moment.js',
+        'app/bower_components/moment-range/lib/moment-range.js',
         'app/scripts/**/*.coffee',
         '.tmp/templates.js'
     ],

@@ -1,6 +1,6 @@
 angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas', 'Muzza.bebidas', 'Muzza.promo'])
 
-angular.module("Muzza.services").factory "StoreService", (days) ->
+angular.module("Muzza.services").factory "StoreService", (days, DateService) ->
 
   class StoreDetailsObject
     constructor: ( data ) ->
@@ -8,13 +8,85 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
       @name = data.name_fantasy
       @address = data.address.street + " " + data.address.door + " - " + data.address.hood + " (" +  data.address.area + ")"
       @tel = data.phone.main + " / " + data.phone.other + " / " + data.phone.cel
-      @hours = contructHours data.hours
+      @hours =
+        byDay: contructHours data.hours
+
+      @hours.isOpen = @isOpen @hours.byDay
+
+
+    isOpen: (dayHours) ->
+      today = DateService.nowMoment().day()
+
+      todayElem = dayHours[today]
+
+      continueSearching = true
+
+      try
+
+        horas = todayElem.hours
+        _.forEach horas, (tempHours) ->
+
+
+          if continueSearching
+  #          console.log "loop " + JSON.stringify tempHours
+    #        console.log "tempHours.start: " + tempHours.start
+    #        console.log "tempHours.end: " + tempHours.end
+
+            startMoment = DateService.specificMomentField( tempHours.start, 'HH:mm' )
+            endMoment = DateService.specificMomentField( tempHours.end, 'HH:mm' )
+
+            # check in case closing hours after midnight
+            # need to be implemented later
+            if endMoment.hour() < 8
+              throw "isOpen: closing hours after midnight Not yet implemented"
+  #            continueSearching = false
+  #            return
+
+            #create start range
+            testStartMoment = angular.copy DateService.nowMoment()
+            testStartMoment.hours( startMoment.hour() )
+            testStartMoment.minutes( startMoment.minute() )
+            testStartMoment.seconds( 0 )
+            testStartMoment.milliseconds( 0 )
+
+            #create end range
+            testEndMoment = angular.copy DateService.nowMoment()
+            testEndMoment.hour( endMoment.hour() )
+            testEndMoment.minutes( endMoment.minute() )
+            testEndMoment.seconds( 0 )
+            testEndMoment.milliseconds( 0 )
+
+            range = DateService.nowMoment().range( testStartMoment, testEndMoment )
+
+
+            currentMoment = DateService.nowMoment()
+
+            #########################################
+  #          console.log "-----------------------------------------"
+  #          console.log "-----------------------------------------"
+  #          console.log "Today time:     " + currentMoment.format("dddd, MMMM Do YYYY, H:mm:ss")
+  #          console.log "RANGE:start     " + range.start.format("dddd, MMMM Do YYYY, H:mm:ss")
+  #          console.log "RANGE:end       " + range.end.format("dddd, MMMM Do YYYY, H:mm:ss")
+  #          console.log "-----------------------------------------"
+  #          console.log "-----------------------------------------"
+            #########################################
+
+            continueSearching = !currentMoment.within range
+  #          console.log "res: " + result + " ----- " + "flag:  " +  isOpenFlag
+  #          console.log "flag updated:  " +  isOpenFlag
+      catch err
+        console.log err
+        continueSearching = true
+
+      !continueSearching
+
 
 
   contructHours = (hours) ->
+
     storeHours = []
 
-    todayDayOfWeek = new Date().getDay()
+    todayDayOfWeek = DateService.nowMoment().day()
 
     _.forEach (_.keys hours), (day) ->
       currentDayHours = hours[day]
@@ -24,25 +96,30 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
 
       ###### no hours at all
       if angular.isUndefined( currentDayHours[0] ) and angular.isUndefined( currentDayHours[1] )
-        storeHours.push {day:dayName, hours:"Cerrado", today:isToday}
+        storeHours.push {day:dayName, displayHours:"Cerrado", today:isToday}
 
       ###### some hours
       else
 
+        currentHours = undefined
+        if isToday
+          currentHours = []
+          _.forEach currentDayHours, (elem) ->
+            currentHours.push {start:elem.start, end:elem.end} if elem isnt undefined
+
         if angular.isDefined( currentDayHours[0] ) and angular.isDefined( currentDayHours[1] )
-          currentHours = currentDayHours[0].start + " - " + currentDayHours[0].end
-          currentHours = currentHours + "  /  "
-          currentHours = currentHours + currentDayHours[1].start + " - " + currentDayHours[1].end
-          storeHours.push {day:dayName, hours:currentHours,today:isToday}
+          currentHoursDisplay = currentDayHours[0].start + " - " + currentDayHours[0].end
+          currentHoursDisplay = currentHoursDisplay + "  /  "
+          currentHoursDisplay = currentHoursDisplay + currentDayHours[1].start + " - " + currentDayHours[1].end
+          storeHours.push {day:dayName, displayHours:currentHoursDisplay,hours:currentHours,today:isToday}
 
         else if angular.isDefined( currentDayHours[0] )
-          storeHours.push {day:dayName, hours:currentDayHours[0].start + " - " + currentDayHours[0].end,today:isToday}
+          storeHours.push {day:dayName, displayHours:currentDayHours[0].start + " - " + currentDayHours[0].end,hours:currentHours,today:isToday}
 
         else
-          storeHours.push {day:dayName, hours:currentDayHours[1].start + " - " + currentDayHours[1].end,today:isToday}
+          storeHours.push {day:dayName, displayHours:currentDayHours[1].start + " - " + currentDayHours[1].end,hours:currentHours,today:isToday}
 
     storeHours
-
 
 
   getStores = () ->
@@ -76,7 +153,7 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
           3: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
           4: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
           5: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
-          6: [undefined,{start:"18:30",end:"02:00"}]
+          6: [undefined,{start:"18:30",end:"23:59"}]
         }
 
       },
@@ -218,3 +295,16 @@ angular.module("Muzza.services").factory "OrderService", () ->
     return new OrderDetailsObject {}
 
   placeOrder: submitOrder
+
+
+angular.module('Muzza.services').service 'DateService', () ->
+
+  getNowMoment = () ->
+    moment()
+
+  getSpecificMomentField = ( field, format ) ->
+    moment( field, format )
+
+
+  nowMoment: getNowMoment
+  specificMomentField: getSpecificMomentField

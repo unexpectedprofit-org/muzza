@@ -5,12 +5,16 @@
         <ion-list data-ng-controller="StoresCtrl">
             <ion-item ng-repeat="store in stores" data-ng-click="continue(store)">
                 <i class="icon icon-home"></i>
-                <strong>{{store.name}}</strong><br>
-                {{ store.address }}<br>
+                <strong>{{store.name}}</strong>
+                <br>
+                {{ store.address }}
+                <br>
                 {{ store.tel }}
+                <br>
+                Today open? {{ store.hours.isOpen }}
 
-                <div data-ng-repeat="dayHours in store.hours" data-ng-class="{todayHours: dayHours.today}">
-                  {{ dayHours.day }}: {{dayHours.hours}}
+                <div data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours: dayHours.today}">
+                  {{ dayHours.day }}: {{dayHours.displayHours}}
                 </div>
             </ion-item>
         </ion-list>

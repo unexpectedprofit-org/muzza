@@ -3,17 +3,23 @@ describe "services", ->
   beforeEach ->
     module "Muzza.services"
 
+
   describe "store service", ->
-    StoreService = undefined
+    StoreService = DateService = newStores = undefined
 
     beforeEach ->
       inject ($injector) ->
         StoreService = $injector.get 'StoreService'
+        DateService = $injector.get 'DateService'
 
     it "should create a list of store objects", ->
 
 #      jasmine.getJSONFixtures().fixturesPath = 'test/fixtures'
 #      dataResponse = getJSONFixture('store.json')
+
+      #      Jan 1st 2014 was a Wednesday = 3
+      spyOn(DateService, 'nowMoment').and.returnValue moment("01-01-2014T20:00", "MM-DD-YYYYTHH:mm")
+      newStores = StoreService.listStores()
 
       expected = {
         name: "La pizzeria de Juancho"
@@ -26,31 +32,138 @@ describe "services", ->
           {day:"Miercoles",hours:"11:30 - 15:00  /  19:30 - 22:00"}
           {day:"Jueves",hours:"11:30 - 15:00  /  19:30 - 22:00"}
           {day:"Viernes",hours:"11:30 - 15:00  /  19:30 - 22:00"}
-          {day:"Sabado",hours:"18:30 - 02:00"}
+          {day:"Sabado",hours:"18:30 - 23:59"}
         ]
       }
 
-      newObject = StoreService.listStores()
-      expect( newObject[0].name ).toEqual expected.name
-      expect( newObject[0].address).toEqual expected.address
-      expect( newObject[0].tel ).toEqual expected.tel
 
-      expect( newObject[0].hours[0].day ).toBe 'Domingo'
-      expect( newObject[0].hours[0].hours ).toBe 'Cerrado'
 
-      expect( newObject[0].hours[1].day ).toBe 'Lunes'
-      expect( newObject[0].hours[1].hours ).toBe '12:00 - 14:00'
+      expect( newStores[0].name ).toEqual expected.name
+      expect( newStores[0].address).toEqual expected.address
+      expect( newStores[0].tel ).toEqual expected.tel
 
-      expect( newObject[0].hours[3].day ).toBe 'Miercoles'
-      expect( newObject[0].hours[3].hours ).toBe '11:30 - 15:00  /  19:30 - 22:00'
+      expect( newStores[0].hours.byDay[0].day ).toBe 'Domingo'
+      expect( newStores[0].hours.byDay[0].displayHours ).toBe expected.hours[0].hours
+      expect( newStores[0].hours.byDay[0].hours ).toBeUndefined()
 
-      expect( newObject[0].hours[6].day ).toBe 'Sabado'
-      expect( newObject[0].hours[6].hours ).toBe '18:30 - 02:00'
+      expect( newStores[0].hours.byDay[1].day ).toBe 'Lunes'
+      expect( newStores[0].hours.byDay[1].displayHours ).toBe expected.hours[1].hours
+      expect( newStores[0].hours.byDay[1].hours ).toBeUndefined()
 
-      todayDay = _.filter newObject[0].hours, (elem) ->
+      expect( newStores[0].hours.byDay[3].day ).toBe 'Miercoles'
+      expect( newStores[0].hours.byDay[3].displayHours ).toBe expected.hours[3].hours
+      expect( newStores[0].hours.byDay[3].hours[0].start ).toBe '11:30'
+      expect( newStores[0].hours.byDay[3].hours[0].end ).toBe '15:00'
+      expect( newStores[0].hours.byDay[3].hours[1].start ).toBe '19:30'
+      expect( newStores[0].hours.byDay[3].hours[1].end ).toBe '22:00'
+
+      expect( newStores[0].hours.byDay[6].day ).toBe 'Sabado'
+      expect( newStores[0].hours.byDay[6].displayHours ).toBe expected.hours[6].hours
+      expect( newStores[0].hours.byDay[6].hours ).toBeUndefined()
+
+      todayDay = _.filter newStores[0].hours.byDay, (elem) ->
         elem.today
 
       expect(todayDay.length).toBe 1
+
+      todayDay = _.filter newStores[0].hours.byDay, (elem) ->
+        elem.hours isnt undefined
+
+      expect(todayDay.length).toBe 1
+
+
+    describe "open or close", ->
+
+      it "should be open - wednesday - 1", ->
+        #      3: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 1st 2014 was a Wednesday = 3
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-01-2014T20:00", "MM-DD-YYYYTHH:mm")
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeTruthy()
+
+      it "should be open - wednesday - 2", ->
+        #      3: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 1st 2014 was a Wednesday = 3
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-01-2014T14:15", "MM-DD-YYYYTHH:mm")
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeTruthy()
+
+      it "should be open - wednesday - 3", ->
+        #      3: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 1st 2014 was a Wednesday = 3
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-01-2014T21:33", "MM-DD-YYYYTHH:mm")
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeTruthy()
+
+      it "should be open - saturday - 1", ->
+        #      6: [undefined,{start:"18:30",end:"02:00"}]
+        #      Jan 4th 2014 was a Saturday = 6
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-04-2014T18:30", "MM-DD-YYYYTHH:mm")
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeTruthy()
+
+      it "should be open - saturday - 2", ->
+        #      6: [undefined,{start:"18:30",end:"02:00"}]
+        #      Jan 4th 2014 was a Saturday = 6
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-04-2014T22:15", "MM-DD-YYYYTHH:mm")
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeTruthy()
+
+      it "should be open - saturday - 3", ->
+        #      6: [undefined,{start:"18:30",end:"23:59"}]
+        #      Jan 4th 2014 was a Saturday = 6
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-04-2014T23:59", "MM-DD-YYYYTHH:mm")
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeTruthy()
+
+      it "should be close - sunday - 1", ->
+        #      0: [undefined,undefined],
+        #      Jan 5th 2014 was a Sunday = 0
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-05-2014T09:30", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
+
+      it "should be close - sunday - 2", ->
+        #      0: [undefined,undefined],
+        #      Jan 5th 2014 was a Sunday = 0
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-05-2014T15:01", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
+
+      it "should be close - tuesday - 1", ->
+        #      2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 7th 2014 was a Tuesday = 2
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-07-2014T09:30", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
+
+      it "should be close - tuesday - 2", ->
+        #      2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 7th 2014 was a Tuesday = 2
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-07-2014T15:01", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
+
+      it "should be close - tuesday - 3", ->
+        #      2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 7th 2014 was a Tuesday = 2
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-07-2014T19:29", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
+
+      it "should be close - tuesday - 4", ->
+        #      2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 7th 2014 was a Tuesday = 2
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-07-2014T22:01", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
+
+      it "should be close - tuesday - 5", ->
+        #      2: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
+        #      Jan 7th 2014 was a Tuesday = 2
+        spyOn(DateService, 'nowMoment').and.returnValue moment("01-08-2014T01:00", "MM-DD-YYYYTHH:mm");
+        newStores = StoreService.listStores()
+        expect(newStores[0].hours.isOpen).toBeFalsy()
 
 
   describe "Product Service", ->
