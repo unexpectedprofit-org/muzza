@@ -1,4 +1,4 @@
-angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, ShoppingCartService, BebidaOrder, BebidaPromoOrder, $state, $stateParams, $q, Bebida) ->
+angular.module('Muzza.bebidas').directive 'bebidas', ($log, $ionicModal, ShoppingCartService, BebidaOrder, $q, Bebida) ->
   restrict: 'EA'
   scope: {
     menu: '=ngModel'
