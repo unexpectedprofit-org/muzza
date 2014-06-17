@@ -11,9 +11,14 @@
                 <br>
                 {{ store.tel }}
                 <br>
-                Today open? {{ store.hours.isOpen }}
+                Today open? {{ store.hours.openInfo.isOpen }} - day: {{ store.hours.openInfo.day }}
 
-                <div data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours: dayHours.today}">
+
+                <div data-ng-if="store.hours.openInfo.day == -1" data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours: dayHours.today}">
+                  {{ dayHours.day }}: {{dayHours.displayHours}}
+                </div>
+
+                <div data-ng-if="store.hours.openInfo.day != -1" data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours:$index == store.hours.openInfo.day}">
                   {{ dayHours.day }}: {{dayHours.displayHours}}
                 </div>
             </ion-item>
