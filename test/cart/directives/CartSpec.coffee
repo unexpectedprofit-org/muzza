@@ -6,7 +6,6 @@ describe "Cart", ->
     module 'Muzza.directives'
     module 'Muzza.pizzas'
     module 'Muzza.empanadas'
-    module 'Muzza.bebidas'
     module 'ionic'
 
     module ($provide) ->
@@ -24,7 +23,7 @@ describe "Cart", ->
 
       return null
 
-  $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = Bebida = undefined
+  $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = undefined
   pizza1 = pizza2 = undefined
 
   beforeEach ->
@@ -32,7 +31,6 @@ describe "Cart", ->
       ShoppingCartService = $injector.get 'ShoppingCartService'
       Pizza = $injector.get 'Pizza'
       Empanada = $injector.get 'Empanada'
-      Bebida = $injector.get 'Bebida'
       $scope = $rootScope
       element = angular.element('<cart></cart>')
       $compile(element)($rootScope)
@@ -201,19 +199,6 @@ describe "Cart", ->
 
         isolatedScope.edit(pizza)
         expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:1}
-
-      it "should redirect to BEBIDA edit view", ->
-        bebida = new Bebida {desc:'Muzza',qty:1,totalPrice:1000,cat:'BEBIDA',size:"chica",id:1,price:{base:1000},cartItemKey: 1}
-
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [bebida]
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-
-        onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
-        editItem = spyOn(isolatedScope, 'edit').and.callThrough()
-
-        isolatedScope.edit bebida
-        expect(onState).toHaveBeenCalledWith 'app.bebida', {bebidaId:1}
 
       it "should redirect to menu default view if no categ matches", ->
 
