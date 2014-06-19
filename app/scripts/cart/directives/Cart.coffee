@@ -1,8 +1,13 @@
-angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, OrderService) ->
+angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, OrderService, $rootScope) ->
   restrict: 'EA'
   scope: {}
   templateUrl: '../app/scripts/cart/templates/cart.html'
   link: ($scope, ele, attrs, ctrl)->
+
+    $scope.orderEligibility = OrderService.checkEligibility()
+    $rootScope.$on 'CART:PRICE_UPDATED', (event, newValue) ->
+      $scope.orderEligibility = OrderService.checkEligibility()
+
 
     $scope.edit = (item)->
 

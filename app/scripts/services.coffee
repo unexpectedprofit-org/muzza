@@ -13,6 +13,7 @@ angular.module("Muzza.services").factory "StoreService", (days, DateService) ->
 
       @hours.openInfo = @isOpen @hours.byDay
 
+      @order = data.order
 
     getPreviousDay = (day) ->
       switch day
@@ -211,8 +212,12 @@ angular.module("Muzza.services").factory "StoreService", (days, DateService) ->
           4: [{start:"11:30",end:"15:00"},{start:"19:30",end:"01:00"}],
           5: [{start:"11:30",end:"15:00"},{start:"19:30",end:"02:30"}],
           6: [undefined,{start:"18:30",end:"23:59"}]
-        }
+        },
 
+        order:
+          minPrice:
+            delivery: 6000
+            pickup: 8000
       },
       {
         "id": 2,
@@ -242,7 +247,12 @@ angular.module("Muzza.services").factory "StoreService", (days, DateService) ->
           4: [{start:"11:30",end:"15:00"},{start:"19:30",end:"22:00"}],
           5: [undefined,undefined],
           6: [undefined,undefined]
-        }
+        },
+
+        order:
+          minPrice:
+            delivery: 9000
+            pickup: 10000
       }
     ]
     ######################### back end data

@@ -73,6 +73,25 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
     deferred.resolve()
     deferred.promise
 
+  getMinimumAmount = () ->
+    #need to be updated when logic for selecting stores is updated
+    #since delivery still needs a store to deliver from
+    if true
+      order.store.order.minPrice['delivery']
+    else
+      order.store.order.minPrice['pickup']
+
+
+  isOrderEligible = () ->
+
+    if ShoppingCartService.getCart().length is 0 then return {success: false,reason:"NO_PRODUCTS"}
+
+    if order.store is undefined then return {success: false,reason:"NO_STORE"}
+
+    if ShoppingCartService.getTotalPrice() < getMinimumAmount() then return {success:false,reason:"NO_MIN_AMOUNT"}
+
+    {success:true}
+
 
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
@@ -82,3 +101,5 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
   retrieveDelivery: getDelivery
   retrieveConnectionInfo: getContactInfo
   chooseStore: setPickupStore
+  retrieveMinimumAmount: getMinimumAmount
+  checkEligibility: isOrderEligible

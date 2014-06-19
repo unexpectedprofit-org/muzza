@@ -20,6 +20,7 @@ describe "Cart", ->
 
       $provide.value "OrderService",
         createOrder: ()-> null
+        checkEligibility: () -> null
 
       return null
 
@@ -72,11 +73,12 @@ describe "Cart", ->
       expect(isolatedScope.remove).toBeDefined()
       expect(isolatedScope.checkout).toBeDefined()
 
-    it "should have a cart defined", ->
+    it "should have variables defined", ->
       $scope.$digest()
       isolatedScope = element.isolateScope()
 
       expect(isolatedScope.cart).toBeDefined()
+      expect(isolatedScope.orderEligibility).toBeDefined()
 
 
   describe 'when shopping cart has at least one item', ->
@@ -248,3 +250,32 @@ describe "Cart", ->
         isolatedScope.checkout()
         expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
           products: [pizza]
+
+  describe "order eligibility", ->
+
+    it "should call Order service", ->
+      inject (OrderService) ->
+        eligibilitySpy = spyOn(OrderService, 'checkEligibility').and.returnValue {}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue []
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+        expect(eligibilitySpy).toHaveBeenCalled()
+        expect(isolatedScope.orderEligibility).toBeDefined()
+
+    it "should call Order service once cart has changed", ->
+      inject (OrderService) ->
+        eligibilitySpy = spyOn(OrderService, 'checkEligibility').and.returnValue {}
+        spyOn(ShoppingCartService, 'getCart').and.returnValue []
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+        $scope.$broadcast 'CART:PRICE_UPDATED', 1200
+
+        expect(isolatedScope.orderEligibility).toBeDefined()
+        expect(eligibilitySpy).toHaveBeenCalled()
+        expect(eligibilitySpy.calls.count()).toBe 2
+
+    it "should evaluate order eligibility on html", ->
+      $scope.$digest()
+      expect(element.html()).toContain "!orderEligibility.success"

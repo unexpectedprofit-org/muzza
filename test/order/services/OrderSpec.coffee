@@ -26,6 +26,7 @@ describe 'Order Service', ->
     module ($provide) ->
       $provide.value 'ShoppingCartService',
         getCart: () -> []
+        getTotalPrice: () -> 15
       $provide.value '$firebase', firebaseStub()
       $provide.value 'Firebase', firebaseStub()
       $provide.value 'OrderRef', firebaseStub()
@@ -33,14 +34,13 @@ describe 'Order Service', ->
         validateDeliveryRadio: ()-> null
       return null
 
-  OrderService = ShoppingCartService = getCartSpy = undefined
+  OrderService = ShoppingCartService = undefined
 
   beforeEach ->
     inject (_ShoppingCartService_, _OrderService_) ->
       ShoppingCartService = _ShoppingCartService_
       OrderService = _OrderService_
 
-    getCartSpy = spyOn(ShoppingCartService, 'getCart').and.callThrough()
 
   describe 'chooseDeliveryOption', ->
 
@@ -209,3 +209,73 @@ describe 'Order Service', ->
       OrderService.chooseStore(store)
       expect(OrderService.retrieveOrder()).toEqual { store: {id: 1}}
 
+
+  describe "getMinimumAmount", ->
+
+    it "should return delivery min amount", ->
+      OrderService.chooseDelivery 'delivery'
+      OrderService.chooseStore {order: {minPrice:{delivery:11,pickup:22}}}
+      amount = OrderService.retrieveMinimumAmount()
+
+      expect(amount).toBe 11
+
+#    it "should return pickup min amount", ->
+#      OrderService.chooseDelivery 'pickup'
+#      OrderService.chooseStore {order: {minPrice:{delivery:11,pickup:22}}}
+#      amount = OrderService.retrieveMinimumAmount()
+#
+#      expect(amount).toBe 22
+
+  describe "check order eligibility", ->
+
+    it "should return error if cart empty", ->
+      getCartSpy = spyOn(ShoppingCartService,'getCart').and.callThrough()
+      OrderService.createOrder {}
+      response = OrderService.checkEligibility()
+
+      expect(getCartSpy).toHaveBeenCalled()
+      expect(response.success).toBeFalsy()
+      expect(response.reason).toBe "NO_PRODUCTS"
+
+    it "should return error if no store selected", ->
+      getCartSpy = spyOn(ShoppingCartService,'getCart').and.callFake( () -> [{id:1}] )
+      OrderService.createOrder {}
+      response = OrderService.checkEligibility()
+
+      expect(response.success).toBeFalsy()
+      expect(response.reason).toBe "NO_STORE"
+
+    it "should return error if no minimum reached", ->
+      spyOn(ShoppingCartService,'getCart').and.callFake( () -> [{id:3,price:20,qty:1}] )
+      getTotalPriceSpy = spyOn(ShoppingCartService,'getTotalPrice').and.callThrough()
+      OrderService.createOrder {}
+
+      store =
+        order:
+          minPrice:
+            delivery: 100
+            pickup: 50
+
+      OrderService.chooseStore store
+      response = OrderService.checkEligibility()
+
+      expect(getTotalPriceSpy).toHaveBeenCalled()
+      expect(response.success).toBeFalsy()
+      expect(response.reason).toBe "NO_MIN_AMOUNT"
+
+    it "should return ok if all conditions met", ->
+      spyOn(ShoppingCartService,'getCart').and.callFake( () -> [{id:1}] )
+      spyOn(ShoppingCartService,'getTotalPrice').and.callFake( () -> 300 )
+      OrderService.createOrder {products:[{id:1}]}
+
+      store =
+        order:
+          minPrice:
+            delivery: 100
+            pickup: 50
+
+      OrderService.chooseStore store
+
+      response = OrderService.checkEligibility()
+
+      expect(response.success).toBeTruthy()
