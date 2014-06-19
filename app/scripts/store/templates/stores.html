@@ -11,8 +11,16 @@
                 <br>
                 {{ store.tel }}
                 <br>
+                <br>
+                Monto minimo:
+                  pickup: {{ store.order.minPrice.pickup | centsToMoney | currency }}
+                  delivery: {{ store.order.minPrice.delivery | centsToMoney | currency }}
+                <br>
+                <br>
                 Today open? {{ store.hours.openInfo.isOpen }} - day: {{ store.hours.openInfo.day }}
 
+                <br>
+                <br>
 
                 <div data-ng-if="store.hours.openInfo.day == -1" data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours: dayHours.today}">
                   {{ dayHours.day }}: {{dayHours.displayHours}}
