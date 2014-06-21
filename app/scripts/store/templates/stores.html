@@ -16,19 +16,16 @@
                   pickup: {{ store.order.minPrice.pickup | centsToMoney | currency }}
                   delivery: {{ store.order.minPrice.delivery | centsToMoney | currency }}
                 <br>
-                <br>
-                Today open? {{ store.hours.openInfo.isOpen }} - day: {{ store.hours.openInfo.day }}
-
-                <br>
-                <br>
-
-                <div data-ng-if="store.hours.openInfo.day == -1" data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours: dayHours.today}">
-                  {{ dayHours.day }}: {{dayHours.displayHours}}
+                <div>Abierto {{store.isOpenRightNow()}}</div>
+                <div ng-repeat="day in store.displayDays" ng-class="{todayHours:$index == store.dayOfTheWeek}">
+                    {{day}}
+                    <span ng-repeat="range in store.displayHours[day]"
+                          ng-show="store.displayHours[day]">
+                        {{range[0]}} a {{range[1]}}
+                    </span>
+                    <span ng-show="store.displayHours[day].length < 1">Cerrado</span>
                 </div>
 
-                <div data-ng-if="store.hours.openInfo.day != -1" data-ng-repeat="dayHours in store.hours.byDay" data-ng-class="{todayHours:$index == store.hours.openInfo.day}">
-                  {{ dayHours.day }}: {{dayHours.displayHours}}
-                </div>
             </ion-item>
         </ion-list>
 
