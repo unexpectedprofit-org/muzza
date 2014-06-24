@@ -27,239 +27,307 @@ describe "services", ->
       }
 
       expect( newStores[0].name ).toEqual expected.name
-      expect( newStores[0].address).toEqual expected.address
+      expect( newStores[0].address ).toEqual expected.address
       expect( newStores[0].tel ).toEqual expected.tel
 
-    describe "open or close", ->
+    it "should create a hoursInfo object", ->
+      expectedDisplayOpenHours =
+        Domingo: []
+        Lunes: [
+          ['12:00', '14:00']
+          ['19:30', '03:00']
+        ]
+        Martes: [
+          ['11:30', '15:00']
+          ['19:30', '22:00']
+        ]
+        Miercoles: [
+          ['11:30', '15:00']
+          ['19:30', '22:00']
+        ]
+        Jueves: [
+          ['11:30', '15:00']
+          ['19:30', '01:00']
+        ]
+        Viernes: [
+          ['11:30', '15:00']
+          ['19:30', '02:30']
+        ]
+        Sabado: [
+          ['18:30', '03:00']
+        ]
 
-      it "should be open - wednesday - 1", ->
-#        Miercoles: [
+      fakeDate = "January 1, 2014 11:30:00"
+      newStores = StoreService.listStores()
+
+
+      expect(newStores[0].hoursInfo.displayHours).toEqual expectedDisplayOpenHours
+      expect(newStores[0].hoursInfo.displayDays).toEqual _.keys expectedDisplayOpenHours
+      expect(newStores[0].hoursInfo.todayDayOfWeek).toEqual 3
+
+
+    describe "wednesday", ->
+#         Miercoles: [
 #          ['11:30', '15:00']
 #          ['19:30', '22:00']
-#        ]
-#        Jan 1st 2014 was a Wednesday = 3
-        fakeDate = "January 1, 2014 20:00:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
 
-      it "should be open - wednesday - 2", ->
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 1st 2014 was a Wednesday = 3
-        fakeDate = "January 1, 2014 14:15:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
+      describe "open/close", ->
 
-      it "should be open - wednesday - 3", ->
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 1st 2014 was a Wednesday = 3
-        fakeDate = "January 1, 2014 21:33:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
+        it "should be open as soon as it opens - 1", ->
+          fakeDate = "January 1, 2014 11:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
 
-      it "should be open - Thrusday - 1", ->
-#        Jueves: [
-#          ['11:30', '15:00']
-#          ['19:30', '01:00']
-#        ]
-#        Jan 2nd 2014 was a Thrusday = 4
-        fakeDate = "January 2, 2014 21:33:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
+        it "should be open as soon as it opens - 2", ->
+          fakeDate = "January 1, 2014 19:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
 
-      it "should be open - friday night  - 1", ->
-#        Viernes: [
+        it "should be open during working hours - 3", ->
+          fakeDate = "January 1, 2014 14:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
+
+        it "should be open during working hours - 4", ->
+          fakeDate = "January 1, 2014 21:45:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
+
+        it "should be closed as soon as it closes - 5", ->
+          fakeDate = "January 1, 2014 15:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be closed as soon as it closes - 6", ->
+          fakeDate = "January 1, 2014 22:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be closed during non-working hours - 7", ->
+          fakeDate = "January 1, 2014 10:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be closed during non-working hours - 8", ->
+          fakeDate = "January 1, 2014 17:25:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be closed during non-working hours - 9", ->
+          fakeDate = "January 1, 2014 23:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+
+      describe "time to open/close", ->
+
+        it "should have open message - 1", ->
+          fakeDate = "January 1, 2014 10:45:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBe 45
+
+        it "should have open message - 2", ->
+          fakeDate = "January 1, 2014 11:29:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBe 1
+
+        it "should have open message - 3", ->
+          fakeDate = "January 1, 2014 19:29:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBe 1
+
+        it "should NOT have open/close message - 4", ->
+          fakeDate = "January 1, 2014 09:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should NOT have open/close message - 5", ->
+          fakeDate = "January 1, 2014 17:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should NOT have open/close message - 6", ->
+          fakeDate = "January 1, 2014 11:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should NOT have open/close message - 7", ->
+          fakeDate = "January 1, 2014 19:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should have close message - 8", ->
+          fakeDate = "January 1, 2014 14:59:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBe 1
+
+        it "should have close message - 9", ->
+          fakeDate = "January 1, 2014 14:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBe 30
+
+        it "should NOT have close message - 10", ->
+          fakeDate = "January 1, 2014 21:45:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBe 15
+
+        it "should NOT have open/close message - 11", ->
+          fakeDate = "January 1, 2014 15:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should NOT have open/close message - 12", ->
+          fakeDate = "January 1, 2014 22:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should NOT have open/close message - 13", ->
+          fakeDate = "January 1, 2014 22:10:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+
+    describe "friday", ->
+#         Jan 3rd Viernes
 #          ['11:30', '15:00']
 #          ['19:30', '02:30']
-#        ]
-#        Jan 3nd 2014 was a Friday
-        fakeDate = "January 4, 2014 01:00:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
 
-      it "should be close - friday night  - 2", ->
-#        Viernes: [
-#          ['11:30', '15:00']
-#          ['19:30', '02:30']
-#        ]
-#        Jan 4th 2014 was a Saturday
-        fakeDate = "January 4, 2014 03:00:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+      describe "open/close", ->
 
-      it "should be open - friday night  - 3", ->
-#        Viernes: [
-#          ['11:30', '15:00']
-#          ['19:30', '02:30']
-#        ]
-#        Jan 4th 2014 was a Saturday
-        fakeDate = "January 4, 2014 02:15:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
+        it "should be open - 1", ->
+          fakeDate = "January 4, 2014 01:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
 
-      it "should be open - saturday - 1", ->
+        it "should be close - 2", ->
+          fakeDate = "January 4, 2014 03:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be open - 3", ->
+          fakeDate = "January 4, 2014 02:15:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
+
+      describe "time to open/close", ->
+
+        it "should NOT have open/close message - 1", ->
+          fakeDate = "January 3, 2014 23:59:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should NOT have open/close message - 2", ->
+          fakeDate = "January 4, 2014 01:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+        it "should have close message - 3", ->
+          fakeDate = "January 4, 2014 02:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBe 30
+
+        it "should NOT have close message - 4", ->
+          fakeDate = "January 4, 2014 02:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
+
+
+    describe "sunday", ->
 #        Sabado: [
-#          ['18:30', '23:59']
-#        ]
-#        Jan 4th 2014 was a Saturday
-        fakeDate = "January 4, 2014 18:30:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
-
-      it "should be open - saturday - 2", ->
-#        Sabado: [
-#          ['18:30', '23:59']
-#        ]
-#        Jan 4th 2014 was a Saturday
-        fakeDate = "January 4, 2014 22:15:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
-
-      it "should be open - saturday - 3", ->
-#        Sabado: [
-#          ['18:30', '23:59']
-#        ]
-#        Jan 4th 2014 was a Saturday
-        fakeDate = "January 4, 2014 23:59:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeTruthy()
-
-      it "should be close - sunday night - 1", ->
+#          ['18:30', '03:00']
 #        Domingo: []
 #        Lunes: [
 #          ['12:00', '14:00']
 #          ['19:30', '03:00']
-#        ]
-#        Jan 6th 2014 was a Monday
-        fakeDate = "January 6, 2014 01:00:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+#        Jan 5th 2014 was a Sunday
 
-      it "should be close - sunday - 1", ->
-#        Domingo: []
+      describe "open/close", ->
+
+        it "should be open - 1", ->
+          fakeDate = "January 5, 2014 02:45"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
+
+        it "should be open - 2", ->
+          fakeDate = "January 5, 2014 00:45"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeTruthy()
+
+        it "should be closed - 3", ->
+          fakeDate = "January 5, 2014 03:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be close - 4", ->
+          fakeDate = "January 5, 2014 09:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+        it "should be close past midnight - 5", ->
+          fakeDate = "January 6, 2014 01:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
+
+
+    describe "tuesday", ->
+#          ['11:30', '15:00']
+#          ['19:30', '22:00']
+#        Jan 7th 2014 was a Tuesday
+
+      describe "time to open/close", ->
+
+        it "should have open message - 1", ->
+          fakeDate = "January 7, 2014 11:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBe 30
+
+        it "should have open message - 2", ->
+          fakeDate = "January 7, 2014 19:15:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBe 15
+
+        it "should have close message - 3", ->
+          fakeDate = "January 7, 2014 14:30:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBe 30
+
+        it "should have close message - 4", ->
+          fakeDate = "January 7, 2014 21:50:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToClose).toBe 10
+
+    describe "monday", ->
+#      Domingo: []
 #        Lunes: [
 #          ['12:00', '14:00']
 #          ['19:30', '03:00']
 #        ]
-#        Jan 5th 2014 was a Sunday
-        fakeDate = "January 5, 2014 09:30:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+#      Jan 6th Monday
 
-      it "should be close - sunday - 2", ->
-#        Sabado: [
-#          ['18:30', '23:59']
-#        ]
-#        Domingo: []
-#        Jan 5th 2014 was a Sunday
-        fakeDate = "January 5, 2014 01:00:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+      describe "open/close", ->
 
-      it "should be close - sunday - 2", ->
-#        Sabado: [
-#          ['18:30', '23:59']
-#        ]
-#        Domingo: []
-#        Jan 5th 2014 was a Sunday
-        fakeDate = "January 5, 2014 15:01:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+        it "should be closed - 1", ->
+          fakeDate = "January 6, 2014 01:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.isOpen).toBeFalsy()
 
-      it "should be close - tuesday - 1", ->
-#      Lunes: [
-#        ['12:00', '14:00']
-#        ['19:30', '03:00']
-#      ]
-#        Martes: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 7th 2014 was a Tuesday
-        fakeDate = "January 7, 2014 09:30:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+      describe "time to open/close", ->
 
-      it "should be close - tuesday - 2", ->
-#      Lunes: [
-#        ['12:00', '14:00']
-#        ['19:30', '03:00']
-#      ]
-#        Martes: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 7th 2014 was a Tuesday
-        fakeDate = "January 7, 2014 15:01:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
+        it "should NOT have open/close message - 1", ->
+          fakeDate = "January 6, 2014 01:00:00"
+          newStores = StoreService.listStores()
+          expect(newStores[0].hoursInfo.timeToOpen).toBeUndefined()
+          expect(newStores[0].hoursInfo.timeToClose).toBeUndefined()
 
-      it "should be close - tuesday - 3", ->
-#      Lunes: [
-#        ['12:00', '14:00']
-#        ['19:30', '03:00']
-#      ]
-#        Martes: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 7th 2014 was a Tuesday
-        fakeDate = "January 7, 2014 19:29:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
-
-      it "should be close - tuesday - 4", ->
-#      Lunes: [
-#        ['12:00', '14:00']
-#        ['19:30', '03:00']
-#      ]
-#        Martes: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 7th 2014 was a Tuesday
-        fakeDate = "January 7, 2014 22:01:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
-
-      xit "should be close - tuesday - 5", ->
-#      Lunes: [
-#        ['12:00', '14:00']
-#        ['19:30', '03:00']
-#      ]
-#        Martes: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Miercoles: [
-#          ['11:30', '15:00']
-#          ['19:30', '22:00']
-#        ]
-#        Jan 7th 2014 was a Tuesday
-        fakeDate = "January 8, 2014 01:00:00"
-        newStores = StoreService.listStores()
-        expect(newStores[0].isOpenRightNow()).toBeFalsy()
 
 
   describe "Product Service", ->
