@@ -55,6 +55,23 @@ describe 'ShoppingCart Service', ->
           ShoppingCartService.add new Empanada {id:1,desc:'Pollo',type:'Frita',qty:2,price:{base: 10}}
 
           expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 20
+          expect(broadcastSpy.calls.count()).toBe 1
+
+    it "should broadcast CART:PRICE_UPDATED event when adding item editted", ->
+      inject ($rootScope) ->
+        broadcastSpy = spyOn($rootScope, '$broadcast')
+
+        empanada = new Empanada {id:1,desc:'Pollo',type:'Frita',qty:2,price:{base: 10}}
+
+        ShoppingCartService.add empanada
+        products = ShoppingCartService.getCart()
+        products[0].qty = 5
+        ShoppingCartService.add products[0]
+
+        expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 20
+        expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 0
+        expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 50
+        expect(broadcastSpy.calls.count()).toBe 3
 
 
   describe "retrieve functionality", ->
@@ -127,8 +144,40 @@ describe 'ShoppingCart Service', ->
         ShoppingCartService.emptyCart()
         expect(broadcastSpy).toHaveBeenCalledWith 'CART:PRICE_UPDATED', 0
 
+    describe "when item not found", ->
+
+      it "should not remove any", ->
+        item1 = new Empanada {id:15,desc:'Pollo',type:'Frita',qty:1,price:{base:10}}
+        item2 = new Empanada {id:16,desc:'Carne suave',type:'Horno',qty:1,price:{base:20}}
+
+        ShoppingCartService.add item1
+        ShoppingCartService.add item2
+
+        expect(ShoppingCartService.getCart().length).toBe 2
+
+        ShoppingCartService.remove "someid"
+
+        expect(ShoppingCartService.getCart().length).toBe 2
+
+
+      it "should NOT broadcast CART:PRICE_UPDATED event", ->
+        inject ($rootScope) ->
+          broadcastSpy = spyOn($rootScope, '$broadcast')
+
+          item1 = new Empanada {id:15,desc:'Pollo',type:'Frita',qty:1,price:{base:10}}
+          item2 = new Empanada {id:16,desc:'Carne suave',type:'Horno',qty:1,price:{base:20}}
+
+          ShoppingCartService.add item1
+          ShoppingCartService.add item2
+
+          ShoppingCartService.remove "someid"
+          expect(broadcastSpy).not.toHaveBeenCalled
+
 
   describe "calculate price functionality", ->
+
+    it "should return 0 if no products", ->
+      expect(ShoppingCartService.getTotalPrice()).toBe 0
 
     it "should calculate total price, only one product", ->
       ShoppingCartService.add new Empanada {id:15,desc:'Pollo',type:'Frita',qty:2,price:{base:1000}}
