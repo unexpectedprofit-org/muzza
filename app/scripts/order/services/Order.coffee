@@ -50,6 +50,19 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
 
   createOrder = (cart)->
     angular.extend(order, cart)
+    order.id = generateOrderId()
+
+
+  generateOrderId = ->
+    chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ"
+    sequence = '';
+
+    _.times 10, () ->
+      index = Math.floor(Math.random() * chars.length)
+      sequence += chars.substring index, index + 1
+
+    sequence
+
 
   sendOrder = ->
     deferred = $q.defer()

@@ -162,14 +162,25 @@ describe 'Order Service', ->
 
   describe 'createOrder', ->
 
-    it 'should create an order with a cart', ->
+    cart = undefined
+
+    beforeEach ->
       inject (Pizza)->
         cart =
           products: [new Pizza {id:1, desc:'Muzza', qty:1}]
           promotions: null
           totalPrice: ()-> null
         OrderService.createOrder(cart)
-        expect(OrderService.retrieveOrder()).toEqual cart
+
+    it 'should create an order with a cart', ->
+      expect(OrderService.retrieveOrder().products).toEqual cart.products
+      expect(OrderService.retrieveOrder().promotions).toEqual cart.promotions
+      expect(OrderService.retrieveOrder().totalPrice).toEqual cart.totalPrice
+
+    it "should have a 10 chars length order ID", ->
+      expect(OrderService.retrieveOrder().id.length).toBe 10
+
+
 
   describe 'submitOrder', ->
 
