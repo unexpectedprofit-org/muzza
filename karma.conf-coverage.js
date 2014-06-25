@@ -18,9 +18,10 @@ module.exports = function(config){
         'app/bower_components/firebase-simple-login/firebase-simple-login.js',
         'app/bower_components/angularfire/angularfire.js',
         'app/bower_components/angular-bindonce/bindonce.js',
-        '.tmp/templates.js',
-        'app/scripts/**/*.coffee',
-        'test/**/*.coffee'
+
+        '.tmp/scripts/**/*.js',
+        'test/**/*.coffee',
+        '.tmp/templates.js'
     ],
 
     // web server port
@@ -54,18 +55,26 @@ module.exports = function(config){
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    singleRun: true,
 
     preprocessors: {
 //        https://github.com/karma-runner/karma-coverage/issues/75
 //        http://stackoverflow.com/questions/23701505/why-does-karma-preprocessor-not-properly-parse-coffeescript
-        'app/scripts/**/*.coffee': ['coffee'],
+
+        '.tmp/scripts/**/*.js': ['coverage'],
         'test/**/*.coffee': ['coffee']
     },
 
+    coverageReporter: {
+        reporters: [
+            { type: 'html', dir: 'coverage/' },
+            { type: 'text-summary' }
+        ]
+    },
+
     // test results reporter to use
-    // possible values: 'dots', 'progress', 'junit'
-    reporters: ['dots']
+    // possible values: 'dots', 'progress', 'junit', 'coverage'
+    reporters: ['dots', 'coverage']
 
     //junitReporter = {
     //    outputFile: 'test-results.xml'

@@ -122,7 +122,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      coverage: 'coverage/*'
     },
     
     autoprefixer: {
@@ -362,7 +363,11 @@ module.exports = function (grunt) {
 //          background: true
       },
       continuous: {
-        singleRun: true
+          configFile:  "karma.conf.js",
+          singleRun: true,
+      },
+      coverageinfo: {
+          configFile:  "karma.conf-coverage.js"
       }
     },
 
@@ -512,7 +517,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('cordova', ['copy:all', 'copy:js', 'cordova:build']);
 
-  grunt.registerTask('coverage', ['karma:continuous', 'connect:coverage:keepalive']);
+  grunt.registerTask('coverage', [
+      'clean:coverage',
+      'karma:coverageinfo',
+      'connect:coverage:keepalive'
+  ]);
 
   grunt.registerTask('default', [
     'newer:jshint',
