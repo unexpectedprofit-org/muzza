@@ -10,11 +10,13 @@
         <pre>Poner Junin 1477 Buenos Aires para que pase</pre>
         <div class="list list-inset">
             <div class="item item-divider">Direccion</div>
+
             <label class="item item-input"
                    data-ng-class="(addressForm.street.$invalid)? 'ng-invalid' : 'ng-valid'">
                 <input type="text" placeholder="Calle"
                        data-ng-required="deliveryOption == 'delivery'"
                        data-ng-model="contact.address.street"
+                       data-ng-maxlength="30"
                        name="street">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="addressForm.street.$invalid"></i>
@@ -28,6 +30,7 @@
                        data-ng-required="deliveryOption == 'delivery'"
                        data-ng-model="contact.address.door"
                        data-ng-pattern="/^[0-9]+$/"
+                       data-ng-maxlength="5"
                        name="door">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="addressForm.door.$invalid"></i>
@@ -40,6 +43,7 @@
                 <input type="text" placeholder="Localidad"
                        data-ng-required="deliveryOption == 'delivery'"
                        data-ng-model="contact.address.area"
+                       data-ng-maxlength="30"
                        name="area">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="addressForm.area.$invalid"></i>
@@ -66,6 +70,7 @@
                 <input type="text" placeholder="Nombre"
                        data-ng-required="true"
                        data-ng-model="contact.name"
+                       data-ng-maxlength="30"
                        name="name">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="contactDetailsForm.name.$invalid"></i>
@@ -80,6 +85,7 @@
                        data-ng-model="contact.phone"
                        data-ng-minlength="8"
                        data-ng-pattern="/^[0-9]+$/"
+                       data-ng-maxlength="10"
                        name="tel">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="contactDetailsForm.tel.$invalid"></i>
@@ -92,6 +98,7 @@
                 <input type="email" placeholder="Email"
                        data-ng-required="true"
                        data-ng-model="contact.email"
+                       data-ng-maxlength="30"
                        name="email">
                 <i class="icon ion-alert-circled error"
                    data-ng-if="contactDetailsForm.email.$invalid"></i>
