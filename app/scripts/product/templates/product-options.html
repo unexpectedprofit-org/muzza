@@ -1,0 +1,63 @@
+<div class="modal">
+
+    <ion-header-bar>
+       <h1 class="title">Opciones</h1>
+    </ion-header-bar>
+
+    <ion-content>
+
+        <div class="list card">
+            <div class="item item-avatar">
+                <p>{{ product.description }}</p>
+                <p>{{ product.details }}</p>
+            </div>
+
+            <div class="item item-body">
+
+              <div data-ng-repeat="option in product.options track by $index">
+
+                Seleccione {{ option.description }}:
+
+                <div data-ng-if="option.component == 'ONE_OPTION' ">
+
+                  <label class="item item-radio" data-ng-repeat="item in option.items">
+                    <input type="radio" name="groupOptions_{{$parent.$index}}">
+                    <div class="item-content">
+                      {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                  </label>
+
+
+                </div>
+
+
+
+                <div data-ng-if="option.component == 'MULTIPLE_OPTION' ">
+
+                  <li class="item item-checkbox" data-ng-repeat="item in option.items">
+                    <label class="checkbox">
+                      <input type="checkbox" name="prod_option">
+                    </label>
+                    {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
+                  </li>
+
+
+                </div>
+
+                <br/>
+                <br/>
+
+
+
+              </div>
+            </div>
+        </div>
+
+
+      <div class="button-bar">
+        <a class="button" data-ng-click="productOptions.hide()">Cancelar</a>
+      </div>
+
+    </ion-content>
+</div>

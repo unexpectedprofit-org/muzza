@@ -208,24 +208,25 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
 
   _menu = undefined
 
-  getProductsByCompanyId = (id, category)->
-    results =
-      pizza: _.map stores.store1.products['pizza'], constructPizzas
-      empanada: _.map stores.store1.products['empanada'], constructEmpanadas
-      promo: constructPromotions stores.store1.products['promotion']
-      bebida: _.map stores.store1.products['bebida'], constructBebidas
+  getProductsByCompanyId = (id, catId)->
 
-    # This should become two different methods executing either diff queries,
-    # or fetching form cache...who knows?
-    if category?
-      menu = {}
-      menu[category] = results[category]
+    constructMenu catId
+
+
+  constructMenu = (categoryId) ->
+    console.log categoryId
+    if categoryId isnt undefined
+      results = _.find stores.store1.products, (elem) ->
+        elem.id is parseInt(categoryId)
+
+      returning = []
+      returning.push results
+      returning
+
+
     else
-      menu = results
+      stores.store1.products
 
-    _menu = menu
-
-    menu
 
 
   retrieveProdFromCategory = (categoryId) ->
