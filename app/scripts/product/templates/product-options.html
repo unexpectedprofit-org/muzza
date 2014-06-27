@@ -14,6 +14,12 @@
                 <p>PRECIO ACTUALIZADO: {{ productTotalPrice | centsToMoney | currency }} </p>
             </div>
 
+            <div class="item item-avatar">
+              <p>CANTIDAD</p>
+              <p>PLACEHOLDER PARA QTY DIRECTIVE</p>
+
+            </div>
+
             <div class="item item-body">
 
               <div data-ng-repeat="option in product.options track by $index">
@@ -21,6 +27,7 @@
                 Seleccione {{ option.description }}:
                 <span data-ng-if="option.config.component == 'MULTIPLE_OPTION' ">(maximo {{ option.config.max }})</span>
 
+                <div data-ng-show="option.validationError">{{ option.validationError }}</div>
 
                 <div data-ng-if="option.config.component == 'ONE_OPTION' ">
 

@@ -44,14 +44,33 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
 
         if option.selection is undefined or option.selection.length is 0
           isValid = false
+          option.validationError = "Debe seleccionar una opcion!"
+        else
+          option.validationError = undefined
+
+
       else
 
         if option.selection is undefined
           if option.config.min > 0
             isValid = false
+            option.validationError = "Debe seleccionar una opcion!"
+          else
+            option.validationError = undefined
 
-        else if !(option.selection.length <= option.config.max and option.selection.length >= option.config.min)
+
+        else if option.selection.length <= option.config.max and option.selection.length >= option.config.min
+          option.validationError = undefined
+        else if !option.selection.length <= option.config.max and !option.selection.length >= option.config.min
           isValid = false
+          option.validationError = "Debe seleccionar entre " + option.config.min + " y " + option.config.max
+        else if !option.selection.length <= option.config.max
+          isValid = false
+          option.validationError = "Debe seleccionar menos de " + option.config.max
+        else
+          isValid = false
+          option.validationError = "Debe seleccionar al menos " + option.config.min
+
 
     console.log "isSelectionValid: " + isValid
     isValid
