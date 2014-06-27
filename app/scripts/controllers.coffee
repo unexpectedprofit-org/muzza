@@ -2,6 +2,66 @@ angular.module("Muzza.controllers", ['Muzza.services'])
 
 angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, $rootScope, ShoppingCartService, $state, $ionicModal) ->
 
+  $scope.updateOptionSelection = (option, item) ->
+
+    if option.selection is undefined
+      option.selection = []
+
+
+    if option.config.component is 'ONE_OPTION'
+
+      if option.selection.length > 0
+        itemRemoved = option.selection.pop()
+        $scope.productTotalPrice -= itemRemoved.price
+
+      option.selection.push item
+      $scope.productTotalPrice += item.price
+
+    else
+
+
+      result = _.find option.selection, (elem) ->
+        elem.description is item.description
+
+      if result is undefined
+#        console.log "elemento no esta..... agregando"
+        option.selection.push item
+        $scope.productTotalPrice += item.price
+      else
+#        console.log "elemento existe..... removiendo"
+        _.remove option.selection, (elem) ->
+          elem.description is item.description
+        $scope.productTotalPrice -= item.price
+
+#    console.log "colection: " + JSON.stringify option.selection
+
+
+  $scope.isSelectionValid = () ->
+    isValid = true
+    _.each $scope.product.options, (option) ->
+
+      if option.config.component is 'ONE_OPTION'
+
+        if option.selection is undefined or option.selection.length is 0
+          isValid = false
+      else
+
+        if option.selection is undefined
+          if option.config.min > 0
+            isValid = false
+
+        else if !(option.selection.length <= option.config.max and option.selection.length >= option.config.min)
+          isValid = false
+
+    console.log "isSelectionValid: " + isValid
+    isValid
+
+
+
+
+  $scope.validate = (option) ->
+    console.log JSON.stringify option
+
 
   $scope.chooseProduct = (product) ->
 
@@ -11,11 +71,13 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
 
     options.then (view) ->
 
-      $scope.product = product
+      console.log "Choosing product: " + JSON.stringify product
+
+      $scope.product = angular.copy product
 
       $scope.productOptions = view
 
-      console.log "Choosing product: " + JSON.stringify product
+      $scope.productTotalPrice = $scope.product.price.base
 
       $scope.productOptions.show()
 
