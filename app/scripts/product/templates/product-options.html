@@ -1,16 +1,8 @@
-<div class="modal">
-
-    <ion-header-bar>
-       <h1 class="title">Opciones</h1>
-    </ion-header-bar>
-
-    <ion-content>
-
         <div class="list card">
             <div class="item item-avatar">
-                <p>{{ product.description }}</p>
-                <p>{{ product.details }}</p>
-                <p>PRECIO BASE: {{ product.price.base | centsToMoney | currency }}</p>
+                <p>{{ productSelected.description }}</p>
+                <p>{{ productSelected.details }}</p>
+                <p>PRECIO BASE: {{ productSelected.price.base | centsToMoney | currency }}</p>
                 <p>PRECIO ACTUALIZADO: {{ productTotalPrice | centsToMoney | currency }} </p>
             </div>
 
@@ -22,14 +14,14 @@
 
             <div class="item item-body">
 
-              <div data-ng-repeat="option in product.options track by $index">
+              <div data-ng-repeat="option in productSelected.options track by $index">
 
                 Seleccione {{ option.description }}:
-                <span data-ng-if="option.config.component == 'MULTIPLE_OPTION' ">(maximo {{ option.config.max }})</span>
+                <span data-ng-if="!(option.config.min == 1 && option.config.max == 1)">(maximo {{ option.config.max }})</span>
 
                 <div data-ng-show="option.validationError">{{ option.validationError }}</div>
 
-                <div data-ng-if="option.config.component == 'ONE_OPTION' ">
+                <div data-ng-if="option.config.min == 1 && option.config.max == 1">
 
                   <label class="item item-radio" data-ng-repeat="item in option.items" data-ng-click="updateOptionSelection(option, item)">
                     <input type="radio" name="groupOptions_{{$parent.$index}}" />
@@ -43,7 +35,7 @@
 
 
 
-                <div data-ng-if="option.config.component == 'MULTIPLE_OPTION' ">
+                <div data-ng-if="!(option.config.min == 1 && option.config.max == 1)">
 
                   <li class="item item-checkbox" data-ng-repeat="item in option.items">
                     <label class="checkbox" data-ng-click="updateOptionSelection(option, item)">
@@ -68,11 +60,3 @@
 
             </div>
         </div>
-
-
-      <div class="button-bar">
-        <a class="button" data-ng-click="productOptions.hide()">Cancelar</a>
-      </div>
-
-    </ion-content>
-</div>

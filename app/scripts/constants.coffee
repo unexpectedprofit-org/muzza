@@ -12,7 +12,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Sabor"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Naranja"
             price: 0
@@ -32,7 +33,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Gas"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Con gas"
             price: 50
@@ -49,7 +51,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Sabor"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Quilmes"
             price: 10
@@ -73,7 +76,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Salsa"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Blanca"
             price: 0
@@ -93,7 +97,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Salsa"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Bolognesa"
             price: 0
@@ -110,7 +115,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           description: "Relleno"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Jamon y Queso"
             price: 20
@@ -131,9 +137,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Ingredientes"
           config:
-            component: "MULTIPLE_OPTION"
-            max:3
             min:1
+            max:3
           items: [
             description: "Lechuga"
             price: 30
@@ -160,7 +165,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Pan"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Baguette"
             price: 0
@@ -174,9 +180,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           description: "Adicionales"
           config:
-            component: "MULTIPLE_OPTION"
-            max:2
             min:1
+            max:2
           items: [
             description: "Huevo Frito"
             price: 40
@@ -203,7 +208,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Coccion"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Frita"
             price: 0
@@ -220,7 +226,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Coccion"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Frita"
             price: 150
@@ -237,7 +244,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Coccion"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Frita"
             price: 100
@@ -254,7 +262,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Coccion"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Frita"
             price: 0
@@ -275,7 +284,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Tamano"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Porcion"
             price: 0
@@ -292,7 +302,6 @@ angular.module('Muzza.constants',[]).constant 'stores',
         ,
           description: "Adicionales"
           config:
-            component: "MULTIPLE_OPTION"
             min:0
             max:4
           items: [
@@ -317,7 +326,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Tamano"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Porcion"
             price: 0
@@ -340,7 +350,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Tamano"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Mediana"
             price: 0
@@ -361,7 +372,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Tamano"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Chica"
             price: 0
@@ -378,7 +390,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
         options: [
           description: "Tamano"
           config:
-            component: "ONE_OPTION"
+            min: 1
+            max:1
           items: [
             description: "Porcion"
             price: 0
