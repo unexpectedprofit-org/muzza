@@ -1,4 +1,4 @@
-angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas', 'Muzza.bebidas', 'Muzza.promo'])
+angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.bebidas', 'Muzza.promo', 'Muzza.product'])
 
 angular.module("Muzza.services").factory "StoreService", (days) ->
 
@@ -204,7 +204,7 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
   listStores: getStores
 
 
-angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, Bebida, PromotionTypeFactory) ->
+angular.module("Muzza.services").service "ProductService", (stores, Product, PromotionTypeFactory) ->
 
   # define variable here to hold menu info.
   # So that next time the menu is looked up, we don't need to go to the backend to get it again.
@@ -217,12 +217,16 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
     if categoryId isnt undefined
       category = _.find stores.store1.products, (elem) ->
         elem.id is parseInt categoryId
-
-      [category]
-
+      categories = [category]
     else
-      stores.store1.products
+      categories = stores.store1.products
 
+    _.forEach categories, (category) ->
+      category.products = _.map category.products, (product) ->
+        product.categoryId = category.id
+        new Product product
+
+    categories
 
 
   getMenu: getProductsByCompanyId

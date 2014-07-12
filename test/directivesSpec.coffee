@@ -3,8 +3,8 @@ describe "directives", ->
   beforeEach ->
     module 'ionic'
     module 'Muzza.directives'
-    module 'Muzza.empanadas'
     module 'Muzza.pizzas'
+    module 'Muzza.product'
     module 'Muzza.templates'
 
     module ($provide) ->
@@ -81,13 +81,13 @@ describe "directives", ->
 
       it "should call model to reset", ->
         inject ($rootScope, $compile,$injector) ->
-          Empanada = $injector.get 'Empanada'
+          Product = $injector.get 'Product'
 
           $scope.steps = ['step1']
           $scope.step1 =
             hide: () -> null
 
-          $scope.item = new Empanada {}
+          $scope.item = new Product {}
 
           element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
           $compile(element)($rootScope)
@@ -104,13 +104,13 @@ describe "directives", ->
 
       it "should NOT call model to reset", ->
         inject ($rootScope, $compile,$injector) ->
-          Empanada = $injector.get 'Empanada'
+          Product = $injector.get 'Product'
 
           $scope.steps = ['step1']
           $scope.step1 =
             hide: () -> null
 
-          $scope.item = new Empanada {}
+          $scope.item = new Product {}
 
           element = angular.element('<cancel-selection></cancel-selection>')
           $compile(element)($rootScope)
@@ -128,13 +128,13 @@ describe "directives", ->
 
       it "should set qty to zero if promo", ->
         inject ($rootScope, $compile,$injector) ->
-          Empanada = $injector.get 'Empanada'
+          Product = $injector.get 'Product'
 
           $scope.steps = ['step1']
           $scope.step1 =
             hide: () -> null
 
-          $scope.item = new Empanada {qty:4}
+          $scope.item = new Product {qty:4}
           $scope.isPromoView = true
 
           element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
@@ -152,13 +152,13 @@ describe "directives", ->
 
       it "should NOT set qty to zero if not promo", ->
         inject ($rootScope, $compile,$injector) ->
-          Empanada = $injector.get 'Empanada'
+          Product = $injector.get 'Product'
 
           $scope.steps = ['step1']
           $scope.step1 =
             hide: () -> null
 
-          $scope.item = new Empanada {qty:4}
+          $scope.item = new Product {qty:4}
 
           element = angular.element('<cancel-selection data-reset-model="item"></cancel-selection>')
           $compile(element)($rootScope)
