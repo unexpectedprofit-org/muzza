@@ -26,10 +26,14 @@ angular.module('Muzza.product').factory "Product", () ->
     @qty = 1
 
   Product::getHash = () ->
-    commonHash = "ID_BRAND|" + @id + "|" + @categoryId + "|"
+    commonHash = "ID_BRAND|ID:" + @id + "|CAT_ID:" + @categoryId + "|"
+
     if @options isnt undefined
-      if @options[0].selection isnt undefined and @options[0].selection.length > 0
-        commonHash + @options[0].selection[0].description + '|'
+      _.each @options, (option) ->
+        commonHash += "OPT:" + option.description + '|'
+
+        _.each option.selection, (selection) ->
+          commonHash += selection.description + '|'
 
     commonHash
 

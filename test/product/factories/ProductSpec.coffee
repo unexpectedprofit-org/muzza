@@ -54,16 +54,73 @@ describe 'Product Factory', ->
 
   describe "getHash functionality", ->
 
-    it "should generate hash", ->
+    it "should generate hash - no selection", ->
 
       param =
         id: 8099
-        description: 'Product name here'
         catId: 44
-        qty: 2
         price:
           base: 50
 
       product = new Product param
 
-      expect(product.getHash()).toEqual "ID_BRAND|" + param.id + "|" + param.catId + "|"
+      expect(product.getHash()).toEqual "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.catId + "|"
+
+    it "should generate hash - single selection", ->
+
+      param =
+        id: 8099
+        catId: 44
+        price:
+          base: 50
+        options: [
+          description: "Sabor"
+          selection: [
+            description: "Naranja"
+          ]
+        ]
+
+      product = new Product param
+
+      expected = "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.catId + "|"
+      expected += "OPT:" + param.options[0].description + '|'
+      expected += param.options[0].selection[0].description + '|'
+
+      expect(product.getHash()).toEqual expected
+
+    it "should generate hash - single selection + multiple selection", ->
+
+      param =
+        id: 777
+        description: 'Product name here'
+        catId: 33
+        qty: 2
+        price:
+          base: 50
+        options: [
+          description: "Pan"
+          selection: [
+            description: "Salvado"
+          ]
+        ,
+          description: "Adicionales"
+          selection: [
+            description: "Tomate"
+          ,
+            description: "Lechuga"
+          ,
+            description: "Queso"
+          ]
+        ]
+
+      product = new Product param
+
+      expected = "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.catId + "|"
+      expected += "OPT:" + param.options[0].description + '|'
+      expected += param.options[0].selection[0].description + '|'
+      expected += "OPT:" + param.options[1].description + '|'
+      expected += param.options[1].selection[0].description + '|'
+      expected += param.options[1].selection[1].description + '|'
+      expected += param.options[1].selection[2].description + '|'
+
+      expect(product.getHash()).toEqual expected
