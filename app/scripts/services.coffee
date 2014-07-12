@@ -214,15 +214,11 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
 
 
   constructMenu = (categoryId) ->
-    console.log categoryId
     if categoryId isnt undefined
-      results = _.find stores.store1.products, (elem) ->
-        elem.id is parseInt(categoryId)
+      category = _.find stores.store1.products, (elem) ->
+        elem.id is parseInt categoryId
 
-      returning = []
-      returning.push results
-      returning
-
+      [category]
 
     else
       stores.store1.products

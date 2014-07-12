@@ -1,6 +1,7 @@
 describe "controllers", ->
 
   beforeEach ->
+    module 'ionic'
     module "Muzza.controllers"
 
   describe "Menu Controller", ->
