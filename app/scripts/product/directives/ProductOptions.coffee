@@ -1,4 +1,4 @@
-angular.module('Muzza.product').directive 'productOptions', () ->
+angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
   restrict: 'E'
   scope: {
     productSelected: '=ngModel'
@@ -14,9 +14,6 @@ angular.module('Muzza.product').directive 'productOptions', () ->
     $scope.productTotalPrice = $scope.productSelected.price.base
 
 
-    ##############################################################
-    ## functions
-    ##############################################################
     $scope.isSelectionValid = () ->
       isValid = true
       _.each $scope.productSelected.options, (option) ->
@@ -61,7 +58,6 @@ angular.module('Muzza.product').directive 'productOptions', () ->
       console.log "isSelectionValid: " + isValid
       isValid
 
-
     $scope.selectOptionAndRecalculatePrice = (option, item) ->
       if option.selection is undefined
         option.selection = []
@@ -86,3 +82,9 @@ angular.module('Muzza.product').directive 'productOptions', () ->
             elem.description is item.description
           
           $scope.productTotalPrice -= item.price
+
+    $scope.addProductSelectionToCart = (product) ->
+      if !$scope.isSelectionValid()
+        return
+
+      $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product

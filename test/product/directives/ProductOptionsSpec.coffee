@@ -511,3 +511,48 @@ describe 'Product Options Directive', ->
 
           expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeTruthy()
           expect(isolatedScope.productSelected.options[1].selectionValid.error).toBeUndefined()
+
+
+  describe "addProductSelectionToCart" , ->
+
+    broadcastSpy = isolatedScope = undefined
+
+    beforeEach ->
+      inject ($compile, $rootScope) ->
+        $scope = $rootScope
+        $scope.product =
+          id:1
+          price:10
+          description: "Aquarius 500 cc"
+          options: [
+            description: "Sabor"
+            config:
+              min: 1
+              max:1
+            items: [
+              description: "Naranja"
+            ,
+              description: "Pomelo"
+            ,
+              description: "Manzana"
+            ]
+          ]
+
+        broadcastSpy = spyOn($rootScope, '$broadcast')
+
+        element = angular.element('<product-options data-ng-model="product"></product-options>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+
+    it "should broadcast event if selection is valid", ->
+      isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+      isolatedScope.addProductSelectionToCart isolatedScope.productSelected
+
+      expect(broadcastSpy).toHaveBeenCalledWith 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', isolatedScope.productSelected
+
+    it "should NOT broadcast event if selection not valid", ->
+      isolatedScope.addProductSelectionToCart isolatedScope.productSelected
+
+      expect(broadcastSpy).not.toHaveBeenCalled()

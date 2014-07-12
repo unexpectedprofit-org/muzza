@@ -1,7 +1,6 @@
 angular.module("Muzza.controllers", ['Muzza.services'])
 
-angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, $rootScope, ShoppingCartService, $state, $ionicModal) ->
-
+angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, Product, $rootScope, ShoppingCartService, $state, $ionicModal) ->
 
   $scope.chooseProduct = (product) ->
 
@@ -9,13 +8,14 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
       scope: $scope,
       animation: 'slide-in-up'
 
-    options.then (view) ->
-
-      $scope.product = angular.copy product
-
+    options.then (view)->
       $scope.productOptions = view
-
+      $scope.product = new Product product
       $scope.productOptions.show()
+
+      $rootScope.$on 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', (event, productSelected) ->
+        ShoppingCartService.add productSelected
+        $scope.productOptions.hide()
 
 
   $scope.viewCart = () ->
