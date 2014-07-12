@@ -1,10 +1,15 @@
 describe 'Product Options Directive', ->
 
   beforeEach ->
-
     module 'Muzza.product'
     module 'Muzza.templates'
     module 'Muzza.directives'
+
+  Product = undefined
+
+  beforeEach ->
+    inject ($injector) ->
+      Product = $injector.get 'Product'
 
 
   describe "selectOptionAndRecalculatePrice functionality", ->
@@ -18,7 +23,7 @@ describe 'Product Options Directive', ->
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               description: "Aquarius 500 cc"
               price:
@@ -48,22 +53,22 @@ describe 'Product Options Directive', ->
         it "should show same price if no additional price", ->
 
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          expect(isolatedScope.productTotalPrice).toBe 2000
+          expect(isolatedScope.productSelected.totalPrice).toBe 2000
 
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          expect(isolatedScope.productTotalPrice).toBe 2000
+          expect(isolatedScope.productSelected.totalPrice).toBe 2000
 
         it "should update product price if item selection has additional price", ->
 
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          expect(isolatedScope.productTotalPrice).toBe 2099
+          expect(isolatedScope.productSelected.totalPrice).toBe 2099
 
       describe "and multiple selection", ->
 
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               description: "Ensalada de la casa"
               price:
@@ -94,21 +99,21 @@ describe 'Product Options Directive', ->
 
         it "should show same price if no additional price - only one selection", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          expect(isolatedScope.productTotalPrice).toBe 8500
+          expect(isolatedScope.productSelected.totalPrice).toBe 8500
 
         it "should show same price if no additional price - more than one selection", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
-          expect(isolatedScope.productTotalPrice).toBe 8500
+          expect(isolatedScope.productSelected.totalPrice).toBe 8500
 
         it "should update product price if item selection has additional price - only one selection", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          expect(isolatedScope.productTotalPrice).toBe 8555
+          expect(isolatedScope.productSelected.totalPrice).toBe 8555
 
         it "should update product price if item selection has additional price - more than one selection", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          expect(isolatedScope.productTotalPrice).toBe 8585
+          expect(isolatedScope.productSelected.totalPrice).toBe 8585
 
 
     describe "product with multiple options", ->
@@ -118,7 +123,7 @@ describe 'Product Options Directive', ->
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               description:"SANDWICH CALIENTE DE LOMITO CON PAPAS FRITAS"
               price:
@@ -163,19 +168,19 @@ describe 'Product Options Directive', ->
         it "should show same price if no additional price", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
-          expect(isolatedScope.productTotalPrice).toBe 3000
+          expect(isolatedScope.productSelected.totalPrice).toBe 3000
 
         it "should update product price if item selection has additional price", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
-          expect(isolatedScope.productTotalPrice).toBe 3055
+          expect(isolatedScope.productSelected.totalPrice).toBe 3055
 
       describe "and options are single and multiple selection", ->
 
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               description:"SANDWICH CALIENTE DE LOMITO CON PAPAS FRITAS"
               price:
@@ -224,13 +229,13 @@ describe 'Product Options Directive', ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[3]
-          expect(isolatedScope.productTotalPrice).toBe 6000
+          expect(isolatedScope.productSelected.totalPrice).toBe 6000
 
         it "should update product price if item selection has additional price", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[0]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
-          expect(isolatedScope.productTotalPrice).toBe 6080
+          expect(isolatedScope.productSelected.totalPrice).toBe 6080
 
 
   describe "isSelectionValid functionality", ->
@@ -244,7 +249,7 @@ describe 'Product Options Directive', ->
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               price:10
               description: "Aquarius 500 cc"
@@ -373,7 +378,7 @@ describe 'Product Options Directive', ->
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               price:10
               description: "Sandwich de Milanesa"
@@ -443,7 +448,7 @@ describe 'Product Options Directive', ->
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               price:10
               description: "Sandwich de Milanesa"
@@ -520,7 +525,7 @@ describe 'Product Options Directive', ->
     beforeEach ->
       inject ($compile, $rootScope) ->
         $scope = $rootScope
-        $scope.product =
+        $scope.product = new Product
           id:1
           price:10
           description: "Aquarius 500 cc"

@@ -11,9 +11,6 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
 
   link: ($scope, ele, attrs, ctrl) ->
 
-    $scope.productTotalPrice = $scope.productSelected.price.base
-
-
     $scope.isSelectionValid = () ->
       isValid = true
       _.each $scope.productSelected.options, (option) ->
@@ -65,10 +62,10 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
       if option.config.min is 1 and option.config.max is 1
         if option.selection.length > 0
           itemRemoved = option.selection.pop()
-          $scope.productTotalPrice -= itemRemoved.price
+          $scope.productSelected.totalPrice -= itemRemoved.price
 
         option.selection.push item
-        $scope.productTotalPrice += item.price
+        $scope.productSelected.totalPrice += item.price
 
       else
         result = _.find option.selection, (elem) ->
@@ -76,12 +73,12 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
 
         if result is undefined
           option.selection.push item
-          $scope.productTotalPrice += item.price
+          $scope.productSelected.totalPrice += item.price
         else
           _.remove option.selection, (elem) ->
             elem.description is item.description
-          
-          $scope.productTotalPrice -= item.price
+
+          $scope.productSelected.totalPrice -= item.price
 
     $scope.addProductSelectionToCart = (product) ->
       if !$scope.isSelectionValid()

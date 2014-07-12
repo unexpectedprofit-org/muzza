@@ -3,7 +3,7 @@
                 <p>{{ productSelected.description }}</p>
                 <p>{{ productSelected.details }}</p>
                 <p>PRECIO BASE: {{ productSelected.price.base | centsToMoney | currency }}</p>
-                <p>PRECIO ACTUALIZADO: {{ productTotalPrice | centsToMoney | currency }} </p>
+                <p>PRECIO ACTUALIZADO: {{ productSelected.totalPrice | centsToMoney | currency }} </p>
             </div>
 
             <div class="item item-avatar">
