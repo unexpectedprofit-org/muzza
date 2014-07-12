@@ -3,7 +3,6 @@ describe "directives", ->
   beforeEach ->
     module 'ionic'
     module 'Muzza.directives'
-    module 'Muzza.pizzas'
     module 'Muzza.product'
     module 'Muzza.templates'
 

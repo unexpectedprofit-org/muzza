@@ -1,4 +1,3 @@
-angular.module("Muzza.pizzas", ['ui.router'])
 angular.module("Muzza.cart", [])
 angular.module("Muzza.order", [])
 angular.module("Muzza.promo", [])
@@ -14,7 +13,7 @@ angular.module("Muzza.stores",[])
 angular.module("Muzza.confirmation",[])
 angular.module("Muzza.product",[])
 
-angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas","Muzza.cart",
+angular.module("Muzza", [ "pasvaz.bindonce","ionic","Muzza.cart",
     "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants",
     "Muzza.order", "Muzza.promo", "Muzza.delivery", "Muzza.contact", "Muzza.review", "Muzza.qty", "Muzza.facebook"
     , "Muzza.google", "Muzza.twitter", "Muzza.config", "Muzza.stores", "Muzza.confirmation", "Muzza.product"])
