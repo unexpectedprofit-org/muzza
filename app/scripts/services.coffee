@@ -1,4 +1,4 @@
-angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.bebidas', 'Muzza.promo', 'Muzza.product'])
+angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.promo', 'Muzza.product'])
 
 angular.module("Muzza.services").factory "StoreService", (days) ->
 
