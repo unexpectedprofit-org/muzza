@@ -21,6 +21,21 @@ angular.module('Muzza.product').factory "Product", () ->
   Product::getDescription = () ->
     @description
 
+  Product::getDetails = () ->
+    detailsStr = ''
+
+    if @options isnt undefined
+      _.each @options, (option) ->
+        detailsStr += option.description + ': '
+
+        _.each option.selection, (selection) ->
+          detailsStr += selection.description + '/'
+
+        detailsStr += '||'
+
+    detailsStr
+
+
   Product::reset = () ->
     @totalPrice = 0
     @qty = 1

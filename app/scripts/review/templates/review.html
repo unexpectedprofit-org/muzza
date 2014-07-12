@@ -4,6 +4,9 @@
     <ion-item class="item-divider">Productos</ion-item>
     <ion-item data-ng-repeat="product in order.products track by $index">
         <span data-bo-bind="product.qty"></span>: <span data-bo-bind="product.getDescription()"></span>
+        <br/>
+        <span data-bo-bind="product.getDetails()"></span>
+
       <div data-ng-if="product.cat == 'PROMO'">
         <div bindonce data-ng-repeat="item in product.items track by $index">
           <span data-bo-bind="item.qty"></span> - <span data-bo-bind="item.description"></span>

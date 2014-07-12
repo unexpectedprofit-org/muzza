@@ -124,3 +124,64 @@ describe 'Product Factory', ->
       expected += param.options[1].selection[2].description + '|'
 
       expect(product.getHash()).toEqual expected
+
+
+  describe "getDetails functionality", ->
+
+    it "should generate hash - no selection", ->
+
+      param =
+        id: 8099
+        catId: 44
+        price:
+          base: 50
+
+      product = new Product param
+
+      expect(product.getDetails()).toEqual ''
+
+    it "should generate hash - single selection", ->
+
+      param =
+        id: 8099
+        catId: 44
+        price:
+          base: 50
+        options: [
+          description: "Sabor"
+          selection: [
+            description: "Naranja"
+          ]
+        ]
+
+      product = new Product param
+
+      expect(product.getDetails()).toEqual "Sabor: Naranja/||"
+
+    it "should generate hash - single selection + multiple selection", ->
+
+      param =
+        id: 777
+        catId: 33
+        qty: 2
+        price:
+          base: 50
+        options: [
+          description: "Pan"
+          selection: [
+            description: "Salvado"
+          ]
+        ,
+          description: "Adicionales"
+          selection: [
+            description: "Tomate"
+          ,
+            description: "Lechuga"
+          ,
+            description: "Queso"
+          ]
+        ]
+
+      product = new Product param
+
+      expect(product.getDetails()).toEqual "Pan: Salvado/||Adicionales: Tomate/Lechuga/Queso/||"
