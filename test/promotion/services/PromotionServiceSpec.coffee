@@ -7,7 +7,7 @@ describe 'PromotionService', ->
 
     module ($provide) ->
       $provide.value 'ProductService',
-        getProductsFromCategory: () -> null
+        getMenu: () -> null
       null
 
   Empanada = ProductService = PromotionService = productsSpy = undefined
@@ -35,7 +35,7 @@ describe 'PromotionService', ->
         products: [ empanada4, empanada5 ]
       ]
 
-      productsSpy = spyOn(ProductService, 'getProductsFromCategory').and.callFake( () -> response )
+      productsSpy = spyOn(ProductService, 'getMenu').and.callFake( () -> response )
 
   describe "createPromotionComponentsList", ->
 
@@ -45,7 +45,7 @@ describe 'PromotionService', ->
       ]
       PromotionService.createPromotionComponentsList rules
 
-      expect(productsSpy).toHaveBeenCalledWith rules[0].properties.cat
+      expect(productsSpy).toHaveBeenCalledWith undefined, rules[0].properties.cat
 
     it "should retrieve only one empanadas subcat", ->
       rules = [

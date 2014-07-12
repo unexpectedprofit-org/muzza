@@ -8,7 +8,7 @@ describe 'PromoTypeQuantity', ->
 
     module ($provide) ->
       $provide.value 'ProductService',
-        getProductsFromCategory: () -> []
+        getMenu: () -> []
       return
 
 

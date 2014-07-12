@@ -206,10 +206,10 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
 
 angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, Bebida, PromotionTypeFactory) ->
 
-  _menu = undefined
+  # define variable here to hold menu info.
+  # So that next time the menu is looked up, we don't need to go to the backend to get it again.
 
   getProductsByCompanyId = (id, catId)->
-
     constructMenu catId
 
 
@@ -225,54 +225,7 @@ angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empan
 
 
 
-  retrieveProdFromCategory = (categoryId) ->
-
-    switch categoryId
-      when "EMPANADA"
-        _cat = "empanada"
-      when "PIZZA"
-        _cat = "pizza"
-      when "BEBIDA"
-        _cat = "bebida"
-      else
-        _cat = undefined
-
-    if angular.isUndefined( _menu ) or angular.isUndefined( _menu[_cat] )
-      getProductsByCompanyId()
-
-    angular.copy _menu[_cat]
-
-
-
-
-
-  constructPizzas = (pizzaCategory)->
-    pizzaCategory.products = _.map pizzaCategory.products, (pizza)->
-      pizza.subcat = pizzaCategory.id
-      new Pizza pizza
-    pizzaCategory
-
-  constructEmpanadas = (empanadaCategory)->
-    empanadaCategory.products = _.map empanadaCategory.products, (empanada)->
-      empanada.subcat = empanadaCategory.id
-      empanada.type = empanadaCategory.description
-      new Empanada empanada
-    empanadaCategory
-
-  constructPromotions = (promotions) ->
-    allPromos = _.map promotions, (promotion)->
-      PromotionTypeFactory.createPromotion promotion
-    allPromos
-
-  constructBebidas = (bebidaCategory)->
-    bebidaCategory.products = _.map bebidaCategory.products, (bebida)->
-      bebida.subcat = bebidaCategory.id
-      new Bebida bebida
-    bebidaCategory
-
-
   getMenu: getProductsByCompanyId
-  getProductsFromCategory: retrieveProdFromCategory
 
 
 
