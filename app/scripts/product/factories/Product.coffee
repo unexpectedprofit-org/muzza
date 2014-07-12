@@ -8,11 +8,14 @@ angular.module('Muzza.product').factory "Product", () ->
       @description = param.description or ''
       @totalPrice = param?.price?.base or undefined
 
-#      @isEditable =
-#        options:false
-#        qty:true
-
       angular.extend(@, param)
+
+
+  Product::isEditable = () ->
+    {
+      qty:true
+      options: @options?[0].selection?.length > 0
+    }
 
   Product::updateQty = (value) ->
     @qty = @qty + value

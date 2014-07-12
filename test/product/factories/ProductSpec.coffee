@@ -50,6 +50,46 @@ describe 'Product Factory', ->
       expect(product.updateQty).toBeDefined()
       expect(product.getHash).toBeDefined()
       expect(product.reset).toBeDefined()
+      expect(product.isEditable()).toBeDefined()
+
+
+  describe "isEditable functionality", ->
+
+    it 'should always have qty editable as true', ->
+      param =
+        id: 8099
+        description: 'Product name here'
+        catId: 44
+        qty: 2
+        price:
+          base: 50
+
+      product = new Product param
+      expect(product.isEditable().qty).toBeTruthy()
+
+    it 'should have options NOT editable if no options', ->
+      param =
+        id: 8099
+        catId: 44
+        other:"thing"
+
+      product = new Product param
+      expect(product.isEditable().options).toBeFalsy()
+
+    it 'should construct a Product model from param - case 3', ->
+      param =
+        id: 8099
+        catId: 44
+        other:"thing"
+
+      product = new Product param
+
+      product.options = []
+      product.options.push {selection:[{'naranja'}]}
+
+      expect(product.isEditable().options).toBeTruthy()
+
+
 
 
   describe "getHash functionality", ->

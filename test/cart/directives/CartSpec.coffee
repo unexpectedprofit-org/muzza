@@ -138,8 +138,8 @@ describe "Cart", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [product1,product2]
       $scope.$digest()
 
-      expect(element.html()).toContain "item.isEditable.qty"
-      expect(element.html()).toContain "item.isEditable.options"
+      expect(element.html()).toContain "item.isEditable().qty"
+      expect(element.html()).toContain "item.isEditable().options"
 
 
   describe 'when shopping cart is empty', ->
