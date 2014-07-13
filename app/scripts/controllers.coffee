@@ -2,6 +2,7 @@ angular.module("Muzza.controllers", ['Muzza.services'])
 
 angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, Product, $rootScope, ShoppingCartService, $state, $ionicModal) ->
 
+# TODO: this should go into the product directive. not productOptions...product directive
   $scope.chooseProduct = (product) ->
 
     options = $ionicModal.fromTemplateUrl '../app/scripts/product/templates/product-view.html',
