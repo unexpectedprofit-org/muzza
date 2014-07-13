@@ -90,8 +90,6 @@ describe 'Product Factory', ->
       expect(product.isEditable().options).toBeTruthy()
 
 
-
-
   describe "getHash functionality", ->
 
     it "should generate hash - no selection", ->
@@ -225,3 +223,75 @@ describe 'Product Factory', ->
       product = new Product param
 
       expect(product.getDetails()).toEqual "Pan: Salvado/||Adicionales: Tomate/Lechuga/Queso/||"
+
+
+  describe "calculateTotalPrice functionality", ->
+
+    it "should be zero if no base price", ->
+      product = new Product {id:2}
+
+      expect(product.calculateTotalPrice()).toBe 0
+
+    it "should get base price if no options selected", ->
+      product = new Product {id:2, price:{base:50}}
+
+      expect(product.calculateTotalPrice()).toBe 50
+
+    it "should get calculated price when options selected - only one single selection", ->
+
+      param =
+        id:2
+        price:
+          base: 100
+        options: [
+          selection:[
+            price:20
+          ]
+        ]
+      product = new Product param
+
+      expect(product.calculateTotalPrice()).toBe 120
+
+    it "should get calculated price when options selected - only one multiple selection", ->
+
+      param =
+        id:2
+        price:
+          base: 100
+        options: [
+          selection:[
+            price:20
+          ,
+            price:0
+          ,
+            price:30
+          ]
+        ]
+      product = new Product param
+
+      expect(product.calculateTotalPrice()).toBe 150
+
+    it "should get calculated price when options selected - single selection + multiple selection", ->
+
+      param =
+        id:2
+        price:
+          base: 100
+        options: [
+          selection:[
+            price:20
+          ]
+        ,
+          selection: [
+            price:10
+          ,
+            price:0
+          ,
+            price:20
+          ,
+            price:5
+          ]
+        ]
+      product = new Product param
+
+      expect(product.calculateTotalPrice()).toBe 155

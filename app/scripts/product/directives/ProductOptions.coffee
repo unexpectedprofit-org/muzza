@@ -65,23 +65,9 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
           _.remove option.selection, (elem) ->
             elem.description is item.description
 
-      calculateTotalPrice()
       null
 
 
 
     $scope.addProductSelectionToCart = (product) ->
       $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product if $scope.isSelectionValid()
-
-
-    calculateTotalPrice = () ->
-
-      totalPrice = $scope.productSelected.price.base
-
-      _.forEach $scope.productSelected.options, (option) ->
-
-        _.forEach option.selection, (selection) ->
-
-          totalPrice += selection.price
-
-      $scope.productSelected.totalPrice = totalPrice

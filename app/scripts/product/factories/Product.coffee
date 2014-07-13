@@ -55,5 +55,16 @@ angular.module('Muzza.product').factory "Product", () ->
 
     commonHash
 
+  Product::calculateTotalPrice = () ->
+    totalPrice = @price?.base or 0
+
+    _.forEach @options, (option) ->
+
+      _.forEach option.selection, (selection) ->
+
+        totalPrice += selection.price
+
+    totalPrice
+
 
   return Product
