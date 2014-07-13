@@ -6,7 +6,6 @@ angular.module('Muzza.product').factory "Product", () ->
       @categoryId = param.catId
       @qty = param.qty or 1
       @description = param.description or ''
-      @totalPrice = param?.price?.base or undefined
 
       angular.extend(@, param)
 

@@ -1,4 +1,4 @@
-describe 'Product Factory', ->
+describe 'Product', ->
 
   Product = undefined
 
@@ -27,7 +27,6 @@ describe 'Product Factory', ->
       expect(product.categoryId).toBe param.catId
       expect(product.qty).toBe param.qty
       expect(product.price.base).toBe param.price.base
-      expect(product.totalPrice).toBe param.price.base
 
     it 'should construct a Product model from param - case 2', ->
       param =
@@ -41,7 +40,6 @@ describe 'Product Factory', ->
       expect(product.categoryId).toBe param.catId
       expect(product.qty).toBe 1
       expect(product.price).toBe undefined
-      expect(product.totalPrice).toBe undefined
       expect(product.other).toBe param.other
 
     it 'should have functions defined', ->
