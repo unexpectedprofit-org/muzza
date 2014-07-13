@@ -42,21 +42,18 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
       console.log "isSelectionValid: " + isValid
       isValid
 
-    $scope.selectOptionAndRecalculatePrice = (option, item) ->
+
+
+    $scope.selectOption = (option, item) ->
 #      TODO: is this is the initial state it should go all the way up when the directive is instantiated
       if option.selection is undefined
         option.selection = []
 
-#      TODO: price calculation should not be done here...just remove and add selections.
-#      TODO: we need one method $scope.calculataTotalPrice that iterates over all selections and provides final total.
-
       if option.config.min is 1 and option.config.max is 1
         if option.selection.length > 0
-          itemRemoved = option.selection.pop()
-          $scope.productSelected.totalPrice -= itemRemoved.price
+          option.selection.pop()
 
         option.selection.push item
-        $scope.productSelected.totalPrice += item.price
 
       else
         result = _.find option.selection, (elem) ->
@@ -64,12 +61,27 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
 
         if result is undefined
           option.selection.push item
-          $scope.productSelected.totalPrice += item.price
         else
           _.remove option.selection, (elem) ->
             elem.description is item.description
 
-          $scope.productSelected.totalPrice -= item.price
+      calculateTotalPrice()
+      null
+
+
 
     $scope.addProductSelectionToCart = (product) ->
       $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product if $scope.isSelectionValid()
+
+
+    calculateTotalPrice = () ->
+
+      totalPrice = $scope.productSelected.price.base
+
+      _.forEach $scope.productSelected.options, (option) ->
+
+        _.forEach option.selection, (selection) ->
+
+          totalPrice += selection.price
+
+      $scope.productSelected.totalPrice = totalPrice

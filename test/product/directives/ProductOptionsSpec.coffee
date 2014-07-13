@@ -12,7 +12,7 @@ describe 'Product Options Directive', ->
       Product = $injector.get 'Product'
 
 
-  describe "selectOptionAndRecalculatePrice functionality", ->
+  describe "selectOption functionality", ->
 
     isolatedScope = undefined
 
@@ -50,18 +50,14 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should show same price if no additional price", ->
+        it "should add product selection", ->
 
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          expect(isolatedScope.productSelected.totalPrice).toBe 2000
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Naranja"}
 
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          expect(isolatedScope.productSelected.totalPrice).toBe 2000
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Manzana"}
 
-        it "should update product price if item selection has additional price", ->
-
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          expect(isolatedScope.productSelected.totalPrice).toBe 2099
 
       describe "and multiple selection", ->
 
@@ -97,23 +93,15 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should show same price if no additional price - only one selection", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          expect(isolatedScope.productSelected.totalPrice).toBe 8500
+        it "should add product selection", ->
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
 
-        it "should show same price if no additional price - more than one selection", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
-          expect(isolatedScope.productSelected.totalPrice).toBe 8500
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Tomate"}
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Hongos"}
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Zanahoria"}
 
-        it "should update product price if item selection has additional price - only one selection", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          expect(isolatedScope.productSelected.totalPrice).toBe 8555
-
-        it "should update product price if item selection has additional price - more than one selection", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          expect(isolatedScope.productSelected.totalPrice).toBe 8585
 
 
     describe "product with multiple options", ->
@@ -165,15 +153,15 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should show same price if no additional price", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
-          expect(isolatedScope.productSelected.totalPrice).toBe 3000
 
-        it "should update product price if item selection has additional price", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
-          expect(isolatedScope.productSelected.totalPrice).toBe 3055
+        it "should add product selection", ->
+
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Baguette"}
+
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
+          expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Rejilla"}
+
 
       describe "and options are single and multiple selection", ->
 
@@ -225,17 +213,15 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should show same price if no additional price", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[3]
-          expect(isolatedScope.productSelected.totalPrice).toBe 6000
+        it "should add product selection", ->
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Baguette"}
 
-        it "should update product price if item selection has additional price", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
-          expect(isolatedScope.productSelected.totalPrice).toBe 6080
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[3]
+          expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Jamon"}
+          expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Lechuga"}
+
 
 
   describe "isSelectionValid functionality", ->
@@ -278,7 +264,7 @@ describe 'Product Options Directive', ->
 
 
         it "should validate if selection done", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
@@ -321,41 +307,41 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should NOT validate if number of items less than min", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
           expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MIN"
 
         it "should NOT validate if number of items more than max - 5 items", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[4]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[4]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
           expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MAX"
 
         it "should validate if number of items between min and max - 2 items", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
         it "should validate if number of items between min and max - 3 items", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
         it "should validate if number of items between min and max - 4 items", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
@@ -408,7 +394,7 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should NOT validate if some selection done", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
@@ -416,8 +402,8 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should validate if all selection done", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
 
@@ -470,18 +456,18 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should NOT validate if not all options validate - second option", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[0]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
+          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
           expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_MAX"
 
         it "should validate if selection done on first option only", ->
-          isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
 
@@ -523,7 +509,7 @@ describe 'Product Options Directive', ->
 
 
     it "should broadcast event if selection is valid", ->
-      isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+      isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
       isolatedScope.addProductSelectionToCart isolatedScope.productSelected
 
       expect(broadcastSpy).toHaveBeenCalledWith 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', isolatedScope.productSelected
