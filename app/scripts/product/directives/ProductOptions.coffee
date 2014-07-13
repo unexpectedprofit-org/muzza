@@ -2,7 +2,6 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
   restrict: 'E'
   scope: {
     productSelected: '=ngModel'
-
   }
   require: 'ngModel'
   templateUrl: '../app/scripts/product/templates/product-options.html'
@@ -16,18 +15,13 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
       isValid = true
       _.each $scope.productSelected.options, (option) ->
 
-#        TODO: status is not needed. option.selectionError = undefined
-        option.selectionValid =
-          status: true
+        option.selectionError = undefined
 
         if option.config.min is 1 and option.config.max is 1
 
           if option.selection is undefined or option.selection.length is 0
             isValid = false
-#            TODO: option.selectionError =  "OPTION_ERROR_NO_SELECTION"
-            option.selectionValid =
-              status: false
-              error: "OPTION_ERROR_NO_SELECTION"
+            option.selectionError = "OPTION_ERROR_NO_SELECTION"
 
 
         else
@@ -35,28 +29,15 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
           if option.selection is undefined
             if option.config.min > 0
               isValid = false
-#            TODO: option.selectionError =  "OPTION_ERROR_NO_SELECTION"
-              option.selectionValid =
-                status: false
-                error: "OPTION_ERROR_NO_SELECTION"
+              option.selectionError  = "OPTION_ERROR_NO_SELECTION"
 
           else if option.selection.length > option.config.max
             isValid = false
-#            TODO: option.selectionError =  "OPTION_ERROR_MAX"
-            option.selectionValid =
-              status: false
-              error: "OPTION_ERROR_MAX"
-              params:
-                max: option.config.max
+            option.selectionError = "OPTION_ERROR_MAX"
 
           else if option.selection.length < option.config.min
             isValid = false
-#            TODO: option.selectionError =  "OPTION_ERROR_MIN" The view already knows the min and max
-            option.selectionValid =
-              status: false
-              error: "OPTION_ERROR_MIN"
-              params:
-                min: option.config.min
+            option.selectionError  = "OPTION_ERROR_MIN"
 
       console.log "isSelectionValid: " + isValid
       isValid
@@ -91,9 +72,4 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
           $scope.productSelected.totalPrice -= item.price
 
     $scope.addProductSelectionToCart = (product) ->
-
-#      TODO: Always use positive cases. if isSelectionValid() then $rootScope.$broadcast '', product
-      if !$scope.isSelectionValid()
-        return
-
-      $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product
+      $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product if $scope.isSelectionValid()

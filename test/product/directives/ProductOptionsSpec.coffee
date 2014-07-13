@@ -274,16 +274,14 @@ describe 'Product Options Directive', ->
 
         it "should NOT validate if no selection done", ->
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toEqual "OPTION_ERROR_NO_SELECTION"
+          expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
 
         it "should validate if selection done", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
 
       describe "and multiple selection", ->
@@ -320,16 +318,13 @@ describe 'Product Options Directive', ->
 
         it "should NOT validate if no selection done", ->
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toEqual "OPTION_ERROR_NO_SELECTION"
+          expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should NOT validate if number of items less than min", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toEqual "OPTION_ERROR_MIN"
-          expect(isolatedScope.productSelected.options[0].selectionValid.params.min).toEqual 2
+          expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MIN"
 
         it "should NOT validate if number of items more than max - 5 items", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
@@ -339,17 +334,14 @@ describe 'Product Options Directive', ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[4]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toEqual "OPTION_ERROR_MAX"
-          expect(isolatedScope.productSelected.options[0].selectionValid.params.max).toEqual 4
+          expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MAX"
 
         it "should validate if number of items between min and max - 2 items", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[1]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
         it "should validate if number of items between min and max - 3 items", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
@@ -357,8 +349,7 @@ describe 'Product Options Directive', ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
         it "should validate if number of items between min and max - 4 items", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
@@ -367,8 +358,7 @@ describe 'Product Options Directive', ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[3]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
 
     describe "product with multiple options", ->
@@ -414,22 +404,16 @@ describe 'Product Options Directive', ->
         it "should NOT validate if no selection done", ->
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toEqual "OPTION_ERROR_NO_SELECTION"
-
-          expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[1].selectionValid.error).toEqual "OPTION_ERROR_NO_SELECTION"
+          expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
+          expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should NOT validate if some selection done", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
-
-          expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[1].selectionValid.error).toEqual "OPTION_ERROR_NO_SELECTION"
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
+          expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should validate if all selection done", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
@@ -437,11 +421,8 @@ describe 'Product Options Directive', ->
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
 
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
-
-          expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[1].selectionValid.error).toBeUndefined()
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
+          expect(isolatedScope.productSelected.options[1].selectionError).toBeUndefined()
 
       describe "and multiple selection", ->
 
@@ -486,10 +467,7 @@ describe 'Product Options Directive', ->
         it "should NOT validate if not all options validate - first option", ->
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toEqual "OPTION_ERROR_NO_SELECTION"
-
-          expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeTruthy()
+          expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
         it "should NOT validate if not all options validate - second option", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
@@ -500,22 +478,15 @@ describe 'Product Options Directive', ->
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-
-          expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeFalsy()
-          expect(isolatedScope.productSelected.options[1].selectionValid.error).toEqual "OPTION_ERROR_MAX"
-          expect(isolatedScope.productSelected.options[1].selectionValid.params.max).toEqual 2
+          expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_MAX"
 
         it "should validate if selection done on first option only", ->
           isolatedScope.selectOptionAndRecalculatePrice isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
 
-          expect(isolatedScope.productSelected.options[0].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[0].selectionValid.error).toBeUndefined()
-
-          expect(isolatedScope.productSelected.options[1].selectionValid.status).toBeTruthy()
-          expect(isolatedScope.productSelected.options[1].selectionValid.error).toBeUndefined()
+          expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
+          expect(isolatedScope.productSelected.options[1].selectionError).toBeUndefined()
 
 
   describe "addProductSelectionToCart" , ->
