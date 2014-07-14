@@ -50,13 +50,21 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should add product selection", ->
+        describe "when add product selection and selected options is empty", ->
 
-          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Naranja"}
+          it "should add selected itm", ->
 
-          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
-          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Manzana"}
+            isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+            expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Naranja"}
+
+        describe "when add product selection and selected options has a previous selected item", ->
+
+          it "should replace the item for the selected one", ->
+
+            isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+            isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[2]
+            expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Manzana"}
+
 
 
       describe "and multiple selection", ->
@@ -154,13 +162,24 @@ describe 'Product Options Directive', ->
             isolatedScope = element.isolateScope()
 
 
-        it "should add product selection", ->
+        describe "and selection is so far empty", ->
 
-          isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
-          expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Baguette"}
+          it "should add product selection", ->
 
-          isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
-          expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Rejilla"}
+            isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+            expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Baguette"}
+
+            isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
+            expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Rejilla"}
+
+        describe "and selection is not empty", ->
+
+          it "should add product selection", ->
+
+            isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
+            isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[2]
+            isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
+            expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Pay"}
 
 
       describe "and options are single and multiple selection", ->
@@ -224,11 +243,11 @@ describe 'Product Options Directive', ->
 
 
 
-  describe "isSelectionValid functionality", ->
+  describe "isSelectionValid", ->
 
     isolatedScope = undefined
 
-    describe "product with one option", ->
+    describe "when a product with one option", ->
 
       describe "and single selection", ->
 
@@ -347,9 +366,9 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
 
-    describe "product with multiple options", ->
+    describe "when a product with multiple options", ->
 
-      describe "and all single selection", ->
+      describe "and all its options require a single selection", ->
 
         beforeEach ->
           inject ($compile, $rootScope) ->
@@ -387,13 +406,13 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should NOT validate if no selection done", ->
+        it "should fail validation if no selection is done", ->
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
 
           expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
           expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
-        it "should NOT validate if some selection done", ->
+        it "should fail validation if some selection is done but not all", ->
           isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
@@ -401,7 +420,7 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
           expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
-        it "should validate if all selection done", ->
+        it "should succeed validation if all selection done", ->
           isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
           isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[1]
 
@@ -410,7 +429,7 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
           expect(isolatedScope.productSelected.options[1].selectionError).toBeUndefined()
 
-      describe "and multiple selection", ->
+      describe "and all its options require a multiple selection", ->
 
         beforeEach ->
           inject ($compile, $rootScope) ->
@@ -450,12 +469,11 @@ describe 'Product Options Directive', ->
             $scope.$digest()
             isolatedScope = element.isolateScope()
 
-        it "should NOT validate if not all options validate - first option", ->
+        it "should fail validation if first option does not validate succesfully", ->
           expect(isolatedScope.isSelectionValid()).toBeFalsy()
-
           expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_NO_SELECTION"
 
-        it "should NOT validate if not all options validate - second option", ->
+        it "should fail validation if second option does not validate succesfully", ->
           isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[0]
@@ -466,14 +484,13 @@ describe 'Product Options Directive', ->
 
           expect(isolatedScope.productSelected.options[1].selectionError).toEqual "OPTION_ERROR_MAX"
 
-        it "should validate if selection done on first option only", ->
+        it "should succeed validation if first option is selected and second option is not (min=0)", ->
           isolatedScope.selectOption isolatedScope.productSelected.options[0], isolatedScope.productSelected.options[0].items[0]
 
           expect(isolatedScope.isSelectionValid()).toBeTruthy()
 
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
           expect(isolatedScope.productSelected.options[1].selectionError).toBeUndefined()
-
 
   describe "addProductSelectionToCart" , ->
 

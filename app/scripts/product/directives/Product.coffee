@@ -42,27 +42,25 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
 
 
     $scope.setCurrentOptionsSelectedForDisplay = (product) ->
-      _.forEach product.options, (option) ->
+      _.each product.options, (option) ->
 
-        if option.config.min is 1 and option.config.max is 1
-          optionSelected = option.selection[0].description
+        if (option.config.min is 1 and option.config.max is 1)
 
-          _.forEach option.items, (item) ->
-            item.isSelected = item.description is optionSelected
-            console.log "setCurrentOptionsSelectedForDisplay " + JSON.stringify item
+          selectItemIfMatched = (item) ->
+            item.isSelected = item.description is option.selection[0].description
+
+          option.items.map( selectItemIfMatched )
 
         else
 
-          _.forEach option.items, (item) ->
+          _.each option.items, (item) ->
+
             optionSelected = item.description
-
             itemFound = _.find option.selection, (selectionElement) ->
+              console.log 'selection: ' + selectionElement.description
+
               selectionElement.description is optionSelected
-
             item.isSelected = itemFound isnt undefined
-            console.log "setCurrentOptionsSelectedForDisplay - itemFound?: " + itemFound
-
-      null
-
+            return
 
     if $stateParams.productId then $scope.chooseProduct null, $stateParams.productId
