@@ -28,7 +28,8 @@
                 <div data-ng-if="option.config.min == 1 && option.config.max == 1">
 
                   <label class="item item-radio" data-ng-repeat="item in option.items" data-ng-click="selectOption(option, item)">
-                    <input type="radio" name="groupOptions_{{$parent.$index}}" />
+                    <input type="radio" name="groupOptions_{{$parent.$index}}"
+                           data-ng-checked="item.isSelected" />
                     <div class="item-content">
                       {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency }} )</span>
                     </div>
@@ -42,8 +43,10 @@
                 <div data-ng-if="!(option.config.min == 1 && option.config.max == 1)">
 
                   <li class="item item-checkbox" data-ng-repeat="item in option.items">
-                    <label class="checkbox" data-ng-click="selectOption(option, item)">
-                      <input type="checkbox" name="prod_option"/>
+                    <label class="checkbox"
+                           data-ng-click="selectOption(option, item)">
+                      <input type="checkbox" name="prod_option"
+                              data-ng-checked="item.isSelected"/>
                     </label>
                     {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
                   </li>

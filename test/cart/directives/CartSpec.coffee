@@ -127,7 +127,7 @@ describe "Cart", ->
       $scope.$digest()
       isolatedScope = element.isolateScope()
       isolatedScope.showEdit = true
-      expect(element.find('ion-item').html()).toContain "$parent.edit(item)"
+      expect(element.find('ion-item').html()).toContain "$parent.edit(item.cartItemKey)"
 
     it "should list items with remove function bound", ->
       spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]

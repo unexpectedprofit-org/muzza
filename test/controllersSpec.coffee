@@ -64,6 +64,124 @@ describe "controllers", ->
 
       expect(scope.cartTotalPrice).toBe 1200
 
+
+    describe "setCurrentOptionsSelectedForDisplay functionality", ->
+
+      beforeEach ->
+        createController {}
+
+      it "should set values for only one single selection", ->
+
+        product =
+          options: [
+            config:
+              min:1
+              max:1
+            items:[
+              description:"Coca"
+            ,
+              description:"Sprite"
+            ,
+              description:"Fanta"
+            ]
+            selection:[
+              description:"Sprite"
+            ]
+          ]
+
+        scope.setCurrentOptionsSelectedForDisplay product
+
+        expect(product.options[0].items[0].isSelected).toBeFalsy()
+        expect(product.options[0].items[1].isSelected).toBeTruthy()
+        expect(product.options[0].items[2].isSelected).toBeFalsy()
+
+      it "should set values for only one multiple selection", ->
+
+        product =
+          options: [
+            config:
+              min:1
+              max:3
+            items:[
+              description:"Tomate"
+            ,
+              description:"Lechuga"
+            ,
+              description:"Huevo duro"
+            ,
+              description:"Jamon"
+            ,
+              description:"Queso"
+            ]
+            selection:[
+              description:"Lechuga"
+            ,
+              description:"Jamon"
+            ]
+          ]
+
+        scope.setCurrentOptionsSelectedForDisplay product
+
+        expect(product.options[0].items[0].isSelected).toBeFalsy()
+        expect(product.options[0].items[1].isSelected).toBeTruthy()
+        expect(product.options[0].items[2].isSelected).toBeFalsy()
+        expect(product.options[0].items[3].isSelected).toBeTruthy()
+        expect(product.options[0].items[4].isSelected).toBeFalsy()
+
+      it "should set values for one single + one multiple selection", ->
+
+        product =
+          options: [
+            config:
+              min:1
+              max:1
+            items:[
+              description:"Coca"
+            ,
+              description:"Sprite"
+            ,
+              description:"Fanta"
+            ]
+            selection:[
+              description:"Fanta"
+            ]
+          ,
+            config:
+              min:1
+              max:3
+            items:[
+              description:"Tomate"
+            ,
+              description:"Lechuga"
+            ,
+              description:"Huevo duro"
+            ,
+              description:"Jamon"
+            ,
+              description:"Queso"
+            ]
+            selection:[
+              description:"Tomate"
+            ,
+              description:"Queso"
+            ]
+          ]
+
+        scope.setCurrentOptionsSelectedForDisplay product
+
+        expect(product.options[0].items[0].isSelected).toBeFalsy()
+        expect(product.options[0].items[1].isSelected).toBeFalsy()
+        expect(product.options[0].items[2].isSelected).toBeTruthy()
+
+        expect(product.options[1].items[0].isSelected).toBeTruthy()
+        expect(product.options[1].items[1].isSelected).toBeFalsy()
+        expect(product.options[1].items[2].isSelected).toBeFalsy()
+        expect(product.options[1].items[3].isSelected).toBeFalsy()
+        expect(product.options[1].items[4].isSelected).toBeTruthy()
+
+
+
+
     xdescribe "on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART", ->
 
       beforeEach ->

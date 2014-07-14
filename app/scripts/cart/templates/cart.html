@@ -32,7 +32,7 @@
       <div>Precio: {{item.calculateTotalPrice() * item.qty | centsToMoney | currency}}</div>
       <button
               class="button button-light"
-              data-ng-click="$parent.edit(item)"
+              data-ng-click="$parent.edit(item.cartItemKey)"
               data-ng-show="showEdit && item.isEditable().options">
         Editar Opciones
       </button>
