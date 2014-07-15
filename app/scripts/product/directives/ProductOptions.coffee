@@ -6,8 +6,6 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
   require: 'ngModel'
   templateUrl: '../app/scripts/product/templates/product-options.html'
 
-
-
   link: ($scope, ele, attrs, ctrl) ->
 
     $scope.isSelectionValid = () ->

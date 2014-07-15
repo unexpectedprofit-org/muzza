@@ -10,7 +10,8 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
 
 
     $scope.edit = (product_cartItemKey)->
-        $state.go 'app.products-edit', {productId: product_cartItemKey}
+
+      $state.go 'app.products-edit', {productId: product_cartItemKey}
 
     $scope.remove = (cartItemKey) ->
       ShoppingCartService.remove cartItemKey

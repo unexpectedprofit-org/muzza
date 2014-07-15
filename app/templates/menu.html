@@ -13,8 +13,16 @@
 
     <ion-content class="has-header">
 
-      <product data-ng-model="menu"></product>
+        <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
+            <strong data-bo-bind="cat.description"></strong>
+        </div>
 
+
+        <ion-list data-ng-repeat-end>
+
+            <product data-ng-model="product" data-ng-repeat="product in cat.products track by $index"></product>
+
+        </ion-list>
     </ion-content>
 
 </ion-view>
