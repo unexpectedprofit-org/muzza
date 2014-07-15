@@ -2,13 +2,18 @@ angular.module('Muzza.product').factory "Product", () ->
 
   class Product
     constructor: (param) ->
+      angular.copy param, @
       @id = param.id
       @categoryId = param.catId
       @qty = param.qty or 1
       @description = param.description or ''
 
-      angular.extend(@, param)
 
+  Product::clearSelections = ()->
+    _.each @options, (option) ->
+      option.selection = undefined
+      _.each option.items, (item)->
+        item.isSelected = undefined
 
   Product::isEditable = () ->
     {

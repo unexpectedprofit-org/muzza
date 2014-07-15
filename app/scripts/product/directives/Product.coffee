@@ -7,6 +7,8 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
   templateUrl: '../app/scripts/product/templates/product.html'
   link: ($scope, ele, attrs, ctrl) ->
 
+
+
     $scope.chooseProduct = (product) ->
 
       options = $ionicModal.fromTemplateUrl '../app/scripts/product/templates/product-view.html',
@@ -15,9 +17,10 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
 
       options.then (view)->
         $scope.productOptions = view
+        product.clearSelections()
         $scope.product = new Product product
         $scope.productOptions.show()
 
         $rootScope.$on 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', (event, productSelected) ->
           ShoppingCartService.add productSelected
-          $scope.productOptions.hide()
+          $scope.productOptions.remove()
