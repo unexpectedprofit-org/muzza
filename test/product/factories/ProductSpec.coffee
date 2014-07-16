@@ -194,6 +194,25 @@ describe 'Product', ->
 
       expect(product.getDetails()).toEqual "Sabor: Naranja/||"
 
+    it "should generate hash - single selection with quantity", ->
+
+      param =
+        id: 8099
+        catId: 44
+        price:
+          base: 50
+        options: [
+          description: "Sabor"
+          selection: [
+            description: "Naranja"
+            qty:2
+          ]
+        ]
+
+      product = new Product param
+
+      expect(product.getDetails()).toEqual "Sabor: 2 Naranja/||"
+
     it "should generate hash - single selection + multiple selection", ->
 
       param =
@@ -293,3 +312,18 @@ describe 'Product', ->
       product = new Product param
 
       expect(product.calculateTotalPrice()).toBe 155
+
+    it "should get calculated price when extra price and qty in item selection", ->
+      param =
+        id:2
+        price:
+          base: 100
+        options: [
+          selection:[
+            price:20
+            qty:2
+          ]
+        ]
+      product = new Product param
+
+      expect(product.calculateTotalPrice()).toBe 140

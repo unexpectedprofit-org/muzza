@@ -19,7 +19,6 @@ describe "EditProductCtrl", ->
   describe "setCurrentOptionsSelectedForDisplay", ->
 
     it "should set values for only one single selection", ->
-
       product =
         id:2
         options:[
@@ -114,3 +113,38 @@ describe "EditProductCtrl", ->
       expect(scope.product.options[1].items[2].isSelected).toBeFalsy()
       expect(scope.product.options[1].items[3].isSelected).toBeFalsy()
       expect(scope.product.options[1].items[4].isSelected).toBeTruthy()
+
+    it "should set values for multipleQty option type", ->
+      product =
+        id:2
+        options:[
+          config:
+            min:3
+            max:3
+            multipleQty:true
+          items:[
+            description:"Pollo"
+          ,
+            description:"Verdura"
+          ,
+            description:"Ricota"
+          ]
+          selection: [
+            description:'Verdura'
+            qty:2
+          ,
+            description:'Pollo'
+            qty:1
+          ]
+        ]
+
+      createController product
+
+      expect(scope.product.options[0].items[0].isSelected).toBeTruthy()
+      expect(scope.product.options[0].items[0].qty).toBe 1
+
+      expect(scope.product.options[0].items[1].isSelected).toBeTruthy()
+      expect(scope.product.options[0].items[1].qty).toBe 2
+
+      expect(scope.product.options[0].items[2].isSelected).toBeFalsy()
+      expect(scope.product.options[0].items[2].qty).toBe 0

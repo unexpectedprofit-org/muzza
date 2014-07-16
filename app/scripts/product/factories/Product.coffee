@@ -36,6 +36,10 @@ angular.module('Muzza.product').factory "Product", () ->
         detailsStr += option.description + ': '
 
         _.each option.selection, (selection) ->
+
+          if selection.qty isnt undefined
+            detailsStr += selection.qty + " "
+
           detailsStr += selection.description + '/'
 
         detailsStr += '||'
@@ -66,7 +70,10 @@ angular.module('Muzza.product').factory "Product", () ->
 
       _.forEach option.selection, (selection) ->
 
-        totalPrice += selection.price
+        selection.price = 0 unless selection.price isnt undefined
+        selection.qty = 1 unless selection.qty isnt undefined
+
+        totalPrice += (selection.price * selection.qty)
 
     totalPrice
 

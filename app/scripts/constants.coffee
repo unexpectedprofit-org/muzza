@@ -401,6 +401,96 @@ angular.module('Muzza.constants',[]).constant 'stores',
           ]
         ]
       ]
+    ,
+      id:8
+      description:"Promos"
+      products:[
+        id:1
+        description:"Aquarius 500 cc + 6 empanadas"
+        price:
+          base:900
+        options:[
+          description:"Aquarius 500 cc"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Naranja"
+          ,
+            description: "Pomelo"
+          ,
+            description: "Manzana"
+          ]
+        ,
+          description:"Empanadas"
+          config:
+            min: 6
+            max:6
+            multipleQty: true
+          items: [
+            description: "Pollo"
+          ,
+            description: "Humita"
+          ]
+        ]
+      ,
+        id:2
+        description:"Pizza grande de muzzarella + 2 Agua mineral"
+        price:
+          base:7500
+        options:[
+          description:"Pizza grande de muzza"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "La pizza"
+          ]
+        ,
+          description:"Agua mineral"
+          config:
+            min: 2
+            max:2
+            multipleQty:true
+          items: [
+            description: "Con gas"
+            price: 100
+          ,
+            description: "Sin gas"
+          ]
+        ]
+      ,
+        id:3
+        description:"Cerveza de litro + 2 pizzas medianas"
+        price:
+          base:8000
+        options:[
+          description:"Cerveza de litro"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Quilmes"
+          ,
+            description: "Stella"
+            price: 100
+          ,
+            description: "Heineken"
+          ]
+        ,
+          description:"Pizza mediana"
+          config:
+            min: 2
+            max:2
+            multipleQty: true
+          items: [
+            description: "Muzzarella"
+          ,
+            description: "Muzzarella con Jamon"
+          ]
+        ]
+
+      ]
     ]
 
 

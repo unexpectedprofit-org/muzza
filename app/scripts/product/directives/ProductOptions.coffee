@@ -15,12 +15,32 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
 
         option.selectionError = undefined
 
-        selectMultipleOptions = (option.config.max - option.config.min) > 0
+        selectMultipleOptions = !(option.config.min is 1 and option.config.max is 1) and !option.config.multipleQty
+        selectMultipleOptionsMultipleQty = !(option.config.min is 1 and option.config.max is 1) and option.config.multipleQty
         emptySelection = option.selection is undefined or option.selection.length is 0
 
-        if emptySelection and option.config.min > 0
+        if emptySelection and option.config.min > 0 and !selectMultipleOptionsMultipleQty
           isValid = false
           option.selectionError = "OPTION_ERROR_NO_SELECTION"
+
+
+        ################### intended for products that can have quantities per item #######################
+        ################### multipleQty: current example: PROMO
+        if selectMultipleOptionsMultipleQty
+          totalQty = 0
+          _.each option.items, (item) ->
+            totalQty += item.qty
+
+          if totalQty isnt option.config.min
+            isValid = false
+            option.selectionError  = "OPTION_ERROR_MIN_MAX"
+
+          else
+            option.selection = []
+            _.each option.items, (item) ->
+              option.selection.push item
+        ################### intended for products that can have quantities per item #######################
+
 
         if !emptySelection and selectMultipleOptions
 
@@ -41,7 +61,7 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
       if option.selection is undefined then option.selection = []
 
       selectOnlyOneOption = option.config.min is 1 and option.config.max is 1
-      selectMultipleOptions = (option.config.max - option.config.min) > 0
+      selectMultipleOptions = !selectOnlyOneOption and !option.config.multipleQty
 
       addOrReplace =  (item)->
         if option.selection.length > 0 then option.selection.pop()

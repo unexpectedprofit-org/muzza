@@ -492,6 +492,64 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
           expect(isolatedScope.productSelected.options[1].selectionError).toBeUndefined()
 
+
+    describe "when a product with multiple options and multiple quantities", ->
+
+      beforeEach ->
+        inject ($compile, $rootScope) ->
+          $scope = $rootScope
+          $scope.product = new Product
+            id:1
+            price:10
+            description: "Promo 1 docena de empanadas"
+            options: [
+              description: "Empanadas"
+              config:
+                min: 12
+                max:12
+                multipleQty:true
+              items: [
+                description: "Jamon y Queso"
+                qty:0
+              ,
+                description: "Carne picante"
+                qty:0
+              ,
+                description: "Pollo"
+                qty:0
+              ,
+                description: "Verdura"
+                qty:0
+              ]
+            ]
+
+          element = angular.element('<product-options data-ng-model="product"></product-options>')
+          $compile(element)($rootScope)
+          $scope.$digest()
+          isolatedScope = element.isolateScope()
+
+      it "should fail validation if no selection is done", ->
+        expect(isolatedScope.isSelectionValid()).toBeFalsy()
+
+        expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MIN_MAX"
+
+      it "should fail validation if some selection is done but not all", ->
+        isolatedScope.productSelected.options[0].items[0].qty = 4
+
+        expect(isolatedScope.isSelectionValid()).toBeFalsy()
+
+        expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MIN_MAX"
+
+      it "should succeed validation if all selection done", ->
+        isolatedScope.productSelected.options[0].items[0].qty = 5
+        isolatedScope.productSelected.options[0].items[1].qty = 1
+        isolatedScope.productSelected.options[0].items[2].qty = 6
+
+        expect(isolatedScope.isSelectionValid()).toBeTruthy()
+
+        expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
+
+
   describe "addProductSelectionToCart" , ->
 
     broadcastSpy = isolatedScope = undefined

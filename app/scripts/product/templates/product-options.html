@@ -24,6 +24,8 @@
                     <span data-ng-show="option.selectionError == 'OPTION_ERROR_NO_SELECTION'">Debe seleccionar una opcion</span>
                     <span data-ng-show="option.selectionError == 'OPTION_ERROR_MAX'">Debe seleccionar como maximo {{option.config.max}} opciones</span>
                     <span data-ng-show="option.selectionError == 'OPTION_ERROR_MIN'">Debe seleccionar al menos {{option.config.min}} opcion</span>
+                    <span data-ng-show="option.selectionError == 'OPTION_ERROR_MIN_MAX'">Debe seleccionar exactamente {{option.config.min}} opciones</span>
+
                 </div>
 
                 <div data-ng-if="option.config.min == 1 && option.config.max == 1">
@@ -41,7 +43,7 @@
 
 
 
-                <div data-ng-if="!(option.config.min == 1 && option.config.max == 1)">
+                <div data-ng-if="option.config.min != 1 && option.config.max != 1 && !option.config.multipleQty">
 
                   <li class="item item-checkbox" data-ng-repeat="item in option.items">
                     <label class="checkbox"
@@ -54,6 +56,17 @@
 
 
                 </div>
+
+
+                <!--################### intended for products that can have quantities per item #######################-->
+                <div data-ng-if="option.config.multipleQty">
+                  <li class="item item-checkbox" data-ng-repeat="item in option.items">
+                    {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
+                    <span>Cantidad: <qty data-ng-model="item" min="0"></qty></span>
+                  </li>
+                </div>
+                <!--################### intended for products that can have quantities per item #######################-->
+
 
                 <br/>
                 <br/>

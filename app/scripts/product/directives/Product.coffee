@@ -19,6 +19,21 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
         $scope.productOptions = view
         product.clearSelections()
         $scope.product = new Product product
+
+
+        ################### intended for products that can have quantities per item #######################
+        ################### multipleQty: current example: PROMO
+        _.each $scope.product.options, (option) ->
+          if option.config.multipleQty
+            _.each option.items, (item) ->
+              item.qty = 0
+
+              item.updateQty = (value) ->
+                item.qty += value
+                if item.qty < 0 then item.qty = 0
+        ################### intended for products that can have quantities per item #######################
+
+
         $scope.productOptions.show()
 
         $rootScope.$on 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', (event, productSelected) ->
