@@ -50,10 +50,10 @@ angular.module('Muzza.product').factory "Product", () ->
 
         _.each option.selection, (selection) ->
 
-          if selection.qty isnt undefined
+          if selection.qty isnt undefined and selection.qty > 0
             detailsStr += selection.qty + " "
 
-          detailsStr += selection.description + '/'
+          detailsStr += (selection.description + '/') unless selection.qty is 0
 
         detailsStr += '||'
 

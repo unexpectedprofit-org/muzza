@@ -272,7 +272,7 @@ describe 'Product', ->
 
   describe "getDetails functionality", ->
 
-    it "should generate hash - no selection", ->
+    it "should generate details description - no selection", ->
 
       param =
         id: 8099
@@ -284,7 +284,7 @@ describe 'Product', ->
 
       expect(product.getDetails()).toEqual ''
 
-    it "should generate hash - single selection", ->
+    it "should generate details description - single selection", ->
 
       param =
         id: 8099
@@ -305,7 +305,7 @@ describe 'Product', ->
 
       expect(product.getDetails()).toEqual "Sabor: Naranja/||"
 
-    it "should generate hash - single selection with quantity", ->
+    it "should generate details description - single selection with quantity", ->
 
       param =
         id: 8099
@@ -313,21 +313,24 @@ describe 'Product', ->
         price:
           base: 50
         options: [
-          description: "Sabor"
+          description: "Empanadas"
           config:
-            min:1
-            max:1
+            min:6
+            max:6
           selection: [
-            description: "Naranja"
-            qty:2
+            description: "Carne"
+            qty:6
+          ,
+            description:"Pollo"
+            qty:0
           ]
         ]
 
       product = new Product param
 
-      expect(product.getDetails()).toEqual "Sabor: 2 Naranja/||"
+      expect(product.getDetails()).toEqual "Empanadas: 6 Carne/||"
 
-    it "should generate hash - single selection + multiple selection", ->
+    it "should generate details description - single selection + multiple selection", ->
 
       param =
         id: 777
