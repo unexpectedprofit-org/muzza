@@ -8,6 +8,19 @@ angular.module('Muzza.product').factory "Product", () ->
       @qty = param.qty or 1
       @description = param.description or ''
 
+      setOptionsType @options
+
+    setOptionsType = (options) ->
+      _.each options, (option) ->
+        singleOption = option.config.min is 1 && option.config.max is 1
+        multipleOptions = !singleOption and !option.config.multipleQty
+        multipleOptionsMultipleQty = !singleOption and option.config.multipleQty
+
+        option.type = "SINGLE" if singleOption
+        option.type = "MULTIPLE" if multipleOptions
+        option.type = "MULTIPLE_QTY" if multipleOptionsMultipleQty
+
+
 
   Product::clearSelections = ()->
     _.each @options, (option) ->

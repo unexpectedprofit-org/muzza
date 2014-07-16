@@ -42,6 +42,9 @@ describe "Cart", ->
           base: 8000
         options: [
           description: "Coccion"
+          config:
+            min:1
+            max:1
           items: [
             description: "Frita"
           ,
@@ -56,6 +59,9 @@ describe "Cart", ->
           base: 7500
         options: [
           description: "Ingredientes"
+          config:
+            min:1
+            max:3
           items: [
             description: "Lechuga"
           ,

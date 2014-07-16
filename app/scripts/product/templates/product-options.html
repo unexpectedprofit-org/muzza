@@ -17,7 +17,7 @@
               <div data-ng-repeat="option in productSelected.options track by $index">
 
                 Seleccione {{ option.description }}:
-                <span data-ng-if="!(option.config.min == 1 && option.config.max == 1)">(maximo {{ option.config.max }})</span>
+                <span data-ng-if="option.type != 'SINGLE'">(maximo {{ option.config.max }})</span>
 
                 <div data-ng-show="option.selectionError">
                     <span data-ng-show="option.selectionError == 'OPTION_ERROR_NO_SELECTION'">Debe seleccionar una opcion</span>
@@ -27,7 +27,7 @@
 
                 </div>
 
-                <div data-ng-if="option.config.min == 1 && option.config.max == 1">
+                <div data-ng-if="option.type == 'SINGLE'">
 
                   <label class="item item-radio" data-ng-repeat="item in option.items" data-ng-click="selectOption(option, item)">
                     <input type="radio" name="groupOptions_{{$parent.$index}}"
@@ -42,7 +42,7 @@
 
 
 
-                <div data-ng-if="option.config.min != 1 && option.config.max != 1 && !option.config.multipleQty">
+                <div data-ng-if="option.type == 'MULTIPLE'">
 
                   <li class="item item-checkbox" data-ng-repeat="item in option.items">
                     <label class="checkbox"
@@ -58,7 +58,7 @@
 
 
                 <!--################### intended for products that can have quantities per item #######################-->
-                <div data-ng-if="option.config.multipleQty">
+                <div data-ng-if="option.type == 'MULTIPLE_QTY'">
                   <li class="item item-checkbox" data-ng-repeat="item in option.items">
                     {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
                     <span>Cantidad: <qty data-ng-model="item" min="0"></qty></span>

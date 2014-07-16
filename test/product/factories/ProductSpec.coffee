@@ -50,6 +50,105 @@ describe 'Product', ->
       expect(product.reset).toBeDefined()
       expect(product.isEditable()).toBeDefined()
 
+    describe "setOptionsType functionality", ->
+
+      it "should be SINGLE", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:1
+              max:1
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "SINGLE"
+
+      it "should be MULTIPLE - case 1", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:2
+              max:4
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "MULTIPLE"
+
+      it "should be MULTIPLE - case 2", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:3
+              max:3
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "MULTIPLE"
+
+      it "should be MULTIPLE - case 3", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:0
+              max:4
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "MULTIPLE"
+
+      it "should be MULTIPLE_QTY - case 1", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:3
+              max:3
+              multipleQty:true
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "MULTIPLE_QTY"
+
+      it "should be MULTIPLE_QTY - case 2", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:2
+              max:5
+              multipleQty:true
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "MULTIPLE_QTY"
+
+      it "should be SINGLE, MULTIPLE_QTY, MULTIPLE", ->
+        param =
+          id: 8099
+          options:[
+            config:
+              min:1
+              max:1
+          ,
+            config:
+              min:2
+              max:5
+              multipleQty:true
+          ,
+            config:
+              min:2
+              max:5
+          ]
+
+        product = new Product param
+        expect(product.options[0].type).toBe "SINGLE"
+        expect(product.options[1].type).toBe "MULTIPLE_QTY"
+        expect(product.options[2].type).toBe "MULTIPLE"
+
 
   describe "isEditable functionality", ->
 
@@ -111,6 +210,9 @@ describe 'Product', ->
           base: 50
         options: [
           description: "Sabor"
+          config:
+            min:1
+            max:1
           selection: [
             description: "Naranja"
           ]
@@ -135,11 +237,17 @@ describe 'Product', ->
           base: 50
         options: [
           description: "Pan"
+          config:
+            min:1
+            max:1
           selection: [
             description: "Salvado"
           ]
         ,
           description: "Adicionales"
+          config:
+            min:1
+            max:2
           selection: [
             description: "Tomate"
           ,
@@ -185,6 +293,9 @@ describe 'Product', ->
           base: 50
         options: [
           description: "Sabor"
+          config:
+            min:1
+            max:1
           selection: [
             description: "Naranja"
           ]
@@ -203,6 +314,9 @@ describe 'Product', ->
           base: 50
         options: [
           description: "Sabor"
+          config:
+            min:1
+            max:1
           selection: [
             description: "Naranja"
             qty:2
@@ -223,11 +337,17 @@ describe 'Product', ->
           base: 50
         options: [
           description: "Pan"
+          config:
+            min:1
+            max:1
           selection: [
             description: "Salvado"
           ]
         ,
           description: "Adicionales"
+          config:
+            min:1
+            max:3
           selection: [
             description: "Tomate"
           ,
@@ -261,6 +381,9 @@ describe 'Product', ->
         price:
           base: 100
         options: [
+          config:
+            min:1
+            max:1
           selection:[
             price:20
           ]
@@ -276,6 +399,9 @@ describe 'Product', ->
         price:
           base: 100
         options: [
+          config:
+            min:1
+            max:3
           selection:[
             price:20
           ,
@@ -295,10 +421,16 @@ describe 'Product', ->
         price:
           base: 100
         options: [
+          config:
+            min:1
+            max:4
           selection:[
             price:20
           ]
         ,
+          config:
+            min:0
+            max:4
           selection: [
             price:10
           ,
@@ -319,6 +451,10 @@ describe 'Product', ->
         price:
           base: 100
         options: [
+          config:
+            min:1
+            max:1
+            multipleQty:true
           selection:[
             price:20
             qty:2
@@ -341,6 +477,9 @@ describe 'Product', ->
           base: 50
         options: [
           description: "Pan"
+          config:
+            min:1
+            max:1
           selection: [
             description: "Salvado"
           ]
@@ -351,6 +490,9 @@ describe 'Product', ->
           ]
         ,
           description: "Adicionales"
+          config:
+            min:0
+            max:2
           selection: [
             description: "Tomate"
           ,

@@ -12,6 +12,37 @@ describe 'Product Options Directive', ->
       Product = $injector.get 'Product'
 
 
+  describe "init", ->
+
+    it "should have option type checks to display appropiate sections", ->
+      inject ($compile, $rootScope) ->
+        $scope = $rootScope
+        $scope.product = new Product
+          id:1
+          description: "Aquarius 500 cc"
+          price:
+            base: 2000
+          options: [
+            description: "Sabor"
+            config:
+              min: 1
+              max:1
+            items: [
+              description: "Naranja"
+              price: 0
+            ]
+          ]
+
+        element = angular.element('<product-options data-ng-model="product"></product-options>')
+        $compile(element)($rootScope)
+        $scope.$digest()
+        isolatedScope = element.isolateScope()
+
+        expect(element.html()).toContain "option.type == 'SINGLE'"
+        expect(element.html()).toContain "option.type == 'MULTIPLE'"
+        expect(element.html()).toContain "option.type == 'MULTIPLE_QTY'"
+
+
   describe "selectOption functionality", ->
 
     isolatedScope = undefined
@@ -109,7 +140,6 @@ describe 'Product Options Directive', ->
           expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Tomate"}
           expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Hongos"}
           expect(isolatedScope.productSelected.options[0].selection).toContain jasmine.objectContaining {description:"Zanahoria"}
-
 
 
     describe "product with multiple options", ->
@@ -240,7 +270,6 @@ describe 'Product Options Directive', ->
           isolatedScope.selectOption isolatedScope.productSelected.options[1], isolatedScope.productSelected.options[1].items[3]
           expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Jamon"}
           expect(isolatedScope.productSelected.options[1].selection).toContain jasmine.objectContaining {description:"Lechuga"}
-
 
 
   describe "isSelectionValid", ->
