@@ -327,3 +327,48 @@ describe 'Product', ->
       product = new Product param
 
       expect(product.calculateTotalPrice()).toBe 140
+
+
+  describe "clearSelections functionality", ->
+
+    it "should clear fields", ->
+      param =
+        id: 777
+        description: 'Product name here'
+        catId: 33
+        qty: 2
+        price:
+          base: 50
+        options: [
+          description: "Pan"
+          selection: [
+            description: "Salvado"
+          ]
+          items:[
+            isSelected:true
+          ,
+            isSelected:false
+          ]
+        ,
+          description: "Adicionales"
+          selection: [
+            description: "Tomate"
+          ,
+            description: "Lechuga"
+          ,
+            description: "Queso"
+          ]
+          items:[
+            isSelected:true
+          ]
+        ]
+
+      product = new Product param
+      product.clearSelections()
+
+      expect(product.options[0].selection).toBeUndefined()
+      expect(product.options[0].items[0].isSelected).toBeUndefined()
+      expect(product.options[0].items[1].isSelected).toBeUndefined()
+
+      expect(product.options[1].selection).toBeUndefined()
+      expect(product.options[1].items[0].isSelected).toBeUndefined()
