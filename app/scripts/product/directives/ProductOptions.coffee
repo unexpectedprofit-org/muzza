@@ -35,10 +35,6 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
             isValid = false
             option.selectionError  = "OPTION_ERROR_MIN_MAX"
 
-          else
-            option.selection = []
-            _.each option.items, (item) ->
-              option.selection.push item
         ################### intended for products that can have quantities per item #######################
 
 

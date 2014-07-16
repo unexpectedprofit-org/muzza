@@ -25,7 +25,13 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
         ################### multipleQty: current example: PROMO
         _.each $scope.product.options, (option) ->
           if option.config.multipleQty
+
+            option.selection = []
+
             _.each option.items, (item) ->
+
+              option.selection.push item
+
               item.qty = 0
 
               item.updateQty = (value) ->

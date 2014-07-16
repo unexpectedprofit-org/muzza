@@ -530,14 +530,12 @@ describe 'Product Options Directive', ->
 
       it "should fail validation if no selection is done", ->
         expect(isolatedScope.isSelectionValid()).toBeFalsy()
-
         expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MIN_MAX"
 
       it "should fail validation if some selection is done but not all", ->
         isolatedScope.productSelected.options[0].items[0].qty = 4
 
         expect(isolatedScope.isSelectionValid()).toBeFalsy()
-
         expect(isolatedScope.productSelected.options[0].selectionError).toEqual "OPTION_ERROR_MIN_MAX"
 
       it "should succeed validation if all selection done", ->
@@ -546,7 +544,6 @@ describe 'Product Options Directive', ->
         isolatedScope.productSelected.options[0].items[2].qty = 6
 
         expect(isolatedScope.isSelectionValid()).toBeTruthy()
-
         expect(isolatedScope.productSelected.options[0].selectionError).toBeUndefined()
 
 
