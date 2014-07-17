@@ -108,8 +108,9 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
         templateUrl: "../app/scripts/product/templates/cart-product-edit.html"
         controller: 'EditProductCtrl'
         resolve:
-          product: (ShoppingCartService, $stateParams)->
+          product: ["ShoppingCartService","$stateParams", (ShoppingCartService, $stateParams)->
             return ShoppingCartService.get $stateParams.productId
+          ]
 
 
   # if none of the above states are matched, use this as the fallback
