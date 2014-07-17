@@ -23,6 +23,8 @@ angular.module('Muzza.product').factory "Product", () ->
 
 
   Product::clearSelections = ()->
+    @qty = 1
+
     _.each @options, (option) ->
       option.selection = undefined
       _.each option.items, (item)->

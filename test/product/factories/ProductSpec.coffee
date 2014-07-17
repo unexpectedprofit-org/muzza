@@ -471,7 +471,21 @@ describe 'Product', ->
 
   describe "clearSelections functionality", ->
 
-    it "should clear fields", ->
+    it "should set qty to 1", ->
+      param =
+        id: 777
+        description: 'Product name here'
+        catId: 33
+        qty: 2
+        price:
+          base: 50
+
+      product = new Product param
+      product.clearSelections()
+
+      expect(product.qty).toBe 1
+
+    it "should clear selections", ->
       param =
         id: 777
         description: 'Product name here'
