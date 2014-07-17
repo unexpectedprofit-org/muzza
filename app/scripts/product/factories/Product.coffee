@@ -4,7 +4,6 @@ angular.module('Muzza.product').factory "Product", () ->
     constructor: (param) ->
       angular.copy param, @
       @id = param.id
-      @categoryId = param.catId
       @qty = param.qty or 1
       @description = param.description or ''
 

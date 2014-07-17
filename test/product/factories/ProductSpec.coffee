@@ -16,7 +16,7 @@ describe 'Product', ->
       param =
         id: 8099
         description: 'Product name here'
-        catId: 44
+        categoryId: 44
         qty: 2
         price:
           base: 50
@@ -24,20 +24,20 @@ describe 'Product', ->
       product = new Product param
       expect(product.id).toBe param.id
       expect(product.description).toBe param.description
-      expect(product.categoryId).toBe param.catId
+      expect(product.categoryId).toBe param.categoryId
       expect(product.qty).toBe param.qty
       expect(product.price.base).toBe param.price.base
 
     it 'should construct a Product model from param - case 2', ->
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         other:"thing"
 
       product = new Product param
       expect(product.id).toBe param.id
       expect(product.description).toBe ''
-      expect(product.categoryId).toBe param.catId
+      expect(product.categoryId).toBe param.categoryId
       expect(product.qty).toBe 1
       expect(product.price).toBe undefined
       expect(product.other).toBe param.other
@@ -156,7 +156,7 @@ describe 'Product', ->
       param =
         id: 8099
         description: 'Product name here'
-        catId: 44
+        categoryId: 44
         qty: 2
         price:
           base: 50
@@ -167,7 +167,7 @@ describe 'Product', ->
     it 'should have options NOT editable if no options', ->
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         other:"thing"
 
       product = new Product param
@@ -176,7 +176,7 @@ describe 'Product', ->
     it 'should construct a Product model from param - case 3', ->
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         other:"thing"
 
       product = new Product param
@@ -193,19 +193,19 @@ describe 'Product', ->
 
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         price:
           base: 50
 
       product = new Product param
 
-      expect(product.getHash()).toEqual "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.catId + "|"
+      expect(product.getHash()).toEqual "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.categoryId + "|"
 
     it "should generate hash - single selection", ->
 
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         price:
           base: 50
         options: [
@@ -220,7 +220,7 @@ describe 'Product', ->
 
       product = new Product param
 
-      expected = "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.catId + "|"
+      expected = "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.categoryId + "|"
       expected += "OPT:" + param.options[0].description + '|'
       expected += param.options[0].selection[0].description + '|'
 
@@ -231,7 +231,7 @@ describe 'Product', ->
       param =
         id: 777
         description: 'Product name here'
-        catId: 33
+        categoryId: 33
         qty: 2
         price:
           base: 50
@@ -259,7 +259,7 @@ describe 'Product', ->
 
       product = new Product param
 
-      expected = "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.catId + "|"
+      expected = "ID_BRAND|ID:" + param.id + "|CAT_ID:" + param.categoryId + "|"
       expected += "OPT:" + param.options[0].description + '|'
       expected += param.options[0].selection[0].description + '|'
       expected += "OPT:" + param.options[1].description + '|'
@@ -276,7 +276,7 @@ describe 'Product', ->
 
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         price:
           base: 50
 
@@ -288,7 +288,7 @@ describe 'Product', ->
 
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         price:
           base: 50
         options: [
@@ -309,7 +309,7 @@ describe 'Product', ->
 
       param =
         id: 8099
-        catId: 44
+        categoryId: 44
         price:
           base: 50
         options: [
@@ -335,7 +335,7 @@ describe 'Product', ->
 
       param =
         id: 777
-        catId: 33
+        categoryId: 33
         qty: 2
         price:
           base: 50
@@ -475,7 +475,7 @@ describe 'Product', ->
       param =
         id: 777
         description: 'Product name here'
-        catId: 33
+        categoryId: 33
         qty: 2
         price:
           base: 50
@@ -489,7 +489,7 @@ describe 'Product', ->
       param =
         id: 777
         description: 'Product name here'
-        catId: 33
+        categoryId: 33
         qty: 2
         price:
           base: 50
