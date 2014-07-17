@@ -50,7 +50,7 @@ angular.module('Muzza.product').factory "Product", () ->
 
         _.each option.selection, (selection) ->
 
-          if selection.qty isnt undefined and selection.qty > 0
+          if option.type is 'MULTIPLE_QTY' and selection.qty isnt undefined and selection.qty > 0
             detailsStr += selection.qty + " "
 
           detailsStr += (selection.description + '/') unless selection.qty is 0

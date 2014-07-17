@@ -305,7 +305,7 @@ describe 'Product', ->
 
       expect(product.getDetails()).toEqual "Sabor: Naranja/||"
 
-    it "should generate details description - single selection with quantity", ->
+    it "should generate details description - multiple selection with quantity", ->
 
       param =
         id: 8099
@@ -317,6 +317,7 @@ describe 'Product', ->
           config:
             min:6
             max:6
+            multipleQty:true
           selection: [
             description: "Carne"
             qty:6
