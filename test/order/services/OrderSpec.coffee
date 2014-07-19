@@ -198,6 +198,27 @@ describe 'Order Service', ->
         OrderService.submitOrder()
         expect($firebase.fns.$set).toHaveBeenCalledWith(order)
 
+  describe 'cleanOrder', ->
+
+    order = undefined
+
+    beforeEach ->
+      inject (Product)->
+        cart =
+          products: [new Product {id:1, desc:'Muzza', qty:1}]
+          promotions: null
+          contact: {name: 'San'}
+          totalPrice: ()-> null
+        OrderService.createOrder(cart)
+        OrderService.chooseDelivery('pickup')
+        OrderService.chooseStore({id:1})
+        OrderService.cleanOrder()
+        order = OrderService.retrieveOrder()
+
+    it 'should empty the products', ->
+      expect(order.products.length).toBe 0
+
+
   describe 'retrieveDelivery', ->
 
     it 'should return the selected delivery option', ->

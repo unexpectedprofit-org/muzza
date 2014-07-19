@@ -25,6 +25,7 @@ angular.module("Muzza").run ($ionicPlatform, $state) ->
   $ionicPlatform.ready ->
     StatusBar.styleDefault() if window.StatusBar
     $state.go 'app.menu'
+#    $state.go 'app.order-delivery'
 
 
 angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->

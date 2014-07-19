@@ -242,26 +242,26 @@ describe "Cart", ->
 
   describe "when checkout", ->
 
-    it "should redirect to delivery option", ->
-      inject ($state)->
+    $state = OrderService = undefined
+
+    beforeEach ->
+      inject (_$state_, _OrderService_)->
+        $state = _$state_
+        OrderService = _OrderService_
         spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
         spyOn($state, 'go').and.callThrough()
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-        isolatedScope.checkout()
-
-        expect($state.go).toHaveBeenCalledWith('app.order-review')
-
-    it "should delegate to OrderService to create the order", ->
-      inject (OrderService)->
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
         spyOn(OrderService, 'createOrder')
         $scope.$digest()
         isolatedScope = element.isolateScope()
-
         isolatedScope.checkout()
-        expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
-          products: [product1]
+
+
+    it "should redirect to delivery option", ->
+      expect($state.go).toHaveBeenCalledWith('app.order-review')
+
+    it "should delegate to OrderService to create the order", ->
+      expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
+        products: [product1]
 
   describe "order eligibility", ->
 

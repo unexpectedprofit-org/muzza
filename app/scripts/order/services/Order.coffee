@@ -72,7 +72,7 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
     fireOrder.$set(order)
     deferred.resolve()
     deferred.promise
-#   TODO: clean order and references
+#   TODO: What if it fails?
 
   getDelivery =  ->
     order.delivery
@@ -105,6 +105,9 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
 
     {success:true}
 
+  clearOrder = ()->
+    order.products = new Array()
+
 
   chooseDelivery: setDelivery
   retrieveOrder: getOrder
@@ -116,3 +119,4 @@ angular.module('Muzza.order').service 'OrderService', (ShoppingCartService,$fire
   chooseStore: setPickupStore
   retrieveMinimumAmount: getMinimumAmount
   checkEligibility: isOrderEligible
+  cleanOrder: clearOrder
