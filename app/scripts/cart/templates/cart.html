@@ -25,14 +25,15 @@
   <ion-list show-delete="showDelete">
     <ion-item nav-clear data-ng-repeat="item in cart.products track by $index | orderBy:'+cat'">
       <div style="white-space: normal">{{item.cat}} {{item.getDescription()}}</div>
+      <div>{{item.getDetails()}}</div>
       <div>Cantidad: {{item.qty}}
-          <qty ng-model="item" min="1" data-ng-show="showEdit && item.isEditable.qty" style="font: 0.5em;"></qty>
+          <qty ng-model="item" min="1" data-ng-show="showEdit && item.isEditable().qty" style="font: 0.5em;"></qty>
       </div>
-      <div>Precio: {{item.totalPrice * item.qty | centsToMoney | currency}}</div>
+      <div>Precio: {{item.calculateTotalPrice() * item.qty | centsToMoney | currency}}</div>
       <button
               class="button button-light"
-              data-ng-click="$parent.edit(item)"
-              data-ng-show="showEdit && item.isEditable.options">
+              data-ng-click="$parent.edit(item.cartItemKey)"
+              data-ng-show="showEdit && item.isEditable().options">
         Editar Opciones
       </button>
 

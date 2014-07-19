@@ -9,11 +9,9 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
       $scope.orderEligibility = OrderService.checkEligibility()
 
 
-    $scope.edit = (item)->
+    $scope.edit = (product_cartItemKey)->
 
-      switch item.cat
-        when 'PIZZA'    then $state.go 'app.pizza', { pizzaId: item.cartItemKey }
-        else $state.go 'app.menu'
+      $state.go 'app.products-edit', {productId: product_cartItemKey}
 
     $scope.remove = (cartItemKey) ->
       ShoppingCartService.remove cartItemKey

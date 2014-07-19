@@ -1,4 +1,4 @@
-angular.module('Muzza.directives', ['Muzza.factories'])
+angular.module('Muzza.directives',[])
 
 angular.module("Muzza.directives").filter "centsToMoney", ->
   (cents) ->

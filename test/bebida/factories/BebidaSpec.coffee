@@ -33,7 +33,7 @@ describe 'Bebida', ->
         option: 'Negra'
         price:
           base: 50
-      
+
       bebida = new Bebida param
       expect(bebida.description).toBe 'Heineken'
       expect(bebida.size).toBe 'chica'

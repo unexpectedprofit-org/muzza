@@ -13,14 +13,16 @@
 
     <ion-content class="has-header">
 
-      <pizzas bindonce data-ng-model="menu.pizza"></pizzas>
+        <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
+            <strong data-bo-bind="cat.description"></strong>
+        </div>
 
-      <empanadas bindonce data-ng-model="menu.empanada"></empanadas>
 
-      <bebidas bindonce data-ng-model="menu.bebida"></bebidas>
+        <ion-list data-ng-repeat-end>
 
-      <promotions bindonce data-ng-model="menu.promo"></promotions>
+            <product data-ng-model="product" data-ng-repeat="product in cat.products track by $index"></product>
 
+        </ion-list>
     </ion-content>
 
 </ion-view>

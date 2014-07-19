@@ -32,7 +32,7 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
     totalPrice = 0
 
     angular.forEach products, (product) ->
-      totalPrice += product.qty * product.totalPrice
+      totalPrice += product.qty * product.calculateTotalPrice()
 
     totalPrice
 

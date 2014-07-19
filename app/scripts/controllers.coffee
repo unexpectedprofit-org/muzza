@@ -12,6 +12,3 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
     $scope.cartTotalPrice = newValue
 
   $scope.menu = ProductService.getMenu($rootScope.storeId, $stateParams.category)
-
-
-

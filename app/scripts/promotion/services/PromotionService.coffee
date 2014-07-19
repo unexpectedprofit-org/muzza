@@ -6,7 +6,7 @@ angular.module('Muzza.promo').service 'PromotionService', ($log, PromotionUtil, 
     _.forEach promotionRules, (promoRule) ->
       ruleProperties = promoRule.properties
 
-      productsListByCategory = ProductService.getProductsFromCategory ruleProperties.cat
+      productsListByCategory = ProductService.getMenu undefined, ruleProperties.cat
       tempProducts = PromotionUtil.getPromotionProducts productsListByCategory, ruleProperties
 
       if angular.isUndefined( filteredProducts[ruleProperties.cat] )

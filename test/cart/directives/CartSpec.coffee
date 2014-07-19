@@ -4,8 +4,7 @@ describe "Cart", ->
     module 'Muzza.cart'
     module 'Muzza.templates'
     module 'Muzza.directives'
-    module 'Muzza.pizzas'
-    module 'Muzza.empanadas'
+    module 'Muzza.product'
     module 'ionic'
 
     module ($provide) ->
@@ -24,44 +23,55 @@ describe "Cart", ->
 
       return null
 
-  $scope = element = ShoppingCartService = isolatedScope = Pizza = Empanada = undefined
-  pizza1 = pizza2 = undefined
+  $scope = element = ShoppingCartService = isolatedScope = Product = undefined
+  product1 = product2 = undefined
 
   beforeEach ->
     inject ($compile, $rootScope, $injector) ->
       ShoppingCartService = $injector.get 'ShoppingCartService'
-      Pizza = $injector.get 'Pizza'
-      Empanada = $injector.get 'Empanada'
+      Product = $injector.get 'Product'
       $scope = $rootScope
       element = angular.element('<cart></cart>')
       $compile(element)($rootScope)
 
-      pizza1 = new Pizza
+      product1 = new Product
         id: 1
-        desc: "Muzza"
-        toppings: "Muzzarella / tomate / Aceitunas"
+        desc: "Carne Cortada a cuchillo"
+        catId:55
         price:
           base: 8000
-          size:
-            individual: 0
-            chica: 1000
-            grande: 2000
-          dough:
-            "a la piedra": 2
-            "al molde": 3
-      pizza2 = new Pizza
+        options: [
+          description: "Coccion"
+          config:
+            min:1
+            max:1
+          items: [
+            description: "Frita"
+          ,
+            description: "Horno"
+          ]
+        ]
+      product2 = new Product
         id: 2,
-        desc: "Fugazetta"
-        toppings: "Muzzarella / Cebolla"
+        desc: "Ensalada de la casa"
+        catId:11
         price:
           base: 7500
-          size:
-            individual: 0
-            chica: 1500
-            grande: 2000
-          dough:
-            "a la piedra": 0
-            "al molde": 0
+        options: [
+          description: "Ingredientes"
+          config:
+            min:1
+            max:3
+          items: [
+            description: "Lechuga"
+          ,
+            description: "Tomate"
+          ,
+            description: "Hongos"
+          ,
+            description: "Zanahoria"
+          ]
+        ]
 
   describe "init", ->
 
@@ -84,52 +94,58 @@ describe "Cart", ->
   describe 'when shopping cart has at least one item', ->
 
     it 'should list all items in the shopping cart', ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1,product2]
       $scope.$digest()
       items = element.find('ion-item')
       expect(items.length).toBe 3
 
     it "should display items sorted by category - 1", ->
-      empanada = new Empanada {desc:'Humita',qty:1,cat:'EMPANADA', price: {base: 2000}}
-
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,empanada]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1,product2]
       $scope.$digest()
       items = element.find('ion-list').html()
 
-      expect(items).toContain empanada.getDescription()
-      expect(items).toContain pizza1.getDescription()
+      expect(items).toContain product1.getDescription()
+      expect(items).toContain product2.getDescription()
+
+    it "should display items sorted by category - 2", ->
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product2,product1]
+      $scope.$digest()
+      items = element.find('ion-list').html()
+
+      expect(items).toContain product1.getDescription()
+      expect(items).toContain product2.getDescription()
 
     it "should show total price", ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1,product2]
       spyOn(ShoppingCartService, 'getTotalPrice').and.returnValue 1661
 
       $scope.$digest()
       expect(element.html()).toMatch(/Total \$16.61/)
 
     it 'should not display the empty msg', ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
       $scope.$digest()
       msg = element.find('div.card').html()
       expect(msg).not.toMatch(/vacio/)
 
     it "should list items with edit function bound", ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
       $scope.$digest()
       isolatedScope = element.isolateScope()
       isolatedScope.showEdit = true
-      expect(element.find('ion-item').html()).toContain "$parent.edit(item)"
+      expect(element.find('ion-item').html()).toContain "$parent.edit(item.cartItemKey)"
 
     it "should list items with remove function bound", ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
       $scope.$digest()
       expect(element.find('ion-item').html()).toContain "$parent.remove(item.cartItemKey)"
 
     it "should have edit functions set", ->
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1,pizza2]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1,product2]
       $scope.$digest()
 
-      expect(element.html()).toContain "item.isEditable.qty"
-      expect(element.html()).toContain "item.isEditable.options"
+      expect(element.html()).toContain "item.isEditable().qty"
+      expect(element.html()).toContain "item.isEditable().options"
 
 
   describe 'when shopping cart is empty', ->
@@ -168,19 +184,16 @@ describe "Cart", ->
 
       it "should call the edit function with proper data", ->
 
-        pizza1 = new Pizza {id:1, desc:'Muzza', qty:1, totalPrice: 10}
-        pizza2 = new Pizza {id:2, desc:'Fugazzeta',qty:2, totalPrice:5}
-
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza1, pizza2]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [product1, product2]
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
         editItem = spyOn(isolatedScope, 'edit').and.callFake( () -> 1 )
 
-        isolatedScope.edit(pizza1)
-        expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:1, desc:'Muzza', qty:1, totalPrice: 10}
+        isolatedScope.edit product1
+        expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:product1.id}
 
-    describe "edit function show redirect to proper view", ->
+    xdescribe "edit function show redirect to proper view", ->
 
       onState = $mystate = undefined
 
@@ -218,20 +231,20 @@ describe "Cart", ->
 
     it "should call service", ->
 
-      spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1}]
+      spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
       $scope.$digest()
       isolatedScope = element.isolateScope()
 
       removeItem = spyOn(isolatedScope, 'remove').and.callFake( () -> 1 )
 
-      isolatedScope.remove pizza1.cartItemKey
-      expect(removeItem).toHaveBeenCalledWith pizza1.cartItemKey
+      isolatedScope.remove product1.cartItemKey
+      expect(removeItem).toHaveBeenCalledWith product1.cartItemKey
 
   describe "when checkout", ->
 
     it "should redirect to delivery option", ->
       inject ($state)->
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [new Pizza {id:1, desc:'Muzza', qty:1}]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
         spyOn($state, 'go').and.callThrough()
         $scope.$digest()
         isolatedScope = element.isolateScope()
@@ -241,15 +254,14 @@ describe "Cart", ->
 
     it "should delegate to OrderService to create the order", ->
       inject (OrderService)->
-        pizza = new Pizza {id:1, desc:'Muzza', qty:1}
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
         spyOn(OrderService, 'createOrder')
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
         isolatedScope.checkout()
         expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
-          products: [pizza]
+          products: [product1]
 
   describe "order eligibility", ->
 

@@ -1,0 +1,5 @@
+<ion-item bindonce data-ng-click="chooseProduct(product)">
+    <h3 data-bo-bind="product.description"></h3>
+    <span data-bo-bind="product.toppings"></span>
+    <span data-bo-bind="product.price.base | centsToMoney | currency"></span>
+</ion-item>

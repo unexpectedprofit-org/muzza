@@ -21,7 +21,7 @@ describe 'Order Service', ->
   beforeEach ->
     module 'Muzza.order'
     module 'Muzza.cart'
-    module 'Muzza.pizzas'
+    module 'Muzza.product'
 
     module ($provide) ->
       $provide.value 'ShoppingCartService',
@@ -165,9 +165,9 @@ describe 'Order Service', ->
     cart = undefined
 
     beforeEach ->
-      inject (Pizza)->
+      inject (Product)->
         cart =
-          products: [new Pizza {id:1, desc:'Muzza', qty:1}]
+          products: [new Product {id:1, desc:'Muzza', qty:1}]
           promotions: null
           totalPrice: ()-> null
         OrderService.createOrder(cart)
@@ -185,9 +185,9 @@ describe 'Order Service', ->
   describe 'submitOrder', ->
 
     it 'should push the order to firebase', ->
-      inject (Pizza, $firebase)->
+      inject (Product, $firebase)->
         cart =
-          products: [new Pizza {id:1, desc:'Muzza', qty:1}]
+          products: [new Product {id:1, desc:'Muzza', qty:1}]
           promotions: null
           contact: {name: 'San'}
           totalPrice: ()-> null

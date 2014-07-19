@@ -1,7 +1,9 @@
 describe "controllers", ->
 
   beforeEach ->
+    module 'ionic'
     module "Muzza.controllers"
+    module "Muzza.templates"
 
   describe "Menu Controller", ->
 
@@ -14,8 +16,8 @@ describe "controllers", ->
             { pizza:[products:{id:1}], empanada:[products:{id:2}] }
         null
         $provide.value 'ShoppingCartService',
-          getTotalPrice: () ->
-            100
+          getTotalPrice: () -> 100
+          add: () -> null
         null
 
     beforeEach ->
@@ -61,3 +63,21 @@ describe "controllers", ->
       rootScope.$broadcast 'CART:PRICE_UPDATED', 1200
 
       expect(scope.cartTotalPrice).toBe 1200
+
+
+    xdescribe "on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART", ->
+
+      beforeEach ->
+        inject ($rootScope) ->
+          createController({})
+          product = {id:15}
+
+          scope.chooseProduct product
+          $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product
+
+      it "should close modal", ->
+        expect(scope.productOptions.hide()).toHaveBeenCalled()
+
+      it "should call service", ->
+        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
+        expect(addSpy).toHaveBeenCalledWith {id:15}

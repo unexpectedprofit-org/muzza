@@ -1,4 +1,4 @@
-angular.module("Muzza.services", ['Muzza.constants', 'Muzza.pizzas', 'Muzza.empanadas', 'Muzza.bebidas', 'Muzza.promo'])
+angular.module("Muzza.services", ['Muzza.constants', 'Muzza.promo', 'Muzza.product'])
 
 angular.module("Muzza.services").factory "StoreService", (days) ->
 
@@ -204,78 +204,32 @@ angular.module("Muzza.services").factory "StoreService", (days) ->
   listStores: getStores
 
 
-angular.module("Muzza.services").service "ProductService", (stores, Pizza, Empanada, Bebida, PromotionTypeFactory) ->
+angular.module("Muzza.services").service "ProductService", (stores, Product, PromotionTypeFactory) ->
 
-  _menu = undefined
+  # define variable here to hold menu info.
+  # So that next time the menu is looked up, we don't need to go to the backend to get it again.
 
-  getProductsByCompanyId = (id, category)->
-    results =
-      pizza: _.map stores.store1.products['pizza'], constructPizzas
-      empanada: _.map stores.store1.products['empanada'], constructEmpanadas
-      promo: constructPromotions stores.store1.products['promotion']
-      bebida: _.map stores.store1.products['bebida'], constructBebidas
+  getProductsByCompanyId = (id, catId)->
+    constructMenu catId
 
-    # This should become two different methods executing either diff queries,
-    # or fetching form cache...who knows?
-    if category?
-      menu = {}
-      menu[category] = results[category]
+
+  constructMenu = (categoryId) ->
+    if categoryId isnt undefined
+      category = _.find stores.store1.products, (elem) ->
+        elem.id is parseInt categoryId
+      categories = [category]
     else
-      menu = results
+      categories = stores.store1.products
 
-    _menu = menu
+    _.forEach categories, (category) ->
+      category.products = _.map category.products, (product) ->
+        product.categoryId = category.id
+        new Product product
 
-    menu
-
-
-  retrieveProdFromCategory = (categoryId) ->
-
-    switch categoryId
-      when "EMPANADA"
-        _cat = "empanada"
-      when "PIZZA"
-        _cat = "pizza"
-      when "BEBIDA"
-        _cat = "bebida"
-      else
-        _cat = undefined
-
-    if angular.isUndefined( _menu ) or angular.isUndefined( _menu[_cat] )
-      getProductsByCompanyId()
-
-    angular.copy _menu[_cat]
-
-
-
-
-
-  constructPizzas = (pizzaCategory)->
-    pizzaCategory.products = _.map pizzaCategory.products, (pizza)->
-      pizza.subcat = pizzaCategory.id
-      new Pizza pizza
-    pizzaCategory
-
-  constructEmpanadas = (empanadaCategory)->
-    empanadaCategory.products = _.map empanadaCategory.products, (empanada)->
-      empanada.subcat = empanadaCategory.id
-      empanada.type = empanadaCategory.description
-      new Empanada empanada
-    empanadaCategory
-
-  constructPromotions = (promotions) ->
-    allPromos = _.map promotions, (promotion)->
-      PromotionTypeFactory.createPromotion promotion
-    allPromos
-
-  constructBebidas = (bebidaCategory)->
-    bebidaCategory.products = _.map bebidaCategory.products, (bebida)->
-      bebida.subcat = bebidaCategory.id
-      new Bebida bebida
-    bebidaCategory
+    categories
 
 
   getMenu: getProductsByCompanyId
-  getProductsFromCategory: retrieveProdFromCategory
 
 
 

@@ -1,0 +1,82 @@
+        <div class="list card">
+            <div class="item item-avatar">
+                <p>{{ productSelected.description }}</p>
+                <p>{{ productSelected.details }}</p>
+                <p>PRECIO BASE: {{ productSelected.price.base | centsToMoney | currency }}</p>
+                <p>PRECIO ACTUALIZADO: {{ productSelected.calculateTotalPrice() | centsToMoney | currency }} </p>
+            </div>
+
+            <div class="item item-avatar">
+              <p>CANTIDAD</p>
+                <qty ng-model="productSelected" min="1"></qty>
+
+            </div>
+
+            <div class="item item-body">
+
+              <div data-ng-repeat="option in productSelected.options track by $index">
+
+                Seleccione {{ option.description }}:
+                <span data-ng-if="option.type != 'SINGLE'">(maximo {{ option.config.max }})</span>
+
+                <div data-ng-show="option.selectionError">
+                    <span data-ng-show="option.selectionError == 'OPTION_ERROR_NO_SELECTION'">Debe seleccionar una opcion</span>
+                    <span data-ng-show="option.selectionError == 'OPTION_ERROR_MAX'">Debe seleccionar como maximo {{option.config.max}} opciones</span>
+                    <span data-ng-show="option.selectionError == 'OPTION_ERROR_MIN'">Debe seleccionar al menos {{option.config.min}} opcion</span>
+                    <span data-ng-show="option.selectionError == 'OPTION_ERROR_MIN_MAX'">Debe seleccionar exactamente {{option.config.min}} opciones</span>
+
+                </div>
+
+                <div data-ng-if="option.type == 'SINGLE'">
+
+                  <label class="item item-radio" data-ng-repeat="item in option.items" data-ng-click="selectOption(option, item)">
+                    <input type="radio" name="groupOptions_{{$parent.$index}}"
+                           data-ng-checked="item.isSelected" />
+                    <div class="item-content">
+                      {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency }} )</span>
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                  </label>
+
+                </div>
+
+
+
+                <div data-ng-if="option.type == 'MULTIPLE'">
+
+                  <li class="item item-checkbox" data-ng-repeat="item in option.items">
+                    <label class="checkbox"
+                           data-ng-click="selectOption(option, item)">
+                      <input type="checkbox" name="prod_option"
+                              data-ng-checked="item.isSelected"/>
+                    </label>
+                    {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
+                  </li>
+
+
+                </div>
+
+
+                <!--################### intended for products that can have quantities per item #######################-->
+                <div data-ng-if="option.type == 'MULTIPLE_QTY'">
+                  <li class="item item-checkbox" data-ng-repeat="item in option.items">
+                    {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
+                    <span>Cantidad: <qty data-ng-model="item" min="0"></qty></span>
+                  </li>
+                </div>
+                <!--################### intended for products that can have quantities per item #######################-->
+
+
+                <br/>
+                <br/>
+
+
+
+              </div>
+
+              <div class="button-bar">
+                <a class="button" data-ng-click="addProductSelectionToCart(productSelected)">CONFIRMAR</a>
+              </div>
+
+            </div>
+        </div>

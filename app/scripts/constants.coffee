@@ -1,357 +1,498 @@
 angular.module('Muzza.constants',[]).constant 'stores',
 
   store1:
-    products:
-      "empanada": [
-        "id": 1,
-        description: "Al Horno"
-        "products": [
-          "id": 1
-          description: "Carne cortada a cuchillo"
-          "toppings": "Carne / Huevo / Morron"
-          "price":
-            base:1800
-        ,
-          "id": 2
-          description: "Calabresa"
-          "toppings": "Muzzarella / Longaniza / Salsa"
-          "price":
-            base: 1800
-        ,
-          "id": 3
-          description: "Cebolla y queso"
-          "toppings": "Muzzarella / Cebolla"
-          "price":
-            base: 1800
-        ,
-          "id": 4
-          description: "Pollo"
-          "toppings": "Pollo / Cebolla"
-          "price":
-            base: 1800
-        ,
-          "id": 5
-          description: "Carne picante"
-          "toppings": "Carne / Cebolla"
-          "price":
-            base: 1800
-        ,
-          "id": 6
-          description: "Verdura"
-          "toppings": "Espinaca / Huevo / Salsa Blanca"
-          "price":
-            base: 1800
-        ]
-      ,
-        "id": 2,
-        description: "Fritas",
-        "products": [
-          "id": 7
-          description: "Cebolla y queso"
-          "toppings": "Muzzarella / Cebolla"
-          "price":
-            base: 1800
-        ,
-          "id": 8
-          description: "Pollo"
-          "toppings": "Pollo / Cebolla"
-          "price":
-            base: 2000
-        ,
-          "id": 9
-          description: "Verdura"
-          "toppings": "Espinaca / Huevo / Salsa Blanca"
-          "price":
-            base: 2000
-        ]
-      ],
-      "pizza": [
-        "id": 1
-        "description": "Pizzas Especiales"
-        "products": [
-          "id": 90
-          description: "Muzzarella"
-          "toppings": "Muzzarella / Salsa tomate / Aceitunas"
-          "price":
-            base: 5000
-            size:
-              porcion: 0
-              individual: 500
-              chica: 1000
-              grande: 2000
-            dough:
-              "a la piedra": 2
-              "al molde": 3
-        ,
-          "id": 91
-          description: "Fuggazetta"
-          "toppings": "Muzzarella / Cebollas"
-          "price":
-            base: 5500
-            size:
-              porcion: 0
-              individual: 500
-              chica: 1500
-              grande: 2000
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-        ,
-          "id": 92
-          description: "Jamon y Morrones"
-          "toppings": "Muzzarella / Jamon / Morron"
-          "price":
-            base: 7500
-            size:
-              porcion: 0
-              individual: 500
-              chica: 1000
-              grande: 1500
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-        ,
-          "id": 93
-          description: "Calabresa"
-          "toppings": "Muzzarella / Longaniza / Salsa"
-          "price":
-            base: 5000
-            size:
-              porcion: 0
-              individual: 500
-              chica: 1000
-              grande: 2000
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-        ]
-      ,
-        "id": 2
-        "description": "Pizzas de la Casa"
-        "products": [
-          "id": 94
-          description: "Muzzarella con tomate al natural y aceitunas"
-          "toppings": "Muzzarella / tomate / Aceitunas"
-          "price":
-            base: 8000
-            size:
-              porcion: 0
-              individual: 500
-              chica: 1000
-              grande: 2000
-            dough:
-              "a la piedra": 2
-              "al molde": 3
-        ,
-          "id": 95
-          description: "Espinaca con salsa blanca o muzzarella"
-          "toppings": "Espinaca / muzzarella"
-          "price":
-            base: 7500
-            size:
-              porcion: 0
-              individual: 500
-              chica: 1500
-              grande: 2000
-            dough:
-              "a la piedra": 0
-              "al molde": 0
-        ]
-      ]
-      "promotion": [
-        id: 1
-        description: "1 docena de empanadas"
-        cat: 1 #PromoTypeQuantity
-        rules: [
-          qty: 12
-          properties: {
-            cat: 'EMPANADA'
-          }
-        ]
-        price: 5000
-        details: "Llevando una docena de empanadas de cualquier gusto te ahorras una bocha. Aprovechala!!!!!"
-      ,
-        id: 2
-        description: "1 pizza grande + 6 empanadas al horno"
-        cat: 1 #PromoTypeQuantity
-        rules: [
-          qty: 6
-          properties: {
-            cat: 'EMPANADA'
-            subcat:1
-          }
-        ,
-          qty: 1
-          properties: {
-            cat: 'PIZZA'
-            size: 'grande'
-          }
-        ]
-        price: 10000
-        details: "Llevando media docena de empanadas al horno de cualquier gusto y 1 pizza grande te ahorras una bocha. Aprovechala!!!!!"
-      ,
-        id: 3
-        description: "6 empanadas fritas + 1 pizza de la casa grande + 2 empanadas al horno"
-        cat: 1 #PromoTypeQuantity
-        rules: [
-          qty: 6
-          properties: {
-            cat: 'EMPANADA'
-            subcat:2
-          }
-        ,
-          qty: 2
-          properties: {
-            cat: 'EMPANADA'
-            subcat:1
-          }
-        ,
-          qty: 1
-          properties: {
-            cat: 'PIZZA'
-            subcat:2
-            size: 'grande'
-          }
-        ]
-        price:8000
-        details: "Llevando una docena de empanadas de empanadas fritas cualquier gusto mas 1 pizza al molde te ahorras una bocha. Aprovechala!!!!!"
-      ,
-        id: 4
-        description: "6 empanadas + 1 Gaseosa 600 cc"
-        cat: 1 #PromoTypeQuantity
-        rules: [
-          qty: 6
-          properties: {
-            cat: 'EMPANADA'
-          }
-        ,
-          qty: 1
-          properties: {
-            cat: 'BEBIDA'
-            subcat:1
-          }
-        ]
-        price: 5000
-        details: "Llevando 6 empanadas de cualquier gusto + 1 Gaseosa 600 cc te ahorras una bocha. Aprovechala!!!!!"
-      ,
-        id: 5
-        description: "1 pizza de la casa  + 1 pizza especial"
-        cat: 1 #PromoTypeQuantity
-        rules: [
-          qty: 1
-          properties: {
-            cat: 'PIZZA'
-            subcat:1
-          }
-        ,
-          qty: 1
-          properties: {
-            cat: 'PIZZA'
-            subcat:2
-          }
-        ]
-        price:8000
-        details: "Llevando una 1 pizza de la casa grande y 1 pizza especial te ahorras una bocha. Aprovechala!!!!!"
-      ,
-      ]
-      "bebida": [
+    products: [
+      id:1
+      description: "Bebidas"
+      products: [
         id:1
-        description:"Gaseosa 600 cc"
-        products: [
-          id:1
-          description:"Coca Cola"
-          price:
-            base: 1000
-        ,
-          id:2
-          description:"Coca Cola Zero"
-          price:
-            base: 1000
-        ,
-          id:3
-          description:"Fanta"
-          price:
-            base: 1000
-        ,
-          id:4
-          description:"Sprite"
-          price:
-            base: 1000
-        ,
-          id:5
-          description:"Levite Manzana"
-          price:
-            base: 1100
-        ,
-          id:6
-          description:"Levita Naranja"
-          price:
-            base: 1100
-        ,
-          id:7
-          description:"Ser Citrus"
-          price:
-            base: 1150
-        ,
-          id:8
-          description:"Ser Lima"
-          price:
-            base: 1150
+        description: "Aquarius 500 cc"
+        price:
+          base: 2000
+        options: [
+          description: "Sabor"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Naranja"
+            price: 0
+          ,
+            description: "Pomelo"
+            price: 0
+          ,
+            description: "Manzana"
+            price: 0
+          ]
         ]
       ,
         id:2
-        description:"Gaseosa 1.5 L"
-        products: [
-          id:1
-          description:"Coca Cola"
-          price:
-            base: 1000
-        ,
-          id:2
-          description:"Coca Cola Zero"
-          price:
-            base: 1000
-        ,
-          id:3
-          description:"Sprite"
-          price:
-            base: 1000
+        description: "Agua mineral"
+        price:
+          base:1500
+        options: [
+          description: "Gas"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Con gas"
+            price: 50
+          ,
+            description: "Sin gas"
+            price: 0
+          ]
         ]
-
+      ,
         id:3
-        description:"Cervezas"
-        products: [
-          id:1
-          description:"Cerveza warsteiner 1 L"
-          price:
-            base: 1200
-        ,
-          id:2
-          description:"Cerveza Isenbeck 1 L"
-          price:
-            base: 1200
-        ,
-          id:3
-          description:"Cerveza Isenbeck porrón de 355 cc"
-          price:
-            base: 600
-        ,
-          id:4
-          description:"Cerveza Quilmes 473 cc"
-          price:
-            base: 800
-        ,
-          id:5
-          description:"Cerveza heinekken 354 cc"
-          price:
-            base: 9000
-        ,
-          id:6
-          description:"Cerveza Corona"
-          price:
-            base: 1600
+        description: "Cerveza de litro"
+        price:
+          base:3500
+        options: [
+          description: "Sabor"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Quilmes"
+            price: 10
+          ,
+            description: "Heineken"
+            price: 20
+          ,
+            description: "Stella"
+            price: 0
+          ]
         ]
       ]
+    ,
+      id:2
+      description: "Pastas caseras"
+      products: [
+        id:1
+        description: "Ravioles Gran Caruso"
+        price:
+          base:5000
+        options: [
+          description: "Salsa"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Blanca"
+            price: 0
+          ,
+            description: "Rosa"
+            price: 0
+          ,
+            description: "Crema"
+            price: 0
+          ]
+        ]
+      ,
+        id:2
+        description: "Sorrentinos"
+        price:
+          base:8500
+        options: [
+          description: "Salsa"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Bolognesa"
+            price: 0
+          ,
+            description: "Rosa"
+            price: 10
+          ,
+            description: "Crema"
+            price: 0
+          ,
+            description: "Mixta"
+            price: 15
+          ]
+        ,
+          description: "Relleno"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Jamon y Queso"
+            price: 20
+          ,
+            description: "Pollo y verdura"
+            price: 0
+          ]
+        ]
+      ]
+    ,
+      id:3
+      description:"Ensaladas"
+      products: [
+        id:1
+        description:"Ensalada de la casa"
+        price:
+          base:8500
+        options: [
+          description: "Ingredientes"
+          config:
+            min:1
+            max:3
+          items: [
+            description: "Lechuga"
+            price: 30
+          ,
+            description: "Tomate"
+            price: 0
+          ,
+            description: "Hongos"
+            price: 30
+          ,
+            description: "Zanahoria"
+            price: 0
+          ]
+        ]
+      ]
+    ,
+      id:4
+      description:"Sandwiches"
+      products: [
+        id:1
+        description:"SANDWICH CALIENTE DE LOMITO CON PAPAS FRITAS"
+        price:
+          base:8500
+        options: [
+          description: "Pan"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Baguette"
+            price: 0
+          ,
+            description: "Frances"
+            price: 0
+          ,
+            description: "Bola salvado"
+            price: 30
+          ]
+        ,
+          description: "Adicionales"
+          config:
+            min:1
+            max:2
+          items: [
+            description: "Huevo Frito"
+            price: 40
+          ,
+            description: "Morrones"
+            price: 0
+          ,
+            description: "Palmitos"
+            price: 500
+          ,
+            description: "Provolone"
+            price: 20
+          ]
+        ]
+      ]
+    ,
+      id:5
+      description:"Empanadas"
+      products: [
+        id:1
+        description:"Carne cortada a cuchillo"
+        price:
+          base:1800
+        options: [
+          description: "Coccion"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Frita"
+            price: 0
+          ,
+            description: "Horno"
+            price: 0
+          ]
+        ]
+      ,
+        id:2
+        description:"Jamon y queso"
+        price:
+          base:1800
+        options: [
+          description: "Coccion"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Frita"
+            price: 150
+          ,
+            description: "Horno"
+            price: 0
+          ]
+        ]
+      ,
+        id:3
+        description:"Pollo loco"
+        price:
+          base:2000
+        options: [
+          description: "Coccion"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Frita"
+            price: 100
+          ,
+            description: "Horno"
+            price: 0
+          ]
+        ]
+      ,
+        id:4
+        description:"Espinaca y salsa blanca"
+        price:
+          base:2400
+        options: [
+          description: "Coccion"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Frita"
+            price: 0
+          ,
+            description: "Horno"
+            price: 200
+          ]
+        ]
+      ]
+    ,
+      id:6
+      description:"Pizzas a la piedra"
+      products: [
+        id:1
+        description:"Muzzarella"
+        price:
+          base:6700
+        options: [
+          description: "Tamano"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Porcion"
+            price: 0
+          ,
+            description: "Chica"
+            price: 100
+          ,
+            description: "Mediana"
+            price: 150
+          ,
+            description: "Grande"
+            price: 200
+          ]
+        ,
+          description: "Adicionales"
+          config:
+            min:0
+            max:4
+          items: [
+            description: "Jamon"
+            price: 200
+          ,
+            description: "Aceitunas"
+            price: 100
+          ,
+            description: "Pollo"
+            price: 1500
+          ,
+            description: "Doble muzzarella"
+            price: 900
+          ]
+        ]
+      ,
+        id:2
+        description:"Napolitana"
+        price:
+          base:6100
+        options: [
+          description: "Tamano"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Porcion"
+            price: 0
+          ,
+            description: "Chica"
+            price: 100
+          ,
+            description: "Mediana"
+            price: 200
+          ,
+            description: "Grande"
+            price: 350
+          ]
+        ]
+      ,
+        id:3
+        description:"Espinaca y verdura"
+        price:
+          base:8500
+        options: [
+          description: "Tamano"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Mediana"
+            price: 0
+          ,
+            description: "Grande"
+            price: 300
+          ]
+        ]
+      ]
+    ,
+      id:7
+      description:"Pizzas al molde"
+      products: [
+        id:1
+        description:"Fugazzetta rellena"
+        price:
+          base:10000
+        options: [
+          description: "Tamano"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Chica"
+            price: 0
+          ,
+            description: "Grande"
+            price: 500
+          ]
+        ]
+      ,
+        id:2
+        description:"Calabreza"
+        price:
+          base:7200
+        options: [
+          description: "Tamano"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Porcion"
+            price: 0
+          ,
+            description: "Grande"
+            price: 500
+          ]
+        ]
+      ]
+    ,
+      id:8
+      description:"Promos"
+      products:[
+        id:1
+        description:"Aquarius 500 cc + 6 empanadas"
+        price:
+          base:900
+        options:[
+          description:"Aquarius 500 cc"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Naranja"
+          ,
+            description: "Pomelo"
+          ,
+            description: "Manzana"
+          ]
+        ,
+          description:"Empanadas"
+          config:
+            min: 6
+            max:6
+            multipleQty: true
+          items: [
+            description: "Pollo"
+          ,
+            description: "Humita"
+          ]
+        ]
+      ,
+        id:2
+        description:"Pizza grande de muzzarella + 2 Agua mineral"
+        price:
+          base:7500
+        options:[
+          description:"Pizza grande de muzza"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "La pizza"
+          ]
+        ,
+          description:"Agua mineral"
+          config:
+            min: 2
+            max:2
+            multipleQty:true
+          items: [
+            description: "Con gas"
+            price: 100
+          ,
+            description: "Sin gas"
+          ]
+        ]
+      ,
+        id:3
+        description:"Cerveza de litro + 2 pizzas medianas"
+        price:
+          base:8000
+        options:[
+          description:"Cerveza de litro"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Quilmes"
+          ,
+            description: "Stella"
+            price: 100
+          ,
+            description: "Heineken"
+          ]
+        ,
+          description:"Pizza mediana"
+          config:
+            min: 2
+            max:2
+            multipleQty: true
+          items: [
+            description: "Muzzarella"
+          ,
+            description: "Muzzarella con Jamon"
+          ]
+        ]
+
+      ]
+    ]
+
 
 
 angular.module('Muzza.constants').constant 'days',
