@@ -7,8 +7,6 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
   templateUrl: '../app/scripts/product/templates/product.html'
   link: ($scope, ele, attrs, ctrl) ->
 
-
-
     $scope.chooseProduct = (product) ->
 
       options = $ionicModal.fromTemplateUrl '../app/scripts/product/templates/product-view.html',
@@ -18,12 +16,12 @@ angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ioni
       options.then (view)->
         $scope.productOptions = view
         product.clearSelections()
-        $scope.product = new Product product
+        $scope.productToChange = new Product product
 
 
         ################### intended for products that can have quantities per item #######################
         ################### multipleQty: current example: PROMO
-        _.each $scope.product.options, (option) ->
+        _.each $scope.productToChange.options, (option) ->
           if option.config.multipleQty
 
             option.selection = []

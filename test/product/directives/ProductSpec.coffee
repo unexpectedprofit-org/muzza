@@ -86,29 +86,29 @@ describe 'Product Directive', ->
 
 
     it "should call clearSelection on product object ", ->
-      expect(isolatedScope.product.options[0].selection).toBeUndefined()
-      expect(isolatedScope.product.options[0].items[0].isSelected).toBeUndefined()
-      expect(isolatedScope.product.options[0].items[1].isSelected).toBeUndefined()
+      expect(isolatedScope.productToChange.options[0].selection).toBeUndefined()
+      expect(isolatedScope.productToChange.options[0].items[0].isSelected).toBeUndefined()
+      expect(isolatedScope.productToChange.options[0].items[1].isSelected).toBeUndefined()
 
-      expect(isolatedScope.product.options[1].selection).toBeUndefined()
-      expect(isolatedScope.product.options[1].items[0].isSelected).toBeUndefined()
+      expect(isolatedScope.productToChange.options[1].selection).toBeUndefined()
+      expect(isolatedScope.productToChange.options[1].items[0].isSelected).toBeUndefined()
 
     it "should set a product Type object in the scope", ->
-      expect(isolatedScope.product instanceof Product).toBeTruthy()
+      expect(isolatedScope.productToChange instanceof Product).toBeTruthy()
 
     it "should NOT define a selection array", ->
-      expect(isolatedScope.product.options[0].selection).toBeUndefined()
-      expect(isolatedScope.product.options[1].selection).toBeUndefined()
+      expect(isolatedScope.productToChange.options[0].selection).toBeUndefined()
+      expect(isolatedScope.productToChange.options[1].selection).toBeUndefined()
 
     it "should NOT set qty to zero / define function if NO multipleQty option type", ->
 
-      expect(isolatedScope.product.options[0].items[0].qty).not.toBe 0
-      expect(isolatedScope.product.options[0].items[1].qty).not.toBe 0
-      expect(isolatedScope.product.options[0].items[0].updateQty).toBeUndefined()
-      expect(isolatedScope.product.options[0].items[1].updateQty).toBeUndefined()
+      expect(isolatedScope.productToChange.options[0].items[0].qty).not.toBe 0
+      expect(isolatedScope.productToChange.options[0].items[1].qty).not.toBe 0
+      expect(isolatedScope.productToChange.options[0].items[0].updateQty).toBeUndefined()
+      expect(isolatedScope.productToChange.options[0].items[1].updateQty).toBeUndefined()
 
-      expect(isolatedScope.product.options[1].items[0].qty).not.toBe 0
-      expect(isolatedScope.product.options[1].items[0].updateQty).toBeUndefined()
+      expect(isolatedScope.productToChange.options[1].items[0].qty).not.toBe 0
+      expect(isolatedScope.productToChange.options[1].items[0].updateQty).toBeUndefined()
 
 
     describe "multipleQty option type", ->
@@ -147,9 +147,9 @@ describe 'Product Directive', ->
 
 
       it "should set qty to zero / define function", ->
-        expect(isolatedScope.product.options[0].items[0].qty).toBe 0
-        expect(isolatedScope.product.options[0].items[0].updateQty).toBeDefined()
+        expect(isolatedScope.productToChange.options[0].items[0].qty).toBe 0
+        expect(isolatedScope.productToChange.options[0].items[0].updateQty).toBeDefined()
 
       it "should define a selection array", ->
-        expect(isolatedScope.product.options[0].selection[0].id).toBe 999
-        expect(isolatedScope.product.options[0].selection[1].id).toBe 888
+        expect(isolatedScope.productToChange.options[0].selection[0].id).toBe 999
+        expect(isolatedScope.productToChange.options[0].selection[1].id).toBe 888

@@ -7,7 +7,7 @@
     <ion-nav-buttons side="right">
         <button class="button button-clear button-positive" data-ng-click="viewCart()">
           Mi Pedido
-          <span data-ng-if="cartTotalPrice > 0" >({{ cartTotalPrice  | centsToMoney | currency }})</span>
+          <span data-ng-if="cartTotalPrice() > 0" >({{ cartTotalPrice()  | centsToMoney | currency }})</span>
         </button>
     </ion-nav-buttons>
 

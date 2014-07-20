@@ -4,10 +4,7 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
   templateUrl: '../app/scripts/cart/templates/cart.html'
   link: ($scope, ele, attrs, ctrl)->
 
-    $scope.orderEligibility = OrderService.checkEligibility()
-    $rootScope.$on 'CART:PRICE_UPDATED', (event, newValue) ->
-      $scope.orderEligibility = OrderService.checkEligibility()
-
+    $scope.orderEligibility = OrderService.checkEligibility
 
     $scope.edit = (product_cartItemKey)->
       $state.go 'app.products-edit', {productId: product_cartItemKey}

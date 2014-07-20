@@ -7,8 +7,6 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
 
   $rootScope.storeId = $stateParams.storeID
 
-  $scope.cartTotalPrice = ShoppingCartService.getTotalPrice()
-  $rootScope.$on 'CART:PRICE_UPDATED', (event, newValue) ->
-    $scope.cartTotalPrice = newValue
+  $scope.cartTotalPrice = ShoppingCartService.getTotalPrice
 
   $scope.menu = ProductService.getMenu($rootScope.storeId, $stateParams.category)

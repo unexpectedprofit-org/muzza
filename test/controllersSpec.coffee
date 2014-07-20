@@ -53,18 +53,6 @@ describe "controllers", ->
       createController({category: 'PIZZA', storeID: 1})
       expect(ProductService.getMenu).toHaveBeenCalledWith(1, 'PIZZA')
 
-    it "should call cart to get price", ->
-      getPriceSpy = spyOn(ShoppingCartService, 'getTotalPrice').and.callThrough()
-      createController({})
-      expect(getPriceSpy).toHaveBeenCalled()
-
-    it "should update the price when event is fired", ->
-      createController({})
-      rootScope.$broadcast 'CART:PRICE_UPDATED', 1200
-
-      expect(scope.cartTotalPrice).toBe 1200
-
-
     xdescribe "on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART", ->
 
       beforeEach ->

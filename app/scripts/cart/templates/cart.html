@@ -50,10 +50,10 @@
   </ion-list>
 
   <button class="button button-block button-positive"
-          data-ng-disabled="!orderEligibility.success"
+          data-ng-disabled="!orderEligibility().success"
           data-ng-click="checkout()">Realizar Pedido</button>
-  <div data-ng-show="!orderEligibility.success">
+  <div data-ng-show="!orderEligibility().success">
     Aun no puede completar la orden por...
     </br>
-    {{orderEligibility.reason}}
+    {{orderEligibility().reason}}
   </div>
