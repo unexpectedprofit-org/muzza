@@ -343,7 +343,7 @@ describe "services", ->
       menu = ProductService.getMenu undefined, undefined
 
       expect(menu.length).toBe 8
-      expect(menu[0].products.length).toBe 3
+      expect(menu[0].products.length).toBe 4
       expect(menu[1].products.length).toBe 3
       expect(menu[2].products.length).toBe 1
       expect(menu[3].products.length).toBe 1
@@ -358,7 +358,7 @@ describe "services", ->
       menu = ProductService.getMenu 1, categoryID
 
       expect(menu.length).toBe 1
-      expect(menu[0].products.length).toBe 3
+      expect(menu[0].products.length).toBe 4
       expect(menu[0].id).toEqual categoryID
 
 

@@ -64,6 +64,11 @@ angular.module('Muzza.constants',[]).constant 'stores',
             price: 0
           ]
         ]
+      ,
+        id:4
+        description: "Bebida sin opciones"
+        price:
+          base:10000
       ]
     ,
       id:2
