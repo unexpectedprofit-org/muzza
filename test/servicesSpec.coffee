@@ -344,7 +344,7 @@ describe "services", ->
 
       expect(menu.length).toBe 8
       expect(menu[0].products.length).toBe 3
-      expect(menu[1].products.length).toBe 2
+      expect(menu[1].products.length).toBe 3
       expect(menu[2].products.length).toBe 1
       expect(menu[3].products.length).toBe 1
       expect(menu[4].products.length).toBe 4

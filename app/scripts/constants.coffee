@@ -70,7 +70,8 @@ angular.module('Muzza.constants',[]).constant 'stores',
       description: "Pastas caseras"
       products: [
         id:1
-        description: "Ravioles Gran Caruso"
+        description: "Ravioles di Magro"
+        details: "Ravioles rellenos con ricota y espinaca. Mas texto sobre el plato viene aca..."
         price:
           base:5000
         options: [
@@ -123,6 +124,31 @@ angular.module('Muzza.constants',[]).constant 'stores',
           ,
             description: "Pollo y verdura"
             price: 0
+          ]
+        ]
+      ,
+        id:3
+        description: "Shrimp Scampi Pasta"
+        details: "Flavorful shrimp tossed with delicate angel hair pasta in a light blend of olive oil, butter, garlic, lemon juice and Roma tomatoes. Topped with Parmesan cheese, seasoned bread crumbs and parsley."
+        price:
+          base: 11000
+        options: [
+          description: "Salsa"
+          config:
+            min: 1
+            max:1
+          items: [
+            description: "Bolognesa"
+            price: 0
+          ,
+            description: "Rosa"
+            price: 10
+          ,
+            description: "Crema"
+            price: 0
+          ,
+            description: "Mixta"
+            price: 15
           ]
         ]
       ]

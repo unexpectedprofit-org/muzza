@@ -2,8 +2,12 @@
     <div class="item item-avatar">
         <qty ng-model="productSelected" min="1" style="float: right"></qty>
         <h2>{{ productSelected.description }}</h2>
-        <p>{{ productSelected.details }}</p>
         <p>Precio por Unidad: {{ productSelected.calculateTotalPrice() | centsToMoney | currency }}</p>
+    </div>
+
+    <div data-ng-if="productSelected.details != undefined"
+         class="item item-text-wrap">
+      {{ productSelected.details }}
     </div>
 
 
