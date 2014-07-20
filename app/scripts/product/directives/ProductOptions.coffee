@@ -14,19 +14,16 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
       _.each $scope.productSelected.options, (option) ->
 
         option.selectionError = undefined
-
-        selectMultipleOptions = !(option.config.min is 1 and option.config.max is 1) and !option.config.multipleQty
-        selectMultipleOptionsMultipleQty = !(option.config.min is 1 and option.config.max is 1) and option.config.multipleQty
         emptySelection = option.selection is undefined or option.selection.length is 0
 
-        if emptySelection and option.config.min > 0 and !selectMultipleOptionsMultipleQty
+        if emptySelection and option.config.min > 0 and option.type isnt "MULTIPLE_QTY"
           isValid = false
           option.selectionError = "OPTION_ERROR_NO_SELECTION"
 
 
         ################### intended for products that can have quantities per item #######################
         ################### multipleQty: current example: PROMO
-        if selectMultipleOptionsMultipleQty
+        if option.type is "MULTIPLE_QTY"
           totalQty = 0
           _.each option.items, (item) ->
             totalQty += item.qty
@@ -38,7 +35,7 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
         ################### intended for products that can have quantities per item #######################
 
 
-        if !emptySelection and selectMultipleOptions
+        if !emptySelection and option.type is "MULTIPLE"
 
           if option.selection.length > option.config.max
             isValid = false
@@ -56,9 +53,6 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
 
       if option.selection is undefined then option.selection = []
 
-      selectOnlyOneOption = option.config.min is 1 and option.config.max is 1
-      selectMultipleOptions = !selectOnlyOneOption and !option.config.multipleQty
-
       addOrReplace =  (item)->
         if option.selection.length > 0 then option.selection.pop()
         add(item)
@@ -71,9 +65,9 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
           #TODO: change this for a generated code
           elem.description is item.description
 
-      if selectOnlyOneOption then addOrReplace(item)
+      if option.type is "SINGLE" then addOrReplace(item)
 
-      if selectMultipleOptions
+      if option.type is "MULTIPLE"
 
         isOptionPresentAmongSelected = _.contains(option.selection, item)
 

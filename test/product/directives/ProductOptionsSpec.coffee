@@ -323,7 +323,7 @@ describe 'Product Options Directive', ->
         beforeEach ->
           inject ($compile, $rootScope) ->
             $scope = $rootScope
-            $scope.product =
+            $scope.product = new Product
               id:1
               price:10
               description: "Ensalada"

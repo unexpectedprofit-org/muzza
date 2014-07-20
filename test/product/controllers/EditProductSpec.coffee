@@ -4,10 +4,11 @@ describe "EditProductCtrl", ->
     module 'ionic'
     module 'Muzza.product'
 
-  scope = rootScope = createController = undefined
+  scope = rootScope = createController = Product = undefined
 
   beforeEach ->
-    inject ($controller, $rootScope)->
+    inject ($controller, $rootScope, $injector)->
+      Product = $injector.get 'Product'
       scope = $rootScope.$new()
       rootScope = $rootScope
       createController = (product)->
@@ -19,7 +20,7 @@ describe "EditProductCtrl", ->
   describe "setCurrentOptionsSelectedForDisplay", ->
 
     it "should set values for only one single selection", ->
-      product =
+      product = new Product
         id:2
         options:[
           config:
@@ -40,7 +41,7 @@ describe "EditProductCtrl", ->
       expect(scope.product.options[0].items[1].isSelected).toBeTruthy()
 
     it "should set values for only one multiple selection", ->
-      product =
+      product = new Product
         id:2
         options:[
           config:
@@ -66,7 +67,7 @@ describe "EditProductCtrl", ->
       expect(scope.product.options[0].items[2].isSelected).toBeFalsy()
 
     it "should set values for one single + one multiple selection", ->
-      product =
+      product = new Product
         id:2
         options: [
           config:
@@ -115,7 +116,7 @@ describe "EditProductCtrl", ->
       expect(scope.product.options[1].items[4].isSelected).toBeTruthy()
 
     it "should set values for multipleQty option type", ->
-      product =
+      product = new Product
         id:2
         options:[
           config:
