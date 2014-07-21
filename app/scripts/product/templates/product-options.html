@@ -1,8 +1,12 @@
 <div class="list card">
     <div class="item item-avatar">
-        <qty ng-model="productSelected" min="1" style="float: right"></qty>
+        <qty
+             data-ng-if="productSelected.isEditable().qty"
+             data-ng-model="productSelected" min="1" style="float: right"></qty>
         <h2>{{ productSelected.description }}</h2>
-        <p>Precio por Unidad: {{ productSelected.calculateTotalPrice() | centsToMoney | currency }}</p>
+
+        <p data-ng-if="productSelected.isEditable().qty">Precio por Unidad: {{ productSelected.calculateTotalPrice() | centsToMoney | currency }}</p>
+        <p data-ng-if="!productSelected.isEditable().qty">Precio Total: {{ productSelected.calculateTotalPrice() | centsToMoney | currency }}</p>
     </div>
 
     <div data-ng-if="productSelected.details != undefined"
@@ -34,7 +38,7 @@
                        data-ng-checked="item.isSelected"/>
 
                 <div class="item-content">
-                    {{ item.description }} <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency }} )</span>
+                    {{ item.description }}  <span data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency }} )</span>
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
@@ -61,8 +65,8 @@
         <!--################### intended for products that can have quantities per item #######################-->
         <div data-ng-if="option.type == 'MULTIPLE_QTY'">
             <li class="item item-checkbox" data-ng-repeat="item in option.items">
-                {{ item.description }} <span
-                    data-ng-if="item.price > 0">(+ {{ item.price | centsToMoney | currency}} )</span>
+                {{ item.description }}
+                <span>(c/u {{ item.price + productSelected.price.base | centsToMoney | currency}} )</span>
                 <span>Cantidad: <qty data-ng-model="item" min="0"></qty></span>
             </li>
         </div>

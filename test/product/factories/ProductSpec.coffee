@@ -366,7 +366,7 @@ describe 'Product', ->
       expect(product.getDetails()).toEqual "Pan: Salvado/||Adicionales: Tomate/Lechuga/Queso/||"
 
 
-  describe "calculateTotalPrice functionality", ->
+  xdescribe "calculateTotalPrice functionality", ->
 
     it "should be zero if no base price", ->
       product = new Product {id:2}

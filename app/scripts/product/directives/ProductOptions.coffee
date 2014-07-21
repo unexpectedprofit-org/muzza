@@ -28,9 +28,13 @@ angular.module('Muzza.product').directive 'productOptions', ($rootScope) ->
           _.each option.items, (item) ->
             totalQty += item.qty
 
-          if totalQty isnt option.config.min
+          if totalQty isnt option.config.min and option.config.max isnt -1
             isValid = false
             option.selectionError  = "OPTION_ERROR_MIN_MAX"
+          else if totalQty < option.config.min
+            isValid = false
+            option.selectionError  = "OPTION_ERROR_MIN"
+
 
         ################### intended for products that can have quantities per item #######################
 

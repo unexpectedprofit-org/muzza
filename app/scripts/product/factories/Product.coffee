@@ -19,7 +19,11 @@ angular.module('Muzza.product').factory "Product", () ->
         option.type = "MULTIPLE" if multipleOptions
         option.type = "MULTIPLE_QTY" if multipleOptionsMultipleQty
 
+  hasMultipleQtyOptionType = (options) ->
+    option_MULTIPLE_QTY_type = _.find options, (option) ->
+      option.type is 'MULTIPLE_QTY'
 
+    option_MULTIPLE_QTY_type isnt undefined
 
   Product::clearSelections = ()->
     @qty = 1
@@ -31,7 +35,7 @@ angular.module('Muzza.product').factory "Product", () ->
 
   Product::isEditable = () ->
     {
-      qty:true
+      qty: !hasMultipleQtyOptionType @options
       options: @options?[0].selection?.length > 0
     }
 
@@ -78,16 +82,25 @@ angular.module('Muzza.product').factory "Product", () ->
     commonHash
 
   Product::calculateTotalPrice = () ->
-    totalPrice = @price?.base or 0
+    productBasePrice = @price?.base or 0
+    totalPrice = 0
 
     _.forEach @options, (option) ->
+      totalPricePerOption = if option.type is "MULTIPLE_QTY" then 0 else productBasePrice
 
       _.forEach option.selection, (selection) ->
 
         selection.price = 0 unless selection.price isnt undefined
         selection.qty = 1 unless selection.qty isnt undefined
 
-        totalPrice += (selection.price * selection.qty)
+        if option.type is 'MULTIPLE_QTY'
+
+          totalPricePerOption += (productBasePrice + selection.price) * selection.qty
+        else
+          totalPricePerOption += (selection.price * selection.qty)
+
+      totalPrice += totalPricePerOption
+
 
     totalPrice
 

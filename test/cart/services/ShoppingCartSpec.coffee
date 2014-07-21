@@ -130,7 +130,7 @@ describe 'ShoppingCart Service', ->
           expect(broadcastSpy).not.toHaveBeenCalled
 
 
-  describe "calculate price functionality", ->
+  xdescribe "calculate price functionality", ->
 
     it "should return 0 if no products", ->
       expect(ShoppingCartService.getTotalPrice()).toBe 0

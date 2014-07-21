@@ -243,7 +243,7 @@ angular.module('Muzza.constants',[]).constant 'stores',
             max:1
           items: [
             description: "Frita"
-            price: 0
+            price: 50
           ,
             description: "Horno"
             price: 0
@@ -258,10 +258,11 @@ angular.module('Muzza.constants',[]).constant 'stores',
           description: "Coccion"
           config:
             min: 1
-            max:1
+            max:-1
+            multipleQty:true
           items: [
             description: "Frita"
-            price: 150
+            price: 50
           ,
             description: "Horno"
             price: 0
