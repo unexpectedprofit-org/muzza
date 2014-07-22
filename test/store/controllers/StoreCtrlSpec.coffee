@@ -1,7 +1,7 @@
 describe "Store Controller", ->
 
   beforeEach ->
-    module 'Muzza.stores'
+    module 'Muzza.store'
     module ($provide) ->
       $provide.value 'StoreService',
         listStores: () -> {then: (callback) -> callback({some: "thing"})}

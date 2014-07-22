@@ -1,4 +1,4 @@
-angular.module("Muzza.stores").service "StoreFileAdapter", ($http, $log) ->
+angular.module("Muzza.store").service "StoreFileAdapter", ($http, $log) ->
 
   retrieveBranchesData = () ->
 

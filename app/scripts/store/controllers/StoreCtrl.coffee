@@ -1,4 +1,4 @@
-angular.module("Muzza.stores").controller "StoresCtrl", ($scope, $state, OrderService, StoreService ) ->
+angular.module("Muzza.store").controller "StoresCtrl", ($scope, $state, OrderService, StoreService ) ->
 
   StoreService.listStores().then (branches) ->
     $scope.stores = branches

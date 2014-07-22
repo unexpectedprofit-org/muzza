@@ -1,4 +1,4 @@
-angular.module("Muzza.stores").service "StoreService", (StoreFileAdapter) ->
+angular.module("Muzza.store").service "StoreService", (StoreFileAdapter) ->
 
   getDayName = (index)->
     days = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado']

@@ -7,7 +7,7 @@ describe "Store service", ->
   StoreService = StoreFileAdapter = newStores = undefined
 
   beforeEach ->
-    module 'Muzza.stores'
+    module 'Muzza.store'
 
 
   beforeEach ->

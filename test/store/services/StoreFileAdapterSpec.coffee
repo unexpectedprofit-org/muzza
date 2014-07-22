@@ -3,7 +3,7 @@ describe "StoreFileAdapter", ->
   StoreFileAdapter = mockBackend = undefined
 
   beforeEach ->
-    module 'Muzza.stores'
+    module 'Muzza.store'
 
   beforeEach ->
     inject ($injector) ->
