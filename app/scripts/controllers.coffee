@@ -9,4 +9,5 @@ angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams
 
   $scope.cartTotalPrice = ShoppingCartService.getTotalPrice
 
-  $scope.menu = ProductService.getMenu($rootScope.storeId, $stateParams.category)
+  ProductService.getMenu($rootScope.storeId, $stateParams.category).then (response) ->
+    $scope.menu = response

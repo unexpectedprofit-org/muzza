@@ -14,7 +14,7 @@ angular.module("Muzza.twitter", ['firebase'])
 angular.module("Muzza.config",[])
 angular.module("Muzza.store",[])
 angular.module("Muzza.confirmation",[])
-angular.module("Muzza.product",['Muzza.constants'])
+angular.module("Muzza.product",[])
 
 angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empanadas", "Muzza.bebidas","Muzza.cart",
     "Muzza.controllers", "Muzza.directives", "Muzza.templates", "Muzza.services", "Muzza.constants",

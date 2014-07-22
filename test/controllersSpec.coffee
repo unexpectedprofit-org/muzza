@@ -13,7 +13,7 @@ describe "controllers", ->
       module ($provide) ->
         $provide.value 'ProductService',
           getMenu: ()->
-            { pizza:[products:{id:1}], empanada:[products:{id:2}] }
+            { then: (callback) -> callback([{products:[{id:1}]}, {products:[id:2]}]) }
         null
         $provide.value 'ShoppingCartService',
           getTotalPrice: () -> 100
@@ -45,8 +45,8 @@ describe "controllers", ->
 
     it "should get all menu items", ->
       createController({storeID: 1})
-      expect(scope.menu.pizza).toEqual [{products:{id:1}}]
-      expect(scope.menu.empanada).toEqual [{products:{id:2}}]
+      expect(scope.menu[0]).toEqual {products:[{id:1}]}
+      expect(scope.menu[1]).toEqual {products:[{id:2}]}
       expect(ProductService.getMenu).toHaveBeenCalled()
 
     it "should get only the menu items for an specific category", ->
