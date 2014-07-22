@@ -1,4 +1,4 @@
-angular.module("Muzza.stores").service "StoreService", () ->
+angular.module("Muzza.stores").service "StoreService", (StoreFileAdapter) ->
 
   getDayName = (index)->
     days = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado']
@@ -86,115 +86,12 @@ angular.module("Muzza.stores").service "StoreService", () ->
 
 
   getStores = () ->
-    ######################### back end data
-    stores =
-    [
-      {
-        "id": 1,
-        "name_real": "Juancho S.R.L.",
-        "name_fantasy": "La pizzeria de Juancho",
+    StoreFileAdapter.getBranches().then (response) ->
+      returnStores = []
 
-        "address": {
-          "street": "Av. Rivadavia",
-          "door": 5100,
-          "zip": "1406",
-          "hood": "Caballito",
-          "area": "Capital Federal",
-          "state": "Buenos Aires"
-        },
+      angular.forEach response.data, ( elem ) ->
+        returnStores.push new StoreDetailsObject elem
 
-        "phone": {
-          "main": "4444 5555",
-          "other": "1111 2222",
-          "cel": "15 4444 9999"
-        },
-
-        displayOpenHours:
-          Domingo: []
-          Lunes: [
-            ['12:00', '14:00']
-            ['19:30', '03:00']
-          ]
-          Martes: [
-            ['11:30', '15:00']
-            ['19:30', '22:00']
-          ]
-          Miercoles: [
-            ['11:30', '15:00']
-            ['19:30', '22:00']
-          ]
-          Jueves: [
-            ['11:30', '15:00']
-            ['19:30', '01:00']
-          ]
-          Viernes: [
-            ['11:30', '15:00']
-            ['19:30', '02:30']
-          ]
-          Sabado: [
-            ['18:30', '03:00']
-          ]
-        ,
-        order:
-          minPrice:
-            delivery: 6000
-            pickup: 8000
-      },
-      {
-        "id": 2,
-        "name_real": "Las 10 porciones S.R.L.",
-        "name_fantasy": "Pizzeria la tengo mas grande",
-
-        "address": {
-          "street": "Av. Juan B. Alberdi",
-          "door": 3200,
-          "zip": "1406",
-          "hood": "Flores",
-          "area": "Capital Federal",
-          "state": "Buenos Aires"
-        },
-
-        "phone": {
-          "main": "2222 8898",
-          "other": "1234 4444",
-          "cel": "15 0000 2222"
-        },
-        displayOpenHours:
-          Domingo: [
-            ['10:30', '13:00']
-          ]
-          Lunes: [
-            ['12:00', '14:00']
-            ['19:00', '21:00']
-          ]
-          Martes: [
-            ['11:30', '15:00']
-            ['19:30', '22:00']
-          ]
-          Miercoles: [
-            ['11:30', '15:00']
-            ['19:30', '22:00']
-          ]
-          Jueves: [
-            ['11:30', '15:00']
-            ['19:30', '22:00']
-          ]
-          Viernes: []
-          Sabado: []
-        ,
-        order:
-          minPrice:
-            delivery: 9000
-            pickup: 10000
-      }
-    ]
-    ######################### back end data
-
-    returnStores = []
-
-    angular.forEach stores, ( elem ) ->
-      returnStores.push new StoreDetailsObject elem
-
-    return returnStores
+      return returnStores
 
   listStores: getStores

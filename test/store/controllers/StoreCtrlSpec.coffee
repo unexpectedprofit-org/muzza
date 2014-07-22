@@ -4,7 +4,7 @@ describe "Store Controller", ->
     module 'Muzza.stores'
     module ($provide) ->
       $provide.value 'StoreService',
-        listStores: () -> {some: "thing"}
+        listStores: () -> {then: (callback) -> callback({some: "thing"})}
       $provide.value '$state',
         go: ()-> null
       $provide.value 'OrderService',
