@@ -9,7 +9,7 @@ google =
           geometry:
             location:
               k: -33.591809
-              A: -58.3959331
+              B: -58.3959331
         ], geoCodeResponse)
 
 

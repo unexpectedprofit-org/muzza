@@ -24,7 +24,7 @@ angular.module('Muzza.contact').service 'Geo', ($q, $log)->
     deferred = $q.defer()
 
     geoCode(userAddress).then (userLatLong)->
-      distanceBetweenUserAndStore = calculateDistance(storeLatLong.k, storeLatLong.A, userLatLong.k, userLatLong.A)
+      distanceBetweenUserAndStore = calculateDistance(storeLatLong.k, storeLatLong.A, userLatLong.k, userLatLong.B)
       isWithinRadio = distanceBetweenUserAndStore <= storeDeliveryRadio
       deferred.resolve(isWithinRadio)
     , (status)->
