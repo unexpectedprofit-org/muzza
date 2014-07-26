@@ -24,8 +24,8 @@ angular.module("Muzza", [ "pasvaz.bindonce","ionic", "Muzza.pizzas" ,"Muzza.empa
 angular.module("Muzza").run ($ionicPlatform, $state) ->
   $ionicPlatform.ready ->
     StatusBar.styleDefault() if window.StatusBar
-    $state.go 'app.menu'
-#    $state.go 'app.order-delivery'
+#    $state.go 'app.menu'
+    $state.go 'app.order-delivery'
 
 
 angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
@@ -67,7 +67,7 @@ angular.module("Muzza").config ($stateProvider, $urlRouterProvider) ->
 #        controller: "MenuCtrl"
 
   .state "app.stores",
-    url: "/stores"
+    url: "/stores/:deliveryOption"
     views:
       navContent:
         templateUrl: "../app/scripts/store/templates/stores.html"

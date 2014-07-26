@@ -5,6 +5,19 @@ describe 'ShoppingCart Service', ->
     module 'Muzza.product'
     module 'Muzza.promo'
 
+    module ($provide) ->
+      $provide.value 'StoreService',
+        retrieveSelectedStore: ()-> null
+      $provide.value 'Delivery',
+        retrieveDelivery: ()-> null
+      $provide.value 'Contact',
+        retrieveConnectionInfo: ()-> null
+      $provide.value 'OrderService',
+        createOrder: ()-> null
+
+
+      null
+
   ShoppingCartService = Product = undefined
 
   beforeEach ->
@@ -146,3 +159,92 @@ describe 'ShoppingCart Service', ->
       ShoppingCartService.add new Product {id:22,desc:'Cebolla y Queso',type:'Frita',qty:2, price:{base:3000}}
 
       expect(ShoppingCartService.getTotalPrice()).toBe 14000
+
+  describe "check order eligibility", ->
+
+    it "should return error if cart empty", ->
+      response = ShoppingCartService.checkEligibility()
+      expect(response.success).toBeFalsy()
+      expect(response.reason).toBe "NO_PRODUCTS"
+
+    it "should return error if no store selected", ->
+      inject (StoreService)->
+        spyOn(StoreService, 'retrieveSelectedStore').and.returnValue null
+        ShoppingCartService.add new Product {id:20,desc:'Pollo',type:'Frita',qty:2, price:{base:1000}}
+        response = ShoppingCartService.checkEligibility()
+        expect(response.success).toBeFalsy()
+        expect(response.reason).toBe "NO_STORE"
+
+    it "should return error if no minimum reached", ->
+      inject (StoreService, Delivery)->
+        store =
+          order:
+            minPrice:
+              delivery: 100
+              pickup: 50
+        spyOn(StoreService, 'retrieveSelectedStore').and.returnValue store
+        spyOn(Delivery, 'retrieveDelivery').and.returnValue 'delivery'
+        ShoppingCartService.add new Product {id:20,desc:'Pollo',type:'Frita',qty:2, price:{base:10}}
+        response = ShoppingCartService.checkEligibility()
+        expect(response.success).toBeFalsy()
+        expect(response.reason).toBe "NO_MIN_AMOUNT"
+
+    it "should return ok if all conditions met", ->
+      inject (StoreService, Delivery)->
+        store =
+          order:
+            minPrice:
+              delivery: 100
+              pickup: 50
+        spyOn(StoreService, 'retrieveSelectedStore').and.returnValue store
+        spyOn(Delivery, 'retrieveDelivery').and.returnValue 'delivery'
+        ShoppingCartService.add new Product {id:20,desc:'Pollo',type:'Frita',qty:2, price:{base:10000}}
+        response = ShoppingCartService.checkEligibility()
+        expect(response.success).toBeTruthy()
+
+  describe 'checkout', ->
+
+    it 'should add the saved store to the cart', ->
+      inject (StoreService)->
+        cart = {}
+        store =
+          order:
+            minPrice:
+              delivery: 100
+              pickup: 50
+        spyOn(StoreService, 'retrieveSelectedStore').and.returnValue store
+        ShoppingCartService.checkout(cart)
+        expect(cart.store).toEqual store
+
+    it 'should add the saved delivery to the cart', ->
+      inject (Delivery)->
+        cart = {}
+        spyOn(Delivery, 'retrieveDelivery').and.returnValue 'delivery'
+        ShoppingCartService.checkout cart
+        expect(cart.delivery).toBe 'delivery'
+
+    it 'should add the saved contact to the cart', ->
+      inject (Contact)->
+        cart = {}
+        user  =
+          name: 'Santiago'
+        spyOn(Contact, 'retrieveConnectionInfo').and.returnValue user
+        ShoppingCartService.checkout cart
+        expect(cart.contact.name).toEqual 'Santiago'
+
+    it 'should delegate the cart to OrderService', ->
+      inject (OrderService)->
+        cart =
+          products: []
+          contact:
+            name: 'Santiago'
+          delivery: 'pickup'
+          store:
+            order:
+              minPrice:
+                delivery: 100
+                pickup: 50
+        spyOn(OrderService, 'createOrder').and.callThrough()
+        ShoppingCartService.checkout cart
+        expect(OrderService.createOrder).toHaveBeenCalled()
+

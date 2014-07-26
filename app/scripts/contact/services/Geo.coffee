@@ -47,3 +47,4 @@ angular.module('Muzza.contact').service 'Geo', ($q, $log)->
     deg * (Math.PI / 180)
 
   validateDeliveryRadio: isUserWithinRadio
+  geoCodeAddress: geoCode

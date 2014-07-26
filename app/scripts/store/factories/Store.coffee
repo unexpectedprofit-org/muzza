@@ -1,18 +1,22 @@
-angular.module("Muzza.store").service "StoreService", (StoreFileAdapter) ->
+angular.module('Muzza.store').factory 'Store', (Geo)->
 
   getDayName = (index)->
     days = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado']
     days[index]
 
-  class StoreDetailsObject
+  class Store
     constructor: ( data ) ->
       @id = data.id
       @name = data.name_fantasy
-      @address = data.address.street + " " + data.address.door + " - " + data.address.hood + " (" +  data.address.area + ")"
-      @tel = data.phone.main + " / " + data.phone.other + " / " + data.phone.cel
+      @address = data.address
+      @tel = data.phone
       @order = data.order
 
       @hoursInfo = @constructHoursInfo data.displayOpenHours
+      @delivery = data.delivery
+      @isAvailableForUser = (userAddress) ->
+        @address = userAddress
+      return Geo.validateDeliveryRadio(@address, @delivery)
 
 
     constructHoursInfo: ( displayOpenHours ) ->
@@ -83,15 +87,4 @@ angular.module("Muzza.store").service "StoreService", (StoreFileAdapter) ->
 
       return angular.extend objectToReturn, {isOpen:isOpen,timeToOpen: minutesToOpen,timeToClose: minutesToClose}
 
-
-
-  getStores = () ->
-    StoreFileAdapter.getBranches().then (response) ->
-      returnStores = []
-
-      angular.forEach response.data, ( elem ) ->
-        returnStores.push new StoreDetailsObject elem
-
-      return returnStores
-
-  listStores: getStores
+  return Store

@@ -1,19 +1,16 @@
-angular.module('Muzza.contact').directive 'contact', (OrderService,$state, $stateParams)->
+angular.module('Muzza.contact').directive 'contact', (Contact,$state, $stateParams)->
   restrict: 'EA'
   scope: {}
   templateUrl: '../app/scripts/contact/templates/contact.html'
   link: ($scope, ele, attrs, ctrl)->
 
-    $scope.contact = OrderService.retrieveConnectionInfo() or {}
+    $scope.contact = Contact.retrieveConnectionInfo() or {}
 
     $scope.deliveryOption = $stateParams.method
 
     $scope.continue =  ()->
-      OrderService.addContactInfo($scope.contact).then ()->
-        if $scope.deliveryOption is 'delivery' then $state.go 'app.menu'
-        if $scope.deliveryOption is 'pickup' then $state.go 'app.stores'
-      , (errorMsg)->
-        $scope.error = errorMsg
+      Contact.addContactInfo($scope.contact)
+      $state.go 'app.stores', deliveryOption: $scope.deliveryOption
 
 
 

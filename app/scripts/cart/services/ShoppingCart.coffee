@@ -1,4 +1,4 @@
-angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
+angular.module("Muzza.cart").service 'ShoppingCartService', (StoreService, Delivery, Contact, OrderService)->
 
   products = []
 
@@ -41,16 +41,39 @@ angular.module("Muzza.cart").service 'ShoppingCartService', ($rootScope)->
 
   removeAllItems = () ->
     products = []
-#    notifyTotalPriceChange()
 
-#  notifyTotalPriceChange = () ->
-#    $rootScope.$broadcast 'CART:PRICE_UPDATED', calculateTotalPrice()
+  getMinimumAmount = () ->
+    deliveryOption = getDeliveryMethod()
+    store = getStore()
+    store.order.minPrice[deliveryOption]
+
+  isOrderEligible = () ->
+    if getItems().length is 0 then return {success: false,reason:"NO_PRODUCTS"}
+    if getStore() is undefined then return {success: false,reason:"NO_STORE"}
+    if calculateTotalPrice() < getMinimumAmount() then return {success:false,reason:"NO_MIN_AMOUNT"}
+    return {success:true}
+
+  getStore = ()->
+    StoreService.retrieveSelectedStore() or undefined
+
+  getDeliveryMethod = ()->
+    Delivery.retrieveDelivery()
+
+  getContact = ()->
+    Contact.retrieveConnectionInfo()
+
+  submitOrder = (cart)->
+    cart.store = getStore()
+    cart.delivery = getDeliveryMethod()
+    cart.contact = getContact()
+    OrderService.createOrder cart
 
 
   getCart: getItems
   emptyCart: removeAllItems
   getTotalPrice: calculateTotalPrice
-
+  checkEligibility: isOrderEligible
   add: addItem
   remove: removeItem
   get: getItem
+  checkout: submitOrder

@@ -14,16 +14,15 @@ angular.module("Muzza.product").service "ProductService", (ProductFileAdapter, P
       category = _.find productsByCategory, (elem) ->
         elem.id is parseInt categoryId
       categories = [category]
-
     else
       categories = productsByCategory
 
-      _.forEach categories, (category) ->
-        category.products = _.map category.products, (product) ->
-          product.categoryId = category.id
-          new Product product
+    _.forEach categories, (category) ->
+      category.products = _.map category.products, (product) ->
+        product.categoryId = category.id
+        new Product product
 
-      categories
+    categories
 
 
   getMenu: getProductsByCompanyId

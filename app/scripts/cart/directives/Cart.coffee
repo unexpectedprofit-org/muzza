@@ -1,10 +1,10 @@
-angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, OrderService, $rootScope) ->
+angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state) ->
   restrict: 'EA'
   scope: {}
   templateUrl: '../app/scripts/cart/templates/cart.html'
   link: ($scope, ele, attrs, ctrl)->
 
-    $scope.orderEligibility = OrderService.checkEligibility
+    $scope.orderEligibility = ShoppingCartService.checkEligibility
 
     $scope.edit = (product_cartItemKey)->
       $state.go 'app.products-edit', {productId: product_cartItemKey}
@@ -17,5 +17,5 @@ angular.module('Muzza.cart').directive 'cart', (ShoppingCartService, $state, Ord
       totalPrice: ShoppingCartService.getTotalPrice
 
     $scope.checkout = () ->
-      OrderService.createOrder $scope.cart
+      ShoppingCartService.checkout $scope.cart
       $state.go 'app.order-review'

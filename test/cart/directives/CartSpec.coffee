@@ -13,13 +13,15 @@ describe "Cart", ->
         getCart: ()-> null
         getTotalPrice: () -> null
         removePromotion: () -> null
+        checkEligibility: () -> null
+        checkout: ()-> null
 
       $provide.value "$state",
         go: () -> null
 
       $provide.value "OrderService",
         createOrder: ()-> null
-        checkEligibility: () -> null
+
 
       return null
 
@@ -245,12 +247,11 @@ describe "Cart", ->
     $state = OrderService = undefined
 
     beforeEach ->
-      inject (_$state_, _OrderService_)->
+      inject (_$state_)->
         $state = _$state_
-        OrderService = _OrderService_
         spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
         spyOn($state, 'go').and.callThrough()
-        spyOn(OrderService, 'createOrder')
+        spyOn(ShoppingCartService, 'checkout')
         $scope.$digest()
         isolatedScope = element.isolateScope()
         isolatedScope.checkout()
@@ -259,18 +260,17 @@ describe "Cart", ->
     it "should redirect to delivery option", ->
       expect($state.go).toHaveBeenCalledWith('app.order-review')
 
-    it "should delegate to OrderService to create the order", ->
-      expect(OrderService.createOrder).toHaveBeenCalledWith jasmine.objectContaining
+    it "should call Shopping Service to create the order", ->
+      expect(ShoppingCartService.checkout).toHaveBeenCalledWith jasmine.objectContaining
         products: [product1]
 
   describe "order eligibility", ->
 
     it "should call Order service", ->
-      inject (OrderService) ->
-        eligibilitySpy = spyOn(OrderService, 'checkEligibility').and.returnValue {}
-        spyOn(ShoppingCartService, 'getCart').and.returnValue []
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
+      eligibilitySpy = spyOn(ShoppingCartService, 'checkEligibility').and.returnValue {}
+      spyOn(ShoppingCartService, 'getCart').and.returnValue []
+      $scope.$digest()
+      isolatedScope = element.isolateScope()
 
-        expect(eligibilitySpy).toHaveBeenCalled()
-        expect(isolatedScope.orderEligibility).toBeDefined()
+      expect(eligibilitySpy).toHaveBeenCalled()
+      expect(isolatedScope.orderEligibility).toBeDefined()

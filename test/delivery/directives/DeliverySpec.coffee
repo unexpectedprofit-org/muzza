@@ -7,16 +7,16 @@ describe 'Delivery', ->
     module ($provide) ->
       $provide.value '$state',
         go: ()-> null
-      $provide.value 'OrderService',
+      $provide.value 'Delivery',
         chooseDelivery: ()-> null
         retrieveDelivery: ()-> 'pickup'
       return null
 
-  OrderService = isolatedScope = $state = undefined
+  Delivery = isolatedScope = $state = undefined
 
   beforeEach ->
-    inject ($compile, $rootScope, _OrderService_, _$state_) ->
-      OrderService = _OrderService_
+    inject ($compile, $rootScope, _Delivery_, _$state_) ->
+      Delivery = _Delivery_
       $state = _$state_
       $scope = $rootScope
       element = angular.element('<delivery></delivery>')
@@ -27,9 +27,9 @@ describe 'Delivery', ->
   describe 'when user chooses a delivery option', ->
 
     it 'should delegate to Order Service', ->
-      spyOn(OrderService, 'chooseDelivery')
+      spyOn(Delivery, 'chooseDelivery')
       isolatedScope.chooseDelivery('pickup')
-      expect(OrderService.chooseDelivery).toHaveBeenCalledWith('pickup')
+      expect(Delivery.chooseDelivery).toHaveBeenCalledWith('pickup')
 
     it 'should redirect to the contact route', ->
       spyOn($state, 'go')
@@ -39,7 +39,7 @@ describe 'Delivery', ->
   describe 'when user has previously selected an option and comes back', ->
 
     it 'should retrieve the selected option', ->
-      spyOn(OrderService, 'retrieveDelivery')
+      spyOn(Delivery, 'retrieveDelivery')
       expect(isolatedScope.option).toBe 'pickup'
 
 

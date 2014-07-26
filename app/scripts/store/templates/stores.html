@@ -7,13 +7,16 @@
     <ion-content class="has-header">
 
         <ion-list data-ng-controller="StoresCtrl">
+            <ion-item ng-show="stores.length == 0 && deliveryOption == 'pickup'">No hay locales abiertos para {{deliveryOption}} en este momento</ion-item>
+            <ion-item ng-show="stores.length == 0 && deliveryOption == 'delivery'">No hay locales dentro su area abiertos para {{deliveryOption}} en este momento</ion-item>
             <ion-item ng-repeat="store in stores" data-ng-click="continue(store)">
                 <i class="icon icon-home"></i>
                 <strong>{{store.name}}</strong>
                 <br>
-                {{ store.address }}
+                {{ store.address.street}} {{store.address.door}} - {{store.address.hood}} ( {{ store.address.area}} )
+
                 <br>
-                {{ store.tel }}
+                {{store.tel.main}} / {{store.tel.other}} / {{store.tel.cel}}
                 <br>
                 <br>
                 Monto minimo:
