@@ -1,4 +1,4 @@
-angular.module("Muzza.controllers", ['Muzza.services'])
+angular.module("Muzza.controllers",[])
 
 angular.module("Muzza.controllers").controller "MenuCtrl", ($scope, $stateParams, ProductService, $rootScope, ShoppingCartService, $state) ->
 
