@@ -16,7 +16,7 @@ angular.module('Muzza.store').factory 'Store', (Geo)->
       @delivery = data.delivery
       @isAvailableForUser = (userAddress) ->
         @address = userAddress
-      return Geo.validateDeliveryRadio(@address, @delivery)
+        Geo.validateDeliveryRadio(@address, @delivery)
 
 
     constructHoursInfo: ( displayOpenHours ) ->
