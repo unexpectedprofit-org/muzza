@@ -1,17 +1,6 @@
-angular.module("Muzza.product").service "ProductFileAdapter", ($http, $log) ->
+angular.module("Muzza.product").service "ProductFileAdapter", ($http, $log, menu) ->
 
   retrieveMenuData = () ->
-
-    $http(
-      method: 'GET'
-      url: '/data/menu.json'
-    ).success( (data) ->
-      return data
-
-    ).error( (errors) ->
-      $log.error "ProductFileAdapter:getMenu - ERROR"
-      $log.error errors
-    )
-
+    menu.products
 
   getMenu: retrieveMenuData

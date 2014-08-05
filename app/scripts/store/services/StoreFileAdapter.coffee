@@ -1,17 +1,6 @@
-angular.module("Muzza.store").service "StoreFileAdapter", ($http, $log) ->
+angular.module("Muzza.store").service "StoreFileAdapter", ($http, $log, branches) ->
 
   retrieveBranchesData = () ->
-
-    $http(
-      method: 'GET'
-      url: '/data/branches.json'
-    ).success( (data) ->
-      return data
-
-    ).error( (errors) ->
-      $log.error "StoreFileAdapter:getBranches - ERROR"
-      $log.error errors
-    )
-
+    branches.list
 
   getBranches: retrieveBranchesData

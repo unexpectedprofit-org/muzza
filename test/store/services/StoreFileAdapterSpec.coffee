@@ -1,6 +1,6 @@
 describe "StoreFileAdapter", ->
 
-  StoreFileAdapter = mockBackend = undefined
+  StoreFileAdapter = undefined
 
   beforeEach ->
     module 'Muzza.store'
@@ -8,12 +8,9 @@ describe "StoreFileAdapter", ->
   beforeEach ->
     inject ($injector) ->
       StoreFileAdapter = $injector.get 'StoreFileAdapter'
-      mockBackend = $injector.get '$httpBackend'
 
   describe "getBranches", ->
 
-    it "should make a http call", ->
-      StoreFileAdapter.getBranches()
-
-      mockBackend.expectGET().respond({})
-      mockBackend.flush()
+    it "should retrieve stores", ->
+      stores  = StoreFileAdapter.getBranches()
+      expect stores.length > 0
