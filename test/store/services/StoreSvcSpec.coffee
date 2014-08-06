@@ -91,9 +91,6 @@ describe "Store service", ->
     StoreService.listStores()
     expect(StoreFileAdapter.getBranches).toHaveBeenCalled()
 
-#  it 'should return only those store that are opened right now', ->
-#    StoreService.listStores()
-
   describe 'chooseStore', ->
 
     it 'should save the selected store', ->
