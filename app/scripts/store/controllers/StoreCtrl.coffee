@@ -5,11 +5,15 @@ angular.module("Muzza.store").controller "StoresCtrl", ($scope, $state, StoreSer
 
   StoreService.listStores().then (branches) ->
     $scope.stores = []
-    Contact.retrieveConnectionInfo().then (userInfo)->
-      if !userInfo.address.hasOwnProperty('latLong')
+
+    Contact.retrieveContactInfo().then (userInfo)->
+      if !userInfo.address.hasOwnProperty('street')
         throw Error "User address not present"
+
       openedBranches = _.filter(branches, (store)-> store.hoursInfo.isOpen)
+
       if deliveryOption is 'pickup' then $scope.stores = openedBranches
+
       if deliveryOption is 'delivery' and userInfo?.address
         userAddress = userInfo.address
         angular.forEach openedBranches, (store)->

@@ -9,15 +9,13 @@ describe 'ContactSvc', ->
     inject (_Contact_)->
       ContactSvc = _Contact_
 
-  describe 'chooseContactOption', ->
+  describe 'retrieveContact chooseContactOption', ->
 
-    it 'should save the option into the order', ->
-      ContactSvc.addContactInfo('pickup')
-      expect(ContactSvc.retrieveConnectionInfo()).toEqual 'pickup'
-
-  describe 'retrieveContact', ->
-
-    it 'should return the selected Contact option', ->
-      ContactSvc.addContactInfo('pickup')
-      option = ContactSvc.retrieveConnectionInfo()
-      expect(option).toBe 'pickup'
+    it 'should save and return the selected Contact option', ->
+      inject ($rootScope)->
+        userContact = undefined
+        ContactSvc.addContactInfo('pickup')
+        ContactSvc.retrieveContactInfo().then (contact)->
+          userContact = contact
+        $rootScope.$apply()
+        expect(userContact).toBe 'pickup'

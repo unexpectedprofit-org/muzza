@@ -60,7 +60,7 @@ angular.module("Muzza.cart").service 'ShoppingCartService', (StoreService, Deliv
     Delivery.retrieveDelivery()
 
   getContact = ()->
-    Contact.retrieveConnectionInfo()
+    Contact.retrieveContactInfo()
 
   submitOrder = (cart)->
     cart.store = getStore()

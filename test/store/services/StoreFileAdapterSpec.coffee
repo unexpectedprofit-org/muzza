@@ -12,5 +12,9 @@ describe "StoreFileAdapter", ->
   describe "getBranches", ->
 
     it "should retrieve stores", ->
-      stores  = StoreFileAdapter.getBranches()
-      expect stores.length > 0
+      inject ($rootScope)->
+        stores = undefined
+        StoreFileAdapter.getBranches().then (response)->
+          stores = response
+        $rootScope.$apply()
+        expect(stores.data.length).toBeGreaterThan 0

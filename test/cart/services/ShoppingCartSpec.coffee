@@ -11,7 +11,7 @@ describe 'ShoppingCart Service', ->
       $provide.value 'Delivery',
         retrieveDelivery: ()-> null
       $provide.value 'Contact',
-        retrieveConnectionInfo: ()-> null
+        retrieveContactInfo: ()-> null
       $provide.value 'OrderService',
         createOrder: ()-> null
 
@@ -228,7 +228,7 @@ describe 'ShoppingCart Service', ->
         cart = {}
         user  =
           name: 'Santiago'
-        spyOn(Contact, 'retrieveConnectionInfo').and.returnValue user
+        spyOn(Contact, 'retrieveContactInfo').and.returnValue user
         ShoppingCartService.checkout cart
         expect(cart.contact.name).toEqual 'Santiago'
 

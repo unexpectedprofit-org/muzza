@@ -232,7 +232,7 @@ describe 'Order Service', ->
 #    it 'should return the filled contact information', ->
 #      OrderService.chooseDelivery('pickup')
 #      OrderService.addContactInfo({name:'San'})
-#      expect(OrderService.retrieveConnectionInfo()).toEqual {name:'San'}
+#      expect(OrderService.retrieveContactInfo()).toEqual {name:'San'}
 #
 #  describe 'chooseStore', ->
 #

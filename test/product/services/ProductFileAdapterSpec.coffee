@@ -12,5 +12,9 @@ describe "ProductFileAdapter", ->
   describe "getMenu", ->
 
     it "should retrieve menu", ->
-      menu  = ProductFileAdapter.getMenu()
-      expect menu.length > 0
+      inject ($rootScope)->
+        menu = undefined
+        ProductFileAdapter.getMenu().then (response)->
+          menu = response
+        $rootScope.$apply()
+        expect(menu.data.length).toBeGreaterThan 0

@@ -12,7 +12,7 @@ describe 'Contact', ->
       $provide.value 'Contact',
         chooseDelivery: ()-> null
         addContactInfo: ()-> {then: (callback)-> callback()}
-        retrieveConnectionInfo: ()-> {name:'San'}
+        retrieveContactInfo: ()-> {then: (callback)-> callback({name:'San'})}
       return null
 
   Contact = isolatedScope = $state = _stateParams_ = $q = undefined
@@ -69,7 +69,7 @@ describe 'Contact', ->
   describe 'when user has previosuly filled the form', ->
 
     it 'should display the contact information', ->
-      spyOn(Contact, 'retrieveConnectionInfo')
+      spyOn(Contact, 'retrieveContactInfo')
       expect(isolatedScope.contact).toEqual {name:'San'}
 
 

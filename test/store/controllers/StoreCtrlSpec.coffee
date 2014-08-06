@@ -9,7 +9,7 @@ describe "Store Controller", ->
       $provide.value '$state',
         go: ()-> null
       $provide.value 'Contact',
-        retrieveConnectionInfo: ()-> {address: {}}
+        retrieveContactInfo: ()-> {address: {}}
 
       null
 
@@ -28,8 +28,8 @@ describe "Store Controller", ->
 
   it "should call the store service to retrieve the store list", ->
     spyOn(StoreService, 'listStores').and.callThrough()
-    user = {address: { latLong: 1}}
-    spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+    user = {address: { street: 1}}
+    spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
 
     createController()
     expect(StoreService.listStores).toHaveBeenCalled()
@@ -41,7 +41,7 @@ describe "Store Controller", ->
     ]
     user = {address: {}}
     spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
-    spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+    spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
     missingAddress = ()->
       createController(deliveryOption:'delivery')
     expect(missingAddress).toThrow(Error 'User address not present')
@@ -54,9 +54,9 @@ describe "Store Controller", ->
         {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} },
         {some: "thing", hoursInfo:{isOpen: false}, isAvailableForUser: ()-> return {then: (callback)-> callback(false)} }
       ]
-      user = {address: {latLong: 111}}
+      user = {address: {street: 111}}
       spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
-      spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
       createController(deliveryOption:'delivery')
       expect(scope.stores.length).toBe 1
 
@@ -65,9 +65,9 @@ describe "Store Controller", ->
         {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(false)} },
         {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(false)} }
       ]
-      user = {address: {latLong: 111}}
+      user = {address: {street: 111}}
       spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
-      spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
       createController(deliveryOption:'delivery')
       expect(scope.stores.length).toBe 0
 
@@ -78,8 +78,8 @@ describe "Store Controller", ->
         {some: "thing", hoursInfo:{isOpen: true}},
         {some: "thing", hoursInfo:{isOpen: false}}
       ]
-      user = {address: { latLong: 1}}
-      spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      user = {address: { street: 1}}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
       spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
 
       createController(deliveryOption:'pickup')
@@ -90,8 +90,8 @@ describe "Store Controller", ->
         {some: "thing", hoursInfo:{isOpen: true}},
         {some: "thing", hoursInfo:{isOpen: true}}
       ]
-      user = {address: { latLong: 1}}
-      spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      user = {address: { street: 1}}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
 
       spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
       createController(deliveryOption:'pickup')
@@ -102,8 +102,8 @@ describe "Store Controller", ->
         {some: "thing", hoursInfo:{isOpen: false}},
         {some: "thing", hoursInfo:{isOpen: false}}
       ]
-      user = {address: { latLong: 1}}
-      spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      user = {address: { street: 1}}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
 
       spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
       createController(deliveryOption:'pickup')
@@ -114,8 +114,8 @@ describe "Store Controller", ->
   describe 'when user selects a store', ->
 
     it 'should save the selected store into the order', ->
-      user = {address: { latLong: 1}}
-      spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      user = {address: { street: 1}}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
 
       createController()
       store = {id: 1}
@@ -125,8 +125,8 @@ describe "Store Controller", ->
     it 'should redirect to the menu', ->
       inject ($state)->
         spyOn($state, 'go')
-        user = {address: { latLong: 1}}
-        spyOn(Contact, 'retrieveConnectionInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+        user = {address: { street: 1}}
+        spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
 
         createController()
         scope.continue()
