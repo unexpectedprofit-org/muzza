@@ -1,6 +1,9 @@
-angular.module("Muzza.product").service "ProductFileAdapter", ($http, $log, menu) ->
+angular.module("Muzza.product").service "ProductFileAdapter", ($http, $log, menu, $q) ->
 
   retrieveMenuData = () ->
-    menu.products
+    deferred = $q.defer()
+    deferred.resolve({data: menu.products})
+    return deferred.promise
+
 
   getMenu: retrieveMenuData

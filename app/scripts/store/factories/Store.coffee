@@ -5,19 +5,6 @@ angular.module('Muzza.store').factory 'Store', (Geo)->
     days[index]
 
   class Store
-    constructor: ( data ) ->
-      @id = data.id
-      @name = data.name_fantasy
-      @address = data.address
-      @tel = data.phone
-      @order = data.order
-
-      @hoursInfo = @constructHoursInfo data.displayOpenHours
-      @delivery = data.delivery
-      @isAvailableForUser = (userAddress) ->
-        @address = userAddress
-      	Geo.validateDeliveryRadio(@address, @delivery)
-
 
     constructHoursInfo: ( displayOpenHours ) ->
       displayHours = displayOpenHours
@@ -86,5 +73,19 @@ angular.module('Muzza.store').factory 'Store', (Geo)->
 
 
       return angular.extend objectToReturn, {isOpen:isOpen,timeToOpen: minutesToOpen,timeToClose: minutesToClose}
+
+    constructor: ( data ) ->
+      @id = data.id
+      @name = data.name_fantasy
+      @address = data.address
+      @tel = data.phone
+      @order = data.order
+
+      @hoursInfo = @constructHoursInfo data.displayOpenHours
+      @delivery = data.delivery
+      @isAvailableForUser = (userAddress) ->
+        @address = userAddress
+        Geo.validateDeliveryRadio(@address, @delivery)
+      return
 
   return Store

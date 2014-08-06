@@ -1,6 +1,8 @@
-angular.module("Muzza.store").service "StoreFileAdapter", ($http, $log, branches) ->
+angular.module("Muzza.store").service "StoreFileAdapter", ($http, $log, branches, $q) ->
 
   retrieveBranchesData = () ->
-    branches.list
+    deferred = $q.defer()
+    deferred.resolve({data: branches.list})
+    return deferred.promise
 
   getBranches: retrieveBranchesData

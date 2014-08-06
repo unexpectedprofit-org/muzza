@@ -11,7 +11,7 @@ angular.module("Muzza.store").controller "StoresCtrl", ($scope, $state, StoreSer
       userAddress = user.address
       angular.forEach openedBranches, (store)->
         store.isAvailableForUser(userAddress).then (isWithInRadio)->
-          if isWithInRadio and isOpen then $scope.stores.push store
+          if isWithInRadio then $scope.stores.push store
 
   $scope.continue = (store)->
     StoreService.chooseStore(store).then ()->
