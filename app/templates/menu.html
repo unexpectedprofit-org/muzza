@@ -13,8 +13,8 @@
 
     <ion-content class="has-header">
 
-        <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
-            <strong data-bo-bind="cat.description"></strong>
+        <div class="item item-divider bar bar-calm" data-ng-repeat-start="cat in ::menu track by $index">
+            <strong>{{::cat.description}}</strong>
         </div>
 
 
