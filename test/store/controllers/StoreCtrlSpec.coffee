@@ -34,20 +34,20 @@ describe "Store Controller", ->
     createController()
     expect(StoreService.listStores).toHaveBeenCalled()
 
-  it 'should throw an error if the user address is not present', ->
-    stores  = [
-      {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} },
-      {some: "thing", hoursInfo:{isOpen: false}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} }
-    ]
-    user = {address: {}}
-    spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
-    spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
-    missingAddress = ()->
-      createController(deliveryOption:'delivery')
-    expect(missingAddress).toThrow(Error 'User address not present')
-    expect(scope.stores.length).toBe 0
-
   describe 'delivery', ->
+
+    it 'should throw an error if the user address is not present', ->
+      stores  = [
+        {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} },
+        {some: "thing", hoursInfo:{isOpen: false}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} }
+      ]
+      user = {address: {}}
+      spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      missingAddress = ()->
+        createController(deliveryOption:'delivery')
+      expect(missingAddress).toThrow(Error 'User address not present')
+      expect(scope.stores.length).toBe 0
 
     it 'should get only those stores opened and within the delivery range', ->
       stores  = [
@@ -72,6 +72,19 @@ describe "Store Controller", ->
       expect(scope.stores.length).toBe 0
 
   describe 'pickup', ->
+    it 'should NOT throw an error if the user address is not present', ->
+      stores  = [
+        {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} },
+        {some: "thing", hoursInfo:{isOpen: true}, isAvailableForUser: ()-> return {then: (callback)-> callback(true)} }
+      ]
+      user = {address: {}}
+      spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
+      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
+      missingAddress = ()->
+        createController(deliveryOption:'pickup')
+      expect(missingAddress).not.toThrow(Error 'User address not present')
+      expect(scope.stores.length).toBe 2
+
 
     it 'should retrieve only those opened stores', ->
       stores  = [
