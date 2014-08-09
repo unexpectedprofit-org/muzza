@@ -8,9 +8,7 @@ angular.module("Muzza.store").controller "StoresCtrl", ($scope, $state, StoreSer
 
     Contact.retrieveContactInfo().then (userInfo)->
 
-      openedBranches = _.filter(branches, (store)-> store.hoursInfo.isOpen)
-
-      if deliveryOption is 'pickup' then $scope.stores = openedBranches
+      if deliveryOption is 'pickup' then $scope.stores = branches
 
       if deliveryOption is 'delivery'
 
@@ -18,7 +16,7 @@ angular.module("Muzza.store").controller "StoresCtrl", ($scope, $state, StoreSer
           throw Error "User address not present"
 
         userAddress = userInfo.address
-        angular.forEach openedBranches, (store)->
+        angular.forEach branches, (store)->
           store.isAvailableForUser(userAddress).then (isWithInRadio)->
             if isWithInRadio then $scope.stores.push store
 

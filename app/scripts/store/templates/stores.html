@@ -7,9 +7,9 @@
     <ion-content class="has-header">
 
         <ion-list data-ng-controller="StoresCtrl">
-            <ion-item ng-show="stores.length == 0 && deliveryOption == 'pickup'">No hay locales abiertos para {{deliveryOption}} en este momento</ion-item>
-            <ion-item ng-show="stores.length == 0 && deliveryOption == 'delivery'">No hay locales dentro su area abiertos para {{deliveryOption}} en este momento</ion-item>
-            <ion-item ng-repeat="store in stores" data-ng-click="continue(store)">
+            <ion-item ng-show="stores.length == 0 && deliveryOption == 'pickup'">No hay locales para {{deliveryOption}} en este momento</ion-item>
+            <ion-item ng-show="stores.length == 0 && deliveryOption == 'delivery'">No hay locales dentro su area para {{deliveryOption}} en este momento</ion-item>
+            <ion-item ng-repeat="store in stores">
                 <i class="icon icon-home"></i>
                 <strong>{{store.name}}</strong>
                 <br>
@@ -23,7 +23,14 @@
                   pickup: {{ store.order.minPrice.pickup | centsToMoney | currency }}
                   delivery: {{ store.order.minPrice.delivery | centsToMoney | currency }}
                 <br>
-                <div>Abierto {{ store.hoursInfo.isOpen }}</div>
+
+                <button class="button button-balanced"
+                        data-ng-show="store.hoursInfo.isOpen"
+                        data-ng-click="continue(store)">
+                  SELECCIONAR
+                </button>
+
+                <div data-ng-if="!store.hoursInfo.isOpen">CERRADO</div>
 
                 <div data-ng-if="store.hoursInfo.timeToOpen">Abre en {{ store.hoursInfo.timeToOpen }} minutos</div>
                 <div data-ng-if="store.hoursInfo.timeToClose">Cierra en {{ store.hoursInfo.timeToClose }} minutos</div>

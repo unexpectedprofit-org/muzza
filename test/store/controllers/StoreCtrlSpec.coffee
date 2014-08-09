@@ -86,7 +86,7 @@ describe "Store Controller", ->
       expect(scope.stores.length).toBe 2
 
 
-    it 'should retrieve only those opened stores', ->
+    it 'should retrieve all stores', ->
       stores  = [
         {some: "thing", hoursInfo:{isOpen: true}},
         {some: "thing", hoursInfo:{isOpen: false}}
@@ -95,33 +95,8 @@ describe "Store Controller", ->
       spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
       spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
 
-      createController(deliveryOption:'pickup')
-      expect(scope.stores.length).toBe 1
-
-    it 'should retrieve opened stores when all are opened', ->
-      stores  = [
-        {some: "thing", hoursInfo:{isOpen: true}},
-        {some: "thing", hoursInfo:{isOpen: true}}
-      ]
-      user = {address: { street: 1}}
-      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
-
-      spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
       createController(deliveryOption:'pickup')
       expect(scope.stores.length).toBe 2
-
-    it 'should retrieve no stores when all are closed', ->
-      stores  = [
-        {some: "thing", hoursInfo:{isOpen: false}},
-        {some: "thing", hoursInfo:{isOpen: false}}
-      ]
-      user = {address: { street: 1}}
-      spyOn(Contact, 'retrieveContactInfo').and.callFake ()-> {then: (callback)-> callback(user)}
-
-      spyOn(StoreService, 'listStores').and.callFake ()-> {then: (callback)-> callback(stores)}
-      createController(deliveryOption:'pickup')
-      expect(scope.stores.length).toBe 0
-
 
 
   describe 'when user selects a store', ->

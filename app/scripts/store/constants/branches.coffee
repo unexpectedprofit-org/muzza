@@ -89,11 +89,11 @@ angular.module('Muzza.store').constant 'branches',
         Sabado: [
           [
             "06:00"
-            "19:00"
+            "11:00"
           ]
           [
-            "19:01"
-            "05:59"
+            "16:00"
+            "17:00"
           ]
         ]
 
