@@ -19,14 +19,12 @@ angular.module("Muzza.cart").service 'ShoppingCartService', (StoreService, Deliv
       item.cartItemKey = generateItemKey()
       item.hashKey = item.getHash()
     products.push item
-#    notifyTotalPriceChange()
 
   removeItem = (id) ->
     previousLengthBeforeRemoval = products.length
     _.remove( products, (elem) ->
       elem.cartItemKey is id
     )
-#    notifyTotalPriceChange() unless previousLengthBeforeRemoval is products.length
 
   calculateTotalPrice = () ->
     totalPrice = 0
