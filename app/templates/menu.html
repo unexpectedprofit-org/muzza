@@ -13,16 +13,26 @@
 
     <ion-content class="has-header">
 
-        <div class="item item-divider bar bar-calm" bindonce data-ng-repeat-start="cat in menu track by $index">
-            <strong data-bo-bind="cat.description"></strong>
+
+        <div data-ng-if="isMainMenu"
+             class="list"
+             bindonce data-ng-repeat="cat in menu track by $index">
+
+              <a class="item item-thumbnail-left" data-ng-click="showMenu(cat.id)">
+                <img src="images/ionic.png"/>
+                <h2>
+                  <strong data-bo-bind="cat.description"></strong>
+                </h2>
+              </a>
+
         </div>
 
 
-        <ion-list data-ng-repeat-end>
-
-            <product data-ng-model="product" data-ng-repeat="product in cat.products track by $index"></product>
-
+        <ion-list data-ng-if="!isMainMenu">
+          <product data-ng-model="product" data-ng-repeat="product in menu[0].products track by $index"></product>
         </ion-list>
+
+
     </ion-content>
 
 </ion-view>

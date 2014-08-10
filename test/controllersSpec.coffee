@@ -35,6 +35,11 @@ describe "controllers", ->
             $rootScope: $rootScope
             ShoppingCartService: ShoppingCartService
 
+    it 'should have functions set in scope', ->
+      createController {storeID: 1}
+      expect(scope.viewCart).toBeDefined()
+      expect(scope.showMenu).toBeDefined()
+
     it "should redirect to the cart when user clicks the cart icon", ->
       inject ($state)->
         spyOn($state, 'go')
@@ -42,6 +47,13 @@ describe "controllers", ->
         scope.viewCart()
         expect($state.go).toHaveBeenCalledWith 'app.cart'
 
+    it "should redirect to category menu when user clicks the category item", ->
+      inject ($state)->
+        spyOn($state, 'go')
+        createController({storeID: 1})
+        categoryId = 88
+        scope.showMenu(categoryId)
+        expect($state.go).toHaveBeenCalledWith 'app.category', {category:categoryId}
 
     it "should get all menu items", ->
       createController({storeID: 1})
@@ -49,9 +61,20 @@ describe "controllers", ->
       expect(scope.menu[1]).toEqual {products:[{id:2}]}
       expect(ProductService.getMenu).toHaveBeenCalled()
 
-    it "should get only the menu items for an specific category", ->
-      createController({category: 'PIZZA', storeID: 1})
-      expect(ProductService.getMenu).toHaveBeenCalledWith(1, 'PIZZA')
+    it 'should be mainMenu view', ->
+      createController {storeID: 1}
+      expect(scope.isMainMenu).toBeTruthy()
+
+    describe 'when requested specific category id', ->
+
+      it "should get only the menu items for an specific category", ->
+        createController({category: 'PIZZA', storeID: 1})
+        expect(ProductService.getMenu).toHaveBeenCalledWith(1, 'PIZZA')
+
+      it 'should NOT be mainMenu view', ->
+        createController({category: 'PIZZA', storeID: 1})
+        expect(scope.isMainMenu).toBeFalsy()
+
 
     xdescribe "on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART", ->
 
