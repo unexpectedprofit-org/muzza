@@ -59,14 +59,18 @@ angular.module("Muzza.cart").service 'ShoppingCartService', (StoreService, Deliv
   getDeliveryMethod = ()->
     Delivery.retrieveDelivery()
 
-  getContact = ()->
-    Contact.retrieveContactInfo()
+  retrieveContact = ()->
+    Contact.retrieveContactInfo().then (contactInfo) ->
+      contactInfo
 
   submitOrder = (cart)->
     cart.store = getStore()
     cart.delivery = getDeliveryMethod()
-    cart.contact = getContact()
-    OrderService.createOrder cart
+
+    #TODO: Call retrieveContact instead of dupe this same code
+    Contact.retrieveContactInfo().then (contactInfo) ->
+      cart.contact = contactInfo
+      OrderService.createOrder cart
 
 
   getCart: getItems
@@ -77,3 +81,4 @@ angular.module("Muzza.cart").service 'ShoppingCartService', (StoreService, Deliv
   remove: removeItem
   get: getItem
   checkout: submitOrder
+  getContact: retrieveContact

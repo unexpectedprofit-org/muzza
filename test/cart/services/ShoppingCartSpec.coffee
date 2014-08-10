@@ -11,19 +11,21 @@ describe 'ShoppingCart Service', ->
       $provide.value 'Delivery',
         retrieveDelivery: ()-> null
       $provide.value 'Contact',
-        retrieveContactInfo: ()-> null
+        retrieveContactInfo: () ->
+          then: (callback) ->
+            callback {name: "Santiago",email: "myemail"}
       $provide.value 'OrderService',
         createOrder: ()-> null
 
-
       null
 
-  ShoppingCartService = Product = undefined
+  ShoppingCartService = Product = Contact = undefined
 
   beforeEach ->
     inject ($injector) ->
       ShoppingCartService = $injector.get 'ShoppingCartService'
       Product = $injector.get 'Product'
+      Contact = $injector.get 'Contact'
 
   it 'should get an initial empty cart', ->
     expect(ShoppingCartService.getCart().length).toBe 0
@@ -61,6 +63,7 @@ describe 'ShoppingCart Service', ->
       updatedItem = ShoppingCartService.getCart()[0]
       expect(updatedItem.qty).toBe 3
       expect(ShoppingCartService.getCart().length).toBe 1
+
 
   describe "retrieve functionality", ->
 
@@ -204,6 +207,9 @@ describe 'ShoppingCart Service', ->
 
   describe 'checkout', ->
 
+    beforeEach ->
+      spyOn(Contact, 'retrieveContactInfo').and.callThrough()
+
     it 'should add the saved store to the cart', ->
       inject (StoreService)->
         cart = {}
@@ -224,13 +230,9 @@ describe 'ShoppingCart Service', ->
         expect(cart.delivery).toBe 'delivery'
 
     it 'should add the saved contact to the cart', ->
-      inject (Contact)->
-        cart = {}
-        user  =
-          name: 'Santiago'
-        spyOn(Contact, 'retrieveContactInfo').and.returnValue user
-        ShoppingCartService.checkout cart
-        expect(cart.contact.name).toEqual 'Santiago'
+      cart = {}
+      ShoppingCartService.checkout cart
+      expect(cart.contact.name).toEqual 'Santiago'
 
     it 'should delegate the cart to OrderService', ->
       inject (OrderService)->
@@ -248,3 +250,12 @@ describe 'ShoppingCart Service', ->
         ShoppingCartService.checkout cart
         expect(OrderService.createOrder).toHaveBeenCalled()
 
+
+  describe "getContact functionality", ->
+
+    it 'should call Contact service', ->
+      retrieveContactInfoSpy = spyOn(Contact, 'retrieveContactInfo').and.callThrough()
+
+      contact = ShoppingCartService.getContact()
+
+      expect(retrieveContactInfoSpy).toHaveBeenCalled()
