@@ -1,4 +1,4 @@
-angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ionicModal, $rootScope, $stateParams, Product) ->
+angular.module('Muzza.product').directive 'product', (ShoppingCartService, $ionicModal, $rootScope, Product) ->
   restrict: 'E'
   required: 'ngModel'
   scope: {

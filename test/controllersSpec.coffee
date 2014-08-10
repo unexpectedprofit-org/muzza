@@ -74,21 +74,3 @@ describe "controllers", ->
       it 'should NOT be mainMenu view', ->
         createController({category: 'PIZZA', storeID: 1})
         expect(scope.isMainMenu).toBeFalsy()
-
-
-    xdescribe "on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART", ->
-
-      beforeEach ->
-        inject ($rootScope) ->
-          createController({})
-          product = {id:15}
-
-          scope.chooseProduct product
-          $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product
-
-      it "should close modal", ->
-        expect(scope.productOptions.hide()).toHaveBeenCalled()
-
-      it "should call service", ->
-        addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
-        expect(addSpy).toHaveBeenCalledWith {id:15}

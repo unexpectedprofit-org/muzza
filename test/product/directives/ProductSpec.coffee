@@ -4,20 +4,27 @@ describe 'Product Directive', ->
     module 'Muzza.product'
     module 'Muzza.templates'
     module 'Muzza.directives'
-    module 'ionic'
 
     module ($provide) ->
       $provide.value 'ShoppingCartService',
-        add: () ->
+        add: () -> null
       null
 
-  Product = element = isolatedScope = $scope = $ionicModal = undefined
+      $provide.value '$ionicModal',
+        fromTemplateUrl: () ->  then: (callback) ->
+          callback
+            show: () -> {}
+            remove: () -> {}
+      null
+
+  Product = ShoppingCartService = element = isolatedScope = $scope = $ionicModal = addSpy = undefined
 
   beforeEach ->
     inject ($compile, $rootScope, $injector) ->
       $ionicModal = $injector.get '$ionicModal'
 
       Product = $injector.get 'Product'
+      ShoppingCartService = $injector.get 'ShoppingCartService'
       $scope = $rootScope
       $scope.menu = [
         id:1
@@ -60,6 +67,8 @@ describe 'Product Directive', ->
         ]
       ]
 
+      addSpy = spyOn(ShoppingCartService, 'add').and.callThrough()
+
       element = angular.element('<product data-ng-model="menu"></product>')
       $compile(element)($rootScope)
       $scope.$digest()
@@ -81,7 +90,6 @@ describe 'Product Directive', ->
 
     beforeEach ->
       inject ($injector) ->
-        spyOn($ionicModal, 'fromTemplateUrl').and.callFake( () ->  then: (callback) -> callback(show: () -> {}) )
         isolatedScope.chooseProduct $scope.menu[1].products[0]
 
 
@@ -109,6 +117,21 @@ describe 'Product Directive', ->
 
       expect(isolatedScope.productToChange.options[1].items[0].qty).not.toBe 0
       expect(isolatedScope.productToChange.options[1].items[0].updateQty).toBeUndefined()
+
+    describe 'on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', ->
+
+      beforeEach ->
+        inject ($rootScope) ->
+          $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', {id:3}
+
+
+      it 'should call Shopping Cart Service to add product', ->
+        expect(addSpy).toHaveBeenCalledWith {id:3}
+
+
+      it 'should remove modal view', ->
+        #TODO ??????
+
 
 
     describe "multipleQty option type", ->

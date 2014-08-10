@@ -3,6 +3,10 @@ describe "EditProductCtrl", ->
   beforeEach ->
     module 'ionic'
     module 'Muzza.product'
+    module ($provide) ->
+      $provide.value '$state',
+        go: () -> null
+      null
 
   scope = rootScope = createController = Product = undefined
 
@@ -149,3 +153,31 @@ describe "EditProductCtrl", ->
 
       expect(scope.product.options[0].items[2].isSelected).toBeFalsy()
       expect(scope.product.options[0].items[2].qty).toBe 0
+
+
+
+  describe "on event: PRODUCT_SELECTED_TO_BE_ADDED_TO_CART", ->
+
+      it "should call $state", ->
+        inject ($rootScope, $state) ->
+
+          product = new Product
+            id:2
+            options:[
+              config:
+                min:1
+                max:1
+              items:[
+                description:"Sprite"
+              ]
+              selection: [
+                description: 'Sprite'
+              ]
+            ]
+
+          goSpy = spyOn($state, 'go').and.callThrough()
+          createController product
+
+          $rootScope.$broadcast 'PRODUCT_SELECTED_TO_BE_ADDED_TO_CART', product
+
+          expect(goSpy).toHaveBeenCalledWith 'app.cart'
