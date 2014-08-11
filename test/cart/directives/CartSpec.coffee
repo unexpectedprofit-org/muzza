@@ -182,52 +182,20 @@ describe "Cart", ->
 
   describe 'when editting', ->
 
-    describe "and hit edit button", ->
+    it "should redirect to proper view", ->
 
-      it "should call the edit function with proper data", ->
+      inject ($state) ->
+        $mystate = $state
 
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [product1, product2]
+        spyOn(ShoppingCartService, 'getCart').and.returnValue [product1]
         $scope.$digest()
         isolatedScope = element.isolateScope()
 
-        editItem = spyOn(isolatedScope, 'edit').and.callFake( () -> 1 )
+        goSpy = spyOn($mystate, 'go').and.callFake( () -> null )
 
-        isolatedScope.edit product1
-        expect(editItem).toHaveBeenCalledWith jasmine.objectContaining {id:product1.id}
+        isolatedScope.edit product1.id
+        expect(goSpy).toHaveBeenCalledWith 'app.products-edit', {productId: product1.id}
 
-    xdescribe "edit function show redirect to proper view", ->
-
-      onState = $mystate = undefined
-
-      beforeEach ->
-        inject ($state) ->
-          $mystate = $state
-
-
-      it "should redirect to PIZZA edit view", ->
-        pizza = new Pizza {desc:'Muzza', qty:1,totalPrice: 1000,cat:'PIZZA', size:'chica', dough:'alala', id:1, price:{base:1000}, cartItemKey: 1}
-
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [pizza]
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-
-        onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
-        editItem = spyOn(isolatedScope, 'edit').and.callThrough()
-
-        isolatedScope.edit(pizza)
-        expect(onState).toHaveBeenCalledWith 'app.pizza', {pizzaId:1}
-
-      it "should redirect to menu default view if no categ matches", ->
-
-        spyOn(ShoppingCartService, 'getCart').and.returnValue [{hash: '45-newproduct',cat: 'NEW_CATEGORY'}]
-        $scope.$digest()
-        isolatedScope = element.isolateScope()
-
-        onState = spyOn($mystate, 'go').and.callFake( () -> 1 )
-        editItem = spyOn(isolatedScope, 'edit').and.callThrough()
-
-        isolatedScope.edit({})
-        expect(onState).toHaveBeenCalledWith 'app.menu'
 
   describe "remove functionality", ->
 
